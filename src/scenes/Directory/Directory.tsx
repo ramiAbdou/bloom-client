@@ -15,7 +15,6 @@ import DirectoryHeader from './DirectoryHeader';
 
 interface GetMembersByCommunityIdArgs {
   communityId: string;
-  searchString: string;
 }
 
 interface GetMembersByCommunityIdResult {
@@ -23,7 +22,14 @@ interface GetMembersByCommunityIdResult {
 }
 
 const GET_MEMBERS_BY_COMMUNITY_ID: DocumentNode = gql`
-  query GetMembersByCommunityId($communityId: String!, $searchString: String!) {
+  query GetMembersByCommunityId(
+    $communityId: String!
+    $searchString: String!
+    $searchStringStarting: String!
+  ) {
+    directorySearchString @client @export(as: "searchString")
+    directorySearchStringStarting @client @export(as: "searchStringStarting")
+
     members(
       where: {
         _and: [
@@ -33,8 +39,8 @@ const GET_MEMBERS_BY_COMMUNITY_ID: DocumentNode = gql`
             _or: [
               { bio: { _ilike: $searchString } }
               { email: { _ilike: $searchString } }
-              { firstName: { _ilike: $searchString } }
-              { lastName: { _ilike: $searchString } }
+              { firstName: { _ilike: $searchStringStarting } }
+              { lastName: { _ilike: $searchStringStarting } }
             ]
           }
         ]
@@ -49,14 +55,15 @@ const GET_MEMBERS_BY_COMMUNITY_ID: DocumentNode = gql`
 
 const DirectoryContent: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
-  const searchString = ListStore.useStoreState((state) => state.searchString);
 
   const { data, loading } = useQuery<
     GetMembersByCommunityIdResult,
     GetMembersByCommunityIdArgs
   >(GET_MEMBERS_BY_COMMUNITY_ID, {
-    variables: { communityId, searchString: `%${searchString}%` }
+    variables: { communityId }
   });
+
+  console.log(data);
 
   return (
     <MainContent>

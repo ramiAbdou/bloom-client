@@ -6,8 +6,9 @@ import SearchBar, {
 import { cx } from '@util/util';
 import ListStore from './List.store';
 
-const ListSearchBar: React.FC<Omit<SearchBarProps, 'onChange'>> = ({
+const ListSearchBar: React.FC<Partial<SearchBarProps>> = ({
   className,
+  onChange,
   ...props
 }) => {
   const searchString: string = ListStore.useStoreState(
@@ -29,7 +30,12 @@ const ListSearchBar: React.FC<Omit<SearchBarProps, 'onChange'>> = ({
   const css: string = cx('o-list-search', {}, className);
 
   return (
-    <SearchBar className={css} value={value} onChange={setValue} {...props} />
+    <SearchBar
+      className={css}
+      value={value}
+      onChange={onChange ?? setValue}
+      {...props}
+    />
   );
 };
 

@@ -9,38 +9,14 @@ import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import { StoreProvider } from 'easy-peasy';
 import { ClientContext, GraphQLClient } from 'graphql-hooks';
-import pluralize from 'pluralize';
 import React from 'react';
 import { IconContext } from 'react-icons';
 import { BrowserRouter } from 'react-router-dom';
 
-import {
-  ApolloClient,
-  ApolloProvider,
-  HttpLink,
-  InMemoryCache
-} from '@apollo/client';
-import {
-  IApplication,
-  ICommunity,
-  ICommunityIntegrations,
-  IEvent,
-  IEventAttendee,
-  IEventGuest,
-  IEventWatch,
-  IMember,
-  IMemberIntegrations,
-  IMemberSocials,
-  IMemberType,
-  IMemberValue,
-  IPayment,
-  IQuestion,
-  IRankedQuestion,
-  ISupporter,
-  IUser
-} from '@core/db/db.entities';
+import { ApolloClient, ApolloProvider, HttpLink } from '@apollo/client';
 import { store } from '@core/store/Store';
 import { APP } from '@util/constants';
+import cache from './cache';
 
 // Extend the time-based library for entire app.
 day.extend(advancedFormat);
@@ -52,53 +28,8 @@ const client: GraphQLClient = new GraphQLClient({
   url: `${APP.SERVER_URL}/graphql`
 });
 
-/**
- * Resolves the Apollo Client query so that once an entity is fetched, if we
- * query by it's ID, then we'll be able to use our cache store for it.
- */
-function resolveReadQuery<T>(entity: new () => T) {
-  // All of our entity types start with an I (ex: IMember, IUser, etc).
-  const nameWithoutI: string = entity.name.substring(1);
-  const entityName: string = pluralize(nameWithoutI);
-
-  return (existing, { args, toReference }) => {
-    if (args.where?.id) {
-      return toReference({
-        __typename: entityName,
-        id: args.where?.id?._eq
-      });
-    }
-
-    return existing;
-  };
-}
-
 const apolloClient = new ApolloClient({
-  cache: new InMemoryCache({
-    typePolicies: {
-      Query: {
-        fields: {
-          applications: resolveReadQuery(IApplication),
-          communities: resolveReadQuery(ICommunity),
-          communityIntegrations: resolveReadQuery(ICommunityIntegrations),
-          eventAttendees: resolveReadQuery(IEventAttendee),
-          eventGuests: resolveReadQuery(IEventGuest),
-          eventWatches: resolveReadQuery(IEventWatch),
-          events: resolveReadQuery(IEvent),
-          memberIntegrations: resolveReadQuery(IMemberIntegrations),
-          memberSocials: resolveReadQuery(IMemberSocials),
-          memberTypes: resolveReadQuery(IMemberType),
-          memberValues: resolveReadQuery(IMemberValue),
-          members: resolveReadQuery(IMember),
-          payments: resolveReadQuery(IPayment),
-          questions: resolveReadQuery(IQuestion),
-          rankedQuestions: resolveReadQuery(IRankedQuestion),
-          supporters: resolveReadQuery(ISupporter),
-          users: resolveReadQuery(IUser)
-        }
-      }
-    }
-  }),
+  cache,
   connectToDevTools: process.env.APP_ENV === 'dev',
   link: new HttpLink({
     credentials: 'include',

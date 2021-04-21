@@ -8,13 +8,14 @@ import { cx } from '@util/util';
 
 export interface SearchBarProps extends BaseProps, ValueProps {
   placeholder?: string;
-  onChange: (value: string) => any;
+  onChange: (value: string) => void;
 }
 
-const SearchBarClearButton: React.FC<Partial<SearchBarProps>> = (props) => {
-  const { onChange, value } = props;
-
-  const onClick = () => {
+const SearchBarClearButton: React.FC<Omit<SearchBarProps, 'className'>> = ({
+  onChange,
+  value
+}) => {
+  const onClick = (): void => {
     onChange('');
   };
 
@@ -27,11 +28,23 @@ const SearchBarClearButton: React.FC<Partial<SearchBarProps>> = (props) => {
   );
 };
 
-const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
-  const { className, placeholder, onChange, show, value } = props;
+const SearchBarInput: React.FC<Omit<SearchBarProps, 'className'>> = ({
+  placeholder,
+  value,
+  onChange
+}) => (
+  <input
+    placeholder={placeholder ?? 'Search...'}
+    type="text"
+    value={value}
+    onChange={({ target }) => onChange(target.value)}
+  />
+);
 
-  if (show === false) return null;
-
+const SearchBar: React.FC<SearchBarProps> = ({
+  className,
+  ...props
+}: SearchBarProps) => {
   const css: string = cx(
     'c-misc-search bg-gray-5 br-sl c-gray-3 w-5 w-100--m',
     {},
@@ -41,15 +54,8 @@ const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   return (
     <Row className={css}>
       <IoSearch className="c-gray-3 mr-xs--nlc" />
-
-      <input
-        placeholder={placeholder ?? 'Search...'}
-        type="text"
-        value={value}
-        onChange={({ target }) => onChange(target.value)}
-      />
-
-      <SearchBarClearButton value={value} onChange={onChange} />
+      <SearchBarInput {...props} />
+      <SearchBarClearButton {...props} />
     </Row>
   );
 };

@@ -6,7 +6,7 @@ import { LoadingProps } from '@util/constants';
 
 const DirectoryHeader: React.FC<LoadingProps> = ({ loading }) => {
   const membersCount: number = ListStore.useStoreState(
-    (state) => state.filteredItems?.length
+    (state) => state.items.length
   );
 
   return (
