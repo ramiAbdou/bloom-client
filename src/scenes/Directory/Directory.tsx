@@ -9,7 +9,7 @@ import PanelLocal from '@components/organisms/Panel/PanelLocal';
 import { IMember } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
 import DirectoryActionRow from './DirectoryActionRow';
-import DirectoryCard from './DirectoryCard/DirectoryCard';
+import DirectoryCard from './DirectoryCard';
 import DirectoryCardList from './DirectoryCardList';
 import DirectoryHeader from './DirectoryHeader';
 
