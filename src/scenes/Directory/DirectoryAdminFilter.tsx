@@ -1,16 +1,23 @@
 import React from 'react';
 import { directoryIsAdminsOnlyVar } from 'src/reactive';
 
-import Button from '@components/atoms/Button/Button';
+import { useReactiveVar } from '@apollo/client';
+import QuickFilterButton from '@components/atoms/Button/QuickFilterButton';
 
 const DirectoryAdminFilter: React.FC = () => {
-  // const
+  const directoryIsAdminsOnly: boolean = useReactiveVar(
+    directoryIsAdminsOnlyVar
+  );
 
   const onClick = (): void => {
-    directoryIsAdminsOnlyVar(true);
+    directoryIsAdminsOnlyVar(!directoryIsAdminsOnly);
   };
 
-  return <Button onClick={onClick}>Filter: Admins Only</Button>;
+  return (
+    <QuickFilterButton active={directoryIsAdminsOnly} onClick={onClick}>
+      Filter: Admins Only
+    </QuickFilterButton>
+  );
 };
 
 export default DirectoryAdminFilter;

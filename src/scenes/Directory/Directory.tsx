@@ -80,8 +80,6 @@ const DirectoryContent: React.FC = () => {
     GET_MEMBERS_BY_COMMUNITY_ID
   );
 
-  console.log(data?.members?.length);
-
   return (
     <MainContent>
       <DirectoryHeader count={data?.members?.length ?? 0} loading={loading} />
