@@ -1,5 +1,3 @@
-import snakeCaseKeys from 'snakecase-keys';
-
 import { take } from '@util/util';
 
 interface BuildArgsStringArgs {
@@ -75,18 +73,9 @@ const buildWhereString = (where: Record<string, unknown>): string => {
   // need to insert it if necessary.
   const whereWithEq: Record<string, unknown> = insertEqIntoWhereObject(where);
 
-  const snakeCaseWhere: Record<string, unknown> = snakeCaseKeys(
-    whereWithEq,
-    // Don't want to convert any of the query operators.
-    { exclude: operators }
-  );
-
   // Converts the object to a string, and replaces the double quotes around
   // keys (and not the values).
-  const whereString = JSON.stringify(snakeCaseWhere).replace(
-    /"(\w*)":/g,
-    '$1:'
-  );
+  const whereString = JSON.stringify(whereWithEq).replace(/"(\w*)":/g, '$1:');
 
   return `where: ${whereString}`;
 };
@@ -104,26 +93,16 @@ const buildArgsString = ({
 }: BuildArgsStringArgs): string => {
   if (!object && !set && !where) return '';
 
-  const snakeCaseObject: Record<string, unknown> = snakeCaseKeys(object ?? {});
-
-  const snakeCaseSet: Record<string, unknown> = snakeCaseKeys(set ?? {}, {
-    // Don't want to convert any of the query operators.
-    exclude: operators
-  });
-
   // Converts the object to a string, and replaces the double quotes around
   // keys (and not the values).
-  const objectArgsString = JSON.stringify(snakeCaseObject).replace(
+  const objectArgsString = JSON.stringify(object ?? {}).replace(
     /"(\w*)":/g,
     '$1:'
   );
 
   // Converts the object to a string, and replaces the double quotes around
   // keys (and not the values).
-  const setArgsString = JSON.stringify(snakeCaseSet).replace(
-    /"(\w*)":/g,
-    '$1:'
-  );
+  const setArgsString = JSON.stringify(set ?? {}).replace(/"(\w*)":/g, '$1:');
 
   const whereString: string = buildWhereString(where);
 

@@ -1,4 +1,3 @@
-import { snakeCase } from 'change-case';
 import pluralize from 'pluralize';
 
 import {
@@ -46,7 +45,7 @@ class GQL {
       mutation,
       update: (cache, createResult) => {
         const nameWithoutI: string = entity.name.substring(1);
-        const entityName: string = snakeCase(pluralize(nameWithoutI));
+        const entityName: string = pluralize(nameWithoutI);
 
         const createOperationString: string = buildOperationString(
           entity,
@@ -81,9 +80,7 @@ class GQL {
           modifications.forEach((modification) => {
             cache.modify({
               fields: {
-                [snakeCase(modification.field as string)]: (
-                  existingRefs = []
-                ) => {
+                [modification.field as string]: (existingRefs = []) => {
                   const newEntityRef = cache.writeFragment({
                     data: resultData,
                     fragment: gql`
@@ -147,7 +144,7 @@ class GQL {
     fields,
     mutationName
   }: CustomMutationArgs): Promise<MutationResult<T>> {
-    const fieldsString: string = buildFieldsString(fields, false);
+    const fieldsString: string = buildFieldsString(fields);
 
     const mutation: DocumentNode = gql`
         mutation ${mutationName} {

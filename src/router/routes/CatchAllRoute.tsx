@@ -1,9 +1,12 @@
 import React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
+import { useQuery } from '@apollo/client';
 import { IMember } from '@core/db/db.entities';
-import useFind from '@core/gql/hooks/useFind';
 import { useStoreState } from '@core/store/Store';
+import GET_MEMBERS_BY_USER_ID, {
+  GetMembersByUserIdArgs
+} from '../../gql/queries/getMembersByUserId';
 
 const CatchAllRoute: React.FC<Pick<RouteProps, 'exact' | 'path'>> = ({
   exact,
@@ -11,11 +14,10 @@ const CatchAllRoute: React.FC<Pick<RouteProps, 'exact' | 'path'>> = ({
 }) => {
   const userId: string = useStoreState(({ db }) => db.userId);
 
-  const { data: members } = useFind(IMember, {
-    fields: ['community.id', 'community.urlName'],
-    skip: !userId, // Only fire query if userId is present.
-    where: { userId }
-  });
+  const { data: members } = useQuery<IMember[], GetMembersByUserIdArgs>(
+    GET_MEMBERS_BY_USER_ID,
+    { skip: !userId, variables: { userId } }
+  );
 
   // If userId isn't present, means the user isn't logged in, so redirect
   // the user to the login page.

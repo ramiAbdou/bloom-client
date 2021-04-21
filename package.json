@@ -37,7 +37,6 @@
     "@types/validator": "^13.1.0",
     "autoprefixer": "^10.1.0",
     "aws-sdk": "^2.827.0",
-    "camelcase-keys": "^6.2.2",
     "change-case": "^4.1.2",
     "dayjs": "^1.9.7",
     "deepmerge": "^4.2.2",
@@ -64,7 +63,6 @@
     "react-router-dom": "^5.1.2",
     "react-textarea-autosize": "^8.3.0",
     "recharts": "^1.8.5",
-    "snakecase-keys": "^3.2.1",
     "stopword": "^1.0.5",
     "use-onclickoutside": "^0.3.1",
     "validator": "^13.1.17"

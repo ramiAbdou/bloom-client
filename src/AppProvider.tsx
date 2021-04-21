@@ -3,7 +3,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './index.scss';
 import '../public/favicon.ico';
 
-import { snakeCase } from 'change-case';
 import day from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import timezone from 'dayjs/plugin/timezone';
@@ -60,10 +59,7 @@ const client: GraphQLClient = new GraphQLClient({
 function resolveReadQuery<T>(entity: new () => T) {
   // All of our entity types start with an I (ex: IMember, IUser, etc).
   const nameWithoutI: string = entity.name.substring(1);
-
-  // To get the GraphQL version of the entity name, we make the name plural
-  // and convert to snake case (which automatically converts to lowercase).
-  const entityName: string = snakeCase(pluralize(nameWithoutI));
+  const entityName: string = pluralize(nameWithoutI);
 
   return (existing, { args, toReference }) => {
     if (args.where?.id) {
@@ -84,19 +80,19 @@ const apolloClient = new ApolloClient({
         fields: {
           applications: resolveReadQuery(IApplication),
           communities: resolveReadQuery(ICommunity),
-          community_integrations: resolveReadQuery(ICommunityIntegrations),
-          event_attendees: resolveReadQuery(IEventAttendee),
-          event_guests: resolveReadQuery(IEventGuest),
-          event_watches: resolveReadQuery(IEventWatch),
+          communityIntegrations: resolveReadQuery(ICommunityIntegrations),
+          eventAttendees: resolveReadQuery(IEventAttendee),
+          eventGuests: resolveReadQuery(IEventGuest),
+          eventWatches: resolveReadQuery(IEventWatch),
           events: resolveReadQuery(IEvent),
-          member_integrations: resolveReadQuery(IMemberIntegrations),
-          member_socials: resolveReadQuery(IMemberSocials),
-          member_types: resolveReadQuery(IMemberType),
-          member_values: resolveReadQuery(IMemberValue),
+          memberIntegrations: resolveReadQuery(IMemberIntegrations),
+          memberSocials: resolveReadQuery(IMemberSocials),
+          memberTypes: resolveReadQuery(IMemberType),
+          memberValues: resolveReadQuery(IMemberValue),
           members: resolveReadQuery(IMember),
           payments: resolveReadQuery(IPayment),
           questions: resolveReadQuery(IQuestion),
-          ranked_questions: resolveReadQuery(IRankedQuestion),
+          rankedQuestions: resolveReadQuery(IRankedQuestion),
           supporters: resolveReadQuery(ISupporter),
           users: resolveReadQuery(IUser)
         }

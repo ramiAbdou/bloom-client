@@ -1,4 +1,3 @@
-import camelCaseKeys from 'camelcase-keys';
 import day from 'dayjs';
 import { nanoid } from 'nanoid';
 
@@ -60,17 +59,10 @@ export function parseCreateMutationResult<T>(
     };
   }
 
-  // Deeply converts all of the data from the operation to camelCase, if the
-  // data exists.
-  const camelCaseData: T = camelCaseKeys(
-    Array.isArray(result.data[operationString])
+  return {
+    data: Array.isArray(result.data[operationString])
       ? result.data[operationString][0]
       : result.data[operationString],
-    { deep: true }
-  );
-
-  return {
-    data: camelCaseData,
     error: result.errors && result.errors[0]?.message
   };
 }

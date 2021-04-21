@@ -7,7 +7,7 @@ function useCustomQuery<T>({
   queryName,
   skip
 }: CustomQueryArgs): QueryResult<T> {
-  const fieldsString: string = buildFieldsString(fields, false);
+  const fieldsString: string = buildFieldsString(fields);
 
   const query: DocumentNode = gql`
       query ${queryName} {

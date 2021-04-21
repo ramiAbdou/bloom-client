@@ -28,6 +28,8 @@ const DirectoryCardList: React.FC = () => {
     where: { id: communityId }
   });
 
+  console.log('communityData', community);
+
   if (loading) return null;
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment

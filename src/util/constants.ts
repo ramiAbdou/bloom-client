@@ -1,3 +1,5 @@
+import { DocumentNode } from '@apollo/client';
+
 export const isDevelopment = process.env.APP_ENV === 'dev';
 export const isProduction = process.env.APP_ENV === 'prod';
 export const isStage = process.env.APP_ENV === 'stage';
@@ -28,6 +30,20 @@ export type UrlNameProps = { urlName?: string };
 export type ValueProps = { value?: any };
 
 export interface BaseProps extends ClassNameProps, ShowProps, StyleProps {}
+
+export type ComponentWithFragments<T> = React.FC<{ data?: Partial<T> }> & {
+  fragments: { data: DocumentNode };
+};
+
+// <T, Props = { data?: Partial<T> }>
+//   extends React.FC<Props & T> {
+//   fragments: { data: DocumentNode };
+// }
+
+// export interface ComponentWithFragments<T, Props = { data?: Partial<T> }>
+//   extends React.FC<Props & T> {
+//   fragments: { data: DocumentNode };
+// }
 
 /**
  * SYSTEM TYPES - Includes modal, panel and more.

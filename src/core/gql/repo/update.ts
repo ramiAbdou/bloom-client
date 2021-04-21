@@ -1,4 +1,3 @@
-import camelCaseKeys from 'camelcase-keys';
 import day from 'dayjs';
 
 import { DocumentNode, FetchResult, gql } from '@apollo/client';
@@ -54,18 +53,10 @@ export function parseUpdateResult<T>(
       error: result.errors && result.errors[0]?.message
     };
   }
-
-  // Deeply converts all of the data from the operation to camelCase, if the
-  // data exists.
-  const camelCaseData: T = camelCaseKeys(
-    Array.isArray(result.data[operationString])
+  return {
+    data: Array.isArray(result.data[operationString])
       ? result.data[operationString][0]
       : result.data[operationString],
-    { deep: true }
-  );
-
-  return {
-    data: camelCaseData,
     error: result.errors && result.errors[0]?.message
   };
 }
@@ -87,14 +78,8 @@ export function parseUpdateManyResult<T>(
     };
   }
 
-  // Deeply converts all of the data from the operation to camelCase, if the
-  // data exists.
-  const camelCaseData: T[] = camelCaseKeys(result.data[operationString], {
-    deep: true
-  });
-
   return {
-    data: camelCaseData,
+    data: result.data[operationString],
     error: result.errors && result.errors[0]?.message
   };
 }

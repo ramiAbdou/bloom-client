@@ -1,45 +1,46 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { gql } from '@apollo/client';
 import { ICommunity } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
-import { IdProps } from '@util/constants';
+import { ComponentWithFragments } from '@util/constants';
 import { cx } from '@util/util';
+import SidebarCommunityButtonLogo from './SidebarCommunityButtonLogo';
 
-const SidebarCommunityButton: React.FC<IdProps> = ({ id: communityId }) => {
-  const authenticatedCommunityId: string = useStoreState(
-    ({ db }) => db.communityId
-  );
+const SidebarCommunityButton: ComponentWithFragments<ICommunity> = ({
+  data: community
+}) => {
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const { push } = useHistory();
 
-  const { data: community, loading } = useFindOne(ICommunity, {
-    fields: ['logoUrl', 'urlName'],
-    where: { id: communityId }
-  });
-
-  if (loading) return null;
-
-  const onClick = () => {
-    if (communityId !== authenticatedCommunityId) {
+  const onClick = (): void => {
+    if (community.id !== communityId) {
       push(`/${community.urlName}`);
     }
   };
 
   const css: string = cx('br-xs h-xl mb-sm p-2 w-xl o-nav-community', {
-    'o-nav-community--active': communityId === authenticatedCommunityId
+    'o-nav-community--active': community.id === communityId
   });
 
   return (
     <button className={css} type="button" onClick={onClick}>
-      <img
-        alt="Community Logo"
-        className="br-xxs h-100 w-100"
-        src={community.logoUrl}
-      />
+      <SidebarCommunityButtonLogo data={community} />
     </button>
   );
+};
+
+SidebarCommunityButton.fragments = {
+  data: gql`
+    fragment SidebarCommunityButtonFragment on communities {
+      id
+      urlName
+      ...SidebarCommunityButtonLogoFragment
+    }
+    ${SidebarCommunityButtonLogo.fragments.data}
+  `
 };
 
 export default SidebarCommunityButton;

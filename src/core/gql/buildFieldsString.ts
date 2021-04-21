@@ -1,5 +1,3 @@
-import { snakeCase } from 'change-case';
-
 /**
  * Returns the nested fields object that we will later use to clean up.
  *
@@ -35,25 +33,8 @@ const buildFieldsObject = (
  * // Returns { id name members { id firstName } }
  * buildFieldsString(['id', 'name', 'members.id', 'members.firstName'])
  */
-const buildFieldsString = (
-  fields: string[],
-  toSnake: boolean = true
-): string => {
-  const snakeCaseFields: string[] = toSnake
-    ? fields.reduce((allFields: string[], currField: string) => {
-        // Splits the array by the '.', converts that individual string to
-        // snake case, then joins the snake case strings back together.
-        // Example: 'memberValues.id' -> 'member_values.id'
-        const snakeCaseDotCaseField: string = currField
-          .split('.')
-          .map((value: string) => snakeCase(value))
-          .join('.');
-
-        return [...allFields, snakeCaseDotCaseField];
-      }, [])
-    : fields;
-
-  const result: Record<string, any> = snakeCaseFields.reduce(
+const buildFieldsString = (fields: string[]): string => {
+  const result: Record<string, any> = fields.reduce(
     (acc: Record<string, any>, currField: string) =>
       buildFieldsObject(acc, currField.split('.')),
     {}

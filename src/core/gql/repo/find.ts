@@ -1,5 +1,3 @@
-import camelCaseKeys from 'camelcase-keys';
-
 import { ApolloQueryResult, DocumentNode, gql } from '@apollo/client';
 import buildArgsString from '../buildArgsString';
 import buildFieldsString from '../buildFieldsString';
@@ -52,14 +50,8 @@ export function parseFindQueryResult<T>(
     };
   }
 
-  // Deeply converts all of the data from the operation to camelCase, if the
-  // data exists.
-  const camelCaseData: T[] = camelCaseKeys(result.data[operationString], {
-    deep: true
-  });
-
   return {
-    data: camelCaseData,
+    data: result.data[operationString],
     error: result.error?.message,
     loading: result.loading
   };

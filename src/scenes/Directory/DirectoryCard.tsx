@@ -7,24 +7,8 @@ import { IMember } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
 import { useStoreActions } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
-import { ModalType } from '@util/constants';
-
-const DirectoryCardInformationFullName: React.FC = () => {
-  const memberId: string = IdStore.useStoreState(({ id }) => id);
-
-  const { data: member, loading } = useFindOne(IMember, {
-    fields: ['firstName', 'lastName'],
-    where: { id: memberId }
-  });
-
-  if (loading) return null;
-
-  const fullName: string = `${member.firstName} ${member.lastName}`;
-
-  return (
-    <span className="body--bold d-block mb-xxs ta-center">{fullName}</span>
-  );
-};
+import { IdProps, ModalType } from '@util/constants';
+import DirectoryCardFullName from './DirectoryCardFullName';
 
 const DirectoryCardInformationPosition: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
@@ -75,7 +59,7 @@ const DirectoryCardInformationPosition: React.FC = () => {
 const DirectoryCardInformation: React.FC = () => (
   <div className="s-directory-card-content">
     <p>
-      <DirectoryCardInformationFullName />
+      <DirectoryCardFullName />
       <DirectoryCardInformationPosition />
       {/* <DirectoryCardInformationHighlightedValue /> */}
     </p>
@@ -117,7 +101,11 @@ const DirectoryCardContent: React.FC = () => {
   );
 };
 
-const DirectoryCard: React.FC<any> = ({ data }) => (
+interface DirectoryCardProps {
+  data: IdProps;
+}
+
+const DirectoryCard: React.FC<DirectoryCardProps> = ({ data }) => (
   <IdStore.Provider runtimeModel={{ id: data.id }}>
     <DirectoryCardContent />
   </IdStore.Provider>
