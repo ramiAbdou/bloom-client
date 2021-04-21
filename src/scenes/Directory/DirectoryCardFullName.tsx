@@ -7,7 +7,7 @@ import { ComponentWithFragments } from '@util/constants';
 const DirectoryCardFullName: ComponentWithFragments<IMember> = ({
   data: member
 }) => {
-  const fullName: string = `${member.firstName} ${member.lastName}`;
+  const fullName: string = `${member?.firstName} ${member?.lastName}`;
 
   return (
     <span className="body--bold d-block mb-xxs ta-center">{fullName}</span>
@@ -16,7 +16,7 @@ const DirectoryCardFullName: ComponentWithFragments<IMember> = ({
 
 DirectoryCardFullName.fragments = {
   data: gql`
-    fragment DirectoryCardFullNameFragment on Member {
+    fragment DirectoryCardFullNameFragment on members {
       firstName
       lastName
     }

@@ -1,12 +1,26 @@
 import React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
-import { useQuery } from '@apollo/client';
+import { DocumentNode, gql, useQuery } from '@apollo/client';
 import { IMember } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import GET_MEMBERS_BY_USER_ID, {
-  GetMembersByUserIdArgs
-} from '../../gql/queries/getMembersByUserId';
+
+interface GetMembersByUserIdArgs {
+  userId: string;
+}
+
+const GET_MEMBERS_BY_USER_ID: DocumentNode = gql`
+  query GetMembersByUserId($userId: String!) {
+    members(where: { userId: { _eq: $userId } }) {
+      id
+      community {
+        id
+        logoUrl
+        urlName
+      }
+    }
+  }
+`;
 
 const CatchAllRoute: React.FC<Pick<RouteProps, 'exact' | 'path'>> = ({
   exact,

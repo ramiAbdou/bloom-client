@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import Show from '@components/containers/Show';
 import { Identifier, IMember, ISupporter } from '@core/db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import { BaseProps } from '@util/constants';
@@ -8,15 +7,21 @@ import { cx } from '@util/util';
 
 interface ProfilePictureProps extends BaseProps {
   circle?: boolean;
+  firstName?: string;
   fontSize?: number;
+  lastName?: string;
   memberId?: Identifier;
+  pictureUrl?: string;
   supporterId?: Identifier;
   size?: number;
 }
 
 const ProfilePictureContent: React.FC<ProfilePictureProps> = ({
+  firstName,
   fontSize,
+  lastName,
   memberId,
+  pictureUrl,
   supporterId,
   size
 }) => {
@@ -37,9 +42,9 @@ const ProfilePictureContent: React.FC<ProfilePictureProps> = ({
   if (loading1 || loading2) return null;
 
   // If one of these is null, it means the user isn't fully loaded yet.
-  const firstName: string = member?.firstName ?? supporter?.firstName;
-  const lastName: string = member?.lastName ?? supporter?.lastName;
-  const pictureUrl: string = member?.pictureUrl ?? supporter?.pictureUrl;
+  firstName = firstName ?? member?.firstName ?? supporter?.firstName;
+  lastName = lastName ?? member?.lastName ?? supporter?.lastName;
+  pictureUrl = pictureUrl ?? member?.pictureUrl ?? supporter?.pictureUrl;
 
   const initials: string =
     firstName && lastName ? firstName[0] + lastName[0] : '';
@@ -63,7 +68,15 @@ const ProfilePictureContent: React.FC<ProfilePictureProps> = ({
 };
 
 const ProfilePicture: React.FC<ProfilePictureProps> = (props) => {
-  const { circle = true, className, memberId, size, supporterId } = props;
+  const {
+    circle = true,
+    className,
+    firstName,
+    lastName,
+    memberId,
+    size,
+    supporterId
+  } = props;
 
   const { data: member, loading: loading1 } = useFindOne(IMember, {
     where: { id: memberId }
@@ -75,6 +88,10 @@ const ProfilePicture: React.FC<ProfilePictureProps> = (props) => {
 
   if (loading1 || loading2) return null;
 
+  if (!member?.id && !supporter?.id && (!firstName || !lastName)) {
+    return null;
+  }
+
   const css: string = cx(
     'm-profile-picture',
     { 'm-profile-picture--circle': circle },
@@ -82,14 +99,9 @@ const ProfilePicture: React.FC<ProfilePictureProps> = (props) => {
   );
 
   return (
-    <Show show={!!member.id || !!supporter.id}>
-      <div
-        className={css}
-        style={{ height: size, minWidth: size, width: size }}
-      >
-        <ProfilePictureContent {...props} />
-      </div>
-    </Show>
+    <div className={css} style={{ height: size, minWidth: size, width: size }}>
+      <ProfilePictureContent {...props} />
+    </div>
   );
 };
 
