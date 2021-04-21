@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
-import { Identifier, IMember, ISupporter } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import { Identifier } from '@core/db/db.entities';
 import { BaseProps } from '@util/constants';
 import { cx } from '@util/util';
 
@@ -20,31 +19,12 @@ const ProfilePictureContent: React.FC<ProfilePictureProps> = ({
   firstName,
   fontSize,
   lastName,
-  memberId,
   pictureUrl,
-  supporterId,
   size
 }) => {
   // If there is an error rendering the image for whatever reason (URL is no
   // longer valid, etc.) we should show something else.
   const [imageError, setImageError] = useState(false);
-
-  const { data: member, loading: loading1 } = useFindOne(IMember, {
-    fields: ['firstName', 'lastName', 'email', 'pictureUrl'],
-    where: { id: memberId }
-  });
-
-  const { data: supporter, loading: loading2 } = useFindOne(ISupporter, {
-    fields: ['firstName', 'lastName', 'email', 'pictureUrl'],
-    where: { id: supporterId }
-  });
-
-  if (loading1 || loading2) return null;
-
-  // If one of these is null, it means the user isn't fully loaded yet.
-  firstName = firstName ?? member?.firstName ?? supporter?.firstName;
-  lastName = lastName ?? member?.lastName ?? supporter?.lastName;
-  pictureUrl = pictureUrl ?? member?.pictureUrl ?? supporter?.pictureUrl;
 
   const initials: string =
     firstName && lastName ? firstName[0] + lastName[0] : '';
@@ -78,17 +58,7 @@ const ProfilePicture: React.FC<ProfilePictureProps> = (props) => {
     supporterId
   } = props;
 
-  const { data: member, loading: loading1 } = useFindOne(IMember, {
-    where: { id: memberId }
-  });
-
-  const { data: supporter, loading: loading2 } = useFindOne(ISupporter, {
-    where: { id: supporterId }
-  });
-
-  if (loading1 || loading2) return null;
-
-  if (!member?.id && !supporter?.id && (!firstName || !lastName)) {
+  if (!memberId && !supporterId && (!firstName || !lastName)) {
     return null;
   }
 
