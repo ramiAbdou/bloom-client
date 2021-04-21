@@ -23,14 +23,15 @@ const ProfilePictureContent: React.FC<ProfilePictureProps> = ({
   size
 }) => {
   // If there is an error rendering the image for whatever reason (URL is no
-  // longer valid, etc.) we should show something else.
-  const [imageError, setImageError] = useState(false);
+  // longer valid, etc.) we should track the error to ensure that we don't
+  // render that error.
+  const [imageError, setImageError] = useState<boolean>(false);
 
   const initials: string =
     firstName && lastName ? firstName[0] + lastName[0] : '';
 
   if (pictureUrl && !imageError) {
-    const onError = () => {
+    const onError = (): void => {
       setImageError(true);
     };
 
