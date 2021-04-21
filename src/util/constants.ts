@@ -31,7 +31,10 @@ export type ValueProps = { value?: any };
 
 export interface BaseProps extends ClassNameProps, ShowProps, StyleProps {}
 
-export type ComponentWithFragments<T> = React.FC<{ data?: Partial<T> }> & {
+export type ComponentWithFragments<T> = React.FC<{
+  data?: Partial<T>;
+  i?: number;
+}> & {
   fragments: { data: DocumentNode };
 };
 
@@ -76,6 +79,7 @@ export enum ModalType {
 
 export enum PanelType {
   ADD_RECORDING_LINK = 'ADD_RECORDING_LINK',
+  FILTER_DIRECTORY = 'FILTER_DIRECTORY',
   FILTER_LIST = 'FILTER_LIST',
   FILTER_TABLE = 'FILTER_TABLE',
   PROFILE = 'PROFILE',

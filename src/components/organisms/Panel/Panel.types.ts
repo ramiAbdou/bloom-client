@@ -33,6 +33,7 @@ export const globalPanels: PanelType[] = [
 ];
 
 export const localPanels: PanelType[] = [
+  PanelType.FILTER_DIRECTORY,
   PanelType.FILTER_LIST,
   PanelType.FILTER_TABLE,
   PanelType.TABLE_COLUMN
@@ -40,6 +41,10 @@ export const localPanels: PanelType[] = [
 
 export const defaultPanelOptions: Record<string, Partial<PanelData>> = {
   [PanelType.ADD_RECORDING_LINK]: { align: 'BOTTOM_LEFT', size: 'lg' },
+  [PanelType.FILTER_DIRECTORY]: {
+    align: 'BOTTOM_RIGHT',
+    style: { padding: 0 }
+  },
   [PanelType.FILTER_LIST]: { align: 'BOTTOM_RIGHT', style: { padding: 0 } },
   [PanelType.FILTER_TABLE]: { align: 'BOTTOM_RIGHT' },
   [PanelType.PROFILE]: {

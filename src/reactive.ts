@@ -10,6 +10,15 @@ export const userIdVar: ReactiveVar<string> = makeVar<string>('');
 export const directoryIsAdminsOnlyVar: ReactiveVar<boolean> = makeVar<boolean>(
   false
 );
+
+export const directoryFilterOpenQuestionIdVar: ReactiveVar<string> = makeVar<string>(
+  null
+);
+
+export const directoryFilterOpenQuestionSelectedValuesVar: ReactiveVar<
+  string[]
+> = makeVar<string[]>([]);
+
 export const directorySearchStringVar: ReactiveVar<string> = makeVar<string>(
   ''
 );
