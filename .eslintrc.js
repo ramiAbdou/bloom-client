@@ -72,6 +72,7 @@ module.exports = {
       }
     ],
     'react/no-unescaped-entities': 0,
+    'react/require-default-props': 0,
     'react-hooks/rules-of-hooks': 2,
     'react-hooks/exhaustive-deps': 0,
     semi: 2, // Require a semicolon.

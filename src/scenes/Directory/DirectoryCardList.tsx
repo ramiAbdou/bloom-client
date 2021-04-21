@@ -1,21 +1,32 @@
+import { Masonry } from 'masonic';
+import hash from 'object-hash';
 import React from 'react';
 
-import MasonryList from '@components/organisms/List/MasonryList';
 import { IMember } from '@core/db/db.entities';
 import DirectoryCard from './DirectoryCard';
 
 interface DirectoryCardListProps {
-  data: IMember[];
+  directorySearchString: string;
+  members: IMember[];
 }
 
 const DirectoryCardList: React.FC<DirectoryCardListProps> = ({
-  data: members
-}) => (
-  <MasonryList
-    className="s-directory-card-ctr"
-    items={members}
-    render={DirectoryCard}
-  />
-);
+  directorySearchString,
+  members
+}) => {
+  const key: string = hash({ searchString: directorySearchString });
+
+  return (
+    <Masonry
+      key={key}
+      className="s-directory-card-ctr"
+      columnGutter={16}
+      items={members}
+      overscanBy={5}
+      render={DirectoryCard}
+      style={{ outline: 'none' }}
+    />
+  );
+};
 
 export default DirectoryCardList;

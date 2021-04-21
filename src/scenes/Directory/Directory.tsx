@@ -18,16 +18,17 @@ interface GetMembersByCommunityIdArgs {
 }
 
 interface GetMembersByCommunityIdResult {
+  directorySearchString: string;
   members: IMember[];
 }
 
 const GET_MEMBERS_BY_COMMUNITY_ID: DocumentNode = gql`
   query GetMembersByCommunityId(
     $communityId: String!
-    $searchString: String!
+    $searchStringWord: String!
     $searchStringStarting: String!
   ) {
-    directorySearchString @client @export(as: "searchString")
+    directorySearchString @client @export(as: "searchStringWord")
     directorySearchStringStarting @client @export(as: "searchStringStarting")
 
     members(
@@ -37,8 +38,8 @@ const GET_MEMBERS_BY_COMMUNITY_ID: DocumentNode = gql`
           { status: { _eq: "Accepted" } }
           {
             _or: [
-              { bio: { _ilike: $searchString } }
-              { email: { _ilike: $searchString } }
+              { bio: { _ilike: $searchStringWord } }
+              { email: { _ilike: $searchStringWord } }
               { firstName: { _ilike: $searchStringStarting } }
               { lastName: { _ilike: $searchStringStarting } }
             ]
@@ -63,13 +64,13 @@ const DirectoryContent: React.FC = () => {
     variables: { communityId }
   });
 
-  console.log(data);
+  const members: IMember[] = data?.members ?? [];
 
   return (
     <MainContent>
-      <DirectoryHeader loading={loading} />
+      <DirectoryHeader count={data?.members?.length ?? 0} loading={loading} />
       <DirectoryActionRow />
-      {!loading && <DirectoryCardList data={data?.members ?? []} />}
+      {!loading && <DirectoryCardList {...data} />}
     </MainContent>
   );
 };
