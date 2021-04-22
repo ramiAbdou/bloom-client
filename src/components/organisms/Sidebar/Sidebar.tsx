@@ -75,7 +75,7 @@ const Sidebar: React.FC = () => {
         {member && <SidebarMainSection data={member} />}
         {member && <SidebarAdminSection data={member} />}
         {member && <SidebarQuickActionsSection data={member} />}
-        {member && <SidebarProfileSection />}
+        {member && <SidebarProfileSection data={member} />}
         {member && <SidebarProfile data={member} />}
       </div>
     </SidebarContainer>

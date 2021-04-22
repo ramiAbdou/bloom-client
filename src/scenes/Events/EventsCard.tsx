@@ -1,20 +1,16 @@
-import day from 'dayjs';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
-// import { useHistory } from 'react-router-dom';
+import { gql } from '@apollo/client';
 import Card from '@components/containers/Card/Card';
-import useFindOne from '@core/gql/hooks/useFindOne';
-import IdStore from '@core/store/Id.store';
-import { ComponentWithData } from '@util/constants';
+import { ComponentWithFragments } from '@util/constants';
 import { IEvent } from '@util/constants.entities';
-import { cx, take } from '@util/util';
-import { EventTiming, getEventTiming } from './Events.util';
 import EventsAspectBackground from './EventsAspectBackground';
-import EventsCardPeople from './EventsCardPeople';
 // import EventsJoinButton from './EventsJoinButton';
 // import EventsRsvpButton from './EventsRsvpButton';
 // import EventsShareButton from './EventsShareButton';
 // import EventsViewRecordingButton from './EventsViewRecordingButton';
+import EventsCardHeader from './EventsCardHeader';
 
 // const EventsCardButton: React.FC = () => {
 //   const eventId: string = IdStore.useStoreState((event) => event.id);
@@ -29,68 +25,42 @@ import EventsCardPeople from './EventsCardPeople';
 //   );
 // };
 
-const EventsCardContent: React.FC = () => {
-  const eventId: string = IdStore.useStoreState((event) => event.id);
+// const EventsCardContent: React.FC = () => {
+//   const eventId: string = IdStore.useStoreState((event) => event.id);
 
-  const { data: event, loading } = useFindOne(IEvent, {
-    fields: ['endTime', 'startTime', 'title'],
-    where: { id: eventId }
-  });
+//   return (
+//     <div className="s-events-card-content">
+//       <EventsCardHeader data={event} />
 
-  if (loading) return null;
+//       {/* <EventsCardButton /> */}
+//     </div>
+//   );
+// };
 
-  const isHappeningNow: boolean =
-    getEventTiming(event) === EventTiming.HAPPENING_NOW;
+const EventsCard: ComponentWithFragments<IEvent> = ({ data: event }) => {
+  const { push } = useHistory();
 
-  const isStartingSoon: boolean =
-    getEventTiming(event) === EventTiming.STARTING_SOON;
-
-  const formattedStartTime: string = take([
-    [isHappeningNow, 'Happening Now'],
-    [
-      isStartingSoon,
-      `Starting Soon @ ${day(event.startTime).format('h:mm A z')}`
-    ],
-    [true, day(event.startTime).format('ddd, MMM D @ h:mm A z')]
-  ]);
-
-  const css: string = cx('s-events-card-content', {
-    's-events-card-content--now': isHappeningNow || isStartingSoon
-  });
+  const onClick = (): void => {
+    push(event.id);
+  };
 
   return (
-    <div className={css}>
-      <div>
-        <h5>{formattedStartTime}</h5>
-        <h3>{event.title}</h3>
-        <EventsCardPeople />
+    <Card noPadding className="s-events-card" onClick={onClick}>
+      <EventsAspectBackground imageUrl={event?.imageUrl} />
+
+      <div className="s-events-card-content">
+        <EventsCardHeader data={event} />
       </div>
-
-      {/* <EventsCardButton /> */}
-    </div>
+      {/* <EventsCardContent /> */}
+    </Card>
   );
 };
 
-const EventsCard: ComponentWithData<IEvent> = ({ data: event }) => {
-  // const { push } = useHistory();
-  const onClick = () => {};
-  // const onClick = () => push(eventId);
-
-  // const { data: event, loading } = useFindOne(IEvent, {
-  //   fields: ['imageUrl'],
-  //   where: { id: eventId }
-  // });
-
-  // if (loading) return null;
-
-  return (
-    <IdStore.Provider runtimeModel={{ id: '' }}>
-      <Card noPadding className="s-events-card" onClick={onClick}>
-        <EventsAspectBackground imageUrl={event?.imageUrl} />
-        <EventsCardContent />
-      </Card>
-    </IdStore.Provider>
-  );
-};
+EventsCard.fragment = gql`
+  fragment EventsCardFragment on events {
+    ...EventsCardHeaderFragment
+  }
+  ${EventsCardHeader.fragment}
+`;
 
 export default EventsCard;

@@ -6,36 +6,9 @@ import MainContent from '@components/containers/Main/MainContent';
 import Section from '@components/containers/Section';
 import { IEvent } from '@util/constants.entities';
 import { now } from '@util/util';
-// import { EventTiming, getEventTiming } from './Events.util';
-// import EventsCard from './EventsCard/EventsCard';
+import EventsCard from './EventsCard';
 import EventsHeader from './EventsHeader';
 import EventsUpcomingList from './EventsUpcomingList';
-
-// const EventsUpcomingContent: React.FC = () => {
-//   const communityId: string = useReactiveVar(communityIdVar);
-
-//   const { data: events, loading } = useFind(IEvent, {
-//     fields: ['deletedAt', 'endTime', 'startTime'],
-//     where: { communityId }
-//   });
-
-//   if (loading) return null;
-
-//   const upcomingEvents: IEvent[] = events
-//     ?.filter((event: IEvent) => !event.deletedAt)
-//     ?.filter((event: IEvent) => getEventTiming(event) !== EventTiming.PAST)
-//     ?.sort((a: IEvent, b: IEvent) => sortObjects(a, b, 'startTime', 'ASC'));
-
-//   return null;
-//   // return (
-//   //   <List
-//   //     emptyMessage="Looks like there are no upcoming events."
-//   //     items={upcomingEvents}
-//   //     options={{ keys: ['title', 'summary', 'description'] }}
-//   //     render={EventsCard}
-//   //   />
-//   // );
-// };
 
 interface GetEventsUpcomingByCommunityIdArgs {
   currentTimestamp: string;
@@ -49,6 +22,7 @@ const GET_EVENTS_UPCOMING_BY_COMMUNITY_ID: DocumentNode = gql`
   query GetEventsUpcomingByCommunityId(
     $communityId: String!
     $currentTimestamp: String!
+    $isUpcoming: Boolean! = true
   ) {
     communityId @client @export(as: "communityId")
 
@@ -61,8 +35,10 @@ const GET_EVENTS_UPCOMING_BY_COMMUNITY_ID: DocumentNode = gql`
       order_by: { startTime: asc }
     ) {
       id
+      ...EventsCardFragment
     }
   }
+  ${EventsCard.fragment}
 `;
 
 const EventsUpcoming: React.FC = () => {

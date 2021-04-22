@@ -33,7 +33,7 @@ export type ComponentWithData<T, S = unknown> = FunctionComponent<
 >;
 
 export interface ComponentWithFragments<T, S = unknown>
-  extends FunctionComponent<S & { data?: Partial<T> }> {
+  extends FunctionComponent<S & { data: Partial<T> }> {
   fragment: DocumentNode;
 }
 
