@@ -1,15 +1,14 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { memberIdVar } from 'src/App.reactive';
+import { isSidebarOpenVar, memberIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
-import { useStoreState } from '@core/store/Store';
 import useBreakpoint from '@hooks/useBreakpoint';
 import SidebarBackground from './SidebarBackground';
 
 const SidebarContainer: React.FC = ({ children }) => {
-  const isOpen: boolean = useStoreState(({ sidebar }) => sidebar.isOpen);
+  const isOpen: boolean = useReactiveVar(isSidebarOpenVar);
   const memberId: string = useReactiveVar(memberIdVar);
   const isDesktop: boolean = useBreakpoint() >= 3;
 

@@ -1,14 +1,16 @@
 import React from 'react';
 import { IoMenuOutline } from 'react-icons/io5';
+import { isSidebarOpenVar } from 'src/App.reactive';
 
 import Button from '@components/atoms/Button/Button';
-import { useStoreActions } from '@core/store/Store';
 import { BaseProps } from '@util/constants';
 import { cx } from '@util/util';
 
 const SidebarHamburgerButton: React.FC<BaseProps> = ({ className }) => {
-  const setIsOpen = useStoreActions(({ sidebar }) => sidebar.setIsOpen);
-  const onClick = () => setIsOpen(true);
+  const onClick = (): void => {
+    isSidebarOpenVar(true);
+  };
+
   const css: string = cx('d-none--d mb-sm', {}, className);
 
   return (

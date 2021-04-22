@@ -1,12 +1,15 @@
 import React from 'react';
+import { isSidebarOpenVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Show from '@components/containers/Show';
-import { useStoreActions, useStoreState } from '@core/store/Store';
 
 const SidebarBackground: React.FC = () => {
-  const isOpen: boolean = useStoreState(({ sidebar }) => sidebar.isOpen);
-  const setIsOpen = useStoreActions(({ sidebar }) => sidebar.setIsOpen);
-  const onClick = () => setIsOpen(false);
+  const isOpen: boolean = useReactiveVar(isSidebarOpenVar);
+
+  const onClick = (): void => {
+    isSidebarOpenVar(false);
+  };
 
   return (
     <Show show={!!isOpen}>

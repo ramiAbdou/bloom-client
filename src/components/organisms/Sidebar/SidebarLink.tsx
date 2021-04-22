@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { communityIdVar } from 'src/App.reactive';
+import { communityIdVar, isSidebarOpenVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
-import { useStoreActions } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import { OnClickProps } from '@util/constants';
@@ -17,10 +16,8 @@ interface SidebarLinkProps extends SidebarLinkOptions, OnClickProps {}
 const SidebarLinkAction: React.FC<
   Pick<SidebarLinkProps, 'Icon' | 'onClick' | 'title'>
 > = ({ Icon, onClick, title }) => {
-  const setIsOpen = useStoreActions(({ sidebar }) => sidebar.setIsOpen);
-
   const onUpdatedClick = (): void => {
-    setIsOpen(false);
+    isSidebarOpenVar(false);
     if (onClick) onClick();
   };
 
@@ -45,7 +42,6 @@ const SidebarLink: React.FC<SidebarLinkProps> = (props) => {
   const { Icon, onClick, to, title } = props;
 
   const communityId: string = useReactiveVar(communityIdVar);
-  const setIsOpen = useStoreActions(({ sidebar }) => sidebar.setIsOpen);
 
   const isActive: boolean = useTopLevelRoute() === to;
 
@@ -64,7 +60,7 @@ const SidebarLink: React.FC<SidebarLinkProps> = (props) => {
   });
 
   const onLinkClick = (): void => {
-    setIsOpen(false);
+    isSidebarOpenVar(false);
   };
 
   return (
