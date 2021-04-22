@@ -1,48 +1,97 @@
 import React from 'react';
-import { communityIdVar } from 'src/App.reactive';
 
-import { useReactiveVar } from '@apollo/client';
+import { DocumentNode, gql, useQuery } from '@apollo/client';
 import MainContent from '@components/containers/Main/MainContent';
-import { QueryResult } from '@gql/GQL.types';
-import useFind from '@gql/hooks/useFind';
+import Section from '@components/containers/Section';
 import { IEvent } from '@util/constants.entities';
 import { now } from '@util/util';
+import EventsCard from './EventsCard';
 import EventsHeader from './EventsHeader';
-import EventsPastSection from './EventsPastSection';
-import EventsPastYourSection from './EventsPastYourSection';
+import EventsPastList from './EventsPastList';
+import EventsPastSearchBar from './EventsPastSearchBar';
+import EventsPastYourList from './EventsPastYourList';
+
+interface GetEventsPastByCommunityIdArgs {
+  currentTimestamp: string;
+}
+
+interface GetEventsPastByCommunityIdResult {
+  eventsPastSearchString: string;
+  otherEvents: IEvent[];
+  yourEvents: IEvent[];
+}
+
+const GET_EVENTS_PAST_BY_COMMUNITY_ID: DocumentNode = gql`
+  query GetEventsPastByCommunityId(
+    $communityId: String!
+    $currentTimestamp: String!
+    $isUpcoming: Boolean! = false
+    $memberId: String!
+    $searchString: String!
+  ) {
+    communityId @client @export(as: "communityId")
+    memberId @client @export(as: "memberId")
+    eventsPastSearchString @client @export(as: "searchString")
+
+    otherEvents: events(
+      where: {
+        communityId: { _eq: $communityId }
+        deletedAt: { _is_null: true }
+        endTime: { _lt: $currentTimestamp }
+        _or: [
+          { summary: { _ilike: $searchString } }
+          { title: { _ilike: $searchString } }
+        ]
+      }
+      order_by: { endTime: desc }
+    ) {
+      id
+      ...EventsCardFragment
+    }
+
+    yourEvents: events(
+      where: {
+        communityId: { _eq: $communityId }
+        deletedAt: { _is_null: true }
+        endTime: { _lt: $currentTimestamp }
+        eventAttendees: { memberId: { _eq: $memberId } }
+      }
+      order_by: { endTime: desc }
+    ) {
+      id
+      ...EventsCardFragment
+    }
+  }
+  ${EventsCard.fragment}
+`;
 
 const EventsPast: React.FC = () => {
-  const communityId: string = useReactiveVar(communityIdVar);
-
-  const { loading }: QueryResult = useFind(IEvent, {
-    fields: [
-      'community.id',
-      'description',
-      'endTime',
-      'eventAttendees.createdAt',
-      'eventAttendees.id',
-      'eventAttendees.member.id',
-      'eventAttendees.member.firstName',
-      'eventAttendees.member.lastName',
-      'eventAttendees.member.pictureUrl',
-      'eventAttendees.supporter.id',
-      'eventAttendees.supporter.firstName',
-      'eventAttendees.supporter.lastName',
-      'id',
-      'imageUrl',
-      'recordingUrl',
-      'startTime',
-      'summary',
-      'title'
-    ],
-    where: { communityId, endTime: { _lt: now() } }
+  const { data, loading } = useQuery<
+    GetEventsPastByCommunityIdResult,
+    GetEventsPastByCommunityIdArgs
+  >(GET_EVENTS_PAST_BY_COMMUNITY_ID, {
+    variables: { currentTimestamp: now() }
   });
+
+  const otherEvents: IEvent[] = data?.otherEvents;
+  const yourEvents: IEvent[] = data?.yourEvents;
 
   return (
     <MainContent>
-      <EventsHeader />
-      <EventsPastYourSection loading={loading} />
-      <EventsPastSection loading={loading} />
+      <EventsHeader loading={loading} />
+
+      {!!yourEvents?.length && (
+        <Section>
+          <h2 className="mb-sm">Events You've Attended</h2>
+          {yourEvents && <EventsPastYourList {...data} />}
+        </Section>
+      )}
+
+      <Section>
+        <h2 className="mb-sm">Past Events</h2>
+        <EventsPastSearchBar />
+        {otherEvents && <EventsPastList {...data} />}
+      </Section>
     </MainContent>
   );
 };

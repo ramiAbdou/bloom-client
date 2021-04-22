@@ -27,6 +27,7 @@ import {
   userIdVar
 } from './App.reactive';
 import { directoryReactiveFields } from './scenes/Directory/Directory.reactive';
+import { eventsReactiveFields } from './scenes/Events/Events.reactive';
 
 /**
  * Resolves the Apollo Client query so that once an entity is fetched, if we
@@ -63,6 +64,7 @@ const cache: InMemoryCache = new InMemoryCache({
       fields: {
         ...reactiveTypePolicies,
         ...directoryReactiveFields,
+        ...eventsReactiveFields,
         applications: resolveReadQuery(IApplication),
         communities: resolveReadQuery(ICommunity),
         communityIntegrations: resolveReadQuery(ICommunityIntegrations),

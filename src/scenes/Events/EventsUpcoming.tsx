@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { DocumentNode, gql, useQuery } from '@apollo/client';
-import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
 import MainContent from '@components/containers/Main/MainContent';
 import Section from '@components/containers/Section';
 import { IEvent } from '@util/constants.entities';
@@ -57,13 +56,7 @@ const EventsUpcoming: React.FC = () => {
       <EventsHeader loading={loading} />
 
       <Section>
-        <LoadingHeader
-          h2
-          className="mb-sm"
-          loading={loading}
-          title="Upcoming Events"
-        />
-
+        <h2 className="mb-sm">Upcoming Events</h2>
         {events && <EventsUpcomingList events={events} />}
       </Section>
     </MainContent>
