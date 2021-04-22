@@ -1,10 +1,6 @@
 import { useHistory } from 'react-router-dom';
-import { communityIdVar } from 'src/App.reactive';
 
-import { useReactiveVar } from '@apollo/client';
-import useFindOne from '@gql/hooks/useFindOne';
 import { RouteType } from '@util/constants';
-import { ICommunity } from '@util/constants.entities';
 
 /**
  * Returns the first active route of the community. Doesn't care about the
@@ -14,19 +10,10 @@ import { ICommunity } from '@util/constants.entities';
  * @example /colorstack/membership/change => membership
  * @example /colorstack/analytics/dues => analytics
  */
-const useTopLevelRoute = (): RouteType => {
-  const communityId: string = useReactiveVar(communityIdVar);
-
+const useTopLevelRoute = (urlName: string): RouteType => {
   const { pathname } = useHistory().location;
 
-  const { data: community, loading } = useFindOne(ICommunity, {
-    fields: ['urlName'],
-    where: { id: communityId }
-  });
-
-  if (loading) return null;
-
-  const route = pathname.slice(community.urlName?.length + 2);
+  const route = pathname.slice(urlName?.length + 2);
 
   return route.includes('/')
     ? (route.slice(0, route.indexOf('/')) as RouteType)

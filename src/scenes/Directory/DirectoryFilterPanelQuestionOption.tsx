@@ -9,10 +9,14 @@ import {
   directoryFilterSelectedValuesVar
 } from './Directory.reactive';
 
-const DirectoryFilterPanelQuestionOption: ComponentWithFragments<IQuestion> = ({
-  data: question,
-  i
-}) => {
+interface DirectoryFilterPanelQuestionOptionProps {
+  i: number;
+}
+
+const DirectoryFilterPanelQuestionOption: ComponentWithFragments<
+  IQuestion,
+  DirectoryFilterPanelQuestionOptionProps
+> = ({ data: question, i }) => {
   const option: string = question.options[i];
 
   const selectedValues: DirectoryFilterSelectedValue[] = useReactiveVar(

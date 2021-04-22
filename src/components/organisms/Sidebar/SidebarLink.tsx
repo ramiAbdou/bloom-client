@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { communityIdVar, isSidebarOpenVar } from 'src/App.reactive';
+import { isSidebarOpenVar } from 'src/App.reactive';
 
-import { useReactiveVar } from '@apollo/client';
-import useFindOne from '@gql/hooks/useFindOne';
+import { gql } from '@apollo/client';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
-import { OnClickProps } from '@util/constants';
-import { ICommunity } from '@util/constants.entities';
+import { ComponentWithFragments, OnClickProps } from '@util/constants';
+import { IMember } from '@util/constants.entities';
 import { cx } from '@util/util';
 import { SidebarLinkOptions } from './Sidebar.types';
 import SidebarLinkNotificationCircle from './SidebarLinkNotificationCircle';
@@ -38,18 +37,13 @@ const SidebarLinkAction: React.FC<
  * If onClick is defined, then we don't render a link, we simply render a
  * Button that opens up a modal.
  */
-const SidebarLink: React.FC<SidebarLinkProps> = (props) => {
+const SidebarLink: ComponentWithFragments<IMember, SidebarLinkProps> = ({
+  data: member,
+  ...props
+}) => {
   const { Icon, onClick, to, title } = props;
 
-  const communityId: string = useReactiveVar(communityIdVar);
-  const isActive: boolean = useTopLevelRoute() === to;
-
-  const { data: community, loading } = useFindOne(ICommunity, {
-    fields: ['urlName'],
-    where: { id: communityId }
-  });
-
-  if (loading) return null;
+  const isActive: boolean = useTopLevelRoute(member?.community.urlName) === to;
 
   // If onClick is supplied, means it is an action.
   if (onClick) return <SidebarLinkAction {...props} />;
@@ -65,7 +59,7 @@ const SidebarLink: React.FC<SidebarLinkProps> = (props) => {
   return (
     <Link
       className={css}
-      to={`/${community.urlName}/${to}`}
+      to={`/${member?.community.urlName}/${to}`}
       onClick={onLinkClick}
     >
       <Icon />
@@ -74,5 +68,13 @@ const SidebarLink: React.FC<SidebarLinkProps> = (props) => {
     </Link>
   );
 };
+
+SidebarLink.fragment = gql`
+  fragment SidebarLinkFragment on members {
+    community {
+      urlName
+    }
+  }
+`;
 
 export default SidebarLink;

@@ -33,7 +33,11 @@ const GET_MEMBERS_BY_USER_ID: DocumentNode = gql`
     }
 
     member(id: $memberId) {
+      ...SidebarAdminSectionFragment
+      ...SidebarMainSectionFragment
+      ...SidebarQuickActionsSectionFragment
       ...SidebarProfileFragment
+      ...SidebarProfileSectionFragment
     }
 
     members(where: { userId: { _eq: $userId } }, order_by: { joinedAt: asc }) {
@@ -43,15 +47,22 @@ const GET_MEMBERS_BY_USER_ID: DocumentNode = gql`
       }
     }
   }
+  ${SidebarAdminSection.fragment}
   ${SidebarCommunityButton.fragment}
   ${SidebarCommunityName.fragment}
+  ${SidebarMainSection.fragment}
   ${SidebarProfile.fragment}
+  ${SidebarProfileSection.fragment}
+  ${SidebarQuickActionsSection.fragment}
 `;
 
 const Sidebar: React.FC = () => {
   const { data, loading } = useQuery<GetMembersByUserIdResult>(
     GET_MEMBERS_BY_USER_ID
   );
+
+  const community: ICommunity = data?.community;
+  const member: IMember = data?.member;
 
   if (loading) return null;
 
@@ -60,12 +71,12 @@ const Sidebar: React.FC = () => {
       <SidebarCommunityList {...data} />
 
       <div className="f f-col o-scroll w-100">
-        {data?.community && <SidebarCommunityName data={data?.community} />}
-        <SidebarMainSection data={data?.member} />
-        <SidebarAdminSection />
-        <SidebarQuickActionsSection />
+        {community && <SidebarCommunityName data={community} />}
+        {member && <SidebarMainSection data={member} />}
+        {member && <SidebarAdminSection data={member} />}
+        {member && <SidebarQuickActionsSection data={member} />}
         <SidebarProfileSection />
-        <SidebarProfile data={data?.member} />
+        {member && <SidebarProfile data={member} />}
       </div>
     </SidebarContainer>
   );

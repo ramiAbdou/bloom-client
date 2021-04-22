@@ -28,6 +28,10 @@ export type ValueProps = { value?: any };
 
 export interface BaseProps extends ClassNameProps, ShowProps, StyleProps {}
 
+export type ComponentWithData<T, S = unknown> = FunctionComponent<
+  S & { data?: Partial<T> }
+>;
+
 export interface ComponentWithFragments<T, S = unknown>
   extends FunctionComponent<S & { data?: Partial<T> }> {
   fragment: DocumentNode;
