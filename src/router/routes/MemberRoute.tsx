@@ -48,9 +48,7 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
   redirect = true,
   ...rest
 }) => {
-  const storedCommunityId: string = useReactiveVar(communityIdVar);
-  const storedMemberId: string = useReactiveVar(memberIdVar);
-  const storedUserId: string = useReactiveVar(userIdVar);
+  const userId: string = useReactiveVar(userIdVar);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore b/c we know that computed match exists and we need to use
@@ -62,7 +60,7 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
     GetMemberByCommunityUrlNameResult,
     GetMemberByCommunityUrlNameArgs
   >(GET_MEMBER_BY_COMMUNITY_URL_NAME, {
-    skip: !urlName || !storedUserId,
+    skip: !urlName || !userId,
     variables: { urlName }
   });
 
@@ -73,18 +71,15 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
     // actually returned those ID's.
     if (!member?.id || !member.community?.id) return;
 
-    if (
-      member.id !== storedMemberId ||
-      member.community.id !== storedCommunityId
-    ) {
-      communityIdVar(member.community.id);
-      memberIdVar(member.id);
+    console.log('HEREEEE', member.community.id);
 
-      // As we set the active entities, we must also update the document
-      // colors with the community's primary color.
-      updateDocumentColors(member.community.primaryColor);
-    }
-  }, [member, storedCommunityId, storedMemberId, urlName]);
+    communityIdVar(member.community.id);
+    memberIdVar(member.id);
+
+    // As we set the active entities, we must also update the document
+    // colors with the community's primary color.
+    updateDocumentColors(member.community.primaryColor);
+  }, [member]);
 
   // Just wait if the query is still loading.
   if (loading) return null;

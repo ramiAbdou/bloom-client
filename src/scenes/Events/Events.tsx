@@ -3,20 +3,20 @@ import { Redirect, Switch } from 'react-router-dom';
 
 import Scene from '@components/containers/Scene';
 import MemberRoute from '../../router/routes/MemberRoute';
+import EventsPast from './EventsPast';
+import EventsUpcoming from './EventsUpcoming';
 import IndividualEvent from './IndividualEvent/IndividualEvent';
-import PastEvents from './PastEvents';
-import UpcomingEvents from './UpcomingEvents';
 
 const Events: React.FC = () => (
   <Scene>
     <Switch>
       <MemberRoute
         exact
-        component={UpcomingEvents}
+        component={EventsUpcoming}
         path="/:urlName/events/upcoming"
       />
 
-      <MemberRoute exact component={PastEvents} path="/:urlName/events/past" />
+      <MemberRoute exact component={EventsPast} path="/:urlName/events/past" />
 
       <MemberRoute
         exact

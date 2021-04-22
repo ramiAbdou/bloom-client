@@ -8,10 +8,10 @@ import useFind from '@gql/hooks/useFind';
 import { IEvent } from '@util/constants.entities';
 import { now } from '@util/util';
 import EventsHeader from './EventsHeader';
-import PastEventsSection from './PastEventsSection';
-import PastEventsYourSection from './PastEventsYourSection';
+import EventsPastSection from './EventsPastSection';
+import EventsPastYourSection from './EventsPastYourSection';
 
-const PastEvents: React.FC = () => {
+const EventsPast: React.FC = () => {
   const communityId: string = useReactiveVar(communityIdVar);
 
   const { loading }: QueryResult = useFind(IEvent, {
@@ -41,10 +41,10 @@ const PastEvents: React.FC = () => {
   return (
     <MainContent>
       <EventsHeader />
-      <PastEventsYourSection loading={loading} />
-      <PastEventsSection loading={loading} />
+      <EventsPastYourSection loading={loading} />
+      <EventsPastSection loading={loading} />
     </MainContent>
   );
 };
 
-export default PastEvents;
+export default EventsPast;

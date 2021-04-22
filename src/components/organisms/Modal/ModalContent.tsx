@@ -23,8 +23,6 @@ import ModalContainer from './ModalContainer';
 const ModalCustomContent: React.FC = () => {
   const modalId: ModalType = useReactiveVar(modalVar)?.id;
 
-  console.log(modalId);
-
   switch (modalId) {
     case ModalType.ADD_ADMINS:
       return <AddMemberModal admin />;

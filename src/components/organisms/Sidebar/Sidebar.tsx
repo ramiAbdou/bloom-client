@@ -68,14 +68,14 @@ const Sidebar: React.FC = () => {
 
   return (
     <SidebarContainer>
-      <SidebarCommunityList {...data} />
+      {data && <SidebarCommunityList {...data} />}
 
       <div className="f f-col o-scroll w-100">
         {community && <SidebarCommunityName data={community} />}
         {member && <SidebarMainSection data={member} />}
         {member && <SidebarAdminSection data={member} />}
         {member && <SidebarQuickActionsSection data={member} />}
-        <SidebarProfileSection />
+        {member && <SidebarProfileSection />}
         {member && <SidebarProfile data={member} />}
       </div>
     </SidebarContainer>

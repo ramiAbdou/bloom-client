@@ -1,33 +1,33 @@
 import day from 'dayjs';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 
+// import { useHistory } from 'react-router-dom';
 import Card from '@components/containers/Card/Card';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import IdStore from '@core/store/Id.store';
-import { IdProps } from '@util/constants';
+import { ComponentWithData } from '@util/constants';
 import { IEvent } from '@util/constants.entities';
 import { cx, take } from '@util/util';
-import { EventTiming, getEventTiming } from '../Events.util';
-import EventsAspectBackground from '../EventsAspectBackground';
-import EventsJoinButton from '../EventsJoinButton';
-import EventsRsvpButton from '../EventsRsvpButton';
-import EventsShareButton from '../EventsShareButton';
-import EventsViewRecordingButton from '../EventsViewRecordingButton';
+import { EventTiming, getEventTiming } from './Events.util';
+import EventsAspectBackground from './EventsAspectBackground';
 import EventsCardPeople from './EventsCardPeople';
+// import EventsJoinButton from './EventsJoinButton';
+// import EventsRsvpButton from './EventsRsvpButton';
+// import EventsShareButton from './EventsShareButton';
+// import EventsViewRecordingButton from './EventsViewRecordingButton';
 
-const EventsCardButton: React.FC = () => {
-  const eventId: string = IdStore.useStoreState((event) => event.id);
+// const EventsCardButton: React.FC = () => {
+//   const eventId: string = IdStore.useStoreState((event) => event.id);
 
-  return (
-    <>
-      <EventsRsvpButton eventId={eventId} />
-      <EventsJoinButton eventId={eventId} />
-      <EventsShareButton eventId={eventId} />
-      <EventsViewRecordingButton eventId={eventId} />
-    </>
-  );
-};
+//   return (
+//     <>
+//       <EventsRsvpButton eventId={eventId} />
+//       <EventsJoinButton eventId={eventId} />
+//       <EventsShareButton eventId={eventId} />
+//       <EventsViewRecordingButton eventId={eventId} />
+//     </>
+//   );
+// };
 
 const EventsCardContent: React.FC = () => {
   const eventId: string = IdStore.useStoreState((event) => event.id);
@@ -66,26 +66,27 @@ const EventsCardContent: React.FC = () => {
         <EventsCardPeople />
       </div>
 
-      <EventsCardButton />
+      {/* <EventsCardButton /> */}
     </div>
   );
 };
 
-const EventsCard: React.FC<IdProps> = ({ id: eventId }) => {
-  const { push } = useHistory();
-  const onClick = () => push(eventId);
+const EventsCard: ComponentWithData<IEvent> = ({ data: event }) => {
+  // const { push } = useHistory();
+  const onClick = () => {};
+  // const onClick = () => push(eventId);
 
-  const { data: event, loading } = useFindOne(IEvent, {
-    fields: ['imageUrl'],
-    where: { id: eventId }
-  });
+  // const { data: event, loading } = useFindOne(IEvent, {
+  //   fields: ['imageUrl'],
+  //   where: { id: eventId }
+  // });
 
-  if (loading) return null;
+  // if (loading) return null;
 
   return (
-    <IdStore.Provider runtimeModel={{ id: eventId }}>
+    <IdStore.Provider runtimeModel={{ id: '' }}>
       <Card noPadding className="s-events-card" onClick={onClick}>
-        <EventsAspectBackground imageUrl={event.imageUrl} />
+        <EventsAspectBackground imageUrl={event?.imageUrl} />
         <EventsCardContent />
       </Card>
     </IdStore.Provider>

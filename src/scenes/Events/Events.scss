@@ -1,0 +1,96 @@
+$PREF: 's-events';
+
+// ## EVENTS GRID
+
+.#{$PREF}-grid {
+  column-gap: $sm;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 360px);
+  row-gap: $sm;
+
+  @include GTE(1119) {
+    grid-template-columns: repeat(auto-fill, 360px);
+  }
+  @include LTE(1118) {
+    grid-template-columns: auto;
+  }
+  @include T {
+    grid-template-columns: repeat(auto-fill, 360px);
+  }
+  @include LTE(788) {
+    grid-template-columns: auto;
+  }
+}
+
+// ## EVENTS CARD
+
+.#{$PREF}-card {
+  @extend .flex-col;
+
+  align-items: flex-start;
+  background-color: white;
+  padding: 0;
+
+  > .t-aspect,
+  > .t-aspect > div {
+    border-radius: $xs $xs 0 0;
+  }
+}
+
+// ## EVENTS CARD BACKGROUND
+
+.#{$PREF}-card-bg {
+  > div {
+    background-color: $primary-bg;
+  }
+
+  > *:first-child {
+    border-radius: $xs $xs 0 0;
+  }
+}
+
+// ## EVENTS CARD CONTENT
+
+.#{$PREF}-card-content {
+  @extend .flex-col;
+
+  box-sizing: border-box;
+  flex: 1;
+  padding: $sm;
+  width: 100%;
+
+  > div {
+    &:not(:only-child) {
+      margin-bottom: $sm;
+    }
+
+    > h5 {
+      margin-bottom: $xxs;
+    }
+
+    > h3 {
+      @include OVERFLOW_ELLIPSES(2);
+    }
+
+    > h3:not(:only-child) {
+      margin-bottom: $xxs;
+    }
+  }
+
+  &--now > div h5 {
+    color: $primary;
+  }
+
+  > button:last-child {
+    margin-top: auto;
+  }
+}
+
+// ## EVENTS CARD PEOPLE
+
+.#{$PREF}-card-people {
+  > .t-row > *:not(:first-child) {
+    border: 2px white solid;
+    margin-left: -$sm;
+  }
+}

@@ -8,49 +8,47 @@ import Section from '@components/containers/Section';
 import useFind from '@core/gql/hooks/useFind';
 import { LoadingProps } from '@util/constants';
 import { IEvent, IEventAttendee } from '@util/constants.entities';
-import { sortObjects } from '@util/util';
-import EventsCard from './EventsCard/EventsCard';
 
-const PastEventsYourList: React.FC = () => {
-  const communityId: string = useReactiveVar(communityIdVar);
-  const memberId: string = useReactiveVar(memberIdVar);
+// const PastEventsYourList: React.FC = () => {
+//   const communityId: string = useReactiveVar(communityIdVar);
+//   const memberId: string = useReactiveVar(memberIdVar);
 
-  const { data: events, loading } = useFind(IEvent, {
-    fields: [
-      'deletedAt',
-      'description',
-      'endTime',
-      'eventAttendees.id',
-      'eventAttendees.member.id',
-      'startTime',
-      'summary',
-      'title'
-    ],
-    where: { communityId, endTime: { _lt: day.utc().format() } }
-  });
+//   const { data: events, loading } = useFind(IEvent, {
+//     fields: [
+//       'deletedAt',
+//       'description',
+//       'endTime',
+//       'eventAttendees.id',
+//       'eventAttendees.member.id',
+//       'startTime',
+//       'summary',
+//       'title'
+//     ],
+//     where: { communityId, endTime: { _lt: day.utc().format() } }
+//   });
 
-  if (loading) return null;
+//   if (loading) return null;
 
-  const sortedEvents: IEvent[] = events
-    ?.filter((event: IEvent) =>
-      event.eventAttendees.some(
-        (eventAttendee: IEventAttendee) => eventAttendee.member?.id === memberId
-      )
-    )
-    ?.sort((a: IEvent, b: IEvent) => sortObjects(a, b, 'startTime'));
+//   const sortedEvents: IEvent[] = events
+//     ?.filter((event: IEvent) =>
+//       event.eventAttendees.some(
+//         (eventAttendee: IEventAttendee) => eventAttendee.member?.id === memberId
+//       )
+//     )
+//     ?.sort((a: IEvent, b: IEvent) => sortObjects(a, b, 'startTime'));
 
-  return null;
-  // return (
-  //   <List
-  //     className="s-events-card-ctr"
-  //     items={sortedEvents}
-  //     options={{ keys: ['title', 'summary', 'description'] }}
-  //     render={EventsCard}
-  //   />
-  // );
-};
+//   return null;
+//   // return (
+//   //   <List
+//   //     className="s-events-card-ctr"
+//   //     items={sortedEvents}
+//   //     options={{ keys: ['title', 'summary', 'description'] }}
+//   //     render={EventsCard}
+//   //   />
+//   // );
+// };
 
-const PastEventsYourSection: React.FC<LoadingProps> = ({ loading }) => {
+const EventsPastYourSection: React.FC<LoadingProps> = ({ loading }) => {
   const communityId: string = useReactiveVar(communityIdVar);
   const memberId: string = useReactiveVar(memberIdVar);
 
@@ -85,9 +83,9 @@ const PastEventsYourSection: React.FC<LoadingProps> = ({ loading }) => {
         title="Your Events Attended"
       />
 
-      <PastEventsYourList />
+      {/* <PastEventsYourList /> */}
     </Section>
   );
 };
 
-export default PastEventsYourSection;
+export default EventsPastYourSection;
