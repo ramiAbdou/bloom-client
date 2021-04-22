@@ -17,11 +17,8 @@ import sidebar from '@components/organisms/Sidebar/Sidebar.store';
 import { SidebarModel } from '@components/organisms/Sidebar/Sidebar.types';
 import toast from '@components/organisms/Toast/Toast.store';
 import { ToastModel } from '@components/organisms/Toast/Toast.types';
-import db from '../db/db.store';
-import { DbModel } from '../db/db.types';
 
 export interface StoreModel {
-  db: DbModel;
   loader: LoaderModel;
   modal: ModalModel;
   panel: PanelModel;
@@ -30,7 +27,7 @@ export interface StoreModel {
 }
 
 export const store: Store<StoreModel> = createStore<StoreModel>(
-  { db, loader, modal, panel, sidebar, toast },
+  { loader, modal, panel, sidebar, toast },
   { disableImmer: true }
 );
 

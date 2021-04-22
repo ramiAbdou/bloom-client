@@ -1,8 +1,7 @@
-import { ActionCreator, State } from 'easy-peasy';
+import { ActionCreator } from 'easy-peasy';
 
 import { ToastOptions } from '@components/organisms/Toast/Toast.types';
 import { IPaymentMethod } from '@core/db/db.entities';
-import { DbModel } from '@core/db/db.types';
 import GQL from '@gql/GQL';
 import {
   ClassNameProps,
@@ -64,7 +63,6 @@ export interface FormProps extends ClassNameProps, ShowProps {
 export interface OnFormSubmitArgs {
   closeModal?: ActionCreator;
   closePanel?: ActionCreator;
-  db?: State<DbModel>;
   goForward?: ActionCreator;
   gql: GQL;
   items: Record<string, FormItemData>;

@@ -63,7 +63,6 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
         await onSubmit({
           closeModal: modal?.closeModal,
           closePanel: panel?.closePanel,
-          db: globalStore.getState()?.db,
           goForward,
           gql,
           items: validatedItems,

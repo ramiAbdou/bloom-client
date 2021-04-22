@@ -42,7 +42,6 @@ const formatStartTime = ({ startDate, startTime }: FormatStartTimeArgs) => {
 const useCreateEvent = (): OnFormSubmitFunction => {
   const onSubmit = async ({
     closeModal,
-    db,
     gql,
     items,
     setError,

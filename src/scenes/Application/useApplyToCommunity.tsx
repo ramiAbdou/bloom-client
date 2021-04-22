@@ -28,7 +28,6 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
   });
 
   const onSubmit = async ({
-    db,
     gql,
     goForward,
     setError,
@@ -42,7 +41,7 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
         'memberTypes.name',
         'urlName'
       ],
-      where: { id: db.communityId }
+      where: { id: '' }
     });
 
     const emailId: string = questions.find(

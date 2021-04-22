@@ -4,7 +4,6 @@ import { communityIdVar, memberIdVar, userIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import { IMember } from '@core/db/db.entities';
-import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { UrlNameProps } from '@util/constants';
 import { updateDocumentColors } from '@util/util';
@@ -20,7 +19,7 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
   redirect = true,
   ...rest
 }) => {
-  const storedCommunityId: string = useStoreState(({ db }) => db.communityId);
+  const storedCommunityId: string = useReactiveVar(communityIdVar);
   const storedMemberId: string = useReactiveVar(memberIdVar);
   const storedUserId: string = useReactiveVar(userIdVar);
 

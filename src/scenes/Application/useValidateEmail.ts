@@ -1,13 +1,12 @@
-import { ICommunity, IMember, IQuestion } from '@core/db/db.entities';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
+import { ICommunity, IMember, IQuestion } from '@core/db/db.entities';
 import { QuestionCategory } from '@util/constants';
 
 const useValidateEmail = (): OnFormSubmitFunction => {
   const onSubmit = async ({
-    db,
     gql,
     items,
     goForward,
@@ -15,7 +14,7 @@ const useValidateEmail = (): OnFormSubmitFunction => {
   }: OnFormSubmitArgs) => {
     const { name, questions } = await gql.findOne(ICommunity, {
       fields: ['name', 'questions.category', 'questions.id'],
-      where: { id: db.communityId }
+      where: { id: '' }
     });
 
     const emailId: string = questions.find(
@@ -26,7 +25,7 @@ const useValidateEmail = (): OnFormSubmitFunction => {
 
     const existingMember: IMember = await gql.findOne(IMember, {
       fields: ['email'],
-      where: { community: { id: db.communityId }, email }
+      where: { community: { id: '' }, email }
     });
 
     if (existingMember) {
