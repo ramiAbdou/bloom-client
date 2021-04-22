@@ -1,10 +1,10 @@
-import { IMemberValue } from '@util/constants.entities';
-import useBloomMutation from '@gql/hooks/useBloomMutation';
 import {
   FormItemData,
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
+import useBloomMutation from '@gql/hooks/useBloomMutation';
+import { IMemberValue } from '@util/constants.entities';
 import { MutationEvent } from '@util/constants.events';
 import { MemberValueInput, UpdateMemberValueArgs } from './Profile.types';
 

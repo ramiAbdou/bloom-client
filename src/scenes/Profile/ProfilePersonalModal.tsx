@@ -9,9 +9,9 @@ import FormImage from '@components/organisms/Form/FormImage';
 import FormLongText from '@components/organisms/Form/FormLongText';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
-import { IMember } from '@util/constants.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';
+import { IMember } from '@util/constants.entities';
 import useUpdateMember from './useUpdateMember';
 
 const ProfilePersonalModal: React.FC = () => {

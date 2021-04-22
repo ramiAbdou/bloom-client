@@ -7,10 +7,10 @@ import Form from '@components/organisms/Form/Form';
 import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
-import { IEvent } from '@util/constants.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { QuestionCategory, ShowProps } from '@util/constants';
+import { IEvent } from '@util/constants.entities';
 import useCreateEventAttendeeWithSupporter from './useCreateEventAttendeeWithSupporter';
 import useCreateEventGuestWithSupporter from './useCreateEventGuestWithSupporter';
 

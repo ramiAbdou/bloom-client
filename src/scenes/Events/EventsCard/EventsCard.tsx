@@ -3,10 +3,10 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Card from '@components/containers/Card/Card';
-import { IEvent } from '@util/constants.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import IdStore from '@core/store/Id.store';
 import { IdProps } from '@util/constants';
+import { IEvent } from '@util/constants.entities';
 import { cx, take } from '@util/util';
 import { EventTiming, getEventTiming } from '../Events.util';
 import EventsAspectBackground from '../EventsAspectBackground';

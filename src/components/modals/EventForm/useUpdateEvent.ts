@@ -2,8 +2,8 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
-import { EventPrivacy, IEvent } from '@util/constants.entities';
 import { useStoreState } from '@core/store/Store';
+import { EventPrivacy, IEvent } from '@util/constants.entities';
 import { uploadImage } from '@util/imageUtil';
 
 const useUpdateEvent = (): OnFormSubmitFunction => {

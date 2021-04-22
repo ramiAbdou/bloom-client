@@ -8,8 +8,12 @@ import FormItem from '@components/organisms/Form/FormItem';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import StoryStore from '@components/organisms/Story/Story.store';
 import StoryPage from '@components/organisms/Story/StoryPage';
-import { IApplication, IQuestion, IRankedQuestion } from '@util/constants.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
+import {
+  IApplication,
+  IQuestion,
+  IRankedQuestion
+} from '@util/constants.entities';
 import { sortObjects } from '@util/util';
 import useApplyToCommunity from './useApplyToCommunity';
 import useValidateEmail from './useValidateEmail';

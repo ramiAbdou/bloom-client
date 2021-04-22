@@ -6,10 +6,10 @@ import ModalLocal from '@components/organisms/Modal/ModalLocal';
 import Table from '@components/organisms/Table/Table';
 import { TableColumn, TableRow } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
-import { IMember, MemberRole } from '@util/constants.entities';
 import useFind from '@core/gql/hooks/useFind';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { QuestionType } from '@util/constants';
+import { IMember, MemberRole } from '@util/constants.entities';
 import AdminDatabaseActions from './AdminDatabaseActions';
 
 const AdminDatabase: React.FC = () => {

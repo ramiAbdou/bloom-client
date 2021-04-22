@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 
 import Story from '@components/organisms/Story/Story';
-import { IApplication } from '@util/constants.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import { UrlNameProps } from '@util/constants';
+import { IApplication } from '@util/constants.entities';
 import { communityIdVar } from '../../App.reactive';
 import ApplicationChooseTypePage from './ApplicationChooseType';
 import ApplicationConfirmationPage from './ApplicationConfirmation';

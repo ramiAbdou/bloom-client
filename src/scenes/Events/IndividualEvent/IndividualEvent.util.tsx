@@ -5,15 +5,15 @@ import { eventIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import { TableColumn, TableRow } from '@components/organisms/Table/Table.types';
+import useFindOne from '@core/gql/hooks/useFindOne';
+import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
+import { QuestionType } from '@util/constants';
 import {
   IEvent,
   IEventAttendee,
   IEventGuest,
   IEventWatch
 } from '@util/constants.entities';
-import useFindOne from '@core/gql/hooks/useFindOne';
-import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 import { IndividualEventTableRowProps } from './IndividualEvent.types';
 

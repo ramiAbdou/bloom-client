@@ -7,8 +7,8 @@ import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
-import { IMemberSocials } from '@util/constants.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
+import { IMemberSocials } from '@util/constants.entities';
 import useUpdateMemberSocials from './useUpdateMemberSocials';
 
 const ProfileSocialModal: React.FC = () => {

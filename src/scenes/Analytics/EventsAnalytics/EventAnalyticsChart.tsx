@@ -1,9 +1,9 @@
 import React from 'react';
 
 import Section from '@components/containers/Section';
-import useCustomQuery from '@gql/hooks/useCustomQuery';
 import Chart from '@components/organisms/Chart/Chart';
 import { ChartType } from '@components/organisms/Chart/Chart.types';
+import useCustomQuery from '@gql/hooks/useCustomQuery';
 import { TimeSeriesData } from '@util/constants';
 
 const EventAnalyticsChart: React.FC = () => {

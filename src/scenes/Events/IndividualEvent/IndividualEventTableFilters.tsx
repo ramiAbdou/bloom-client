@@ -5,9 +5,9 @@ import { useReactiveVar } from '@apollo/client';
 import Row from '@components/containers/Row/Row';
 import { TableFilterFunction } from '@components/organisms/Table/TableFilterPanel/TableFilterPanel.types';
 import TableQuickFilter from '@components/organisms/Table/TableQuickFilter';
-import { IEvent } from '@util/constants.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
+import { IEvent } from '@util/constants.entities';
 import { IndividualEventTableRowProps } from './IndividualEvent.types';
 
 const IndividualEventViewedFilter: React.FC = () => {

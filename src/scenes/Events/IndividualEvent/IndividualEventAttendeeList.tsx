@@ -7,11 +7,11 @@ import Button from '@components/atoms/Button/Button';
 import Card from '@components/containers/Card/Card';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
 import { ModalData } from '@components/organisms/Modal/Modal.types';
-import { IEvent, IEventAttendee } from '@util/constants.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreActions } from '@core/store/Store';
 import useIsMember from '@hooks/useIsMember';
 import { IdProps, ModalType } from '@util/constants';
+import { IEvent, IEventAttendee } from '@util/constants.entities';
 import { cx, sortObjects } from '@util/util';
 import { EventTiming, getEventTiming } from '../Events.util';
 

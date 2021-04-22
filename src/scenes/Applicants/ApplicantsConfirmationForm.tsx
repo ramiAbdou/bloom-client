@@ -7,8 +7,8 @@ import {
 } from '@components/organisms/Form/Form.types';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
-import { IMember, MemberStatus } from '@util/constants.entities';
 import { useStoreState } from '@core/store/Store';
+import { IMember, MemberStatus } from '@util/constants.entities';
 
 interface ApplicantsConfirmationModalMetadata {
   applicantIds: string[];

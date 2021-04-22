@@ -8,11 +8,11 @@ import Card from '@components/containers/Card/Card';
 import Row from '@components/containers/Row/Row';
 import MailTo from '@components/molecules/MailTo';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
-import { IMember } from '@util/constants.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreActions } from '@core/store/Store';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { ModalType } from '@util/constants';
+import { IMember } from '@util/constants.entities';
 import ProfileCardHeader, { ProfileEditButton } from './ProfileCardHeader';
 
 const ProfilePersonalHeader: React.FC = () => {

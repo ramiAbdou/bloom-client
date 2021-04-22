@@ -1,6 +1,8 @@
 import React from 'react';
 
-import ErrorMessage, { ErrorMessageProps } from '@components/atoms/ErrorMessage';
+import ErrorMessage, {
+  ErrorMessageProps
+} from '@components/atoms/ErrorMessage';
 import FormStore from './Form.store';
 
 /**

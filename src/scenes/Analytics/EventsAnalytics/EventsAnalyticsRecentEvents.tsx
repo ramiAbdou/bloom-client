@@ -14,10 +14,10 @@ import {
 } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
 import TableSearchBar from '@components/organisms/Table/TableSeachBar';
-import { ICommunity, IEvent } from '@util/constants.entities';
 import useFind from '@core/gql/hooks/useFind';
 import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionType } from '@util/constants';
+import { ICommunity, IEvent } from '@util/constants.entities';
 import { sortObjects } from '@util/util';
 
 const EventsAnalyticsRecentEventsTable: React.FC = () => {

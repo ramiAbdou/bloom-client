@@ -3,11 +3,11 @@ import { memberIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
-import { IEvent, IEventWatch, IMember } from '@util/constants.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import GQL from '@gql/GQL';
 import useGQL from '@gql/hooks/useGQL';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
+import { IEvent, IEventWatch, IMember } from '@util/constants.entities';
 
 interface EventsViewRecordingButtonProps
   extends Partial<Pick<ButtonProps, 'large'>> {

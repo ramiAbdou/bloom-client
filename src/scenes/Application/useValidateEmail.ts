@@ -2,8 +2,8 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
-import { ICommunity, IMember, IQuestion } from '@util/constants.entities';
 import { QuestionCategory } from '@util/constants';
+import { ICommunity, IMember, IQuestion } from '@util/constants.entities';
 
 const useValidateEmail = (): OnFormSubmitFunction => {
   const onSubmit = async ({

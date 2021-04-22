@@ -1,11 +1,11 @@
 import React from 'react';
 
 import Row from '@components/containers/Row/Row';
-import useCustomQuery from '@gql/hooks/useCustomQuery';
 import Form from '@components/organisms/Form/Form';
 import FormMultipleChoice from '@components/organisms/Form/FormMultipleChoice';
 import SubmitButton from '@components/organisms/Form/FormSubmitButton';
 import ModalCloseButton from '@components/organisms/Modal/ModalCloseButton';
+import useCustomQuery from '@gql/hooks/useCustomQuery';
 import mailchimp from './images/mailchimp.png';
 import useMailchimpSubmit from './useMailchimpSubmit';
 

@@ -11,11 +11,11 @@ import {
   TableRow
 } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
-import { IQuestion } from '@util/constants.entities';
 import { useStoreActions } from '@core/store/Store';
 import GQL from '@gql/GQL';
 import useGQL from '@gql/hooks/useGQL';
 import { ModalType } from '@util/constants';
+import { IQuestion } from '@util/constants.entities';
 import {
   useMemberDatabaseColumns,
   useMemberDatabaseRows

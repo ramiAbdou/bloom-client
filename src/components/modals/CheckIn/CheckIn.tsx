@@ -3,9 +3,9 @@ import { eventIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import Story from '@components/organisms/Story/Story';
-import { EventPrivacy, IEvent } from '@util/constants.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import useIsMember from '@hooks/useIsMember';
+import { EventPrivacy, IEvent } from '@util/constants.entities';
 import CheckInChoosePage from './CheckInChoosePage';
 import CheckInConfirmation from './CheckInConfirmation';
 import CheckInMainPage from './CheckInMainPage';

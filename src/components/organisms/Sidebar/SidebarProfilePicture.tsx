@@ -2,8 +2,8 @@ import React from 'react';
 
 import { gql } from '@apollo/client';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
-import { IMember } from '@util/constants.entities';
 import { ComponentWithFragments } from '@util/constants';
+import { IMember } from '@util/constants.entities';
 
 const SidebarProfilePicture: ComponentWithFragments<IMember> = ({
   data: member

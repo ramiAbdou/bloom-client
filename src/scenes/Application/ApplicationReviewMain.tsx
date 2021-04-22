@@ -7,8 +7,12 @@ import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/Question
 import FormSection from '@components/organisms/Form/FormSection';
 import FormSectionHeader from '@components/organisms/Form/FormSectionHeader';
 import StoryStore from '@components/organisms/Story/Story.store';
-import { IApplication, IQuestion, IRankedQuestion } from '@util/constants.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
+import {
+  IApplication,
+  IQuestion,
+  IRankedQuestion
+} from '@util/constants.entities';
 import { sortObjects } from '@util/util';
 
 const ApplicationReviewMain: React.FC = () => {

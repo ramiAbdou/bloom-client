@@ -4,9 +4,9 @@ import { eventIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import HeaderTag from '@components/atoms/Tag/HeaderTag';
-import { EventPrivacy, IEvent } from '@util/constants.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import useIsMember from '@hooks/useIsMember';
+import { EventPrivacy, IEvent } from '@util/constants.entities';
 import IndividualEventActions from './IndividualEventActions';
 
 const IndividualEventMainHeaderContainer: React.FC = () => {

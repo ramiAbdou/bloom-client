@@ -1,10 +1,10 @@
 import React from 'react';
 
 import Show from '@components/containers/Show';
-import { IMember } from '@util/constants.entities';
 import IdStore from '@core/store/Id.store';
 import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
+import { IMember } from '@util/constants.entities';
 import ProfileData from './ProfileData';
 import ProfileHistory from './ProfileHistory';
 import ProfilePersonal from './ProfilePersonal';

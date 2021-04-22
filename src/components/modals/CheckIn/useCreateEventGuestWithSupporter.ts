@@ -5,9 +5,9 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
-import { IEventGuest } from '@util/constants.entities';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { CreateEventGuestArgs } from '@scenes/Events/Events.types';
+import { IEventGuest } from '@util/constants.entities';
 import { MutationEvent } from '@util/constants.events';
 
 const useCreateEventGuestWithSupporter = (): OnFormSubmitFunction => {

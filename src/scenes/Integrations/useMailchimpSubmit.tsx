@@ -2,8 +2,8 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
-import { ICommunityIntegrations } from '@util/constants.entities';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
+import { ICommunityIntegrations } from '@util/constants.entities';
 import { MutationEvent } from '@util/constants.events';
 
 const useMailchimpSubmit = (): OnFormSubmitFunction => {

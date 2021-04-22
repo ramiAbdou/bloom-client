@@ -6,13 +6,13 @@ import { parseValue } from '@components/organisms/Form/Form.util';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { ApplyForMembershipArgs } from '@scenes/Application/Application.types';
 import { QuestionCategory } from '@util/constants';
-import { MutationEvent } from '@util/constants.events';
 import {
   ICommunity,
   IMemberType,
   IPaymentMethod,
   IQuestion
 } from '@util/constants.entities';
+import { MutationEvent } from '@util/constants.events';
 
 const useApplyToCommunity = (): OnFormSubmitFunction => {
   const [applyToCommunity] = useBloomMutation<any, ApplyForMembershipArgs>({

@@ -3,13 +3,13 @@ import { memberIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
-import { IEvent, IEventAttendee } from '@util/constants.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreActions } from '@core/store/Store';
 import GQL from '@gql/GQL';
 import useGQL from '@gql/hooks/useGQL';
 import useIsMember from '@hooks/useIsMember';
 import { ModalType } from '@util/constants';
+import { IEvent, IEventAttendee } from '@util/constants.entities';
 import { EventTiming, getEventTiming } from './Events.util';
 
 interface EventsJoinButtonProps extends Partial<Pick<ButtonProps, 'large'>> {

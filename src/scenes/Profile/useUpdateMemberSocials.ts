@@ -2,9 +2,9 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
-import { IMemberSocials } from '@util/constants.entities';
 import GQL from '@gql/GQL';
 import useGQL from '@gql/hooks/useGQL';
+import { IMemberSocials } from '@util/constants.entities';
 
 const useUpdateMemberSocials = (): OnFormSubmitFunction => {
   const gql: GQL = useGQL();

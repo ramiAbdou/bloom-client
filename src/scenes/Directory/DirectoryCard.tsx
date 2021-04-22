@@ -2,9 +2,9 @@ import gql from 'graphql-tag';
 import React from 'react';
 
 import Card from '@components/containers/Card/Card';
-import { IMember } from '@util/constants.entities';
 import { useStoreActions } from '@core/store/Store';
 import { ComponentWithFragments, ModalType } from '@util/constants';
+import { IMember } from '@util/constants.entities';
 import DirectoryCardFullName from './DirectoryCardFullName';
 import DirectoryCardPicture from './DirectoryCardPicture';
 import DirectoryCardPosition from './DirectoryCardPosition';

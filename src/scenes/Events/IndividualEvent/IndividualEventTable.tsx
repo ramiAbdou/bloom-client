@@ -11,10 +11,10 @@ import {
   TableRow
 } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
-import { IEvent, IMember } from '@util/constants.entities';
 import { useStoreActions } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { ModalType } from '@util/constants';
+import { IEvent, IMember } from '@util/constants.entities';
 import {
   useIndividualEventTableColumns,
   useIndividualEventTableRows

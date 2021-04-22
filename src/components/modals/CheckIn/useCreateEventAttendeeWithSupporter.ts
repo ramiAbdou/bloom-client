@@ -3,9 +3,9 @@ import {
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
 import StoryStore from '@components/organisms/Story/Story.store';
-import { IEvent, IEventGuest } from '@util/constants.entities';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { CreateEventGuestArgs } from '@scenes/Events/Events.types';
+import { IEvent, IEventGuest } from '@util/constants.entities';
 import { MutationEvent } from '@util/constants.events';
 import { openHref } from '@util/util';
 
