@@ -8,7 +8,7 @@ import { ComponentWithFragments } from '@util/constants';
 import {
   directoryFilterOpenQuestionIdVar,
   DirectoryFilterSelectedValue,
-  DirectoryFilterSelectedValuesVar
+  directoryFilterSelectedValuesVar
 } from './Directory.reactive';
 
 const DirectoryFilterPanelQuestionSelectedOptionList: ComponentWithFragments<IQuestion> = ({
@@ -17,9 +17,8 @@ const DirectoryFilterPanelQuestionSelectedOptionList: ComponentWithFragments<IQu
   const isOpen: boolean =
     useReactiveVar(directoryFilterOpenQuestionIdVar) === question.id;
 
-  const values: DirectoryFilterSelectedValue[] = DirectoryFilterSelectedValuesVar().filter(
-    (value: DirectoryFilterSelectedValue) =>
-      value.questionId === question.id
+  const values: DirectoryFilterSelectedValue[] = directoryFilterSelectedValuesVar().filter(
+    (value: DirectoryFilterSelectedValue) => value.questionId === question.id
   );
 
   if (isOpen || !values?.length) {

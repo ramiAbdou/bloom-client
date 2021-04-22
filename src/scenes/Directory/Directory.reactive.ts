@@ -21,7 +21,7 @@ export interface DirectoryFilterSelectedValue {
   value: string;
 }
 
-export const DirectoryFilterSelectedValuesVar: ReactiveVar<
+export const directoryFilterSelectedValuesVar: ReactiveVar<
   DirectoryFilterSelectedValue[]
 > = makeVar<DirectoryFilterSelectedValue[]>([]);
 
@@ -39,7 +39,7 @@ interface DirectoryReactiveFields {
 export const directoryReactiveFields: DirectoryReactiveFields = {
   directoryMemberValuesExp: {
     read: (): Record<string, unknown> => {
-      const values = DirectoryFilterSelectedValuesVar();
+      const values = directoryFilterSelectedValuesVar();
       if (!values.length) return {};
 
       return {

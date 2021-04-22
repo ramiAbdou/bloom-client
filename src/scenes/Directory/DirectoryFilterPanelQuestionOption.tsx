@@ -6,7 +6,7 @@ import { IMemberValue, IQuestion } from '@core/db/db.entities';
 import { ComponentWithFragments } from '@util/constants';
 import {
   DirectoryFilterSelectedValue,
-  DirectoryFilterSelectedValuesVar
+  directoryFilterSelectedValuesVar
 } from './Directory.reactive';
 
 const DirectoryFilterPanelQuestionOption: ComponentWithFragments<IQuestion> = ({
@@ -16,7 +16,7 @@ const DirectoryFilterPanelQuestionOption: ComponentWithFragments<IQuestion> = ({
   const option: string = question.options[i];
 
   const selectedValues: DirectoryFilterSelectedValue[] = useReactiveVar(
-    DirectoryFilterSelectedValuesVar
+    directoryFilterSelectedValuesVar
   );
 
   // const questionId: string = IdStore.useStoreState((state) => state.id);
@@ -29,7 +29,7 @@ const DirectoryFilterPanelQuestionOption: ComponentWithFragments<IQuestion> = ({
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
-      DirectoryFilterSelectedValuesVar([
+      directoryFilterSelectedValuesVar([
         ...selectedValues,
         { questionId: question.id, value: option }
       ]);
@@ -38,10 +38,9 @@ const DirectoryFilterPanelQuestionOption: ComponentWithFragments<IQuestion> = ({
       // setFilter({ questionId, value: [...values, option] });
     }
 
-    DirectoryFilterSelectedValuesVar(
+    directoryFilterSelectedValuesVar(
       selectedValues.filter(
-        (value: DirectoryFilterSelectedValue) =>
-          value.value !== option
+        (value: DirectoryFilterSelectedValue) => value.value !== option
       )
     );
 
