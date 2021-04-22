@@ -17,17 +17,21 @@ const DirectoryFilterPanelQuestionSelectedOptionList: ComponentWithFragments<IQu
   const isOpen: boolean =
     useReactiveVar(directoryFilterOpenQuestionIdVar) === question.id;
 
-  const values: DirectoryFilterSelectedValue[] = directoryFilterSelectedValuesVar().filter(
+  const values: DirectoryFilterSelectedValue[] = useReactiveVar(
+    directoryFilterSelectedValuesVar
+  );
+
+  const filteredValues: DirectoryFilterSelectedValue[] = values.filter(
     (value: DirectoryFilterSelectedValue) => value.questionId === question.id
   );
 
-  if (isOpen || !values?.length) {
+  if (isOpen || !filteredValues?.length) {
     return null;
   }
 
   return (
     <Row wrap className="mt-xs" gap="xxs">
-      {values.map((value: DirectoryFilterSelectedValue) => (
+      {filteredValues.map((value: DirectoryFilterSelectedValue) => (
         <Attribute key={value.value}>{value.value}</Attribute>
       ))}
     </Row>
