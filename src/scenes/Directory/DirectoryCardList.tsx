@@ -6,18 +6,21 @@ import { IMember } from '@core/db/db.entities';
 import DirectoryCard from './DirectoryCard';
 
 interface DirectoryCardListProps {
-  directoryIsAdminsOnly: boolean;
+  directoryMemberValuesExp: Record<string, unknown>;
+  directoryRoleExp: Record<string, unknown>;
   directorySearchString: string;
   members: IMember[];
 }
 
 const DirectoryCardList: React.FC<DirectoryCardListProps> = ({
-  directoryIsAdminsOnly,
+  directoryMemberValuesExp,
+  directoryRoleExp,
   directorySearchString,
   members
 }) => {
   const key: string = hash({
-    adminsOnly: directoryIsAdminsOnly,
+    memberValuesExp: directoryMemberValuesExp,
+    roleExp: directoryRoleExp,
     searchString: directorySearchString
   });
 

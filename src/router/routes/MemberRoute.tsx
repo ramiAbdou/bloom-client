@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
-import { communityIdVar, memberIdVar } from 'src/reactive';
+import { communityIdVar, memberIdVar } from 'src/App.reactive';
 
 import { IMember } from '@core/db/db.entities';
 import { useStoreActions, useStoreState } from '@core/store/Store';

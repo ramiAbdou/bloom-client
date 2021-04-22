@@ -6,7 +6,7 @@ import Row from '@components/containers/Row/Row';
 import { IQuestion } from '@core/db/db.entities';
 import { ComponentWithFragments } from '@util/constants';
 import { cx } from '@util/util';
-import { directoryFilterOpenQuestionIdVar } from '../../reactive';
+import { directoryFilterOpenQuestionIdVar } from './Directory.reactive';
 
 const DirectoryFilterPanelQuestionHeader: ComponentWithFragments<IQuestion> = ({
   data: question

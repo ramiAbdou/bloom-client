@@ -1,8 +1,8 @@
 import React from 'react';
-import { directoryIsAdminsOnlyVar } from 'src/reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import QuickFilterButton from '@components/atoms/Button/QuickFilterButton';
+import { directoryIsAdminsOnlyVar } from './Directory.reactive';
 
 const DirectoryAdminFilter: React.FC = () => {
   const directoryIsAdminsOnly: boolean = useReactiveVar(

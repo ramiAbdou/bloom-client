@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { userIdVar } from 'src/reactive';
+import { userIdVar } from 'src/App.reactive';
 
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import useCustomQuery from '@gql/hooks/useCustomQuery';

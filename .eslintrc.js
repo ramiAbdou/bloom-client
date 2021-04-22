@@ -38,7 +38,7 @@ module.exports = {
     'import/prefer-default-export': 0,
     'jsx-a11y/click-events-have-key-events': 0,
     'jsx-a11y/no-static-element-interactions': 0,
-    'max-len': ['error'],
+    'max-len': 0,
 
     // Refers to the entire file.
     'max-lines': ['error', { max: 300, skipComments: true }],

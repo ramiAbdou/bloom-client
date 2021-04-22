@@ -1,9 +1,4 @@
 import pluralize from 'pluralize';
-import {
-  communityIdVar,
-  directoryIsAdminsOnlyVar,
-  directorySearchStringVar
-} from 'src/reactive';
 
 import { InMemoryCache } from '@apollo/client';
 import {
@@ -25,6 +20,8 @@ import {
   ISupporter,
   IUser
 } from '@core/db/db.entities';
+import { communityIdVar } from './App.reactive';
+import { directoryReactiveFields } from './scenes/Directory/Directory.reactive';
 
 /**
  * Resolves the Apollo Client query so that once an entity is fetched, if we
@@ -48,23 +45,19 @@ function resolveReadQuery<T>(entity: new () => T) {
   };
 }
 
+const reactiveTypePolicies = {
+  communityId: { read: (): string => communityIdVar() }
+};
+
 const cache: InMemoryCache = new InMemoryCache({
   typePolicies: {
     Query: {
       fields: {
+        ...reactiveTypePolicies,
+        ...directoryReactiveFields,
         applications: resolveReadQuery(IApplication),
         communities: resolveReadQuery(ICommunity),
-        communityId: { read: (): string => communityIdVar() },
         communityIntegrations: resolveReadQuery(ICommunityIntegrations),
-        directoryIsAdminsOnly: {
-          read: (): boolean => directoryIsAdminsOnlyVar()
-        },
-        directorySearchString: {
-          read: (): string => `%${directorySearchStringVar()}%`
-        },
-        directorySearchStringStarting: {
-          read: (): string => `${directorySearchStringVar()}%`
-        },
         eventAttendees: resolveReadQuery(IEventAttendee),
         eventGuests: resolveReadQuery(IEventGuest),
         eventWatches: resolveReadQuery(IEventWatch),

@@ -1,10 +1,10 @@
 import React from 'react';
-import { directoryFilterOpenQuestionIdVar } from 'src/reactive';
 
 import { gql, useReactiveVar } from '@apollo/client';
 import { IQuestion } from '@core/db/db.entities';
 import { ComponentWithFragments } from '@util/constants';
 import { cx } from '@util/util';
+import { directoryFilterOpenQuestionIdVar } from './Directory.reactive';
 import DirectoryFilterPanelQuestionHeader from './DirectoryFilterPanelQuestionHeader';
 import DirectoryFilterPanelQuestionOptionList from './DirectoryFilterPanelQuestionOptionList';
 import DirectoryFilterPanelQuestionSelectedOptionList from './DirectoryFilterPanelQuestionSelectedOptionList';

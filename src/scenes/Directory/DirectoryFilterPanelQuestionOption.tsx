@@ -4,7 +4,10 @@ import { gql, useReactiveVar } from '@apollo/client';
 import Checkbox from '@components/atoms/Checkbox/Checkbox';
 import { IMemberValue, IQuestion } from '@core/db/db.entities';
 import { ComponentWithFragments } from '@util/constants';
-import { directoryFilterOpenQuestionSelectedValuesVar } from '../../reactive';
+import {
+  DirectoryFilterSelectedValue,
+  DirectoryFilterSelectedValuesVar
+} from './Directory.reactive';
 
 const DirectoryFilterPanelQuestionOption: ComponentWithFragments<IQuestion> = ({
   data: question,
@@ -12,8 +15,8 @@ const DirectoryFilterPanelQuestionOption: ComponentWithFragments<IQuestion> = ({
 }) => {
   const option: string = question.options[i];
 
-  const selectedValues: string[] = useReactiveVar(
-    directoryFilterOpenQuestionSelectedValuesVar
+  const selectedValues: DirectoryFilterSelectedValue[] = useReactiveVar(
+    DirectoryFilterSelectedValuesVar
   );
 
   // const questionId: string = IdStore.useStoreState((state) => state.id);
@@ -25,20 +28,21 @@ const DirectoryFilterPanelQuestionOption: ComponentWithFragments<IQuestion> = ({
   )?.length;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const previousSelectedValues: string[] = directoryFilterOpenQuestionSelectedValuesVar();
-
     if (e.target.checked) {
-      directoryFilterOpenQuestionSelectedValuesVar([
-        ...previousSelectedValues,
-        option
+      DirectoryFilterSelectedValuesVar([
+        ...selectedValues,
+        { questionId: question.id, value: option }
       ]);
 
       return;
       // setFilter({ questionId, value: [...values, option] });
     }
 
-    directoryFilterOpenQuestionSelectedValuesVar(
-      previousSelectedValues.filter((value: string) => value !== option)
+    DirectoryFilterSelectedValuesVar(
+      selectedValues.filter(
+        (value: DirectoryFilterSelectedValue) =>
+          value.value !== option
+      )
     );
 
     // setFilter({
@@ -50,7 +54,7 @@ const DirectoryFilterPanelQuestionOption: ComponentWithFragments<IQuestion> = ({
   return (
     <Checkbox
       key={option}
-      checked={selectedValues.includes(option)}
+      checked={selectedValues.map((value) => value.value).includes(option)}
       format={(value: string) => `${value} (${responsesCount})`}
       title={option}
       onChange={onChange}

@@ -2,7 +2,7 @@ import { ActionCreator } from 'easy-peasy';
 import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { communityIdVar, eventIdVar } from 'src/reactive';
+import { communityIdVar, eventIdVar } from 'src/App.reactive';
 
 import Show from '@components/containers/Show';
 import { EventPrivacy, IEvent } from '@core/db/db.entities';

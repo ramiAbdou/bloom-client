@@ -13,7 +13,8 @@ import DirectoryCardList from './DirectoryCardList';
 import DirectoryHeader from './DirectoryHeader';
 
 interface GetMembersByCommunityIdResult {
-  directoryIsAdminsOnly: boolean;
+  directoryMemberValuesExp: Record<string, unknown>;
+  directoryRoleExp: Record<string, unknown>;
   directorySearchString: string;
   members: IMember[];
 }
@@ -21,12 +22,14 @@ interface GetMembersByCommunityIdResult {
 const GET_MEMBERS_BY_COMMUNITY_ID: DocumentNode = gql`
   query GetMembersByCommunityId(
     $communityId: String!
-    $isAdminsOnly: Boolean! = false
+    $memberValuesExp: member_values_bool_exp
+    $roleExp: String_comparison_exp!
     $searchStringWord: String!
     $searchStringStarting: String!
   ) {
     communityId @client @export(as: "communityId")
-    directoryIsAdminsOnly @client @export(as: "isAdminsOnly")
+    directoryMemberValuesExp @client @export(as: "memberValuesExp")
+    directoryRoleExp @client @export(as: "roleExp")
     directorySearchString @client @export(as: "searchStringWord")
     directorySearchStringStarting @client @export(as: "searchStringStarting")
 
@@ -34,7 +37,8 @@ const GET_MEMBERS_BY_COMMUNITY_ID: DocumentNode = gql`
       where: {
         _and: [
           { communityId: { _eq: $communityId } }
-          { role: { _in: ["Admin", "Owner"] } }
+          { memberValues: $memberValuesExp }
+          { role: $roleExp }
           { status: { _eq: "Accepted" } }
           {
             _or: [
@@ -47,27 +51,7 @@ const GET_MEMBERS_BY_COMMUNITY_ID: DocumentNode = gql`
         ]
       }
       order_by: { joinedAt: desc }
-    ) @include(if: $isAdminsOnly) {
-      ...DirectoryCardFragment
-    }
-
-    members(
-      where: {
-        _and: [
-          { communityId: { _eq: $communityId } }
-          { status: { _eq: "Accepted" } }
-          {
-            _or: [
-              { bio: { _ilike: $searchStringWord } }
-              { email: { _ilike: $searchStringWord } }
-              { firstName: { _ilike: $searchStringStarting } }
-              { lastName: { _ilike: $searchStringStarting } }
-            ]
-          }
-        ]
-      }
-      order_by: { joinedAt: desc }
-    ) @skip(if: $isAdminsOnly) {
+    ) {
       ...DirectoryCardFragment
     }
   }
@@ -76,9 +60,11 @@ const GET_MEMBERS_BY_COMMUNITY_ID: DocumentNode = gql`
 `;
 
 const DirectoryContent: React.FC = () => {
-  const { data, loading } = useQuery<GetMembersByCommunityIdResult>(
+  const { data, loading, error } = useQuery<GetMembersByCommunityIdResult>(
     GET_MEMBERS_BY_COMMUNITY_ID
   );
+
+  console.log(error, data?.members?.length);
 
   return (
     <MainContent>

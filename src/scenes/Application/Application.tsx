@@ -6,7 +6,7 @@ import { IApplication } from '@core/db/db.entities';
 import { useStoreActions } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { UrlNameProps } from '@util/constants';
-import { communityIdVar } from '../../reactive';
+import { communityIdVar } from '../../App.reactive';
 import ApplicationChooseTypePage from './ApplicationChooseType';
 import ApplicationConfirmationPage from './ApplicationConfirmation';
 import ApplicationMainPage from './ApplicationMain';

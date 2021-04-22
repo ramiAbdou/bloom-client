@@ -16,7 +16,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ApolloClient, ApolloProvider, HttpLink } from '@apollo/client';
 import { store } from '@core/store/Store';
 import { APP } from '@util/constants';
-import cache from './cache';
+import cache from './App.cache';
 
 // Extend the time-based library for entire app.
 day.extend(advancedFormat);

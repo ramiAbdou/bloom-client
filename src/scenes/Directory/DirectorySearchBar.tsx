@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { directorySearchStringVar } from 'src/reactive';
 
 import SearchBar from '@components/molecules/SearchBar/SearchBar';
+import { directorySearchStringVar } from './Directory.reactive';
 
 const DirectorySearchBar: React.FC = () => {
   const [value, setValue] = useState<string>('');
