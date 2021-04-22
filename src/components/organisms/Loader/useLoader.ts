@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-
-import { useStoreActions } from '@core/store/Store';
+import { isLoaderShowingVar } from 'src/App.reactive';
 
 /**
  * Updates the global loading state to match the loading state of the query
@@ -9,12 +8,9 @@ import { useStoreActions } from '@core/store/Store';
  * @param loading True if the application is loading.
  */
 const useLoader = (loading: boolean): void => {
-  const closeLoader = useStoreActions(({ loader }) => loader.closeLoader);
-  const showLoader = useStoreActions(({ loader }) => loader.showLoader);
-
   useEffect(() => {
-    if (loading) showLoader();
-    else if (!loading) closeLoader();
+    if (loading) isLoaderShowingVar(true);
+    else if (!loading) isLoaderShowingVar(false);
   }, [loading]);
 };
 

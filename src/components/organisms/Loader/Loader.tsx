@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { isLoaderShowingVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Show from '@components/containers/Show';
-import { useStoreState } from '@core/store/Store';
 import Loader1 from './images/loader-1.svg';
 import Loader2 from './images/loader-2.svg';
 import Loader3 from './images/loader-3.svg';
@@ -52,7 +53,7 @@ const LoaderContent: React.FC = () => (
  */
 const Loader: React.FC = () => {
   const [loading, setLoading] = useState(true);
-  const isShowing = useStoreState(({ loader }) => loader.isShowing);
+  const isShowing: boolean = useReactiveVar(isLoaderShowingVar);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;

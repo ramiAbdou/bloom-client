@@ -8,7 +8,6 @@
 
 import { createStore, createTypedHooks, Store } from 'easy-peasy';
 
-import loader, { LoaderModel } from '@components/organisms/Loader/Loader.store';
 import modal from '@components/organisms/Modal/Modal.store';
 import { ModalModel } from '@components/organisms/Modal/Modal.types';
 import panel from '@components/organisms/Panel/Panel.store';
@@ -17,14 +16,13 @@ import toast from '@components/organisms/Toast/Toast.store';
 import { ToastModel } from '@components/organisms/Toast/Toast.types';
 
 export interface StoreModel {
-  loader: LoaderModel;
   modal: ModalModel;
   panel: PanelModel;
   toast: ToastModel;
 }
 
 export const store: Store<StoreModel> = createStore<StoreModel>(
-  { loader, modal, panel, toast },
+  { modal, panel, toast },
   { disableImmer: true }
 );
 
