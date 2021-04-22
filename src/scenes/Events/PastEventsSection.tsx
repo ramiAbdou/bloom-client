@@ -3,9 +3,6 @@ import React from 'react';
 
 import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
 import Section from '@components/containers/Section';
-import List from '@components/organisms/List/List';
-import ListStore from '@components/organisms/List/List.store';
-import ListSearchBar from '@components/organisms/List/ListSearchBar';
 import { IEvent, IEventAttendee } from '@core/db/db.entities';
 import useFind from '@core/gql/hooks/useFind';
 import { useStoreState } from '@core/store/Store';
@@ -43,7 +40,7 @@ const PastEventsList: React.FC = () => {
 
   return (
     <>
-      <ListSearchBar
+      {/* <ListSearchBar
         className="mb-sm--nlc"
         placeholder="Search events..."
         show={!!sortedEvents?.length}
@@ -54,7 +51,7 @@ const PastEventsList: React.FC = () => {
         items={sortedEvents}
         options={{ keys: ['title', 'summary', 'description'] }}
         render={EventsCard}
-      />
+      /> */}
     </>
   );
 };
@@ -63,9 +60,9 @@ const PastEventsSection: React.FC<LoadingProps> = ({ loading }) => (
   <Section>
     <LoadingHeader h2 className="mb-sm" loading={loading} title="Past Events" />
 
-    <ListStore.Provider>
+    {/* <ListStore.Provider>
       <PastEventsList />
-    </ListStore.Provider>
+    </ListStore.Provider> */}
   </Section>
 );
 

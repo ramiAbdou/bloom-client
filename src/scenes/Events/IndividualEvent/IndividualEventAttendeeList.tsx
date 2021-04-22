@@ -4,8 +4,6 @@ import React from 'react';
 import Button from '@components/atoms/Button/Button';
 import Card from '@components/containers/Card/Card';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
-import List from '@components/organisms/List/List';
-import ListStore from '@components/organisms/List/List.store';
 import { ModalData } from '@components/organisms/Modal/Modal.types';
 import { IEvent, IEventAttendee } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
@@ -90,11 +88,11 @@ const IndividualEventAttendeeListContent: React.FC = () => {
     <>
       {!sortedEventAttendees?.length && <p>No guests attended.</p>}
 
-      <List
+      {/* <List
         className="s-events-card-ctr"
         items={sortedEventAttendees}
         render={IndividualEventAttendee}
-      />
+      /> */}
     </>
   );
 };
@@ -119,9 +117,7 @@ const IndividualEventGuestList: React.FC = () => {
       show={hasEventFinished}
       title="Attendees"
     >
-      <ListStore.Provider>
-        <IndividualEventAttendeeListContent />
-      </ListStore.Provider>
+      <IndividualEventAttendeeListContent />
     </Card>
   );
 };

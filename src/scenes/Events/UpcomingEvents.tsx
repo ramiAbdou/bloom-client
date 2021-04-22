@@ -4,8 +4,6 @@ import React from 'react';
 import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
 import MainContent from '@components/containers/Main/MainContent';
 import Section from '@components/containers/Section';
-import List from '@components/organisms/List/List';
-import ListStore from '@components/organisms/List/List.store';
 import { IEvent } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
 import { QueryResult } from '@gql/GQL.types';
@@ -30,14 +28,15 @@ const UpcomingEventsContent: React.FC = () => {
     ?.filter((event: IEvent) => getEventTiming(event) !== EventTiming.PAST)
     ?.sort((a: IEvent, b: IEvent) => sortObjects(a, b, 'startTime', 'ASC'));
 
-  return (
-    <List
-      emptyMessage="Looks like there are no upcoming events."
-      items={upcomingEvents}
-      options={{ keys: ['title', 'summary', 'description'] }}
-      render={EventsCard}
-    />
-  );
+  return null;
+  // return (
+  //   <List
+  //     emptyMessage="Looks like there are no upcoming events."
+  //     items={upcomingEvents}
+  //     options={{ keys: ['title', 'summary', 'description'] }}
+  //     render={EventsCard}
+  //   />
+  // );
 };
 
 const UpcomingEvents: React.FC = () => {
@@ -77,9 +76,7 @@ const UpcomingEvents: React.FC = () => {
           title="Upcoming Events"
         />
 
-        <ListStore.Provider>
-          {!loading && <UpcomingEventsContent />}
-        </ListStore.Provider>
+        {!loading && <UpcomingEventsContent />}
       </Section>
     </MainContent>
   );

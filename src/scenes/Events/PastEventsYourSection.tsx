@@ -3,8 +3,6 @@ import React from 'react';
 
 import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
 import Section from '@components/containers/Section';
-import List from '@components/organisms/List/List';
-import ListStore from '@components/organisms/List/List.store';
 import { IEvent, IEventAttendee } from '@core/db/db.entities';
 import useFind from '@core/gql/hooks/useFind';
 import { useStoreState } from '@core/store/Store';
@@ -40,14 +38,15 @@ const PastEventsYourList: React.FC = () => {
     )
     ?.sort((a: IEvent, b: IEvent) => sortObjects(a, b, 'startTime'));
 
-  return (
-    <List
-      className="s-events-card-ctr"
-      items={sortedEvents}
-      options={{ keys: ['title', 'summary', 'description'] }}
-      render={EventsCard}
-    />
-  );
+  return null;
+  // return (
+  //   <List
+  //     className="s-events-card-ctr"
+  //     items={sortedEvents}
+  //     options={{ keys: ['title', 'summary', 'description'] }}
+  //     render={EventsCard}
+  //   />
+  // );
 };
 
 const PastEventsYourSection: React.FC<LoadingProps> = ({ loading }) => {
@@ -85,9 +84,7 @@ const PastEventsYourSection: React.FC<LoadingProps> = ({ loading }) => {
         title="Your Events Attended"
       />
 
-      <ListStore.Provider>
-        <PastEventsYourList />
-      </ListStore.Provider>
+      <PastEventsYourList />
     </Section>
   );
 };

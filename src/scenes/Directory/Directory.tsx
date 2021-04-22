@@ -3,8 +3,6 @@ import React from 'react';
 import { DocumentNode, gql, useQuery } from '@apollo/client';
 import MainContent from '@components/containers/Main/MainContent';
 import Scene from '@components/containers/Scene';
-import ListStore from '@components/organisms/List/List.store';
-import ListFilterStore from '@components/organisms/List/ListFilter/ListFilter.store';
 import PanelLocal from '@components/organisms/Panel/PanelLocal';
 import { IMember } from '@core/db/db.entities';
 import DirectoryActionRow from './DirectoryActionRow';
@@ -22,8 +20,8 @@ interface GetMembersByCommunityIdResult {
 const GET_MEMBERS_BY_COMMUNITY_ID: DocumentNode = gql`
   query GetMembersByCommunityId(
     $communityId: String!
-    $memberValuesExp: member_values_bool_exp
-    $roleExp: String_comparison_exp!
+    $memberValuesExp: members_bool_exp! = {}
+    $roleExp: String_comparison_exp! = {}
     $searchStringWord: String!
     $searchStringStarting: String!
   ) {
@@ -36,8 +34,8 @@ const GET_MEMBERS_BY_COMMUNITY_ID: DocumentNode = gql`
     members(
       where: {
         _and: [
+          $memberValuesExp
           { communityId: { _eq: $communityId } }
-          { memberValues: $memberValuesExp }
           { role: $roleExp }
           { status: { _eq: "Accepted" } }
           {
@@ -77,12 +75,8 @@ const DirectoryContent: React.FC = () => {
 
 const Directory: React.FC = () => (
   <Scene>
-    <ListStore.Provider>
-      <ListFilterStore.Provider>
-        <DirectoryContent />
-        <PanelLocal />
-      </ListFilterStore.Provider>
-    </ListStore.Provider>
+    <DirectoryContent />
+    <PanelLocal />
   </Scene>
 );
 

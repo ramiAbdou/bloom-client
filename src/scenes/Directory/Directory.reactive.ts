@@ -21,10 +21,21 @@ export interface DirectoryFilterSelectedValue {
   value: string;
 }
 
+/**
+ * Returns an array of DirectoryFilterSelectedValue(s) based on the values
+ * that are selected in the DirectoryFilterPanel.
+ *
+ * @example
+ * // Returns [{ questionId: "1", value: "Computer Science" }].
+ * directoryFilterSelectedValuesVar()
+ */
 export const directoryFilterSelectedValuesVar: ReactiveVar<
   DirectoryFilterSelectedValue[]
 > = makeVar<DirectoryFilterSelectedValue[]>([]);
 
+/**
+ * Returns the search string used in the Directory.
+ */
 export const directorySearchStringVar: ReactiveVar<string> = makeVar<string>(
   ''
 );
@@ -39,16 +50,28 @@ interface DirectoryReactiveFields {
 export const directoryReactiveFields: DirectoryReactiveFields = {
   directoryMemberValuesExp: {
     read: (): Record<string, unknown> => {
-      const values = directoryFilterSelectedValuesVar();
+      const values: DirectoryFilterSelectedValue[] = directoryFilterSelectedValuesVar();
+
       if (!values.length) return {};
 
+      const valueRecord: Record<string, string[]> = values.reduce(
+        (acc, { questionId, value }) => {
+          return { ...acc, [questionId]: [...(acc[questionId] ?? []), value] };
+        },
+        {}
+      );
+
       return {
-        _and: values.map((value) => {
-          return {
-            questionId: { _eq: value.questionId },
-            value: { _eq: value.value }
-          };
-        })
+        _and: Object.entries(valueRecord).map(
+          ([questionId, value]: [string, string[]]) => {
+            return {
+              memberValues: {
+                questionId: { _eq: questionId },
+                value: { _in: value }
+              }
+            };
+          }
+        )
       };
     }
   },
