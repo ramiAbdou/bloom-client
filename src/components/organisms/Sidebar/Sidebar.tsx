@@ -1,78 +1,55 @@
-import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 
-import Separator from '@components/atoms/Separator';
-import { ICommunity } from '@core/db/db.entities';
-import { useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
-import useBreakpoint from '@hooks/useBreakpoint';
+import { DocumentNode, gql, useQuery } from '@apollo/client';
+import { IMember } from '@core/db/db.entities';
 import SidebarAdminSection from './SidebarAdminSection';
-import SidebarBackground from './SidebarBackground';
+import SidebarCommunityButton from './SidebarCommunityButton';
 import SidebarCommunityList from './SidebarCommunityList';
+import SidebarCommunityName from './SidebarCommunityName';
+import SidebarContainer from './SidebarContainer';
 import SidebarMainSection from './SidebarMainSection';
 import SidebarProfile from './SidebarProfile';
 import SidebarProfileSection from './SidebarProfileSection';
 import SidebarQuickActionsSection from './SidebarQuickActionsSection';
 
-const SidebarCommunityName: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+interface GetMembersByUserIdResult {
+  members: IMember[];
+}
 
-  const { data: community, loading } = useFindOne(ICommunity, {
-    fields: ['name'],
-    where: { id: communityId }
-  });
+const GET_MEMBERS_BY_USER_ID: DocumentNode = gql`
+  query GetMembersByUserId($userId: String!) {
+    userId @client @export(as: "userId")
+
+    members(where: { userId: { _eq: $userId } }, order_by: { joinedAt: asc }) {
+      id
+      community {
+        ...SidebarCommunityButtonFragment
+      }
+    }
+  }
+  ${SidebarCommunityButton.fragments.data}
+`;
+
+const Sidebar: React.FC = () => {
+  const { data, loading } = useQuery<GetMembersByUserIdResult>(
+    GET_MEMBERS_BY_USER_ID
+  );
 
   if (loading) return null;
 
   return (
-    <>
-      <h3 className="c-primary mx-sm my-md">{community.name}</h3>
-      <Separator noMargin />
-    </>
-  );
-};
+    <SidebarContainer>
+      <SidebarCommunityList {...data} />
 
-const SidebarContent: React.FC = () => (
-  <div className="f f-col o-scroll w-100">
-    <SidebarCommunityName />
-    <SidebarMainSection />
-    <SidebarAdminSection />
-    <SidebarQuickActionsSection />
-    <SidebarProfileSection />
-    <SidebarProfile />
-  </div>
-);
-
-const Sidebar: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
-  const isOpen: boolean = useStoreState(({ sidebar }) => sidebar.isOpen);
-  const isDesktop: boolean = useBreakpoint() >= 3;
-
-  const { pathname } = useLocation();
-
-  const showSidebar: boolean =
-    (isDesktop || !!isOpen) && !!memberId && !pathname.includes('/apply');
-
-  return (
-    <>
-      <AnimatePresence>
-        {showSidebar && (
-          <motion.div
-            animate={{ x: !isDesktop && 0 }}
-            className="o-nav"
-            exit={{ x: !isDesktop && -1000 }}
-            initial={{ x: !isDesktop && -1000 }}
-            transition={{ damping: 300 }}
-          >
-            <SidebarCommunityList />
-            <SidebarContent />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <SidebarBackground />
-    </>
+      <div className="f f-col o-scroll w-100">
+        <SidebarCommunityName />
+        <SidebarMainSection />
+        <SidebarAdminSection />
+        <SidebarQuickActionsSection />
+        <SidebarProfileSection />
+        <SidebarProfile />
+      </div>
+    </SidebarContainer>
   );
 };
 

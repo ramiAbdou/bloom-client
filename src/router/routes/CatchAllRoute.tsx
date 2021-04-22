@@ -15,6 +15,7 @@ const GET_MEMBERS_BY_USER_ID: DocumentNode = gql`
       id
       community {
         id
+        name
         logoUrl
         urlName
       }

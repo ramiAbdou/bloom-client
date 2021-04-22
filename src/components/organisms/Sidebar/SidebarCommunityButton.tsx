@@ -1,9 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { communityIdVar } from 'src/App.reactive';
 
-import { gql } from '@apollo/client';
+import { gql, useReactiveVar } from '@apollo/client';
 import { ICommunity } from '@core/db/db.entities';
-import { useStoreState } from '@core/store/Store';
 import { ComponentWithFragments } from '@util/constants';
 import { cx } from '@util/util';
 import SidebarCommunityButtonLogo from './SidebarCommunityButtonLogo';
@@ -11,7 +11,7 @@ import SidebarCommunityButtonLogo from './SidebarCommunityButtonLogo';
 const SidebarCommunityButton: ComponentWithFragments<ICommunity> = ({
   data: community
 }) => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { push } = useHistory();
 

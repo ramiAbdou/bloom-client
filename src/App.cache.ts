@@ -20,7 +20,12 @@ import {
   ISupporter,
   IUser
 } from '@core/db/db.entities';
-import { communityIdVar } from './App.reactive';
+import {
+  communityIdVar,
+  eventIdVar,
+  memberIdVar,
+  userIdVar
+} from './App.reactive';
 import { directoryReactiveFields } from './scenes/Directory/Directory.reactive';
 
 /**
@@ -46,7 +51,10 @@ function resolveReadQuery<T>(entity: new () => T) {
 }
 
 const reactiveTypePolicies = {
-  communityId: { read: (): string => communityIdVar() }
+  communityId: { read: (): string => communityIdVar() },
+  eventId: { read: (): string => eventIdVar() },
+  memberId: { read: (): string => memberIdVar() },
+  userId: { read: (): string => userIdVar() }
 };
 
 const cache: InMemoryCache = new InMemoryCache({
