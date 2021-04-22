@@ -4,9 +4,9 @@ import { DocumentNode, gql, useQuery } from '@apollo/client';
 import IdStore from '@core/store/Id.store';
 import { useStoreState } from '@core/store/Store';
 import { IMember } from '@util/constants.entities';
-// import ProfileData from './ProfileData';
+import ProfileModalMembershipData from './ProfileModalMembershipData';
 // import ProfileHistory from './ProfileHistory';
-import ProfilePersonal from './ProfilePersonal';
+import ProfileModalPersonal from './ProfileModalPersonal';
 
 interface GetMemberProfileArgs {
   memberId: string;
@@ -20,10 +20,12 @@ const GET_MEMBER_PROFILE: DocumentNode = gql`
   query GetMemberProfile($memberId: String!) {
     member(id: $memberId) {
       id
-      ...ProfilePersonalFragment
+      ...ProfileModalPersonalFragment
+      ...ProfileModalMembershipDataFragment
     }
   }
-  ${ProfilePersonal.fragments.data}
+  ${ProfileModalPersonal.fragments.data}
+  ${ProfileModalMembershipData.fragments.data}
 `;
 
 const Profile: React.FC = () => {
@@ -42,9 +44,9 @@ const Profile: React.FC = () => {
 
   return (
     <IdStore.Provider runtimeModel={{ id: memberId }}>
-      <ProfilePersonal data={member} />
-      {/* <ProfileData />
-      <ProfileHistory /> */}
+      <ProfileModalPersonal data={member} />
+      <ProfileModalMembershipData data={member} />
+      {/* <ProfileHistory /> */}
     </IdStore.Provider>
   );
 };

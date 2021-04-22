@@ -10,7 +10,9 @@ import ProfileModalPicture from './ProfileModalPicture';
 import ProfileModalSocialList from './ProfileModalSocialList';
 import ProfileModalTagList from './ProfileModalTagList';
 
-const ProfilePersonal: ComponentWithFragments<IMember> = ({ data: member }) => (
+const ProfileModalPersonal: ComponentWithFragments<IMember> = ({
+  data: member
+}) => (
   <div className="mb-sm--nlc">
     <ProfileModalPicture data={member} />
     <ProfileModalFullName data={member} />
@@ -21,9 +23,9 @@ const ProfilePersonal: ComponentWithFragments<IMember> = ({ data: member }) => (
   </div>
 );
 
-ProfilePersonal.fragments = {
+ProfileModalPersonal.fragments = {
   data: gql`
-    fragment ProfilePersonalFragment on members {
+    fragment ProfileModalPersonalFragment on members {
       ...ProfileModalBioFragment
       ...ProfileModalEmailFragment
       ...ProfileModalFullNameFragment
@@ -40,4 +42,4 @@ ProfilePersonal.fragments = {
   `
 };
 
-export default ProfilePersonal;
+export default ProfileModalPersonal;
