@@ -1,47 +1,36 @@
 import React from 'react';
 import { memberIdVar } from 'src/App.reactive';
 
-import { useReactiveVar } from '@apollo/client';
+import { gql, useReactiveVar } from '@apollo/client';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
-import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreActions } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import useIsMember from '@hooks/useIsMember';
-import { ModalType } from '@util/constants';
+import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IEvent, IEventGuest } from '@util/constants.entities';
 import { EventTiming, getEventTiming } from './Events.util';
 
-interface EventRsvpButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
-  eventId: string;
-}
+type EventRsvpButtonProps = Partial<Pick<ButtonProps, 'large'>>;
 
-const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
-  eventId,
+const EventRsvpButton: ComponentWithFragments<IEvent, EventRsvpButtonProps> = ({
+  data: event,
   ...props
 }) => {
   const memberId: string = useReactiveVar(memberIdVar);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
-
   const isMember: boolean = useIsMember();
 
-  const { data: event, loading } = useFindOne(IEvent, {
-    fields: [
-      'endTime',
-      'eventGuests.deletedAt',
-      'eventGuests.id',
-      'eventGuests.member.id',
-      'startTime'
-    ],
-    where: { id: eventId }
+  const eventTiming: EventTiming = getEventTiming({
+    endTime: event.endTime,
+    startTime: event.startTime
   });
 
-  const isUpcoming: boolean = getEventTiming(event) === EventTiming.UPCOMING;
+  const isUpcoming: boolean = eventTiming === EventTiming.UPCOMING;
 
   const isAlreadyGoing: boolean = event.eventGuests?.some(
-    (eventGuest: IEventGuest) => eventGuest.member?.id === memberId
+    (eventGuest: IEventGuest) => eventGuest.memberId === memberId
   );
 
   // Don't show if loading, is already going or if the event is not upcoming.
-  if (loading || isAlreadyGoing || !isUpcoming) return null;
+  if (isAlreadyGoing || !isUpcoming) return null;
 
   const onClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -51,11 +40,11 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     e.stopPropagation();
 
     if (!isMember) {
-      showModal({ id: ModalType.CHECK_IN, metadata: eventId });
+      modalVar({ id: ModalType.CHECK_IN, metadata: event.id });
       return;
     }
 
-    showModal({ id: ModalType.CONFIRM_RSVP, metadata: eventId });
+    modalVar({ id: ModalType.CONFIRM_RSVP, metadata: event.id });
   };
 
   return (
@@ -64,5 +53,13 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     </Button>
   );
 };
+
+EventRsvpButton.fragment = gql`
+  fragment EventsRsvpButtonFragment on events {
+    endTime
+    id
+    startTime
+  }
+`;
 
 export default EventRsvpButton;

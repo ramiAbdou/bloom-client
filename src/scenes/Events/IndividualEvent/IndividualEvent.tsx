@@ -5,7 +5,7 @@ import { communityIdVar, eventIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import Show from '@components/containers/Show';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { useStoreActions } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import useIsMember from '@hooks/useIsMember';
 import { ModalType } from '@util/constants';

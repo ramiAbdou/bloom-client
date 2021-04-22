@@ -1,6 +1,7 @@
 import React from 'react';
 import { showToast } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Form from '@components/organisms/Form/Form';
 import {
   OnFormSubmitArgs,
@@ -8,12 +9,12 @@ import {
 } from '@components/organisms/Form/Form.types';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
-import { useStoreState } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import useFindOne from '@gql/hooks/useFindOne';
 import { IEvent, IEventGuest } from '@util/constants.entities';
 
-const EventsConfirmRsvpFormHeader: React.FC = () => {
-  const eventId: string = useStoreState(({ modal }) => modal.metadata);
+const EventsConfirmRsvpModalHeader: React.FC = () => {
+  const eventId: string = useReactiveVar(modalVar)?.metadata as string;
 
   const { loading, data: event } = useFindOne(IEvent, {
     fields: ['title'],
@@ -30,11 +31,10 @@ const EventsConfirmRsvpFormHeader: React.FC = () => {
   return <FormHeader description={description} title={title} />;
 };
 
-const EventsConfirmRsvpForm: React.FC = () => {
-  const eventId: string = useStoreState(({ modal }) => modal.metadata);
+const EventsConfirmRsvpModal: React.FC = () => {
+  const eventId: string = useReactiveVar(modalVar)?.metadata as string;
 
   const onSubmit: OnFormSubmitFunction = async ({
-    closeModal,
     gql,
     setError
   }: OnFormSubmitArgs) => {
@@ -56,13 +56,13 @@ const EventsConfirmRsvpForm: React.FC = () => {
       return;
     }
 
-    closeModal();
+    modalVar(null);
     showToast({ message: 'RSVP was registered.' });
   };
 
   return (
     <Form options={{ disableValidation: true }} onSubmit={onSubmit}>
-      <EventsConfirmRsvpFormHeader />
+      <EventsConfirmRsvpModalHeader />
       <ModalConfirmationActions
         primaryLoadingText="Confirming..."
         primaryText="Confirm"
@@ -71,4 +71,4 @@ const EventsConfirmRsvpForm: React.FC = () => {
   );
 };
 
-export default EventsConfirmRsvpForm;
+export default EventsConfirmRsvpModal;

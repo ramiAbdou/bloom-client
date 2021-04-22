@@ -3,7 +3,6 @@ import React from 'react';
 
 import Card from '@components/containers/Card/Card';
 import { modalVar } from '@core/state/Modal.reactive';
-// import { useStoreActions } from '@core/store/Store';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 import DirectoryCardFullName from './DirectoryCardFullName';
@@ -12,11 +11,8 @@ import DirectoryCardPosition from './DirectoryCardPosition';
 import DirectoryCardRole from './DirectoryCardRole';
 
 const DirectoryCard: ComponentWithFragments<IMember> = ({ data: member }) => {
-  // const showModal = useStoreActions(({ modal }) => modal.showModal);
-
   const onClick = (): void => {
     modalVar({ id: ModalType.PROFILE, metadata: member.id });
-    // showModal({ id: ModalType.PROFILE, metadata: member.id });
   };
 
   return (

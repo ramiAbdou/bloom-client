@@ -20,31 +20,6 @@ export interface ModalData {
 
 // ## MODAL TYPES
 
-export const globalModals: ModalType[] = [
-  ModalType.ADD_ADMINS,
-  ModalType.ADD_MEMBERS,
-  ModalType.APPLICANT,
-  ModalType.APPLICANT_CONFIRMATION,
-  ModalType.CHECK_IN,
-  ModalType.CONFIRM_DELETE_EVENT,
-  ModalType.CONFIRM_RSVP,
-  ModalType.CREATE_EVENT,
-  ModalType.EDIT_MEMBERSHIP_INFORMATION,
-  ModalType.EDIT_PERSONAL_INFORMATION,
-  ModalType.EDIT_SOCIAL_MEDIA,
-  ModalType.EVENT_ERROR,
-  ModalType.INTEGRATIONS_DETAILS,
-  ModalType.MAILCHIMP_FLOW,
-  ModalType.PROFILE,
-  ModalType.UPDATE_PAYMENT_METHOD
-];
-
-export const localModals: ModalType[] = [
-  ModalType.DELETE_MEMBERS,
-  ModalType.DEMOTE_MEMBERS,
-  ModalType.PROMOTE_MEMBERS
-];
-
 export const defaultModalOptions: Record<string, Partial<ModalData>> = {
   [ModalType.ADD_MEMBERS]: { width: 750 },
   [ModalType.CREATE_EVENT]: {

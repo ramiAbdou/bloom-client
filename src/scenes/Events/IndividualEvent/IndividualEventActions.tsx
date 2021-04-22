@@ -112,12 +112,12 @@ const IndividualEventActions: React.FC = () => {
 
   return (
     <Row className="mt-auto" equal={!isGoing && isUpcoming} spacing="xs">
-      <EventsRsvpButton large eventId={eventId} />
+      {/* <EventsRsvpButton large eventId={eventId} />
       <EventsJoinButton large eventId={eventId} />
       <EventsEditEventButton />
       <EventsShareButton large eventId={eventId} />
       <EventsViewRecordingButton large eventId={eventId} />
-      <EventsAddRecordingButton show={isPast && !!member.role} />
+      <EventsAddRecordingButton show={isPast && !!member.role} /> */}
     </Row>
   );
 };
