@@ -2,6 +2,7 @@ import React from 'react';
 
 import { gql } from '@apollo/client';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
+import useIsMember from '@hooks/useIsMember';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { ComponentWithFragments } from '@util/constants';
 import { IEvent } from '@util/constants.entities';
@@ -10,6 +11,8 @@ const EventsViewRecordingButton: ComponentWithFragments<
   IEvent,
   Partial<Pick<ButtonProps, 'large'>>
 > = ({ data: event, large }) => {
+  const isMember: boolean = useIsMember();
+
   const eventTiming: EventTiming = getEventTiming({
     endTime: event.endTime,
     startTime: event.startTime
@@ -17,7 +20,7 @@ const EventsViewRecordingButton: ComponentWithFragments<
 
   const isPast: boolean = eventTiming === EventTiming.PAST;
 
-  if (!isPast || !event.recordingUrl) return null;
+  if (!isPast || !isMember) return null;
 
   const onClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -41,9 +44,11 @@ const EventsViewRecordingButton: ComponentWithFragments<
   return (
     <Button
       fill
-      primary
+      disabled={!event.recordingUrl}
       href={event.recordingUrl}
       large={large}
+      primary={!!event.recordingUrl}
+      secondary={!event.recordingUrl}
       onClick={onClick}
     >
       {event.recordingUrl ? 'View Recording' : 'No Recording Available'}
