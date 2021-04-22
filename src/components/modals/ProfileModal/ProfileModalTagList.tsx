@@ -16,17 +16,15 @@ const ProfileModalTagList: ComponentWithFragments<IMember> = ({
   </Row>
 );
 
-ProfileModalTagList.fragments = {
-  data: gql`
-    fragment ProfileModalTagListFragment on members {
-      role
-      position
+ProfileModalTagList.fragment = gql`
+  fragment ProfileModalTagListFragment on members {
+    role
+    position
 
-      memberType {
-        name
-      }
+    memberType {
+      name
     }
-  `
-};
+  }
+`;
 
 export default ProfileModalTagList;

@@ -14,13 +14,11 @@ const DirectoryCardFullName: ComponentWithFragments<IMember> = ({
   );
 };
 
-DirectoryCardFullName.fragments = {
-  data: gql`
-    fragment DirectoryCardFullNameFragment on members {
-      firstName
-      lastName
-    }
-  `
-};
+DirectoryCardFullName.fragment = gql`
+  fragment DirectoryCardFullNameFragment on members {
+    firstName
+    lastName
+  }
+`;
 
 export default DirectoryCardFullName;

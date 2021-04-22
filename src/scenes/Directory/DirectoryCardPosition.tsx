@@ -12,12 +12,10 @@ const DirectoryCardPosition: ComponentWithFragments<IMember> = ({
   </span>
 );
 
-DirectoryCardPosition.fragments = {
-  data: gql`
-    fragment DirectoryCardPositionFragment on members {
-      position
-    }
-  `
-};
+DirectoryCardPosition.fragment = gql`
+  fragment DirectoryCardPositionFragment on members {
+    position
+  }
+`;
 
 export default DirectoryCardPosition;

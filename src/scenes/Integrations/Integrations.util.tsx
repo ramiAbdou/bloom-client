@@ -1,19 +1,12 @@
-import {
-  APP,
-  isDevelopment,
-  isProduction,
-  isStage,
-  UrlNameProps
-} from '@util/constants';
+import { APP, UrlNameProps } from '@util/constants';
 import { ICommunityIntegrations } from '@util/constants.entities';
 import { buildUrl } from '@util/util';
 import mailchimp from './images/mailchimp.png';
 import stripe from './images/stripe.png';
 import { IntegrationsDetailsData } from './Integrations.types';
 
-const MAILCHIMP_BASE_URI = !isDevelopment
-  ? APP.SERVER_URL
-  : 'http://127.0.0.1:8080';
+const MAILCHIMP_BASE_URI =
+  process.env.APP_ENV !== 'dev' ? APP.SERVER_URL : 'http://127.0.0.1:8080';
 
 interface BuildIntegrationDataProps
   extends Pick<
@@ -57,7 +50,7 @@ export const buildIntegrationData = ({
     href: buildUrl('https://connect.stripe.com/oauth/authorize', {
       client_id: process.env.STRIPE_CLIENT_ID,
       redirect_uri:
-        isProduction || isStage
+        process.env.APP_ENV !== 'dev'
           ? `${APP.SERVER_URL}/stripe/auth`
           : `${APP.NGROK_SERVER_URL}/stripe/auth`,
       response_type: 'code',

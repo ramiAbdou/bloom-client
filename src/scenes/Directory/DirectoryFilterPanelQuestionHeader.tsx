@@ -29,13 +29,11 @@ const DirectoryFilterPanelQuestionHeader: ComponentWithFragments<IQuestion> = ({
   );
 };
 
-DirectoryFilterPanelQuestionHeader.fragments = {
-  data: gql`
-    fragment DirectoryFilterPanelQuestionHeaderFragment on questions {
-      id
-      title
-    }
-  `
-};
+DirectoryFilterPanelQuestionHeader.fragment = gql`
+  fragment DirectoryFilterPanelQuestionHeaderFragment on questions {
+    id
+    title
+  }
+`;
 
 export default DirectoryFilterPanelQuestionHeader;

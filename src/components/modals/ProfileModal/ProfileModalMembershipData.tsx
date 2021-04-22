@@ -30,27 +30,25 @@ const ProfileModalMembershipData: ComponentWithFragments<IMember> = ({
   );
 };
 
-ProfileModalMembershipData.fragments = {
-  data: gql`
-    fragment ProfileModalMembershipDataFragment on members {
-      memberValues(
-        where: {
-          memberId: { _eq: $memberId }
-          question: { category: { _is_null: true } }
-          value: { _is_null: false }
-        }
-        order_by: { question: { rank: asc } }
-      ) {
-        id
-        value
+ProfileModalMembershipData.fragment = gql`
+  fragment ProfileModalMembershipDataFragment on members {
+    memberValues(
+      where: {
+        memberId: { _eq: $memberId }
+        question: { category: { _is_null: true } }
+        value: { _is_null: false }
+      }
+      order_by: { question: { rank: asc } }
+    ) {
+      id
+      value
 
-        question {
-          title
-          type
-        }
+      question {
+        title
+        type
       }
     }
-  `
-};
+  }
+`;
 
 export default ProfileModalMembershipData;

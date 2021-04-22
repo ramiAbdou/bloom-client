@@ -14,12 +14,10 @@ const SidebarCommunityButtonLogo: ComponentWithFragments<ICommunity> = ({
   />
 );
 
-SidebarCommunityButtonLogo.fragments = {
-  data: gql`
-    fragment SidebarCommunityButtonLogoFragment on communities {
-      logoUrl
-    }
-  `
-};
+SidebarCommunityButtonLogo.fragment = gql`
+  fragment SidebarCommunityButtonLogoFragment on communities {
+    logoUrl
+  }
+`;
 
 export default SidebarCommunityButtonLogo;

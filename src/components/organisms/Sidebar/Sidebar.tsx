@@ -43,9 +43,9 @@ const GET_MEMBERS_BY_USER_ID: DocumentNode = gql`
       }
     }
   }
-  ${SidebarCommunityButton.fragments.data}
-  ${SidebarCommunityName.fragments.data}
-  ${SidebarProfile.fragments.data}
+  ${SidebarCommunityButton.fragment}
+  ${SidebarCommunityName.fragment}
+  ${SidebarProfile.fragment}
 `;
 
 const Sidebar: React.FC = () => {
@@ -61,7 +61,7 @@ const Sidebar: React.FC = () => {
 
       <div className="f f-col o-scroll w-100">
         {data?.community && <SidebarCommunityName data={data?.community} />}
-        <SidebarMainSection />
+        <SidebarMainSection data={data?.member} />
         <SidebarAdminSection />
         <SidebarQuickActionsSection />
         <SidebarProfileSection />

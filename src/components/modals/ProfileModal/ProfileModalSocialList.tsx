@@ -74,17 +74,15 @@ const ProfileModalSocialList: ComponentWithFragments<IMember> = ({
   );
 };
 
-ProfileModalSocialList.fragments = {
-  data: gql`
-    fragment ProfileModalSocialListFragment on members {
-      memberSocials {
-        facebookUrl
-        instagramUrl
-        linkedInUrl
-        twitterUrl
-      }
+ProfileModalSocialList.fragment = gql`
+  fragment ProfileModalSocialListFragment on members {
+    memberSocials {
+      facebookUrl
+      instagramUrl
+      linkedInUrl
+      twitterUrl
     }
-  `
-};
+  }
+`;
 
 export default ProfileModalSocialList;

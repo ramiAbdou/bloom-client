@@ -23,23 +23,21 @@ const ProfileModalPersonal: ComponentWithFragments<IMember> = ({
   </div>
 );
 
-ProfileModalPersonal.fragments = {
-  data: gql`
-    fragment ProfileModalPersonalFragment on members {
-      ...ProfileModalBioFragment
-      ...ProfileModalEmailFragment
-      ...ProfileModalFullNameFragment
-      ...ProfileModalPictureFragment
-      ...ProfileModalSocialListFragment
-      ...ProfileModalTagListFragment
-    }
-    ${ProfileModalBio.fragments.data}
-    ${ProfileModalEmail.fragments.data}
-    ${ProfileModalFullName.fragments.data}
-    ${ProfileModalPicture.fragments.data}
-    ${ProfileModalSocialList.fragments.data}
-    ${ProfileModalTagList.fragments.data}
-  `
-};
+ProfileModalPersonal.fragment = gql`
+  fragment ProfileModalPersonalFragment on members {
+    ...ProfileModalBioFragment
+    ...ProfileModalEmailFragment
+    ...ProfileModalFullNameFragment
+    ...ProfileModalPictureFragment
+    ...ProfileModalSocialListFragment
+    ...ProfileModalTagListFragment
+  }
+  ${ProfileModalBio.fragment}
+  ${ProfileModalEmail.fragment}
+  ${ProfileModalFullName.fragment}
+  ${ProfileModalPicture.fragment}
+  ${ProfileModalSocialList.fragment}
+  ${ProfileModalTagList.fragment}
+`;
 
 export default ProfileModalPersonal;

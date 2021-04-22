@@ -34,20 +34,18 @@ const DirectoryCard: ComponentWithFragments<IMember> = ({ data: member }) => {
   );
 };
 
-DirectoryCard.fragments = {
-  data: gql`
-    fragment DirectoryCardFragment on members {
-      id
-      ...DirectoryCardFullNameFragment
-      ...DirectoryCardPictureFragment
-      ...DirectoryCardPositionFragment
-      ...DirectoryCardRoleFragment
-    }
-    ${DirectoryCardFullName.fragments.data}
-    ${DirectoryCardPicture.fragments.data}
-    ${DirectoryCardPosition.fragments.data}
-    ${DirectoryCardRole.fragments.data}
-  `
-};
+DirectoryCard.fragment = gql`
+  fragment DirectoryCardFragment on members {
+    id
+    ...DirectoryCardFullNameFragment
+    ...DirectoryCardPictureFragment
+    ...DirectoryCardPositionFragment
+    ...DirectoryCardRoleFragment
+  }
+  ${DirectoryCardFullName.fragment}
+  ${DirectoryCardPicture.fragment}
+  ${DirectoryCardPosition.fragment}
+  ${DirectoryCardRole.fragment}
+`;
 
 export default DirectoryCard;

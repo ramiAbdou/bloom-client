@@ -23,7 +23,7 @@ const GET_QUESTIONS_BY_COMMUNITY_ID: DocumentNode = gql`
       ...DirectoryFilterPanelQuestionFragment
     }
   }
-  ${DirectoryFilterPanelQuestion.fragments.data}
+  ${DirectoryFilterPanelQuestion.fragment}
 `;
 
 const DirectoryFilterPanelQuestionList: React.FC = () => {

@@ -8,17 +8,15 @@ const SidebarProfileTitle: ComponentWithFragments<IMember> = ({
   data: member
 }) => <p>{member.position ?? member.role ?? member.memberType?.name}</p>;
 
-SidebarProfileTitle.fragments = {
-  data: gql`
-    fragment SidebarProfileTitleFragment on members {
-      position
-      role
+SidebarProfileTitle.fragment = gql`
+  fragment SidebarProfileTitleFragment on members {
+    position
+    role
 
-      memberType {
-        name
-      }
+    memberType {
+      name
     }
-  `
-};
+  }
+`;
 
 export default SidebarProfileTitle;

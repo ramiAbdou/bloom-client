@@ -30,17 +30,15 @@ const SidebarProfile: ComponentWithFragments<IMember> = ({ data: member }) => {
   );
 };
 
-SidebarProfile.fragments = {
-  data: gql`
-    fragment SidebarProfileFragment on members {
-      ...SidebarProfileNameFragment
-      ...SidebarProfilePictureFragment
-      ...SidebarProfileTitleFragment
-    }
-    ${SidebarProfileName.fragments.data}
-    ${SidebarProfilePicture.fragments.data}
-    ${SidebarProfileTitle.fragments.data}
-  `
-};
+SidebarProfile.fragment = gql`
+  fragment SidebarProfileFragment on members {
+    ...SidebarProfileNameFragment
+    ...SidebarProfilePictureFragment
+    ...SidebarProfileTitleFragment
+  }
+  ${SidebarProfileName.fragment}
+  ${SidebarProfilePicture.fragment}
+  ${SidebarProfileTitle.fragment}
+`;
 
 export default SidebarProfile;

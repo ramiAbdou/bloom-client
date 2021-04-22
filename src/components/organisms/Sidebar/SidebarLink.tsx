@@ -42,7 +42,6 @@ const SidebarLink: React.FC<SidebarLinkProps> = (props) => {
   const { Icon, onClick, to, title } = props;
 
   const communityId: string = useReactiveVar(communityIdVar);
-
   const isActive: boolean = useTopLevelRoute() === to;
 
   const { data: community, loading } = useFindOne(ICommunity, {

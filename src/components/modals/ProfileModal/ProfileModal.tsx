@@ -25,9 +25,9 @@ const GET_MEMBER_PROFILE: DocumentNode = gql`
       ...ProfileModalMembershipDataFragment
     }
   }
-  ${ProfileModalHistory.fragments.data}
-  ${ProfileModalPersonal.fragments.data}
-  ${ProfileModalMembershipData.fragments.data}
+  ${ProfileModalHistory.fragment}
+  ${ProfileModalPersonal.fragment}
+  ${ProfileModalMembershipData.fragment}
 `;
 
 const ProfileModal: React.FC = () => {

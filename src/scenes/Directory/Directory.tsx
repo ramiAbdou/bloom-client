@@ -11,6 +11,7 @@ import DirectoryCardList from './DirectoryCardList';
 import DirectoryHeader from './DirectoryHeader';
 
 interface GetMembersByCommunityIdResult {
+  communityId: string;
   directoryMemberValuesExp: Record<string, unknown>;
   directoryRoleExp: Record<string, unknown>;
   directorySearchString: string;
@@ -54,7 +55,7 @@ const GET_MEMBERS_BY_COMMUNITY_ID: DocumentNode = gql`
     }
   }
 
-  ${DirectoryCard.fragments.data}
+  ${DirectoryCard.fragment}
 `;
 
 const DirectoryContent: React.FC = () => {

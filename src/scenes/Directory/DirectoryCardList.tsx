@@ -6,6 +6,7 @@ import { IMember } from '@util/constants.entities';
 import DirectoryCard from './DirectoryCard';
 
 interface DirectoryCardListProps {
+  communityId: string;
   directoryMemberValuesExp: Record<string, unknown>;
   directoryRoleExp: Record<string, unknown>;
   directorySearchString: string;
@@ -13,12 +14,14 @@ interface DirectoryCardListProps {
 }
 
 const DirectoryCardList: React.FC<DirectoryCardListProps> = ({
+  communityId,
   directoryMemberValuesExp,
   directoryRoleExp,
   directorySearchString,
   members
 }) => {
   const key: string = hash({
+    communityId,
     memberValuesExp: directoryMemberValuesExp,
     roleExp: directoryRoleExp,
     searchString: directorySearchString

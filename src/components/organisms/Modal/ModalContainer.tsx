@@ -15,7 +15,7 @@ import { cx } from '@util/util';
  * background.
  */
 const ModalBackground: React.FC = () => {
-  const lock: boolean = useReactiveVar(modalVar).options?.lock;
+  const lock: boolean = useReactiveVar(modalVar)?.options?.lock;
 
   const onClick = (): void => {
     if (!lock) modalVar(null);
@@ -27,7 +27,7 @@ const ModalBackground: React.FC = () => {
 };
 
 const ModalExitButton: React.FC = () => {
-  const lock: boolean = useReactiveVar(modalVar).options?.lock;
+  const lock: boolean = useReactiveVar(modalVar)?.options?.lock;
 
   const onClick = (): void => {
     modalVar(null);
@@ -41,7 +41,7 @@ const ModalExitButton: React.FC = () => {
 };
 
 const ModalContainer: React.FC = ({ children }) => {
-  const sheet: boolean = useReactiveVar(modalVar).options?.sheet;
+  const sheet: boolean = useReactiveVar(modalVar)?.options?.sheet;
 
   useLockBodyScroll();
 

@@ -72,38 +72,36 @@ const ProfileModalHistoryEventList: ComponentWithFragments<IMember> = ({
   );
 };
 
-ProfileModalHistoryEventList.fragments = {
-  data: gql`
-    fragment ProfileModalHistoryEventListFragment on members {
-      joinedAt
-      role
+ProfileModalHistoryEventList.fragment = gql`
+  fragment ProfileModalHistoryEventListFragment on members {
+    joinedAt
+    role
 
-      community {
-        name
-      }
+    community {
+      name
+    }
 
-      eventAttendees {
-        createdAt
-        event {
-          title
-        }
-      }
-
-      eventGuests {
-        createdAt
-        event {
-          title
-        }
-      }
-
-      eventWatches {
-        createdAt
-        event {
-          title
-        }
+    eventAttendees {
+      createdAt
+      event {
+        title
       }
     }
-  `
-};
+
+    eventGuests {
+      createdAt
+      event {
+        title
+      }
+    }
+
+    eventWatches {
+      createdAt
+      event {
+        title
+      }
+    }
+  }
+`;
 
 export default ProfileModalHistoryEventList;

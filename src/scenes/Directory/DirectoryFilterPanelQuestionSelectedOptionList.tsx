@@ -38,12 +38,10 @@ const DirectoryFilterPanelQuestionSelectedOptionList: ComponentWithFragments<IQu
   );
 };
 
-DirectoryFilterPanelQuestionSelectedOptionList.fragments = {
-  data: gql`
-    fragment DirectoryFilterPanelQuestionSelectedOptionListFragment on questions {
-      id
-    }
-  `
-};
+DirectoryFilterPanelQuestionSelectedOptionList.fragment = gql`
+  fragment DirectoryFilterPanelQuestionSelectedOptionListFragment on questions {
+    id
+  }
+`;
 
 export default DirectoryFilterPanelQuestionSelectedOptionList;

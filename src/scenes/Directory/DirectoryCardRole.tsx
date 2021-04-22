@@ -9,12 +9,10 @@ const DirectoryCardRole: ComponentWithFragments<IMember> = ({
   data: member
 }) => <HeaderTag show={!!member.role}>{member.role}</HeaderTag>;
 
-DirectoryCardRole.fragments = {
-  data: gql`
-    fragment DirectoryCardRoleFragment on members {
-      role
-    }
-  `
-};
+DirectoryCardRole.fragment = gql`
+  fragment DirectoryCardRoleFragment on members {
+    role
+  }
+`;
 
 export default DirectoryCardRole;

@@ -8,12 +8,10 @@ const SidebarProfileName: ComponentWithFragments<IMember> = ({
   data: member
 }) => <p>{member.fullName}</p>;
 
-SidebarProfileName.fragments = {
-  data: gql`
-    fragment SidebarProfileNameFragment on members {
-      fullName
-    }
-  `
-};
+SidebarProfileName.fragment = gql`
+  fragment SidebarProfileNameFragment on members {
+    fullName
+  }
+`;
 
 export default SidebarProfileName;

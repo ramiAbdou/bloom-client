@@ -11,7 +11,9 @@ $PREF: 'c-modal';
   background-color: hsla($primary-hue, 5%, 20%, 0.75);
   z-index: 1000;
 
-  &--lock { backdrop-filter: blur(8px); }
+  &--lock {
+    backdrop-filter: blur(8px);
+  }
 }
 
 // ## MODAL CONTAINER
@@ -34,10 +36,15 @@ $PREF: 'c-modal';
     max-height: 90%;
     width: 550px;
 
-    ~ .#{$PREF}-cancel { right: $md; top: $md; }
-    ~ .#{$PREF}-cancel > svg { @include SIZE($md); }
+    ~ .#{$PREF}-cancel {
+      right: $md;
+      top: $md;
+    }
+    ~ .#{$PREF}-cancel > svg {
+      @include SIZE($md);
+    }
   }
-  
+
   &--sheet {
     border-radius: $sm $sm 0 0;
     bottom: 0;
@@ -48,36 +55,71 @@ $PREF: 'c-modal';
     top: 100%;
     width: 100vw;
 
-    ~ .#{$PREF}-cancel { right: $sm; top: $sm; }
-    ~ .#{$PREF}-cancel > svg { @include SIZE($md); }
+    ~ .#{$PREF}-cancel {
+      right: $sm;
+      top: $sm;
+    }
+    ~ .#{$PREF}-cancel > svg {
+      @include SIZE($md);
+    }
   }
 }
 
-.#{$PREF}-cancel { position: fixed; z-index: 1002; }
-.#{$PREF}-cancel > svg { @extend .react-icon--xl; color: $gray-5; }
+.#{$PREF}-cancel {
+  position: fixed;
+  z-index: 1002;
+}
+.#{$PREF}-cancel > svg {
+  @extend .react-icon--xl;
+
+  color: $gray-5;
+}
 
 // ## MODAL CONTENT
 
-.#{$PREF} { padding: $md; }
+.#{$PREF} {
+  padding: $md;
+}
 
 .#{$PREF},
 .#{$PREF} > form {
   // All modals will have an h1 tag, which will be standardized everywhere.
   > h1,
-  > header > h1 { color: $primary; }
+  > header > h1 {
+    color: $primary;
+  }
 
   > h1,
-  > .t-loading-header { margin-bottom: $sm; }
-  > p:first-of-type { margin-bottom: $md; }
-  > .c-misc-question-ctr { max-height: 65vh; overflow: scroll; }
-  > .o-story-page > button:last-child { margin-top: $md; }
+  > .t-loading-header {
+    margin-bottom: $sm;
+  }
+
+  > p:first-of-type {
+    margin-bottom: $md;
+  }
+
+  > .c-misc-question-ctr {
+    max-height: 65vh;
+    overflow: scroll;
+  }
+
+  > .o-story-page > button:last-child {
+    margin-top: $md;
+  }
 }
 
 // ## CONFIRMATION MODAL
 
-.#{$PREF}--confirmation > p { margin-bottom: $md; }
-.#{$PREF}--confirmation > div { @extend .f; @extend .f-ac; }
-.#{$PREF}--confirmation > div > button:first-of-type { margin-right: $xs; }
+.#{$PREF}--confirmation > p {
+  margin-bottom: $md;
+}
+.#{$PREF}--confirmation > div {
+  @extend .f;
+  @extend .f-ac;
+}
+.#{$PREF}--confirmation > div > button:first-of-type {
+  margin-right: $xs;
+}
 
 // ## MODAL CONTENT CONTAINER
 
@@ -86,6 +128,11 @@ $PREF: 'c-modal';
   max-height: 65vh;
   overflow: scroll;
 
-  ~ .t-action-ctr--equal { margin-top: $md; }
-  > .o-form-item:last-child { margin-bottom: 0; }
+  ~ .t-action-ctr--equal {
+    margin-top: $md;
+  }
+
+  > .o-form-item:last-child {
+    margin-bottom: 0;
+  }
 }

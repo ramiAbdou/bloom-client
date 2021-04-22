@@ -30,13 +30,11 @@ const ProfileModalHistory: ComponentWithFragments<IMember> = ({
   );
 };
 
-ProfileModalHistory.fragments = {
-  data: gql`
-    fragment ProfileModalHistoryFragment on members {
-      ...ProfileModalHistoryEventListFragment
-    }
-    ${ProfileModalHistoryEventList.fragments.data}
-  `
-};
+ProfileModalHistory.fragment = gql`
+  fragment ProfileModalHistoryFragment on members {
+    ...ProfileModalHistoryEventListFragment
+  }
+  ${ProfileModalHistoryEventList.fragment}
+`;
 
 export default ProfileModalHistory;

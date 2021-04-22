@@ -36,18 +36,16 @@ const DirectoryFilterPanelQuestion: ComponentWithFragments<IQuestion> = ({
   );
 };
 
-DirectoryFilterPanelQuestion.fragments = {
-  data: gql`
-    fragment DirectoryFilterPanelQuestionFragment on questions {
-      id
-      ...DirectoryFilterPanelQuestionHeaderFragment
-      ...DirectoryFilterPanelQuestionOptionListFragment
-      ...DirectoryFilterPanelQuestionSelectedOptionListFragment
-    }
-    ${DirectoryFilterPanelQuestionHeader.fragments.data}
-    ${DirectoryFilterPanelQuestionOptionList.fragments.data}
-    ${DirectoryFilterPanelQuestionSelectedOptionList.fragments.data}
-  `
-};
+DirectoryFilterPanelQuestion.fragment = gql`
+  fragment DirectoryFilterPanelQuestionFragment on questions {
+    id
+    ...DirectoryFilterPanelQuestionHeaderFragment
+    ...DirectoryFilterPanelQuestionOptionListFragment
+    ...DirectoryFilterPanelQuestionSelectedOptionListFragment
+  }
+  ${DirectoryFilterPanelQuestionHeader.fragment}
+  ${DirectoryFilterPanelQuestionOptionList.fragment}
+  ${DirectoryFilterPanelQuestionSelectedOptionList.fragment}
+`;
 
 export default DirectoryFilterPanelQuestion;

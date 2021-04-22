@@ -16,14 +16,12 @@ const SidebarProfilePicture: ComponentWithFragments<IMember> = ({
   />
 );
 
-SidebarProfilePicture.fragments = {
-  data: gql`
-    fragment SidebarProfilePictureFragment on members {
-      firstName
-      lastName
-      pictureUrl
-    }
-  `
-};
+SidebarProfilePicture.fragment = gql`
+  fragment SidebarProfilePictureFragment on members {
+    firstName
+    lastName
+    pictureUrl
+  }
+`;
 
 export default SidebarProfilePicture;

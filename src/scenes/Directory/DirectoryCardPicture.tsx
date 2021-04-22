@@ -17,14 +17,12 @@ const DirectoryCardPicture: ComponentWithFragments<IMember> = ({
   />
 );
 
-DirectoryCardPicture.fragments = {
-  data: gql`
-    fragment DirectoryCardPictureFragment on members {
-      firstName
-      lastName
-      pictureUrl
-    }
-  `
-};
+DirectoryCardPicture.fragment = gql`
+  fragment DirectoryCardPictureFragment on members {
+    firstName
+    lastName
+    pictureUrl
+  }
+`;
 
 export default DirectoryCardPicture;

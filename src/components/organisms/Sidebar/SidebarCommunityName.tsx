@@ -14,13 +14,11 @@ const SidebarCommunityName: ComponentWithFragments<ICommunity> = ({
   </>
 );
 
-SidebarCommunityName.fragments = {
-  data: gql`
-    fragment SidebarCommunityNameFragment on communities {
-      id
-      name
-    }
-  `
-};
+SidebarCommunityName.fragment = gql`
+  fragment SidebarCommunityNameFragment on communities {
+    id
+    name
+  }
+`;
 
 export default SidebarCommunityName;

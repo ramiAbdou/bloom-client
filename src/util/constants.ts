@@ -1,9 +1,6 @@
-import { DocumentNode } from '@apollo/client';
+import { FunctionComponent } from 'react';
 
-export const isDevelopment = process.env.APP_ENV === 'dev';
-export const isProduction = process.env.APP_ENV === 'prod';
-export const isStage = process.env.APP_ENV === 'stage';
-export const isTest = process.env.APP_ENV === 'test';
+import { DocumentNode } from '@apollo/client';
 
 /**
  * APP - Application and Bloom-specific constants.
@@ -31,22 +28,10 @@ export type ValueProps = { value?: any };
 
 export interface BaseProps extends ClassNameProps, ShowProps, StyleProps {}
 
-export type ComponentWithFragments<T> = React.FC<{
-  data?: Partial<T>;
-  i?: number;
-}> & {
-  fragments?: { data: DocumentNode };
-};
-
-// <T, Props = { data?: Partial<T> }>
-//   extends React.FC<Props & T> {
-//   fragments: { data: DocumentNode };
-// }
-
-// export interface ComponentWithFragments<T, Props = { data?: Partial<T> }>
-//   extends React.FC<Props & T> {
-//   fragments: { data: DocumentNode };
-// }
+export interface ComponentWithFragments<T, S = unknown>
+  extends FunctionComponent<S & { data?: Partial<T> }> {
+  fragment: DocumentNode;
+}
 
 /**
  * SYSTEM TYPES - Includes modal, panel and more.

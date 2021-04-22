@@ -18,14 +18,12 @@ const ProfileModalPicture: ComponentWithFragments<IMember> = ({
   />
 );
 
-ProfileModalPicture.fragments = {
-  data: gql`
-    fragment ProfileModalPictureFragment on members {
-      firstName
-      lastName
-      pictureUrl
-    }
-  `
-};
+ProfileModalPicture.fragment = gql`
+  fragment ProfileModalPictureFragment on members {
+    firstName
+    lastName
+    pictureUrl
+  }
+`;
 
 export default ProfileModalPicture;
