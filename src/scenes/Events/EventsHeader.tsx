@@ -1,38 +1,41 @@
-import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { memberIdVar } from 'src/App.reactive';
 
-import { useReactiveVar } from '@apollo/client';
+import {
+  ApolloClient,
+  gql,
+  useApolloClient,
+  useReactiveVar
+} from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import MainHeader from '@components/containers/Main/MainHeader';
 import { MainNavigationOptionProps } from '@components/containers/Main/MainNavigationButton';
-import { ModalData } from '@components/organisms/Modal/Modal.types';
-import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreActions } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import { LoadingProps, ModalType } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 
 const EventsHeaderCreateEventButton: React.FC = () => {
+  const apolloClient: ApolloClient<unknown> = useApolloClient();
   const memberId: string = useReactiveVar(memberIdVar);
 
-  const showModal: ActionCreator<ModalData> = useStoreActions(
-    ({ modal }) => modal.showModal
-  );
-
-  const { data: member, loading } = useFindOne(IMember, {
-    fields: ['role'],
-    where: { id: memberId }
+  const member: IMember = apolloClient.cache.readFragment({
+    fragment: gql`
+      fragment EventsHeaderCreateEventButtonFragment on members {
+        role
+      }
+    `,
+    id: `members:${memberId}`
   });
 
-  if (loading) return null;
+  if (!member.role) return null;
 
   const onClick = (): void => {
-    showModal({ id: ModalType.CREATE_EVENT });
+    modalVar({ id: ModalType.CREATE_EVENT, options: { sheet: true } });
   };
 
   return (
-    <Button primary show={!!member.role} onClick={onClick}>
+    <Button primary onClick={onClick}>
       Create Event
     </Button>
   );

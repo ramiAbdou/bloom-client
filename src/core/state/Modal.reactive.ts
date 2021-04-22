@@ -10,7 +10,7 @@ interface ModalOptions {
 
 interface ModalData {
   id: ModalType;
-  metadata: unknown;
+  metadata?: unknown;
   options?: ModalOptions;
 }
 
