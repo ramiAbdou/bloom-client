@@ -26,7 +26,6 @@ const DirectoryCard: ComponentWithFragments<IMember> = ({ data: member }) => {
         <p>
           <DirectoryCardFullName data={member} />
           <DirectoryCardPosition data={member} />
-          {/* <DirectoryCardInformationHighlightedValue /> */}
         </p>
       </div>
     </Card>
