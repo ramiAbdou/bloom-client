@@ -38,11 +38,11 @@ function resolveReadQuery<T>(entity: new () => T) {
   const entityName: string = pluralize(nameWithoutI);
 
   return (existing, { args, toReference }) => {
-    if (args.where?.id) {
+    if (args?.where?.id) {
       return toReference({
         __typename: entityName,
         // eslint-disable-next-line no-underscore-dangle
-        id: args.where?.id?._eq
+        id: args?.where?.id?._eq
       });
     }
 

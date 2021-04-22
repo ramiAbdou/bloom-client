@@ -199,6 +199,8 @@ export class IMember extends BaseEntity {
 
   firstName: string;
 
+  fullName: string;
+
   joinedAt?: string;
 
   lastName: string;

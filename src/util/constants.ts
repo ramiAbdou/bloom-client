@@ -35,7 +35,7 @@ export type ComponentWithFragments<T> = React.FC<{
   data?: Partial<T>;
   i?: number;
 }> & {
-  fragments: { data: DocumentNode };
+  fragments?: { data: DocumentNode };
 };
 
 // <T, Props = { data?: Partial<T> }>

@@ -7,23 +7,19 @@ import useFindOne from '@gql/hooks/useFindOne';
 import { SidebarLinkOptions } from './Sidebar.types';
 import SidebarLink from './SidebarLink';
 
-interface LinkSectionProps {
+interface SidebarSectionProps {
   links: SidebarLinkOptions[];
   title: string;
 }
 
-const SidebarSection: React.FC<LinkSectionProps> = ({
-  links,
-  title
-}: LinkSectionProps) => {
+const SidebarSection: React.FC<SidebarSectionProps> = ({ links, title }) => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { data: member, loading } = useFindOne(IMember, {
+  const { data: member } = useFindOne(IMember, {
     fields: ['role'],
     where: { id: memberId }
   });
 
-  if (loading) return null;
   if (['Admin', 'Quick Actions'].includes(title) && !member.role) return null;
 
   return (
