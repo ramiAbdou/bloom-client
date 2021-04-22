@@ -4,10 +4,10 @@ import { communityIdVar } from 'src/App.reactive';
 import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
-import { ICommunityIntegrations } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import { QuestionType } from '@util/constants';
+import { ICommunityIntegrations } from '@util/db.entities';
 
 interface IntegrationsDetail {
   label: string;

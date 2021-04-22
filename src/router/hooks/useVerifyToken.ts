@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { ModalData } from '@components/organisms/Modal/Modal.types';
-import { IEvent } from '@core/db/db.entities';
+import { IEvent } from '@util/db.entities';
 import { useStoreActions } from '@core/store/Store';
 import GQL from '@gql/GQL';
 import useBloomMutation from '@gql/hooks/useBloomMutation';

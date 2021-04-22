@@ -2,7 +2,7 @@ import React from 'react';
 
 import { gql } from '@apollo/client';
 import HeaderTag from '@components/atoms/Tag/HeaderTag';
-import { IMember } from '@core/db/db.entities';
+import { IMember } from '@util/db.entities';
 import { ComponentWithFragments } from '@util/constants';
 
 const DirectoryCardRole: ComponentWithFragments<IMember> = ({

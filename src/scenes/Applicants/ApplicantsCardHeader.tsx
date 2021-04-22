@@ -3,12 +3,12 @@ import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
 import Row from '@components/containers/Row/Row';
-import { IMember } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
 import { useStoreActions } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { ModalType } from '@util/constants';
+import { IMember } from '@util/db.entities';
 
 const ApplicantsCardHeaderDetails: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IMember } from '@core/db/db.entities';
+import { IMember } from '@util/db.entities';
 import SidebarCommunityButton from './SidebarCommunityButton';
 
 interface SidebarCommunityListProps {

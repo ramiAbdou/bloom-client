@@ -8,7 +8,7 @@ import Button from '@components/atoms/Button/Button';
 import MainHeader from '@components/containers/Main/MainHeader';
 import { MainNavigationOptionProps } from '@components/containers/Main/MainNavigationButton';
 import { ModalData } from '@components/organisms/Modal/Modal.types';
-import { IMember } from '@core/db/db.entities';
+import { IMember } from '@util/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreActions } from '@core/store/Store';
 import { LoadingProps, ModalType } from '@util/constants';

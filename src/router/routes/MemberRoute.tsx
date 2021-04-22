@@ -3,9 +3,9 @@ import { Redirect, Route, RouteProps } from 'react-router-dom';
 import { communityIdVar, memberIdVar, userIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
-import { IMember } from '@core/db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import { UrlNameProps } from '@util/constants';
+import { IMember } from '@util/db.entities';
 import { updateDocumentColors } from '@util/util';
 
 interface MemberRouteProps extends RouteProps {

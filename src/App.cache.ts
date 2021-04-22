@@ -19,7 +19,7 @@ import {
   IRankedQuestion,
   ISupporter,
   IUser
-} from '@core/db/db.entities';
+} from '@util/db.entities';
 import {
   communityIdVar,
   eventIdVar,

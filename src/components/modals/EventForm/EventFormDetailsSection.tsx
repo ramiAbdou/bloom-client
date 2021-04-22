@@ -7,10 +7,10 @@ import FormSection from '@components/organisms/Form/FormSection';
 import FormSectionHeader from '@components/organisms/Form/FormSectionHeader';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormTime from '@components/organisms/Form/FormTime';
-import { IEvent } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { ShowProps } from '@util/constants';
+import { IEvent } from '@util/db.entities';
 
 const EventFormTimeItems: React.FC<ShowProps> = ({ show }) => (
   <Show show={show}>

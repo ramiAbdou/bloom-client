@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { gql } from '@apollo/client';
-import { IMember } from '@core/db/db.entities';
+import { IMember } from '@util/db.entities';
 import { ComponentWithFragments } from '@util/constants';
 
 const SidebarProfileTitle: ComponentWithFragments<IMember> = ({

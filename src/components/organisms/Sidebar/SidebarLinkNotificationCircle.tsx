@@ -2,7 +2,7 @@ import React from 'react';
 import { communityIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
-import { IMember, MemberStatus } from '@core/db/db.entities';
+import { IMember, MemberStatus } from '@util/db.entities';
 import useFind from '@core/gql/hooks/useFind';
 import { SidebarLinkOptions } from './Sidebar.types';
 

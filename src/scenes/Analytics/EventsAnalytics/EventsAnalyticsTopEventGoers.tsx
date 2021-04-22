@@ -12,10 +12,10 @@ import {
   TableRow
 } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
-import { IEvent, IEventAttendee } from '@core/db/db.entities';
 import useFind from '@core/gql/hooks/useFind';
 import { useStoreActions } from '@core/store/Store';
 import { ModalType, QuestionType } from '@util/constants';
+import { IEvent, IEventAttendee } from '@util/db.entities';
 import { sortObjects } from '@util/util';
 
 const EventsAnalyticsTopEventGoersTable: React.FC = () => {

@@ -7,7 +7,7 @@ import Row from '@components/containers/Row/Row';
 import FormLabel from '@components/organisms/Form/FormLabel';
 import StoryStore from '@components/organisms/Story/Story.store';
 import StoryPage from '@components/organisms/Story/StoryPage';
-import { ICommunity, IEvent } from '@core/db/db.entities';
+import { ICommunity, IEvent } from '@util/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { ShowProps } from '@util/constants';

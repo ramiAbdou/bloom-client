@@ -4,9 +4,9 @@ import { communityIdVar } from 'src/App.reactive';
 import { useReactiveVar } from '@apollo/client';
 import MainHeader from '@components/containers/Main/MainHeader';
 import Row from '@components/containers/Row/Row';
-import { IMember, MemberStatus } from '@core/db/db.entities';
 import useFind from '@core/gql/hooks/useFind';
 import { LoadingProps } from '@util/constants';
+import { IMember, MemberStatus } from '@util/db.entities';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
 const ApplicantsHeader: React.FC<LoadingProps> = ({ loading }) => {

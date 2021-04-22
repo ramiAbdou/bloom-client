@@ -7,7 +7,7 @@ import Button from '@components/atoms/Button/Button';
 import Row from '@components/containers/Row/Row';
 import FormMultipleSelect from '@components/organisms/Form/FormMultipleSelect';
 import FormShortText from '@components/organisms/Form/FormShortText';
-import { IMember, MemberRole } from '@core/db/db.entities';
+import { IMember, MemberRole } from '@util/db.entities';
 import IdStore from '@core/store/Id.store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';

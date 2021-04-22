@@ -2,10 +2,10 @@ import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
-import { MemberStatus } from '@core/db/db.entities';
 import { ModalData } from '@components/organisms/Modal/Modal.types';
 import { useStoreActions } from '@core/store/Store';
 import { ModalType } from '@util/constants';
+import { MemberStatus } from '@util/db.entities';
 import { take } from '@util/util';
 
 interface ApplicantsRespondButtonProps {

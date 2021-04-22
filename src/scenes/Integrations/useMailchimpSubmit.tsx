@@ -2,7 +2,7 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
-import { ICommunityIntegrations } from '@core/db/db.entities';
+import { ICommunityIntegrations } from '@util/db.entities';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { MutationEvent } from '@util/constants.events';
 

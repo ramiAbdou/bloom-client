@@ -7,7 +7,7 @@ import GrayCard from '@components/containers/Card/GrayCard';
 import Row from '@components/containers/Row/Row';
 import Section from '@components/containers/Section';
 import SidebarHamburgerButton from '@components/organisms/Sidebar/SidebarHamburgerButton';
-import { IEvent, IMember } from '@core/db/db.entities';
+import { IEvent, IMember } from '@util/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 

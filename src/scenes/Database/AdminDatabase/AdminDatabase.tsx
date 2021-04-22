@@ -6,7 +6,7 @@ import ModalLocal from '@components/organisms/Modal/ModalLocal';
 import Table from '@components/organisms/Table/Table';
 import { TableColumn, TableRow } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
-import { IMember, MemberRole } from '@core/db/db.entities';
+import { IMember, MemberRole } from '@util/db.entities';
 import useFind from '@core/gql/hooks/useFind';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { QuestionType } from '@util/constants';

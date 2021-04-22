@@ -8,7 +8,7 @@ import {
   IMemberValue,
   IQuestion,
   MemberStatus
-} from '@core/db/db.entities';
+} from '@util/db.entities';
 import useFind from '@core/gql/hooks/useFind';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';

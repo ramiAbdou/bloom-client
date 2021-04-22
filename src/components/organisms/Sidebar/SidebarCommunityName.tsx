@@ -2,7 +2,7 @@ import React from 'react';
 
 import { gql } from '@apollo/client';
 import Separator from '@components/atoms/Separator';
-import { ICommunity } from '@core/db/db.entities';
+import { ICommunity } from '@util/db.entities';
 import { ComponentWithFragments } from '@util/constants';
 
 const SidebarCommunityName: ComponentWithFragments<ICommunity> = ({

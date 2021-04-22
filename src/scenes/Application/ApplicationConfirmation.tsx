@@ -5,8 +5,8 @@ import { useReactiveVar } from '@apollo/client';
 import Card from '@components/containers/Card/Card';
 import StoryConfirmation from '@components/organisms/Story/StoryConfirmation';
 import StoryPage from '@components/organisms/Story/StoryPage';
-import { ICommunity } from '@core/db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
+import { ICommunity } from '@util/db.entities';
 
 const ApplicationConfirmationMessage: React.FC = () => {
   const communityId: string = useReactiveVar(communityIdVar);

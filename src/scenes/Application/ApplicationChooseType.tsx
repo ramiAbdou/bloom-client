@@ -8,10 +8,10 @@ import FormMultipleChoice from '@components/organisms/Form/FormMultipleChoice';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import StoryStore from '@components/organisms/Story/Story.store';
 import StoryPage from '@components/organisms/Story/StoryPage';
-import { IMemberType } from '@core/db/db.entities';
 import useFind from '@core/gql/hooks/useFind';
 import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';
+import { IMemberType } from '@util/db.entities';
 import ApplicationChooseTypeCard from './ApplicationChooseTypeCard';
 import ApplicationPaymentForm from './ApplicationPaymentSection';
 

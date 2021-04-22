@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import { Identifier } from '@core/db/db.entities';
 import { BaseProps } from '@util/constants';
+import { Identifier } from '@util/db.entities';
 import { cx } from '@util/util';
 
 interface ProfilePictureProps extends BaseProps {

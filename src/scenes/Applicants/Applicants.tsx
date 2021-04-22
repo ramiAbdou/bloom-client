@@ -4,8 +4,8 @@ import { communityIdVar } from 'src/App.reactive';
 import { useReactiveVar } from '@apollo/client';
 import MainContent from '@components/containers/Main/MainContent';
 import Scene from '@components/containers/Scene';
-import { IMember } from '@core/db/db.entities';
 import useFind from '@gql/hooks/useFind';
+import { IMember } from '@util/db.entities';
 import ApplicantsCardList from './ApplicantsCardList';
 import ApplicantsHeader from './ApplicantsHeader';
 

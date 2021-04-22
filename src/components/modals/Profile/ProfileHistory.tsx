@@ -5,7 +5,7 @@ import { useReactiveVar } from '@apollo/client';
 import Separator from '@components/atoms/Separator';
 import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
 import Show from '@components/containers/Show';
-import { IMember } from '@core/db/db.entities';
+import { IMember } from '@util/db.entities';
 import IdStore from '@core/store/Id.store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { MemberHistoryData } from './Profile.types';

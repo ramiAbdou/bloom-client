@@ -4,9 +4,9 @@ import Separator from '@components/atoms/Separator';
 import Show from '@components/containers/Show';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/QuestionBox.types';
-import { IMemberValue } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
 import useFind from '@gql/hooks/useFind';
+import { IMemberValue } from '@util/db.entities';
 
 const ProfileDataContent: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);

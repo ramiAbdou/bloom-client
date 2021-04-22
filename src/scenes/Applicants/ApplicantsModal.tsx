@@ -3,7 +3,7 @@ import React from 'react';
 import Row from '@components/containers/Row/Row';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/QuestionBox.types';
-import { IMember, IMemberValue, MemberStatus } from '@core/db/db.entities';
+import { IMember, IMemberValue, MemberStatus } from '@util/db.entities';
 import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';

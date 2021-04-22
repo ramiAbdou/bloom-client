@@ -2,7 +2,7 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
-import { IMemberSocials } from '@core/db/db.entities';
+import { IMemberSocials } from '@util/db.entities';
 import GQL from '@gql/GQL';
 import useGQL from '@gql/hooks/useGQL';
 

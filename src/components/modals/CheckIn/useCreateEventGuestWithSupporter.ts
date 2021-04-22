@@ -5,7 +5,7 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
-import { IEventGuest } from '@core/db/db.entities';
+import { IEventGuest } from '@util/db.entities';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { CreateEventGuestArgs } from '@scenes/Events/Events.types';
 import { MutationEvent } from '@util/constants.events';

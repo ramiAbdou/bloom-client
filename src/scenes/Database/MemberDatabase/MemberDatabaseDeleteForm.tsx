@@ -8,7 +8,7 @@ import {
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
 import TableStore from '@components/organisms/Table/Table.store';
-import { IMember } from '@core/db/db.entities';
+import { IMember } from '@util/db.entities';
 import { now } from '@util/util';
 
 const MemberDatabaseDeleteFormHeader: React.FC = () => {

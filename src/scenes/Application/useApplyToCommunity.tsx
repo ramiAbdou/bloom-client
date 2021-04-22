@@ -3,16 +3,16 @@ import {
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
 import { parseValue } from '@components/organisms/Form/Form.util';
+import useBloomMutation from '@gql/hooks/useBloomMutation';
+import { ApplyForMembershipArgs } from '@scenes/Application/Application.types';
+import { QuestionCategory } from '@util/constants';
+import { MutationEvent } from '@util/constants.events';
 import {
   ICommunity,
   IMemberType,
   IPaymentMethod,
   IQuestion
-} from '@core/db/db.entities';
-import useBloomMutation from '@gql/hooks/useBloomMutation';
-import { ApplyForMembershipArgs } from '@scenes/Application/Application.types';
-import { QuestionCategory } from '@util/constants';
-import { MutationEvent } from '@util/constants.events';
+} from '@util/db.entities';
 
 const useApplyToCommunity = (): OnFormSubmitFunction => {
   const [applyToCommunity] = useBloomMutation<any, ApplyForMembershipArgs>({

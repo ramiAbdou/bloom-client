@@ -4,7 +4,7 @@ import { communityIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import Dropdown from '@components/molecules/Dropdown/Dropdown';
-import { ICommunity, IQuestion } from '@core/db/db.entities';
+import { ICommunity, IQuestion } from '@util/db.entities';
 import IdStore from '@core/store/Id.store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';

@@ -4,7 +4,7 @@ import { communityIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import GrayCard from '@components/containers/Card/GrayCard';
-import { IEvent } from '@core/db/db.entities';
+import { IEvent } from '@util/db.entities';
 import useFind from '@core/gql/hooks/useFind';
 
 const EventsAnalyticsTotalCard: React.FC = () => {

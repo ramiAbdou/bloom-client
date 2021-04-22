@@ -6,7 +6,7 @@ import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import MainHeader from '@components/containers/Main/MainHeader';
 import { MainNavigationOptionProps } from '@components/containers/Main/MainNavigationButton';
-import { IMember, MemberRole } from '@core/db/db.entities';
+import { IMember, MemberRole } from '@util/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreActions } from '@core/store/Store';
 import useFinalPath from '@hooks/useFinalPath';

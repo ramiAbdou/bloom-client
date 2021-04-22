@@ -1,8 +1,8 @@
 import { communityIdVar, userIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
-import { IMember } from '@core/db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
+import { IMember } from '@util/db.entities';
 
 /**
  * Returns true if the authenticated user has a membership with the active

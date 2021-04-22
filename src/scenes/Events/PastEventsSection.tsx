@@ -5,7 +5,7 @@ import { communityIdVar, memberIdVar } from 'src/App.reactive';
 import { useReactiveVar } from '@apollo/client';
 import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
 import Section from '@components/containers/Section';
-import { IEvent, IEventAttendee } from '@core/db/db.entities';
+import { IEvent, IEventAttendee } from '@util/db.entities';
 import useFind from '@core/gql/hooks/useFind';
 import { LoadingProps } from '@util/constants';
 import { sortObjects } from '@util/util';

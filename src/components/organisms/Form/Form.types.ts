@@ -1,7 +1,6 @@
 import { ActionCreator } from 'easy-peasy';
 
 import { ToastOptions } from '@components/organisms/Toast/Toast.types';
-import { IPaymentMethod } from '@core/db/db.entities';
 import GQL from '@gql/GQL';
 import {
   ClassNameProps,
@@ -10,6 +9,7 @@ import {
   ShowProps,
   ValueProps
 } from '@util/constants';
+import { IPaymentMethod } from '@util/db.entities';
 
 export type FormQuestion = {
   category?: QuestionCategory;

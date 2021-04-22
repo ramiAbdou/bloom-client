@@ -9,9 +9,9 @@ import {
 import Button from '@components/atoms/Button/Button';
 import Show from '@components/containers/Show';
 import IdStore from '@core/store/Id.store';
-import { IMemberSocials } from '@core/db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import { SocialBrand } from '@util/constants';
+import { IMemberSocials } from '@util/db.entities';
 import { cx } from '@util/util';
 
 interface ProfileSocialButtonProps {

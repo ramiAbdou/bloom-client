@@ -6,7 +6,7 @@ import Row from '@components/containers/Row/Row';
 import TableStore from '@components/organisms/Table/Table.store';
 import TableFilterButton from '@components/organisms/Table/TableFilterButton';
 import SearchBar from '@components/organisms/Table/TableSeachBar';
-import { IMember, MemberRole } from '@core/db/db.entities';
+import { IMember, MemberRole } from '@util/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import MemberDatabaseCopyButton from './MemberDatabaseCopyButton';
 import DeleteMembersButton from './MemberDatabaseDeleteButton';

@@ -5,10 +5,10 @@ import { communityIdVar } from 'src/App.reactive';
 import { useReactiveVar } from '@apollo/client';
 import Show from '@components/containers/Show';
 import Dropdown from '@components/molecules/Dropdown/Dropdown';
-import { IMemberType, IQuestion } from '@core/db/db.entities';
 import useFind from '@core/gql/hooks/useFind';
 import IdStore from '@core/store/Id.store';
 import { QuestionCategory } from '@util/constants';
+import { IMemberType, IQuestion } from '@util/db.entities';
 import { sortObjects } from '@util/util';
 
 const MembersAnalyticsPlaygroundDropdown: React.FC = () => {

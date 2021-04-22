@@ -4,10 +4,10 @@ import Card from '@components/containers/Card/Card';
 import Row from '@components/containers/Row/Row';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/QuestionBox.types';
-import { IMember, IMemberValue, MemberStatus } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { IdProps, QuestionCategory } from '@util/constants';
+import { IMember, IMemberValue, MemberStatus } from '@util/db.entities';
 import ApplicantsCardHeader from './ApplicantsCardHeader';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 

@@ -1,4 +1,4 @@
-import { ICommunityIntegrations } from '@core/db/db.entities';
+import { ICommunityIntegrations } from '@util/db.entities';
 import {
   APP,
   isDevelopment,

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { gql, useReactiveVar } from '@apollo/client';
 import Checkbox from '@components/atoms/Checkbox/Checkbox';
-import { IMemberValue, IQuestion } from '@core/db/db.entities';
+import { IMemberValue, IQuestion } from '@util/db.entities';
 import { ComponentWithFragments } from '@util/constants';
 import {
   DirectoryFilterSelectedValue,

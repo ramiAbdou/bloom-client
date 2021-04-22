@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { communityIdVar } from 'src/App.reactive';
 
 import { gql, useReactiveVar } from '@apollo/client';
-import { ICommunity } from '@core/db/db.entities';
+import { ICommunity } from '@util/db.entities';
 import { ComponentWithFragments } from '@util/constants';
 import { cx } from '@util/util';
 import SidebarCommunityButtonLogo from './SidebarCommunityButtonLogo';

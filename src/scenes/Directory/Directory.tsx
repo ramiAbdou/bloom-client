@@ -4,7 +4,7 @@ import { DocumentNode, gql, useQuery } from '@apollo/client';
 import MainContent from '@components/containers/Main/MainContent';
 import Scene from '@components/containers/Scene';
 import PanelLocal from '@components/organisms/Panel/PanelLocal';
-import { IMember } from '@core/db/db.entities';
+import { IMember } from '@util/db.entities';
 import DirectoryActionRow from './DirectoryActionRow';
 import DirectoryCard from './DirectoryCard';
 import DirectoryCardList from './DirectoryCardList';

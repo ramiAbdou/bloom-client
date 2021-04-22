@@ -3,7 +3,7 @@ import { memberIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
-import { IEvent, IEventWatch, IMember } from '@core/db/db.entities';
+import { IEvent, IEventWatch, IMember } from '@util/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import GQL from '@gql/GQL';
 import useGQL from '@gql/hooks/useGQL';

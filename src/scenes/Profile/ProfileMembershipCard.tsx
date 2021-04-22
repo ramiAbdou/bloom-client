@@ -8,7 +8,7 @@ import Card from '@components/containers/Card/Card';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/QuestionBox.types';
 import { ModalData } from '@components/organisms/Modal/Modal.types';
-import { ICommunity, IMember, IMemberValue } from '@core/db/db.entities';
+import { ICommunity, IMember, IMemberValue } from '@util/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreActions } from '@core/store/Store';
 import useFind from '@gql/hooks/useFind';

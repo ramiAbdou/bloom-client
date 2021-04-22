@@ -5,7 +5,7 @@ import { communityIdVar, eventIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import Show from '@components/containers/Show';
-import { EventPrivacy, IEvent } from '@core/db/db.entities';
+import { EventPrivacy, IEvent } from '@util/db.entities';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import useIsMember from '@hooks/useIsMember';

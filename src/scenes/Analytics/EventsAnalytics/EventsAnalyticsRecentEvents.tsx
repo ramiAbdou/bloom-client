@@ -14,7 +14,7 @@ import {
 } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
 import TableSearchBar from '@components/organisms/Table/TableSeachBar';
-import { ICommunity, IEvent } from '@core/db/db.entities';
+import { ICommunity, IEvent } from '@util/db.entities';
 import useFind from '@core/gql/hooks/useFind';
 import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionType } from '@util/constants';

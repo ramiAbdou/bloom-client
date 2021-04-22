@@ -7,7 +7,7 @@ import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
-import { IMemberSocials } from '@core/db/db.entities';
+import { IMemberSocials } from '@util/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import useUpdateMemberSocials from './useUpdateMemberSocials';
 

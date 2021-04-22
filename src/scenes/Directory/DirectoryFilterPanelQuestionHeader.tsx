@@ -3,7 +3,7 @@ import { IoAdd } from 'react-icons/io5';
 
 import { gql, useReactiveVar } from '@apollo/client';
 import Row from '@components/containers/Row/Row';
-import { IQuestion } from '@core/db/db.entities';
+import { IQuestion } from '@util/db.entities';
 import { ComponentWithFragments } from '@util/constants';
 import { cx } from '@util/util';
 import { directoryFilterOpenQuestionIdVar } from './Directory.reactive';

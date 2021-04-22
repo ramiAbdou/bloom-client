@@ -4,7 +4,7 @@ import HeaderTag from '@components/atoms/Tag/HeaderTag';
 import Row from '@components/containers/Row/Row';
 import MailTo from '@components/molecules/MailTo';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
-import { IMember } from '@core/db/db.entities';
+import { IMember } from '@util/db.entities';
 import IdStore from '@core/store/Id.store';
 import useFindOne from '@gql/hooks/useFindOne';
 import ProfileSocialContainer from './ProfileSocial';

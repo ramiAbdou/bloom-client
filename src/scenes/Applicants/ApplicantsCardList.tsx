@@ -2,8 +2,8 @@ import React from 'react';
 import { communityIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
-import { IMember, MemberStatus } from '@core/db/db.entities';
 import useFind from '@core/gql/hooks/useFind';
+import { IMember, MemberStatus } from '@util/db.entities';
 import ApplicantCard from './ApplicantsCard';
 
 const ApplicantsCardList: React.FC = () => {

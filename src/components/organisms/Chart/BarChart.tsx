@@ -11,7 +11,7 @@ import {
 import { communityIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
-import { ICommunity } from '@core/db/db.entities';
+import { ICommunity } from '@util/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import Chart from './Chart.store';
 import ChartTooltip, { ChartTooltipProps } from './Tooltip';

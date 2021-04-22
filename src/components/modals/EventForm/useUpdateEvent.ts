@@ -2,7 +2,7 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
-import { EventPrivacy, IEvent } from '@core/db/db.entities';
+import { EventPrivacy, IEvent } from '@util/db.entities';
 import { useStoreState } from '@core/store/Store';
 import { uploadImage } from '@util/imageUtil';
 

@@ -8,7 +8,7 @@ import Card from '@components/containers/Card/Card';
 import Row from '@components/containers/Row/Row';
 import MailTo from '@components/molecules/MailTo';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
-import { IMember } from '@core/db/db.entities';
+import { IMember } from '@util/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreActions } from '@core/store/Store';
 import useBreakpoint from '@hooks/useBreakpoint';

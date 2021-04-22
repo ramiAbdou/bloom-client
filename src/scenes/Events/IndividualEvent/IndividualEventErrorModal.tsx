@@ -4,10 +4,10 @@ import { eventIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import ModalCloseButton from '@components/organisms/Modal/ModalCloseButton';
-import { IEvent } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
 import { ErrorType } from '@util/constants.errors';
+import { IEvent } from '@util/db.entities';
 
 const IndividualEventErrorModal: React.FC = () => {
   const eventId: string = useReactiveVar(eventIdVar);

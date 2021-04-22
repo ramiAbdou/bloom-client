@@ -4,8 +4,8 @@ import { communityIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import Show from '@components/containers/Show';
-import { IEvent } from '@core/db/db.entities';
 import useFind from '@gql/hooks/useFind';
+import { IEvent } from '@util/db.entities';
 import EventAnalyticsChart from './EventAnalyticsChart';
 import EventsAnalyticsOverview from './EventsAnalyticsOverview';
 import EventsAnalyticsRecentEvents from './EventsAnalyticsRecentEvents';
