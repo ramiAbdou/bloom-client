@@ -10,7 +10,7 @@ import EventsCardHeader from './EventsCardHeader';
 import EventsJoinButton from './EventsJoinButton';
 import EventsRsvpButton from './EventsRsvpButton';
 import EventsShareButton from './EventsShareButton';
-// import EventsViewRecordingButton from './EventsViewRecordingButton';
+import EventsViewRecordingButton from './EventsViewRecordingButton';
 
 const EventsCard: ComponentWithFragments<IEvent> = ({ data: event }) => {
   const { push } = useHistory();
@@ -28,7 +28,7 @@ const EventsCard: ComponentWithFragments<IEvent> = ({ data: event }) => {
         <EventsRsvpButton data={event} />
         <EventsJoinButton data={event} />
         <EventsShareButton data={event} />
-        {/* <EventsViewRecordingButton eventId={event.id} /> */}
+        <EventsViewRecordingButton data={event} />
       </div>
     </Card>
   );
@@ -39,12 +39,14 @@ EventsCard.fragment = gql`
     ...EventsCardHeaderFragment
     ...EventsJoinButtonFragment
     ...EventsRsvpButtonFragment
-    ...EventShareButtonFragment
+    ...EventsShareButtonFragment
+    ...EventsViewRecordingButtonFragment
   }
   ${EventsCardHeader.fragment}
   ${EventsJoinButton.fragment}
   ${EventsRsvpButton.fragment}
   ${EventsShareButton.fragment}
+  ${EventsViewRecordingButton.fragment}
 `;
 
 export default EventsCard;

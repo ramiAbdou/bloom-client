@@ -8,7 +8,7 @@ import { APP, ComponentWithFragments } from '@util/constants';
 import { IEvent, IEventGuest, IMember } from '@util/constants.entities';
 import { EventTiming, getEventTiming } from './Events.util';
 
-const EventShareButton: ComponentWithFragments<
+const EventsShareButton: ComponentWithFragments<
   IEvent,
   Partial<Pick<ButtonProps, 'large'>>
 > = ({ data: event, large }) => {
@@ -62,8 +62,8 @@ const EventShareButton: ComponentWithFragments<
   );
 };
 
-EventShareButton.fragment = gql`
-  fragment EventShareButtonFragment on events {
+EventsShareButton.fragment = gql`
+  fragment EventsShareButtonFragment on events {
     endTime
     startTime
 
@@ -73,4 +73,4 @@ EventShareButton.fragment = gql`
   }
 `;
 
-export default EventShareButton;
+export default EventsShareButton;
