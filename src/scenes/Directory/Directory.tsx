@@ -58,11 +58,9 @@ const GET_MEMBERS_BY_COMMUNITY_ID: DocumentNode = gql`
 `;
 
 const DirectoryContent: React.FC = () => {
-  const { data, loading, error } = useQuery<GetMembersByCommunityIdResult>(
+  const { data, loading } = useQuery<GetMembersByCommunityIdResult>(
     GET_MEMBERS_BY_COMMUNITY_ID
   );
-
-  console.log(error, data?.members?.length);
 
   return (
     <MainContent>

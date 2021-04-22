@@ -1,96 +1,43 @@
 import React from 'react';
 
-import HeaderTag from '@components/atoms/Tag/HeaderTag';
-import Row from '@components/containers/Row/Row';
-import MailTo from '@components/molecules/MailTo';
-import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
-import IdStore from '@core/store/Id.store';
-import useFindOne from '@gql/hooks/useFindOne';
+import { gql } from '@apollo/client';
+import { ComponentWithFragments } from '@util/constants';
 import { IMember } from '@util/constants.entities';
-import ProfileSocialContainer from './ProfileSocial';
+import ProfileModalBio from './ProfileModalBio';
+import ProfileModalEmail from './ProfileModalEmail';
+import ProfileModalFullName from './ProfileModalFullName';
+import ProfileModalPicture from './ProfileModalPicture';
+import ProfileModalSocialList from './ProfileModalSocialList';
+import ProfileModalTagList from './ProfileModalTagList';
 
-const ProfilePersonalPicture: React.FC = () => {
-  const memberId: string = IdStore.useStoreState((state) => state.id);
-
-  return (
-    <ProfilePicture
-      className="mb-xs--nlc"
-      fontSize={36}
-      memberId={memberId}
-      size={96}
-    />
-  );
-};
-
-const ProfilePersonalName: React.FC = () => {
-  const memberId: string = IdStore.useStoreState((state) => state.id);
-
-  const { data: member, loading } = useFindOne(IMember, {
-    fields: ['firstName', 'lastName'],
-    where: { id: memberId }
-  });
-
-  if (loading) return null;
-
-  const fullName: string = `${member.firstName} ${member.lastName}`;
-
-  return <h1 className="mb-xs--nlc">{fullName}</h1>;
-};
-
-const ProfilePersonalTags: React.FC = () => {
-  const memberId: string = IdStore.useStoreState((state) => state.id);
-
-  const { data: member, loading } = useFindOne(IMember, {
-    fields: ['memberType.id', 'memberType.name', 'position', 'role'],
-    where: { id: memberId }
-  });
-
-  if (loading) return null;
-
-  return (
-    <Row wrap className="mb-ss--nlc" gap="xs">
-      <HeaderTag show={!!member.role}>{member.role}</HeaderTag>
-      <HeaderTag show={!!member.position}>{member.position}</HeaderTag>
-      <HeaderTag>{member.memberType?.name}</HeaderTag>
-    </Row>
-  );
-};
-
-const ProfilePersonalEmail: React.FC = () => {
-  const memberId: string = IdStore.useStoreState((state) => state.id);
-
-  const { data: member, loading } = useFindOne(IMember, {
-    fields: ['email'],
-    where: { id: memberId }
-  });
-
-  if (loading) return null;
-
-  return <MailTo className="mb-sm--nlc" email={member.email} />;
-};
-
-const ProfilePersonalBio: React.FC = () => {
-  const memberId: string = IdStore.useStoreState((state) => state.id);
-
-  const { data: member, loading } = useFindOne(IMember, {
-    fields: ['bio'],
-    where: { id: memberId }
-  });
-
-  if (loading) return null;
-
-  return <p className="mb-sm--nlc ws-pre-wrap">{member.bio}</p>;
-};
-
-const ProfilePersonal: React.FC = () => (
+const ProfilePersonal: ComponentWithFragments<IMember> = ({ data: member }) => (
   <div className="mb-sm--nlc">
-    <ProfilePersonalPicture />
-    <ProfilePersonalName />
-    <ProfilePersonalTags />
-    <ProfilePersonalEmail />
-    <ProfilePersonalBio />
-    <ProfileSocialContainer />
+    <ProfileModalPicture data={member} />
+    <ProfileModalFullName data={member} />
+    <ProfileModalTagList data={member} />
+    <ProfileModalEmail data={member} />
+    <ProfileModalBio data={member} />
+    <ProfileModalSocialList data={member} />
   </div>
 );
+
+ProfilePersonal.fragments = {
+  data: gql`
+    fragment ProfilePersonalFragment on members {
+      ...ProfileModalBioFragment
+      ...ProfileModalEmailFragment
+      ...ProfileModalFullNameFragment
+      ...ProfileModalPictureFragment
+      ...ProfileModalSocialListFragment
+      ...ProfileModalTagListFragment
+    }
+    ${ProfileModalBio.fragments.data}
+    ${ProfileModalEmail.fragments.data}
+    ${ProfileModalFullName.fragments.data}
+    ${ProfileModalPicture.fragments.data}
+    ${ProfileModalSocialList.fragments.data}
+    ${ProfileModalTagList.fragments.data}
+  `
+};
 
 export default ProfilePersonal;

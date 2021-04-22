@@ -35,6 +35,7 @@ const DirectoryCard: ComponentWithFragments<IMember> = ({ data: member }) => {
 DirectoryCard.fragments = {
   data: gql`
     fragment DirectoryCardFragment on members {
+      id
       ...DirectoryCardFullNameFragment
       ...DirectoryCardPictureFragment
       ...DirectoryCardPositionFragment

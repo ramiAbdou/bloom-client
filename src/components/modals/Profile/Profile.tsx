@@ -1,33 +1,51 @@
 import React from 'react';
 
-import Show from '@components/containers/Show';
+import { DocumentNode, gql, useQuery } from '@apollo/client';
 import IdStore from '@core/store/Id.store';
 import { useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
 import { IMember } from '@util/constants.entities';
-import ProfileData from './ProfileData';
-import ProfileHistory from './ProfileHistory';
+// import ProfileData from './ProfileData';
+// import ProfileHistory from './ProfileHistory';
 import ProfilePersonal from './ProfilePersonal';
+
+interface GetMemberProfileArgs {
+  memberId: string;
+}
+
+interface GetMemberProfileResult {
+  member: IMember;
+}
+
+const GET_MEMBER_PROFILE: DocumentNode = gql`
+  query GetMemberProfile($memberId: String!) {
+    member(id: $memberId) {
+      id
+      ...ProfilePersonalFragment
+    }
+  }
+  ${ProfilePersonal.fragments.data}
+`;
 
 const Profile: React.FC = () => {
   const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const { data: member, loading } = useFindOne(IMember, {
-    fields: ['bio', 'email', 'id', 'joinedAt', 'position'],
-    skip: !memberId,
-    where: { id: memberId }
-  });
+  const { data, loading, error } = useQuery<
+    GetMemberProfileResult,
+    GetMemberProfileArgs
+  >(GET_MEMBER_PROFILE, { skip: !memberId, variables: { memberId } });
 
-  if (loading) return null;
+  const member: IMember = data?.member;
+
+  console.log(member, error);
+
+  if (loading || !member) return null;
 
   return (
-    <Show show={!!member.id}>
-      <IdStore.Provider runtimeModel={{ id: memberId }}>
-        <ProfilePersonal />
-        <ProfileData />
-        <ProfileHistory />
-      </IdStore.Provider>
-    </Show>
+    <IdStore.Provider runtimeModel={{ id: memberId }}>
+      <ProfilePersonal data={member} />
+      {/* <ProfileData />
+      <ProfileHistory /> */}
+    </IdStore.Provider>
   );
 };
 
