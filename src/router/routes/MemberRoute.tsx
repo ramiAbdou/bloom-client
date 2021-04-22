@@ -2,11 +2,40 @@ import React, { useEffect } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 import { communityIdVar, memberIdVar, userIdVar } from 'src/App.reactive';
 
-import { useReactiveVar } from '@apollo/client';
-import useFindOne from '@gql/hooks/useFindOne';
+import { DocumentNode, gql, useQuery, useReactiveVar } from '@apollo/client';
 import { UrlNameProps } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 import { updateDocumentColors } from '@util/util';
+
+interface GetMemberByCommunityUrlNameArgs {
+  urlName: string;
+}
+
+interface GetMemberByCommunityUrlNameResult {
+  members: IMember[];
+}
+
+const GET_MEMBER_BY_COMMUNITY_URL_NAME: DocumentNode = gql`
+  query GetMemberByCommunityUrlName($urlName: String!, $userId: String!) {
+    userId @client @export(as: "userId")
+
+    members(
+      where: {
+        community: { urlName: { _eq: $urlName } }
+        status: { _eq: "Accepted" }
+        userId: { _eq: $userId }
+      }
+      limit: 1
+    ) {
+      id
+      role
+      community {
+        id
+        primaryColor
+      }
+    }
+  }
+`;
 
 interface MemberRouteProps extends RouteProps {
   admin?: boolean;
@@ -29,16 +58,20 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
   // still would not be known to us.
   const { urlName }: UrlNameProps = rest?.computedMatch?.params;
 
-  // Find the community with the urlName that we are currently at.
-  const { data: member, loading } = useFindOne(IMember, {
-    fields: ['community.id', 'community.primaryColor', 'role'],
-    where: { community: { urlName }, userId: storedUserId }
+  const { data, loading } = useQuery<
+    GetMemberByCommunityUrlNameResult,
+    GetMemberByCommunityUrlNameArgs
+  >(GET_MEMBER_BY_COMMUNITY_URL_NAME, {
+    skip: !urlName || !storedUserId,
+    variables: { urlName }
   });
+
+  const member: IMember = data?.members?.length ? data?.members[0] : null;
 
   useEffect(() => {
     // In order to set the active entities, we need to make sure the query
     // actually returned those ID's.
-    if (!member.id || !member.community?.id) return;
+    if (!member?.id || !member.community?.id) return;
 
     if (
       member.id !== storedMemberId ||
