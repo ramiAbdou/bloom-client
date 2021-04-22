@@ -12,17 +12,14 @@ import modal from '@components/organisms/Modal/Modal.store';
 import { ModalModel } from '@components/organisms/Modal/Modal.types';
 import panel from '@components/organisms/Panel/Panel.store';
 import { PanelModel } from '@components/organisms/Panel/Panel.types';
-import toast from '@components/organisms/Toast/Toast.store';
-import { ToastModel } from '@components/organisms/Toast/Toast.types';
 
 export interface StoreModel {
   modal: ModalModel;
   panel: PanelModel;
-  toast: ToastModel;
 }
 
 export const store: Store<StoreModel> = createStore<StoreModel>(
-  { modal, panel, toast },
+  { modal, panel },
   { disableImmer: true }
 );
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { communityIdVar } from 'src/App.reactive';
+import { communityIdVar, showToast } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import Form from '@components/organisms/Form/Form';
@@ -23,8 +23,7 @@ const DeleteEventConfirmationForm: React.FC = () => {
   const onSubmit: OnFormSubmitFunction = async ({
     closeModal,
     gql,
-    setError,
-    showToast
+    setError
   }: OnFormSubmitArgs) => {
     // Fetch the URL name of the community so we can push to correct URL.
     const { urlName } = await gql.findOne(ICommunity, {

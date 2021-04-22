@@ -1,9 +1,9 @@
 import React from 'react';
 import { IoCopy } from 'react-icons/io5';
+import { toastQueueVar, useToast } from 'src/App.reactive';
 
 import TableStore from '@components/organisms/Table/Table.store';
 import { TableRow } from '@components/organisms/Table/Table.types';
-import { useStoreActions } from '@core/store/Store';
 import { QuestionCategory } from '@util/constants';
 import DatabaseAction from '../DatabaseAction';
 
@@ -12,7 +12,7 @@ import DatabaseAction from '../DatabaseAction';
  * comma-separated list.
  */
 const MemberDatabaseCopyButton: React.FC = () => {
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
+  const { showToast } = useToast(toastQueueVar);
 
   const emails = TableStore.useStoreState(
     ({ columns, rows, selectedRowIds }) => {

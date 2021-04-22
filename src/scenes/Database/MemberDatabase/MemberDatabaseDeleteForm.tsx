@@ -1,4 +1,5 @@
 import React from 'react';
+import { showToast } from 'src/App.reactive';
 
 import Form from '@components/organisms/Form/Form';
 import {
@@ -32,8 +33,7 @@ const MemberDatabaseDeleteForm: React.FC = () => {
   const onSubmit: OnFormSubmitFunction = async ({
     closeModal,
     gql,
-    setError,
-    showToast
+    setError
   }: OnFormSubmitArgs) => {
     const { error } = await gql.updateMany(IMember, {
       data: { deletedAt: now() },

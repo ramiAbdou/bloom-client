@@ -1,4 +1,5 @@
 import React from 'react';
+import { showToast } from 'src/App.reactive';
 
 import Form from '@components/organisms/Form/Form';
 import {
@@ -55,8 +56,7 @@ const ApplicantsConfirmationForm: React.FC = () => {
 
   const onSubmit: OnFormSubmitFunction = async ({
     closeModal,
-    gql,
-    showToast
+    gql
   }: OnFormSubmitArgs) => {
     const { error } = await gql.updateMany(IMember, {
       data: { status: response },

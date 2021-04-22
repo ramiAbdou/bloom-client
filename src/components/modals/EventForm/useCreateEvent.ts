@@ -1,4 +1,5 @@
 import day from 'dayjs';
+import { showToast } from 'src/App.reactive';
 
 import {
   OnFormSubmitArgs,
@@ -44,8 +45,7 @@ const useCreateEvent = (): OnFormSubmitFunction => {
     closeModal,
     gql,
     items,
-    setError,
-    showToast
+    setError
   }: OnFormSubmitArgs) => {
     const description: string = items.EVENT_DESCRIPTION?.value as string;
     const privacy: EventPrivacy = items.PRIVACY?.value as EventPrivacy;

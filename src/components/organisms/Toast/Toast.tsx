@@ -1,12 +1,12 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { ToastData, toastQueueVar, useToast } from 'src/App.reactive';
 
-import { useStoreActions, useStoreState } from '@core/store/Store';
-import { ToastOptions } from './Toast.types';
+import { useReactiveVar } from '@apollo/client';
 
-const Toast: React.FC<ToastOptions> = ({ id, message }) => {
-  const dequeueToast = useStoreActions(({ toast }) => toast.dequeueToast);
+const Toast: React.FC<ToastData> = ({ id, message }) => {
+  const { dequeueToast } = useToast(toastQueueVar);
 
   useEffect(() => {
     // We only show the toast for 5 seconds, then we remove it from the DOM.
@@ -31,12 +31,12 @@ const Toast: React.FC<ToastOptions> = ({ id, message }) => {
 };
 
 const ToastList: React.FC = () => {
-  const queue: ToastOptions[] = useStoreState(({ toast }) => toast.queue);
+  const toastQueue: ToastData[] = useReactiveVar(toastQueueVar);
 
   return createPortal(
     <div className="c-toast-ctr">
       <AnimatePresence>
-        {queue.map((toast: ToastOptions) => (
+        {toastQueue.map((toast: ToastData) => (
           <Toast key={toast.id} {...toast} />
         ))}
       </AnimatePresence>

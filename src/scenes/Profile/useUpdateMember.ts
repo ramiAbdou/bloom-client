@@ -1,3 +1,4 @@
+import { showToast } from 'src/App.reactive';
 import validator from 'validator';
 
 import {
@@ -12,8 +13,7 @@ const useUpdateMember = (): OnFormSubmitFunction => {
     closeModal,
     gql,
     items,
-    setError,
-    showToast
+    setError
   }: OnFormSubmitArgs) => {
     const bio: string = items.BIO?.value as string;
     const firstName: string = items.FIRST_NAME?.value as string;

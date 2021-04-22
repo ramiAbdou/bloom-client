@@ -1,3 +1,5 @@
+import { showToast } from 'src/App.reactive';
+
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -13,8 +15,7 @@ const useUpdateEvent = (): OnFormSubmitFunction => {
     closeModal,
     gql,
     items,
-    setError,
-    showToast
+    setError
   }: OnFormSubmitArgs) => {
     const base64String: string = items.COVER_IMAGE?.value as string;
     const description: string = items.EVENT_DESCRIPTION?.value as string;

@@ -1,3 +1,5 @@
+import { showToast } from 'src/App.reactive';
+
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -12,8 +14,7 @@ const useUpdateMemberSocials = (): OnFormSubmitFunction => {
   const onSubmit = async ({
     closeModal,
     items,
-    setError,
-    showToast
+    setError
   }: OnFormSubmitArgs) => {
     const facebookUrl: string = items.FACEBOOK_URL?.value as string;
     const instagramUrl: string = items.INSTAGRAM_URL?.value as string;

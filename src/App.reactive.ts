@@ -1,3 +1,5 @@
+import { nanoid } from 'nanoid';
+
 import { makeVar, ReactiveVar } from '@apollo/client';
 
 // ## ACTIVE ID's
@@ -14,3 +16,35 @@ export const isLoaderShowingVar: ReactiveVar<boolean> = makeVar<boolean>(false);
 // ## SIDEBAR
 
 export const isSidebarOpenVar: ReactiveVar<boolean> = makeVar<boolean>(false);
+
+// ## TOAST
+
+export interface ToastData {
+  id: string;
+  message: string;
+}
+
+interface ToastHook {
+  dequeueToast: (toastId: string) => void;
+  showToast: (toastData: Pick<ToastData, 'message'>) => void;
+}
+
+export const toastQueueVar: ReactiveVar<ToastData[]> = makeVar<ToastData[]>([]);
+
+export const showToast = ({ message }: Pick<ToastData, 'message'>): void => {
+  toastQueueVar([...toastQueueVar(), { id: nanoid(), message }]);
+};
+
+export const useToast = (toastVar: ReactiveVar<ToastData[]>): ToastHook => {
+  return {
+    dequeueToast: (toastId: string) => {
+      toastVar([
+        ...toastVar().filter((value: ToastData) => value.id !== toastId)
+      ]);
+    },
+
+    showToast: ({ message }: Pick<ToastData, 'message'>): void => {
+      toastVar([...toastVar(), { id: nanoid(), message }]);
+    }
+  };
+};

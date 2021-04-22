@@ -1,4 +1,5 @@
 import React from 'react';
+import { showToast } from 'src/App.reactive';
 
 import Form from '@components/organisms/Form/Form';
 import { OnFormSubmitArgs } from '@components/organisms/Form/Form.types';
@@ -24,8 +25,7 @@ const IndividualEventRecordingForm: React.FC = () => {
   const onSubmit = async ({
     closePanel,
     items,
-    setError,
-    showToast
+    setError
   }: OnFormSubmitArgs) => {
     const { error } = await gql.update(IEvent, {
       data: { recordingUrl: items.RECORDING_URL?.value as string },

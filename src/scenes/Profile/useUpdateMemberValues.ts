@@ -1,3 +1,5 @@
+import { showToast } from 'src/App.reactive';
+
 import {
   FormItemData,
   OnFormSubmitArgs,
@@ -21,8 +23,7 @@ const useUpdateMemberValues = (): OnFormSubmitFunction => {
   const onSubmit = async ({
     closeModal,
     items,
-    setError,
-    showToast
+    setError
   }: OnFormSubmitArgs) => {
     const data: MemberValueInput[] = Object.values(items).map(
       (item: FormItemData) => {

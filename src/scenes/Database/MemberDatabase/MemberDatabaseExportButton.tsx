@@ -1,24 +1,22 @@
 import React from 'react';
 import { CSVLink } from 'react-csv';
 import { IoExit } from 'react-icons/io5';
-import { communityIdVar } from 'src/App.reactive';
+import { communityIdVar, toastQueueVar, useToast } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import TableStore from '@components/organisms/Table/Table.store';
-import { useStoreActions } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { ICommunity } from '@util/constants.entities';
 import DatabaseAction from '../DatabaseAction';
 
 const MemberDatabaseExportButton: React.FC = () => {
   const communityId: string = useReactiveVar(communityIdVar);
+  const { showToast } = useToast(toastQueueVar);
 
   const { data: community, loading } = useFindOne(ICommunity, {
     fields: ['urlName'],
     where: { id: communityId }
   });
-
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   // Formatted in a way that CSV Link can properly read it.
   const headers = TableStore.useStoreState(({ columns }) =>

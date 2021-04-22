@@ -1,3 +1,5 @@
+import { showToast } from 'src/App.reactive';
+
 import {
   FormItemData,
   OnFormSubmitArgs,
@@ -22,8 +24,7 @@ const useInviteMembers = (): OnFormSubmitFunction => {
   const onSubmit = async ({
     closeModal,
     items,
-    setError,
-    showToast
+    setError
   }: OnFormSubmitArgs) => {
     // In the first pass, format all the values by looking at the item's
     // category and id.

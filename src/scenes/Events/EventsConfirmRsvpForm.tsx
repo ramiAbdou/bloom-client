@@ -1,4 +1,5 @@
 import React from 'react';
+import { showToast } from 'src/App.reactive';
 
 import Form from '@components/organisms/Form/Form';
 import {
@@ -34,10 +35,8 @@ const EventsConfirmRsvpForm: React.FC = () => {
 
   const onSubmit: OnFormSubmitFunction = async ({
     closeModal,
-    // db,
     gql,
-    setError,
-    showToast
+    setError
   }: OnFormSubmitArgs) => {
     const { error } = await gql.create(IEventGuest, {
       data: { eventId, memberId: '' },

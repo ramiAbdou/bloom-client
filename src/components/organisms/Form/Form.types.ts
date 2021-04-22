@@ -1,6 +1,5 @@
 import { ActionCreator } from 'easy-peasy';
 
-import { ToastOptions } from '@components/organisms/Toast/Toast.types';
 import GQL from '@gql/GQL';
 import {
   ClassNameProps,
@@ -68,7 +67,6 @@ export interface OnFormSubmitArgs {
   items: Record<string, FormItemData>;
   setError: ActionCreator<string>;
   setStoryValue: ActionCreator<SetValueArgs>;
-  showToast?: ActionCreator<ToastOptions>;
   storyItems?: Record<string, FormItemData>;
 }
 

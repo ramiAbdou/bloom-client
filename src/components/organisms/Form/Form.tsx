@@ -54,7 +54,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
       setError(null);
       setIsLoading(true);
 
-      const { modal, panel, toast } = globalStore?.getActions() ?? {};
+      const { modal, panel } = globalStore?.getActions() ?? {};
 
       const { goForward, setValue: setStoryValue } =
         storyStore?.getActions() ?? {};
@@ -68,7 +68,6 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
           items: validatedItems,
           setError,
           setStoryValue,
-          showToast: toast?.showToast,
           storyItems: storyStore?.getState()?.items
         });
 

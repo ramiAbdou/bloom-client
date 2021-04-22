@@ -1,10 +1,9 @@
 import React from 'react';
-import { memberIdVar } from 'src/App.reactive';
+import { memberIdVar, toastQueueVar, useToast } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreActions } from '@core/store/Store';
 import { APP } from '@util/constants';
 import { IEvent, IEventGuest, IMember } from '@util/constants.entities';
 import { EventTiming, getEventTiming } from './Events.util';
@@ -37,7 +36,7 @@ const EventShareButton: React.FC<EventShareButtonProps> = ({
     where: { id: memberId }
   });
 
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
+  const { showToast } = useToast(toastQueueVar);
 
   if (loading1 || loading2) return null;
 
