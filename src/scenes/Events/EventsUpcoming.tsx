@@ -66,15 +66,13 @@ const GET_EVENTS_UPCOMING_BY_COMMUNITY_ID: DocumentNode = gql`
 `;
 
 const EventsUpcoming: React.FC = () => {
-  const { data, error, loading } = useQuery<
+  const { data, loading } = useQuery<
     GetEventsUpcomingByCommunityIdResult,
     GetEventsUpcomingByCommunityIdArgs
   >(GET_EVENTS_UPCOMING_BY_COMMUNITY_ID, {
     fetchPolicy: 'network-only',
     variables: { currentTimestamp: now() }
   });
-
-  console.log(data, error, loading);
 
   const events: IEvent[] = data?.events;
 

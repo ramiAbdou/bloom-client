@@ -48,6 +48,7 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
   redirect = true,
   ...rest
 }) => {
+  const communityId: string = useReactiveVar(communityIdVar);
   const userId: string = useReactiveVar(userIdVar);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -71,8 +72,6 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
     // actually returned those ID's.
     if (!member?.id || !member.community?.id) return;
 
-    console.log('HEREEEE', member.community.id);
-
     communityIdVar(member.community.id);
     memberIdVar(member.id);
 
@@ -92,6 +91,10 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
   // If it is an admin route and the member is not an admin/owner, redirect
   // them to the community's directory page.
   if (admin && !member.role) return <Redirect to={`/${urlName}/directory`} />;
+
+  // Need to wait for the communityIdVar to update properly, since many of
+  // the queries beyond this point depend on it.
+  if (!communityId) return null;
 
   return <Route component={component} {...rest} />;
 };

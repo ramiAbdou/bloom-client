@@ -4,10 +4,10 @@ import { makeVar, ReactiveVar } from '@apollo/client';
 
 // ## ACTIVE ID's
 
-export const communityIdVar: ReactiveVar<string> = makeVar<string>('');
-export const eventIdVar: ReactiveVar<string> = makeVar<string>('');
-export const memberIdVar: ReactiveVar<string> = makeVar<string>('');
-export const userIdVar: ReactiveVar<string> = makeVar<string>('');
+export const communityIdVar: ReactiveVar<string> = makeVar<string>(null);
+export const eventIdVar: ReactiveVar<string> = makeVar<string>(null);
+export const memberIdVar: ReactiveVar<string> = makeVar<string>(null);
+export const userIdVar: ReactiveVar<string> = makeVar<string>(null);
 
 // ## LOADER
 
