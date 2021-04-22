@@ -1,11 +1,12 @@
 import React from 'react';
+import { memberIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Separator from '@components/atoms/Separator';
 import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
 import Show from '@components/containers/Show';
 import { IMember } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
-import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { MemberHistoryData } from './Profile.types';
 import { useMemberHistory } from './Profile.util';
@@ -90,7 +91,7 @@ const ProfileHistoryContent: React.FC = () => {
 
 const ProfileHistory: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
-  const authenticatedMemberId: string = useStoreState(({ db }) => db.memberId);
+  const authenticatedMemberId: string = useReactiveVar(memberIdVar);
 
   const { data: member, loading } = useFindOne(IMember, {
     fields: ['role'],

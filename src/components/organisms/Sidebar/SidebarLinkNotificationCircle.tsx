@@ -1,14 +1,15 @@
 import React from 'react';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import { IMember, MemberStatus } from '@core/db/db.entities';
 import useFind from '@core/gql/hooks/useFind';
-import { useStoreState } from '@core/store/Store';
 import { SidebarLinkOptions } from './Sidebar.types';
 
 const SidebarLinkNotificationCircle: React.FC<
   Pick<SidebarLinkOptions, 'to'>
 > = ({ to }) => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { data: pendingMembers, loading } = useFind(IMember, {
     where: { communityId, status: MemberStatus.PENDING }

@@ -1,10 +1,12 @@
 import React from 'react';
 import { IoTrash } from 'react-icons/io5';
+import { memberIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import TableStore from '@components/organisms/Table/Table.store';
 import { IMember, MemberRole } from '@core/db/db.entities';
 import useFind from '@core/gql/hooks/useFind';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { useStoreActions } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { ModalType } from '@util/constants';
 import { take } from '@util/util';
@@ -15,7 +17,7 @@ import DatabaseAction from '../DatabaseAction';
  * to delete another person in the community.
  */
 const useDeleteTooltip = (): string => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const memberId: string = useReactiveVar(memberIdVar);
 
   const selectedRowIds = TableStore.useStoreState(
     (state) => state.selectedRowIds

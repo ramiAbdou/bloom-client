@@ -1,15 +1,17 @@
+import { eventIdVar } from 'src/App.reactive';
+
+import { useReactiveVar } from '@apollo/client';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
 import { IEventGuest } from '@core/db/db.entities';
-import { useStoreState } from '@core/store/Store';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { CreateEventGuestArgs } from '@scenes/Events/Events.types';
 import { MutationEvent } from '@util/constants.events';
 
 const useCreateEventGuestWithSupporter = (): OnFormSubmitFunction => {
-  const eventId: string = useStoreState(({ db }) => db.eventId);
+  const eventId: string = useReactiveVar(eventIdVar);
 
   const [createEventGuestWithSupporter] = useBloomMutation<
     IEventGuest,

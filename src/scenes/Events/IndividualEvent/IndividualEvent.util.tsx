@@ -1,7 +1,9 @@
 import day from 'dayjs';
 import deepmerge from 'deepmerge';
 import React from 'react';
+import { eventIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import { TableColumn, TableRow } from '@components/organisms/Table/Table.types';
 import {
   IEvent,
@@ -10,7 +12,6 @@ import {
   IEventWatch
 } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreState } from '@core/store/Store';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
@@ -25,7 +26,7 @@ const useIndividualEventTableAttendees = (): Record<
   string,
   IndividualEventTableRowProps
 > => {
-  const eventId: string = useStoreState(({ db }) => db.eventId);
+  const eventId: string = useReactiveVar(eventIdVar);
 
   const { data: event, loading } = useFindOne(IEvent, {
     fields: [
@@ -80,7 +81,7 @@ const useIndividualEventTableGuests = (): Record<
   string,
   IndividualEventTableRowProps
 > => {
-  const eventId: string = useStoreState(({ db }) => db.eventId);
+  const eventId: string = useReactiveVar(eventIdVar);
 
   const { data: event, loading } = useFindOne(IEvent, {
     fields: [
@@ -134,7 +135,7 @@ const useIndividualEventTableWatchers = (): Record<
   string,
   IndividualEventTableRowProps
 > => {
-  const eventId: string = useStoreState(({ db }) => db.eventId);
+  const eventId: string = useReactiveVar(eventIdVar);
 
   const { data: event, loading } = useFindOne(IEvent, {
     fields: [
@@ -219,7 +220,7 @@ export const useIndividualEventTableRows = (): TableRow[] => {
  * and viewedRecording columns.
  */
 export const useIndividualEventTableColumns = (): TableColumn[] => {
-  const eventId: string = useStoreState(({ db }) => db.eventId);
+  const eventId: string = useReactiveVar(eventIdVar);
 
   const { data: event, loading } = useFindOne(IEvent, {
     fields: ['endTime', 'recordingUrl', 'startTime'],

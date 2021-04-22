@@ -1,9 +1,9 @@
 import React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
+import { userIdVar } from 'src/App.reactive';
 
-import { DocumentNode, gql, useQuery } from '@apollo/client';
+import { DocumentNode, gql, useQuery, useReactiveVar } from '@apollo/client';
 import { IMember } from '@core/db/db.entities';
-import { useStoreState } from '@core/store/Store';
 
 interface GetMembersByUserIdArgs {
   userId: string;
@@ -27,7 +27,7 @@ const CatchAllRoute: React.FC<Pick<RouteProps, 'exact' | 'path'>> = ({
   exact,
   path
 }) => {
-  const userId: string = useStoreState(({ db }) => db.userId);
+  const userId: string = useReactiveVar(userIdVar);
 
   const { data: members } = useQuery<IMember[], GetMembersByUserIdArgs>(
     GET_MEMBERS_BY_USER_ID,

@@ -1,12 +1,13 @@
 import { useLocation } from 'react-router-dom';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
 import StoryStore from '@components/organisms/Story/Story.store';
 import { IMember, MemberRole } from '@core/db/db.entities';
-import { useStoreState } from '@core/store/Store';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { ErrorType } from '@util/constants.errors';
 import { MutationEvent } from '@util/constants.events';
@@ -14,7 +15,7 @@ import { SendLoginLinkArgs } from './CheckIn.types';
 import { getCheckInErrorMessage } from './CheckIn.util';
 
 const useSendLoginLink = (): OnFormSubmitFunction => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
   const { pathname } = useLocation();
 
   const setCurrentPage = StoryStore.useStoreActions(

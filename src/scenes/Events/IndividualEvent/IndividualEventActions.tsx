@@ -1,10 +1,12 @@
 import React from 'react';
+import { eventIdVar, memberIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import Row from '@components/containers/Row/Row';
 import { IEvent, IEventGuest, IMember } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { useStoreActions } from '@core/store/Store';
 import { ModalType, PanelType } from '@util/constants';
 import { EventTiming, getEventTiming } from '../Events.util';
 import EventsJoinButton from '../EventsJoinButton';
@@ -13,7 +15,7 @@ import EventsShareButton from '../EventsShareButton';
 import EventsViewRecordingButton from '../EventsViewRecordingButton';
 
 const EventsAddRecordingButton: React.FC<Partial<ButtonProps>> = (props) => {
-  const eventId: string = useStoreState(({ db }) => db.eventId);
+  const eventId: string = useReactiveVar(eventIdVar);
   const showPanel = useStoreActions(({ panel }) => panel.showPanel);
 
   const { data: event, loading } = useFindOne(IEvent, {
@@ -42,8 +44,8 @@ const EventsAddRecordingButton: React.FC<Partial<ButtonProps>> = (props) => {
 };
 
 const EventsEditEventButton: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.eventId);
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const eventId: string = useReactiveVar(eventIdVar);
+  const memberId: string = useReactiveVar(memberIdVar);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const { data: event, loading: loading1 } = useFindOne(IEvent, {
@@ -86,8 +88,8 @@ const EventsEditEventButton: React.FC = () => {
  * - View Event Recording (Past Event)
  */
 const IndividualEventActions: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.eventId);
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const eventId: string = useReactiveVar(eventIdVar);
+  const memberId: string = useReactiveVar(memberIdVar);
 
   const { data: event, loading: loading1 } = useFindOne(IEvent, {
     fields: ['endTime', 'eventGuests.id', 'eventGuests.member.id', 'startTime'],

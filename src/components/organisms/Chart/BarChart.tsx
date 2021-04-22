@@ -8,9 +8,10 @@ import {
   XAxis,
   YAxis
 } from 'recharts';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import { ICommunity } from '@core/db/db.entities';
-import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import Chart from './Chart.store';
 import ChartTooltip, { ChartTooltipProps } from './Tooltip';
@@ -18,7 +19,7 @@ import useXAxisOptions from './useXAxisOptions';
 import useYAxisOptions from './useYAxisOptions';
 
 const BarChart: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { data: community, loading } = useFindOne(ICommunity, {
     fields: ['primaryColor'],

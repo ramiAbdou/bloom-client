@@ -10,7 +10,7 @@ import { ChartModelInitArgs, ChartType } from './Chart.types';
 //   ChartModelInitArgs,
 //   'data' | 'totalResponses'
 // > => {
-//   const communityId: string = useStoreState(({ db }) => db.communityId);
+//   const communityId: string = useReactiveVar(communityIdVar);
 //   const questionId = Chart.useStoreState((state) => state.questionId);
 
 //   const { category, type } = useFindOne(IQuestion, {

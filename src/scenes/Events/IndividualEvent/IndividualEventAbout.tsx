@@ -1,12 +1,13 @@
 import React from 'react';
+import { eventIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Card from '@components/containers/Card/Card';
 import { IEvent } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreState } from '@core/store/Store';
 
 const IndividualEventAbout: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.eventId);
+  const eventId: string = useReactiveVar(eventIdVar);
 
   const { data: event, loading } = useFindOne(IEvent, {
     fields: ['description'],

@@ -1,5 +1,7 @@
 import React from 'react';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import InformationCard from '@components/containers/Card/InformationCard';
 import Row from '@components/containers/Row/Row';
 import FormSection from '@components/organisms/Form/FormSection';
@@ -11,11 +13,10 @@ import {
   RecurrenceType
 } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreState } from '@core/store/Store';
 import { take } from '@util/util';
 
 const ApplicationReviewMembership: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const selectedTypeName: string = StoryStore.useStoreState(
     ({ items }) => items.MEMBER_TYPE?.value as string

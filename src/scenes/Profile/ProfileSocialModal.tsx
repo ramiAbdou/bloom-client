@@ -1,5 +1,7 @@
 import React from 'react';
+import { memberIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Form from '@components/organisms/Form/Form';
 import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
 import FormHeader from '@components/organisms/Form/FormHeader';
@@ -7,11 +9,10 @@ import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { IMemberSocials } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreState } from '@core/store/Store';
 import useUpdateMemberSocials from './useUpdateMemberSocials';
 
 const ProfileSocialModal: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const memberId: string = useReactiveVar(memberIdVar);
   const updateMemberSocials: OnFormSubmitFunction = useUpdateMemberSocials();
 
   const { data: memberSocials, loading } = useFindOne(IMemberSocials, {

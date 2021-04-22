@@ -1,18 +1,19 @@
 import day from 'dayjs';
 import React from 'react';
+import { communityIdVar, memberIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
 import Section from '@components/containers/Section';
 import { IEvent, IEventAttendee } from '@core/db/db.entities';
 import useFind from '@core/gql/hooks/useFind';
-import { useStoreState } from '@core/store/Store';
 import { LoadingProps } from '@util/constants';
 import { sortObjects } from '@util/util';
 import EventsCard from './EventsCard/EventsCard';
 
 const PastEventsList: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const communityId: string = useReactiveVar(communityIdVar);
+  const memberId: string = useReactiveVar(memberIdVar);
 
   const { data: events, loading } = useFind(IEvent, {
     fields: [

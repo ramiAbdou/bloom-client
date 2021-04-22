@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
-import { communityIdVar, memberIdVar } from 'src/App.reactive';
+import { communityIdVar, memberIdVar, userIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import { IMember } from '@core/db/db.entities';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { UrlNameProps } from '@util/constants';
 import { updateDocumentColors } from '@util/util';
@@ -20,9 +21,8 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
   ...rest
 }) => {
   const storedCommunityId: string = useStoreState(({ db }) => db.communityId);
-  const storedMemberId: string = useStoreState(({ db }) => db.memberId);
-  const storedUserId: string = useStoreState(({ db }) => db.userId);
-  const setActiveEntities = useStoreActions(({ db }) => db.setActiveEntities);
+  const storedMemberId: string = useReactiveVar(memberIdVar);
+  const storedUserId: string = useReactiveVar(userIdVar);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore b/c we know that computed match exists and we need to use
@@ -45,11 +45,6 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
       member.id !== storedMemberId ||
       member.community.id !== storedCommunityId
     ) {
-      setActiveEntities({
-        communityId: member.community.id,
-        memberId: member.id
-      });
-
       communityIdVar(member.community.id);
       memberIdVar(member.id);
 

@@ -1,18 +1,19 @@
 import React from 'react';
+import { communityIdVar, eventIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import Row from '@components/containers/Row/Row';
 import FormLabel from '@components/organisms/Form/FormLabel';
 import StoryStore from '@components/organisms/Story/Story.store';
 import StoryPage from '@components/organisms/Story/StoryPage';
 import { ICommunity, IEvent } from '@core/db/db.entities';
-import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { ShowProps } from '@util/constants';
 
 const CheckInChoosePageActions: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.eventId);
+  const eventId: string = useReactiveVar(eventIdVar);
 
   const setCurrentPage = StoryStore.useStoreActions(
     (state) => state.setCurrentPage
@@ -50,7 +51,7 @@ const CheckInChoosePageActions: React.FC = () => {
 };
 
 const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { data: community, loading } = useFindOne(ICommunity, {
     fields: ['name'],

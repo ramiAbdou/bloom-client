@@ -1,12 +1,11 @@
-import { ActionCreator } from 'easy-peasy';
 import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { communityIdVar, eventIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Show from '@components/containers/Show';
 import { EventPrivacy, IEvent } from '@core/db/db.entities';
-import { SetActiveEntitesArgs } from '@core/db/db.types';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import useIsMember from '@hooks/useIsMember';
@@ -22,7 +21,7 @@ import IndividualEventMain from './IndividualEventMain';
 import IndividualEventTable from './IndividualEventTable';
 
 const IndividualEventHeader: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.eventId);
+  const eventId: string = useReactiveVar(eventIdVar);
 
   const { data: event, loading } = useFindOne(IEvent, {
     fields: ['imageUrl'],
@@ -40,8 +39,8 @@ const IndividualEventHeader: React.FC = () => {
 };
 
 const IndividualEventContent: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
-  const eventId: string = useStoreState(({ db }) => db.eventId);
+  const communityId: string = useReactiveVar(communityIdVar);
+  const eventId: string = useReactiveVar(eventIdVar);
 
   const { data: event } = useFindOne(IEvent, {
     fields: ['privacy'],
@@ -86,13 +85,7 @@ const IndividualEventContent: React.FC = () => {
 const IndividualEvent: React.FC = () => {
   const { eventId } = useParams() as { eventId: string };
 
-  const isEventActive: boolean = useStoreState(
-    ({ db }) => db.eventId === eventId
-  );
-
-  const setActiveEntities: ActionCreator<
-    SetActiveEntitesArgs | SetActiveEntitesArgs[]
-  > = useStoreActions(({ db }) => db.setActiveEntities);
+  const isEventActive: boolean = useReactiveVar(eventIdVar) === eventId;
 
   const { data: event, loading } = useFindOne(IEvent, {
     fields: [
@@ -125,11 +118,6 @@ const IndividualEvent: React.FC = () => {
 
   useEffect(() => {
     if (event.id) {
-      setActiveEntities({
-        communityId: event.community.id,
-        eventId: event.id
-      });
-
       communityIdVar(event.community.id);
       eventIdVar(event.id);
     }

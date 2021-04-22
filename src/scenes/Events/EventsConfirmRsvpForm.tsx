@@ -34,13 +34,13 @@ const EventsConfirmRsvpForm: React.FC = () => {
 
   const onSubmit: OnFormSubmitFunction = async ({
     closeModal,
-    db,
+    // db,
     gql,
     setError,
     showToast
   }: OnFormSubmitArgs) => {
     const { error } = await gql.create(IEventGuest, {
-      data: { eventId, memberId: db.memberId },
+      data: { eventId, memberId: '' },
       fields: [
         'createdAt',
         'event.id',

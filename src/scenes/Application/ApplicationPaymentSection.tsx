@@ -1,5 +1,7 @@
 import React from 'react';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Separator from '@components/atoms/Separator';
 import Row from '@components/containers/Row/Row';
 import Show from '@components/containers/Show';
@@ -12,7 +14,6 @@ import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import StoryStore from '@components/organisms/Story/Story.store';
 import { IMemberType } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreState } from '@core/store/Store';
 import useSavePaymentMethod from './useSavePaymentMethod';
 
 const ApplicationPaymentForm: React.FC = () => {
@@ -42,7 +43,7 @@ const ApplicationPaymentForm: React.FC = () => {
 };
 
 const ApplicationPaymentSection: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const selectedTypeName: string = StoryStore.useStoreState(
     ({ items }) => items.MEMBER_TYPE?.value as string

@@ -1,7 +1,9 @@
 import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import ErrorMessage from '@components/atoms/ErrorMessage';
 import Separator from '@components/atoms/Separator';
@@ -11,7 +13,6 @@ import Form from '@components/organisms/Form/Form';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { IMember, MemberRole } from '@core/db/db.entities';
-import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { APP, QuestionCategory, ShowProps } from '@util/constants';
 import { ErrorContext, ErrorType } from '@util/constants.errors';
@@ -20,7 +21,7 @@ import { getCheckInErrorMessage } from './CheckIn.util';
 import useSendLoginLink from './useSendLoginLink';
 
 const CheckInGoogleButton: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
   const { pathname } = useLocation();
 
   const url: string = buildUrl('https://accounts.google.com/o/oauth2/v2/auth', {
@@ -46,7 +47,7 @@ const CheckInGoogleButton: React.FC = () => {
 };
 
 const LoginCardGoogleContainer: React.FC = React.memo(() => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { data: owner, loading } = useFindOne(IMember, {
     fields: ['email', 'firstName', 'lastName'],

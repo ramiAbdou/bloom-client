@@ -10,7 +10,7 @@ import React from 'react';
 // import { QuestionCategory } from '@util/constants';
 
 // const MemberDatabaseInactiveFilter: React.FC = () => {
-//   const communityId: string = useStoreState(({ db }) => db.communityId);
+//   const communityId: string = useReactiveVar(communityIdVar);
 //   const show: boolean = useStoreState(({ db }) => db.community.canCollectDues);
 
 //   const { id: duesStatusQuestionId } = useFindOne(IQuestion, {
@@ -28,7 +28,7 @@ import React from 'react';
 // };
 
 // const MemberDatabaseActiveFilter: React.FC = () => {
-//   const communityId: string = useStoreState(({ db }) => db.communityId);
+//   const communityId: string = useReactiveVar(communityIdVar);
 //   const show: boolean = useStoreState(({ db }) => db.community.canCollectDues);
 
 //   const { id: duesStatusQuestionId } = useFindOne(IQuestion, {

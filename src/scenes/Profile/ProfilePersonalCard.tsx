@@ -1,5 +1,7 @@
 import React from 'react';
+import { memberIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import HeaderTag from '@components/atoms/Tag/HeaderTag';
 import Card from '@components/containers/Card/Card';
@@ -8,13 +10,13 @@ import MailTo from '@components/molecules/MailTo';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
 import { IMember } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { useStoreActions } from '@core/store/Store';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { ModalType } from '@util/constants';
 import ProfileCardHeader, { ProfileEditButton } from './ProfileCardHeader';
 
 const ProfilePersonalHeader: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const memberId: string = useReactiveVar(memberIdVar);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const { data: member, loading } = useFindOne(IMember, {
@@ -36,7 +38,7 @@ const ProfilePersonalHeader: React.FC = () => {
 };
 
 const ProfilePersonalTagList: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const memberId: string = useReactiveVar(memberIdVar);
 
   const { data: member, loading } = useFindOne(IMember, {
     fields: ['role', 'memberType.id', 'memberType.name'],
@@ -54,7 +56,7 @@ const ProfilePersonalTagList: React.FC = () => {
 };
 
 const ProfilePersonalEmail: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const memberId: string = useReactiveVar(memberIdVar);
 
   const { data: member, loading } = useFindOne(IMember, {
     fields: ['email'],
@@ -66,7 +68,7 @@ const ProfilePersonalEmail: React.FC = () => {
 };
 
 const ProfilePersonalBio: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const memberId: string = useReactiveVar(memberIdVar);
 
   const { data: member } = useFindOne(IMember, {
     fields: ['bio'],
@@ -77,7 +79,7 @@ const ProfilePersonalBio: React.FC = () => {
 };
 
 const ProfilePersonalOnboardingContainer: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const memberId: string = useReactiveVar(memberIdVar);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const { data: member, loading } = useFindOne(IMember, {
@@ -117,7 +119,7 @@ const ProfilePersonalMainContent: React.FC = () => (
 );
 
 const ProfilePersonalPictureRow: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const memberId: string = useReactiveVar(memberIdVar);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const isMobile: boolean = useBreakpoint() === 1;
 

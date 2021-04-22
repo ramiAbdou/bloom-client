@@ -1,9 +1,11 @@
 import React from 'react';
+import { memberIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import { IEvent, IEventGuest } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { useStoreActions } from '@core/store/Store';
 import useIsMember from '@hooks/useIsMember';
 import { ModalType } from '@util/constants';
 import { EventTiming, getEventTiming } from './Events.util';
@@ -16,7 +18,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
   eventId,
   ...props
 }) => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const memberId: string = useReactiveVar(memberIdVar);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const isMember: boolean = useIsMember();

@@ -1,6 +1,8 @@
 import day from 'dayjs';
 import React from 'react';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
 import Section from '@components/containers/Section';
 import Table from '@components/organisms/Table/Table';
@@ -12,12 +14,12 @@ import {
 import TableContent from '@components/organisms/Table/TableContent';
 import { IEvent, IEventAttendee } from '@core/db/db.entities';
 import useFind from '@core/gql/hooks/useFind';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { useStoreActions } from '@core/store/Store';
 import { ModalType, QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 
 const EventsAnalyticsTopEventGoersTable: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const { data: events, loading } = useFind(IEvent, {

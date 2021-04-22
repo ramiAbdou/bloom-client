@@ -34,7 +34,6 @@ const useCreateEventAttendeeWithSupporter = (): OnFormSubmitFunction => {
   });
 
   const onSubmit = async ({
-    db,
     gql,
     goForward,
     items,
@@ -46,7 +45,7 @@ const useCreateEventAttendeeWithSupporter = (): OnFormSubmitFunction => {
 
     const { error } = await createEventAttendeeWithSupporter({
       email,
-      eventId: db.eventId,
+      eventId: '',
       firstName,
       lastName
     });
@@ -55,7 +54,7 @@ const useCreateEventAttendeeWithSupporter = (): OnFormSubmitFunction => {
     else {
       const { videoUrl } = await gql.findOne(IEvent, {
         fields: ['videoUrl'],
-        where: { id: db.eventId }
+        where: { id: '' }
       });
 
       openHref(videoUrl);

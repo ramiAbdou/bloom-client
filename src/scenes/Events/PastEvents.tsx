@@ -1,8 +1,9 @@
 import React from 'react';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import MainContent from '@components/containers/Main/MainContent';
 import { IEvent } from '@core/db/db.entities';
-import { useStoreState } from '@core/store/Store';
 import { QueryResult } from '@gql/GQL.types';
 import useFind from '@gql/hooks/useFind';
 import { now } from '@util/util';
@@ -11,7 +12,7 @@ import PastEventsSection from './PastEventsSection';
 import PastEventsYourSection from './PastEventsYourSection';
 
 const PastEvents: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { loading }: QueryResult = useFind(IEvent, {
     fields: [

@@ -3,7 +3,6 @@ import { Redirect, useParams } from 'react-router-dom';
 
 import Story from '@components/organisms/Story/Story';
 import { IApplication } from '@core/db/db.entities';
-import { useStoreActions } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { UrlNameProps } from '@util/constants';
 import { communityIdVar } from '../../App.reactive';
@@ -13,7 +12,6 @@ import ApplicationMainPage from './ApplicationMain';
 import ApplicationReviewPage from './ApplicationReview';
 
 const Application: React.FC = () => {
-  const setActiveEntities = useStoreActions(({ db }) => db.setActiveEntities);
   const { urlName } = useParams() as UrlNameProps;
 
   const { data: application, error, loading } = useFindOne(IApplication, {
@@ -50,7 +48,6 @@ const Application: React.FC = () => {
 
   useEffect(() => {
     if (application.id) {
-      setActiveEntities({ communityId: application.community.id });
       communityIdVar(application.community.id);
     }
   }, [application]);

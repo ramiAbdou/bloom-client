@@ -1,11 +1,12 @@
 import day from 'dayjs';
 import React from 'react';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
 import MainContent from '@components/containers/Main/MainContent';
 import Section from '@components/containers/Section';
 import { IEvent } from '@core/db/db.entities';
-import { useStoreState } from '@core/store/Store';
 import { QueryResult } from '@gql/GQL.types';
 import useFind from '@gql/hooks/useFind';
 import { sortObjects } from '@util/util';
@@ -14,7 +15,7 @@ import EventsCard from './EventsCard/EventsCard';
 import EventsHeader from './EventsHeader';
 
 const UpcomingEventsContent: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { data: events, loading } = useFind(IEvent, {
     fields: ['deletedAt', 'endTime', 'startTime'],
@@ -40,7 +41,7 @@ const UpcomingEventsContent: React.FC = () => {
 };
 
 const UpcomingEvents: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { loading }: QueryResult = useFind(IEvent, {
     fields: [

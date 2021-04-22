@@ -1,6 +1,8 @@
 import day from 'dayjs';
 import React from 'react';
+import { eventIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import ModalCloseButton from '@components/organisms/Modal/ModalCloseButton';
 import { IEvent } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
@@ -8,7 +10,7 @@ import { useStoreState } from '@core/store/Store';
 import { ErrorType } from '@util/constants.errors';
 
 const IndividualEventErrorModal: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.eventId);
+  const eventId: string = useReactiveVar(eventIdVar);
 
   const error:
     | ErrorType.EVENT_FINISHED

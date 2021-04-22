@@ -1,7 +1,8 @@
 import { useHistory } from 'react-router-dom';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import { ICommunity } from '@core/db/db.entities';
-import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { RouteType } from '@util/constants';
 
@@ -14,7 +15,7 @@ import { RouteType } from '@util/constants';
  * @example /colorstack/analytics/dues => analytics
  */
 const useTopLevelRoute = (): RouteType => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { pathname } = useHistory().location;
 

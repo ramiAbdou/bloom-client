@@ -1,10 +1,11 @@
 import { ActionCreator } from 'easy-peasy';
 import React, { useEffect, useState } from 'react';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Dropdown from '@components/molecules/Dropdown/Dropdown';
 import { ICommunity, IQuestion } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
-import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
@@ -15,7 +16,7 @@ import {
 } from './TableFilterPanel.types';
 
 const TableFilterPanelRowQuestionDropdown: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
   const filterId: string = IdStore.useStoreState((state) => state.id);
 
   const columnId: string = TableFilterStore.useStoreState((state) => {

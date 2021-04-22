@@ -1,5 +1,7 @@
 import React from 'react';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Form from '@components/organisms/Form/Form';
 import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
 import FormItem from '@components/organisms/Form/FormItem';
@@ -8,13 +10,12 @@ import StoryStore from '@components/organisms/Story/Story.store';
 import StoryPage from '@components/organisms/Story/StoryPage';
 import { IApplication, IQuestion, IRankedQuestion } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreState } from '@core/store/Store';
 import { sortObjects } from '@util/util';
 import useApplyToCommunity from './useApplyToCommunity';
 import useValidateEmail from './useValidateEmail';
 
 const ApplicationMainForm: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const isSolo: boolean = StoryStore.useStoreState(
     ({ pages }) =>
@@ -68,7 +69,7 @@ const ApplicationMainForm: React.FC = () => {
 };
 
 const ApplicationMain: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { data: application, loading } = useFindOne(IApplication, {
     fields: ['community.id', 'community.logoUrl', 'description', 'title'],

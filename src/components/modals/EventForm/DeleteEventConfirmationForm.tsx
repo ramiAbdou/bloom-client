@@ -1,6 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Form from '@components/organisms/Form/Form';
 import {
   OnFormSubmitArgs,
@@ -13,7 +15,7 @@ import { useStoreState } from '@core/store/Store';
 import { now } from '@util/util';
 
 const DeleteEventConfirmationForm: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
   const eventId: string = useStoreState(({ modal }) => modal.metadata);
 
   const { push } = useHistory();

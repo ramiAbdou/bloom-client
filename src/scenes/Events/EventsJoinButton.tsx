@@ -1,9 +1,11 @@
 import React from 'react';
+import { memberIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import { IEvent, IEventAttendee } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { useStoreActions } from '@core/store/Store';
 import GQL from '@gql/GQL';
 import useGQL from '@gql/hooks/useGQL';
 import useIsMember from '@hooks/useIsMember';
@@ -18,7 +20,7 @@ const EventsJoinButton: React.FC<EventsJoinButtonProps> = ({
   eventId,
   large
 }) => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const memberId: string = useReactiveVar(memberIdVar);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const gql: GQL = useGQL();

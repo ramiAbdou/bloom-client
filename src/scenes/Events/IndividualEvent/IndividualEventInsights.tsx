@@ -1,5 +1,7 @@
 import React from 'react';
+import { eventIdVar, memberIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Separator from '@components/atoms/Separator';
 import GrayCard from '@components/containers/Card/GrayCard';
 import Row from '@components/containers/Row/Row';
@@ -7,11 +9,10 @@ import Section from '@components/containers/Section';
 import SidebarHamburgerButton from '@components/organisms/Sidebar/SidebarHamburgerButton';
 import { IEvent, IMember } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreState } from '@core/store/Store';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 
 const IndividualEventInsightsAttendeesCard: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.eventId);
+  const eventId: string = useReactiveVar(eventIdVar);
 
   const { data: event, loading } = useFindOne(IEvent, {
     fields: ['endTime', 'eventAttendees.id', 'startTime'],
@@ -33,7 +34,7 @@ const IndividualEventInsightsAttendeesCard: React.FC = () => {
 };
 
 const IndividualEventInsightsGuestsCard: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.eventId);
+  const eventId: string = useReactiveVar(eventIdVar);
 
   const { data: event, loading } = useFindOne(IEvent, {
     fields: ['endTime', 'eventGuests.id', 'startTime'],
@@ -47,7 +48,7 @@ const IndividualEventInsightsGuestsCard: React.FC = () => {
 };
 
 const IndividualEventInsightsWatchesCard: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.eventId);
+  const eventId: string = useReactiveVar(eventIdVar);
 
   const { data: event, loading } = useFindOne(IEvent, {
     fields: ['eventWatches.id', 'recordingUrl'],
@@ -68,7 +69,7 @@ const IndividualEventInsightsWatchesCard: React.FC = () => {
 };
 
 const IndividualEventInsights: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const memberId: string = useReactiveVar(memberIdVar);
 
   const { data: member, loading } = useFindOne(IMember, {
     fields: ['role'],

@@ -10,7 +10,6 @@ import { uploadImage } from '@util/imageUtil';
 const useUpdateMember = (): OnFormSubmitFunction => {
   const onSubmit = async ({
     closeModal,
-    db,
     gql,
     items,
     setError,
@@ -25,7 +24,7 @@ const useUpdateMember = (): OnFormSubmitFunction => {
 
     const member: IMember = await gql.findOne(IMember, {
       fields: ['pictureUrl'],
-      where: { id: db.memberId }
+      where: { id: '' }
     });
 
     if (base64String && !validator.isURL(base64String)) {
@@ -43,7 +42,7 @@ const useUpdateMember = (): OnFormSubmitFunction => {
 
     const { error } = await gql.update(IMember, {
       data: { bio, firstName, lastName, pictureUrl },
-      where: { id: db.memberId }
+      where: { id: '' }
     });
 
     if (error) {

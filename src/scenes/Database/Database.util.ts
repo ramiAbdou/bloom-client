@@ -1,5 +1,7 @@
 import day from 'dayjs';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import { TableColumn, TableRow } from '@components/organisms/Table/Table.types';
 import {
   IMember,
@@ -9,7 +11,6 @@ import {
 } from '@core/db/db.entities';
 import useFind from '@core/gql/hooks/useFind';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreState } from '@core/store/Store';
 import { QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
 
@@ -59,7 +60,7 @@ const getMemberValue = ({ member, question, value }: GetMemberValueArgs) => {
 };
 
 export const useMemberDatabaseRows = (): TableRow[] => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { data: members, loading: loading1 } = useFind(IMember, {
     fields: [
@@ -115,7 +116,7 @@ export const useMemberDatabaseRows = (): TableRow[] => {
 };
 
 export const useMemberDatabaseColumns = (): TableColumn[] => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { data: questions, loading } = useFind(IQuestion, {
     fields: ['category', 'rank', 'title', 'type'],

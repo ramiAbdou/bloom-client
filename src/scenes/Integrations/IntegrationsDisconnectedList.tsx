@@ -1,9 +1,10 @@
 import React from 'react';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Row from '@components/containers/Row/Row';
 import { ICommunity } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreState } from '@core/store/Store';
 import { IntegrationsDetailsData } from './Integrations.types';
 import { buildIntegrationData } from './Integrations.util';
 import IntegrationCard from './IntegrationsCard';
@@ -11,7 +12,7 @@ import IntegrationCard from './IntegrationsCard';
 // Responsible for fetching and supplying all the data to the children card
 // components to process and render.
 const IntegrationsCardList: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { data: community, loading } = useFindOne(ICommunity, {
     fields: [

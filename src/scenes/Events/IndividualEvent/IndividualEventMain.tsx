@@ -1,15 +1,16 @@
 import day from 'dayjs';
 import React from 'react';
+import { eventIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import HeaderTag from '@components/atoms/Tag/HeaderTag';
 import { EventPrivacy, IEvent } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreState } from '@core/store/Store';
 import useIsMember from '@hooks/useIsMember';
 import IndividualEventActions from './IndividualEventActions';
 
 const IndividualEventMainHeaderContainer: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.eventId);
+  const eventId: string = useReactiveVar(eventIdVar);
 
   const { data: event, loading } = useFindOne(IEvent, {
     fields: ['endTime', 'startTime'],
@@ -31,7 +32,7 @@ const IndividualEventMainHeaderContainer: React.FC = () => {
 };
 
 const IndividualEventMain: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.eventId);
+  const eventId: string = useReactiveVar(eventIdVar);
   const isMember: boolean = useIsMember();
 
   const { data: event, loading } = useFindOne(IEvent, {

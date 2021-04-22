@@ -1,13 +1,15 @@
 import { ActionCreator } from 'easy-peasy';
 import React from 'react';
+import { eventIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import Card from '@components/containers/Card/Card';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
 import { ModalData } from '@components/organisms/Modal/Modal.types';
 import { IEvent, IEventAttendee } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { useStoreActions } from '@core/store/Store';
 import useIsMember from '@hooks/useIsMember';
 import { IdProps, ModalType } from '@util/constants';
 import { cx, sortObjects } from '@util/util';
@@ -67,7 +69,7 @@ const IndividualEventAttendee: React.FC<IdProps> = ({ id: attendeeId }) => {
 };
 
 const IndividualEventAttendeeListContent: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.eventId);
+  const eventId: string = useReactiveVar(eventIdVar);
 
   const { data: event, loading } = useFindOne(IEvent, {
     fields: ['eventAttendees.createdAt', 'eventAttendees.id'],
@@ -98,7 +100,7 @@ const IndividualEventAttendeeListContent: React.FC = () => {
 };
 
 const IndividualEventGuestList: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.eventId);
+  const eventId: string = useReactiveVar(eventIdVar);
 
   const { data: event, loading } = useFindOne(IEvent, {
     fields: ['endTime', 'eventAttendees.id', 'startTime'],

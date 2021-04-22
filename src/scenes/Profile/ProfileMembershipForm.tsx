@@ -1,5 +1,7 @@
 import React from 'react';
+import { memberIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Form from '@components/organisms/Form/Form';
 import { FormItemData } from '@components/organisms/Form/Form.types';
 import { parseValue } from '@components/organisms/Form/Form.util';
@@ -8,12 +10,11 @@ import FormItem from '@components/organisms/Form/FormItem';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { IMember, IMemberValue } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreState } from '@core/store/Store';
 import { QuestionCategory, QuestionType } from '@util/constants';
 import useUpdateMemberValues from './useUpdateMemberValues';
 
 const ProfileMembershipForm: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const memberId: string = useReactiveVar(memberIdVar);
   const updateMemberValues = useUpdateMemberValues();
 
   const { data: member, loading } = useFindOne(IMember, {

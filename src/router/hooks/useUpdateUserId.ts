@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { userIdVar } from 'src/App.reactive';
 
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { useReactiveVar } from '@apollo/client';
 import useCustomQuery from '@gql/hooks/useCustomQuery';
 
 interface GetUserTokensResult {
@@ -13,8 +13,7 @@ interface GetUserTokensResult {
  * cookies stored in the browser.
  */
 const useUpdateUserId = (): boolean => {
-  const storedUserId: string = useStoreState(({ db }) => db.userId);
-  const setActiveEntities = useStoreActions(({ db }) => db.setActiveEntities);
+  const storedUserId: string = useReactiveVar(userIdVar);
 
   const { data, loading } = useCustomQuery<GetUserTokensResult>({
     fields: ['userId'],
@@ -27,7 +26,6 @@ const useUpdateUserId = (): boolean => {
     // If the userId is decoded from the decoded token, then set the active
     // entities for the communities, members and users.
     if (userId) {
-      setActiveEntities({ userId });
       userIdVar(userId);
     }
   }, [userId]);

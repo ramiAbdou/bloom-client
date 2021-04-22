@@ -11,7 +11,6 @@ const useUpdateMemberSocials = (): OnFormSubmitFunction => {
 
   const onSubmit = async ({
     closeModal,
-    db,
     items,
     setError,
     showToast
@@ -23,7 +22,7 @@ const useUpdateMemberSocials = (): OnFormSubmitFunction => {
 
     const { error } = await gql.update(IMemberSocials, {
       data: { facebookUrl, instagramUrl, linkedInUrl, twitterUrl },
-      where: { member: { id: db.memberId } }
+      where: { member: { id: '' } }
     });
 
     if (error) {

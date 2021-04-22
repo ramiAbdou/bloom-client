@@ -1,5 +1,7 @@
 import React from 'react';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { ICommunityIntegrations } from '@core/db/db.entities';
@@ -13,7 +15,7 @@ interface IntegrationsDetail {
 }
 
 const useIntegrationsDetails = (name: string): IntegrationsDetail[] => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   // const mailchimpListName: string = useStoreState(
   //   ({ db }) => db.communityIntegrations.mailchimpListName

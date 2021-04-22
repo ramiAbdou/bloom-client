@@ -1,5 +1,7 @@
 import React from 'react';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Form from '@components/organisms/Form/Form';
 import FormStore from '@components/organisms/Form/Form.store';
 import FormMultipleChoice from '@components/organisms/Form/FormMultipleChoice';
@@ -8,7 +10,6 @@ import StoryStore from '@components/organisms/Story/Story.store';
 import StoryPage from '@components/organisms/Story/StoryPage';
 import { IMemberType } from '@core/db/db.entities';
 import useFind from '@core/gql/hooks/useFind';
-import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';
 import ApplicationChooseTypeCard from './ApplicationChooseTypeCard';
@@ -19,7 +20,7 @@ const ApplicationChooseTypeButton: React.FC = () => {
     ({ items }) => items.MEMBER_TYPE?.value as string
   );
 
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const isPaidMembershipSelected: boolean = !!useFindOne(IMemberType, {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -35,7 +36,7 @@ const ApplicationChooseTypeButton: React.FC = () => {
 };
 
 const ApplicationChooseTypeForm: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
   const goForward = StoryStore.useStoreActions((state) => state.goForward);
 
   const { data: memberTypes, loading } = useFind(IMemberType, {
@@ -66,7 +67,7 @@ const ApplicationChooseTypeForm: React.FC = () => {
 };
 
 const ApplicationChooseType: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { data: memberTypes, loading } = useFind(IMemberType, {
     fields: ['amount'],

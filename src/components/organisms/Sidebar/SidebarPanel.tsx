@@ -1,16 +1,17 @@
 import React from 'react';
 import { IoExit, IoPerson } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import { PanelAction } from '@components/organisms/Panel/Panel.types';
 import PanelOption from '@components/organisms/Panel/PanelOption';
 import { ICommunity } from '@core/db/db.entities';
-import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import useLogout from './useLogout';
 
 const SidebarPanel: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { push } = useHistory();
   const logout = useLogout();

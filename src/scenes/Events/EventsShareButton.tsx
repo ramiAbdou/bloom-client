@@ -1,9 +1,11 @@
 import React from 'react';
+import { memberIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import { IEvent, IEventGuest, IMember } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { useStoreActions } from '@core/store/Store';
 import { APP } from '@util/constants';
 import { EventTiming, getEventTiming } from './Events.util';
 
@@ -15,7 +17,7 @@ const EventShareButton: React.FC<EventShareButtonProps> = ({
   eventId,
   large
 }) => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const memberId: string = useReactiveVar(memberIdVar);
 
   const { data: event, loading: loading1 } = useFindOne(IEvent, {
     fields: [

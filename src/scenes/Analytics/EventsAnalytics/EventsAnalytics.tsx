@@ -1,9 +1,10 @@
 import day from 'dayjs';
 import React from 'react';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Show from '@components/containers/Show';
 import { IEvent } from '@core/db/db.entities';
-import { useStoreState } from '@core/store/Store';
 import useFind from '@gql/hooks/useFind';
 import EventAnalyticsChart from './EventAnalyticsChart';
 import EventsAnalyticsOverview from './EventsAnalyticsOverview';
@@ -11,7 +12,7 @@ import EventsAnalyticsRecentEvents from './EventsAnalyticsRecentEvents';
 import EventsAnalyticsTopEventGoers from './EventsAnalyticsTopEventGoers';
 
 const EventsAnalytics: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { data: events, loading } = useFind(IEvent, {
     fields: [

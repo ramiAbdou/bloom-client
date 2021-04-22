@@ -1,17 +1,18 @@
 import { ActionCreator } from 'easy-peasy';
 import React from 'react';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Show from '@components/containers/Show';
 import Dropdown from '@components/molecules/Dropdown/Dropdown';
 import { IMemberType, IQuestion } from '@core/db/db.entities';
 import useFind from '@core/gql/hooks/useFind';
 import IdStore from '@core/store/Id.store';
-import { useStoreState } from '@core/store/Store';
 import { QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
 
 const MembersAnalyticsPlaygroundDropdown: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
   const questionId: string = IdStore.useStoreState((state) => state.id);
 
   const setQuestionId: ActionCreator<string> = IdStore.useStoreActions(

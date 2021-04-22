@@ -1,15 +1,16 @@
 import React from 'react';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import MainHeader from '@components/containers/Main/MainHeader';
 import Row from '@components/containers/Row/Row';
 import { IMember, MemberStatus } from '@core/db/db.entities';
 import useFind from '@core/gql/hooks/useFind';
-import { useStoreState } from '@core/store/Store';
 import { LoadingProps } from '@util/constants';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
 const ApplicantsHeader: React.FC<LoadingProps> = ({ loading }) => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const pendingMembersIds: string[] = useFind(IMember, {
     where: { communityId, status: MemberStatus.PENDING }

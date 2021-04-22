@@ -11,7 +11,6 @@ const useUpdateEvent = (): OnFormSubmitFunction => {
 
   const onSubmit = async ({
     closeModal,
-    db,
     gql,
     items,
     setError,
@@ -26,7 +25,7 @@ const useUpdateEvent = (): OnFormSubmitFunction => {
 
     const event: IEvent = await gql.findOne(IEvent, {
       fields: ['imageUrl'],
-      where: { id: db.eventId }
+      where: { id: '' }
     });
 
     let imageUrl: string;

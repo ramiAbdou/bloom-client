@@ -1,6 +1,8 @@
 import { ActionCreator } from 'easy-peasy';
 import React from 'react';
+import { communityIdVar, memberIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import Card from '@components/containers/Card/Card';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
@@ -8,13 +10,13 @@ import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/Question
 import { ModalData } from '@components/organisms/Modal/Modal.types';
 import { ICommunity, IMember, IMemberValue } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { useStoreActions } from '@core/store/Store';
 import useFind from '@gql/hooks/useFind';
 import { ModalType, QuestionCategory } from '@util/constants';
 import ProfileCardHeader from './ProfileCardHeader';
 
 const ProfileMembershipHeader: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const { data: community, loading } = useFindOne(ICommunity, {
@@ -38,7 +40,7 @@ const ProfileMembershipHeader: React.FC = () => {
 };
 
 const ProfileMembershipContent: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const memberId: string = useReactiveVar(memberIdVar);
 
   const { data: memberValues, loading } = useFind(IMemberValue, {
     fields: [
@@ -78,7 +80,7 @@ const ProfileMembershipContent: React.FC = () => {
 };
 
 const ProfileMembershipOnboardingContainer: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const memberId: string = useReactiveVar(memberIdVar);
 
   const showModal: ActionCreator<ModalData> = useStoreActions(
     ({ modal }) => modal.showModal
@@ -103,7 +105,7 @@ const ProfileMembershipOnboardingContainer: React.FC = () => {
 };
 
 const ProfileMembershipCard: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const memberId: string = useReactiveVar(memberIdVar);
 
   const { loading } = useFind(IMemberValue, {
     fields: ['id', 'member.id', 'question.id', 'value'],

@@ -1,6 +1,8 @@
 import React from 'react';
 import { IoLockClosed } from 'react-icons/io5';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Separator from '@components/atoms/Separator';
 import Form from '@components/organisms/Form/Form';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
@@ -8,7 +10,6 @@ import StoryStore from '@components/organisms/Story/Story.store';
 import StoryPage from '@components/organisms/Story/StoryPage';
 import { IMemberType } from '@core/db/db.entities';
 import useFind from '@core/gql/hooks/useFind';
-import { useStoreState } from '@core/store/Store';
 import ApplicationReviewMain from './ApplicationReviewMain';
 import ApplicationReviewMembership from './ApplicationReviewMembership';
 import useApplyToCommunity from './useApplyToCommunity';
@@ -39,7 +40,7 @@ const ApplicationReviewForm: React.FC = () => {
 };
 
 const ApplicationReview: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { data: memberTypes, loading } = useFind(IMemberType, {
     fields: ['amount'],

@@ -1,14 +1,15 @@
 import React from 'react';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Card from '@components/containers/Card/Card';
 import StoryConfirmation from '@components/organisms/Story/StoryConfirmation';
 import StoryPage from '@components/organisms/Story/StoryPage';
 import { ICommunity } from '@core/db/db.entities';
-import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 
 const ApplicationConfirmationMessage: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { data: community, loading } = useFindOne(ICommunity, {
     fields: ['name'],
@@ -30,7 +31,7 @@ const ApplicationConfirmationMessage: React.FC = () => {
 };
 
 const ApplicationConfirmation: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { data: community, loading } = useFindOne(ICommunity, {
     fields: ['memberTypes.id', 'questions.id'],

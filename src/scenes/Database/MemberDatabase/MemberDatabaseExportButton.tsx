@@ -1,15 +1,17 @@
 import React from 'react';
 import { CSVLink } from 'react-csv';
 import { IoExit } from 'react-icons/io5';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import TableStore from '@components/organisms/Table/Table.store';
 import { ICommunity } from '@core/db/db.entities';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { useStoreActions } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import DatabaseAction from '../DatabaseAction';
 
 const MemberDatabaseExportButton: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { data: community, loading } = useFindOne(ICommunity, {
     fields: ['urlName'],

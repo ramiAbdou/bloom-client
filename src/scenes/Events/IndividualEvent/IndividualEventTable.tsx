@@ -1,5 +1,7 @@
 import React from 'react';
+import { eventIdVar, memberIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Section from '@components/containers/Section';
 import Show from '@components/containers/Show';
 import Table from '@components/organisms/Table/Table';
@@ -10,7 +12,7 @@ import {
 } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
 import { IEvent, IMember } from '@core/db/db.entities';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { useStoreActions } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { ModalType } from '@util/constants';
 import {
@@ -47,8 +49,8 @@ const IndividualEventTableContent: React.FC = () => {
 };
 
 const IndividualEventTable: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
-  const eventId: string = useStoreState(({ db }) => db.eventId);
+  const memberId: string = useReactiveVar(memberIdVar);
+  const eventId: string = useReactiveVar(eventIdVar);
 
   const { data: event, loading: loading1 } = useFindOne(IEvent, {
     fields: [

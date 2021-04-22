@@ -1,18 +1,19 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import MainContent from '@components/containers/Main/MainContent';
 import Scene from '@components/containers/Scene';
 import Show from '@components/containers/Show';
 import { IMember, MemberStatus } from '@core/db/db.entities';
-import { useStoreState } from '@core/store/Store';
 import useFind from '@gql/hooks/useFind';
 import AdminDatabase from './AdminDatabase/AdminDatabase';
 import DatabaseHeader from './DatabaseHeader';
 import MemberDatabase from './MemberDatabase/MemberDatabase';
 
 const Database: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { loading } = useFind(IMember, {
     fields: [

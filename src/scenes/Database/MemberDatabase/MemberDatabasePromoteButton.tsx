@@ -1,14 +1,16 @@
 import React from 'react';
 import { IoArrowUpCircle } from 'react-icons/io5';
+import { memberIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import TableStore from '@components/organisms/Table/Table.store';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { useStoreActions } from '@core/store/Store';
 import { ModalType } from '@util/constants';
 import { take } from '@util/util';
 import DatabaseAction from '../DatabaseAction';
 
 const MemberDatabasePromoteButton: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const memberId: string = useReactiveVar(memberIdVar);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const tooManySelected = TableStore.useStoreState(

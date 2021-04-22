@@ -1,8 +1,9 @@
 import React from 'react';
+import { eventIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Story from '@components/organisms/Story/Story';
 import { EventPrivacy, IEvent } from '@core/db/db.entities';
-import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import useIsMember from '@hooks/useIsMember';
 import CheckInChoosePage from './CheckInChoosePage';
@@ -10,7 +11,7 @@ import CheckInConfirmation from './CheckInConfirmation';
 import CheckInMainPage from './CheckInMainPage';
 
 const CheckInModal: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.eventId);
+  const eventId: string = useReactiveVar(eventIdVar);
   const isMember: boolean = useIsMember();
 
   const { data: event, loading } = useFindOne(IEvent, {

@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import { ICommunity } from '@core/db/db.entities';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { useStoreActions } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import { OnClickProps } from '@util/constants';
@@ -42,7 +44,7 @@ const SidebarLinkAction: React.FC<
 const SidebarLink: React.FC<SidebarLinkProps> = (props) => {
   const { Icon, onClick, to, title } = props;
 
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
   const setIsOpen = useStoreActions(({ sidebar }) => sidebar.setIsOpen);
 
   const isActive: boolean = useTopLevelRoute() === to;

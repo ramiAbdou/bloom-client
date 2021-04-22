@@ -1,13 +1,14 @@
 import React from 'react';
 import { IoTrash } from 'react-icons/io5';
+import { memberIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import Row from '@components/containers/Row/Row';
 import FormMultipleSelect from '@components/organisms/Form/FormMultipleSelect';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import { IMember, MemberRole } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
-import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';
 import AddMemberStore from './AddMember.store';
@@ -30,7 +31,7 @@ const AddMemberInputTrashButton: React.FC = () => {
 };
 
 const AddMemberInput: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const memberId: string = useReactiveVar(memberIdVar);
   const id: string = IdStore.useStoreState((state) => state.id);
   const admin = AddMemberStore.useStoreState((state) => state.admin);
 

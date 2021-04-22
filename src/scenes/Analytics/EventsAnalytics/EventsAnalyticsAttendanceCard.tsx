@@ -1,13 +1,14 @@
 import day from 'dayjs';
 import React from 'react';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import GrayCard from '@components/containers/Card/GrayCard';
 import { IEvent } from '@core/db/db.entities';
 import useFind from '@core/gql/hooks/useFind';
-import { useStoreState } from '@core/store/Store';
 
 const EventsAnalyticsTotalCard: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { data: pastEvents, loading } = useFind(IEvent, {
     fields: ['endTime', 'eventAttendees.id', 'startTime'],

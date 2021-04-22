@@ -1,8 +1,9 @@
 import { nanoid } from 'nanoid';
 import React from 'react';
+import { memberIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import { IMember } from '@core/db/db.entities';
-import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { SidebarLinkOptions } from './Sidebar.types';
 import SidebarLink from './SidebarLink';
@@ -13,7 +14,7 @@ interface SidebarSectionProps {
 }
 
 const SidebarSection: React.FC<SidebarSectionProps> = ({ links, title }) => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const memberId: string = useReactiveVar(memberIdVar);
 
   const { data: member } = useFindOne(IMember, {
     fields: ['role'],

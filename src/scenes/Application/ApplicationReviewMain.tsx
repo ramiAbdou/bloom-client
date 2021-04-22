@@ -1,5 +1,7 @@
 import React from 'react';
+import { communityIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/QuestionBox.types';
 import FormSection from '@components/organisms/Form/FormSection';
@@ -7,11 +9,10 @@ import FormSectionHeader from '@components/organisms/Form/FormSectionHeader';
 import StoryStore from '@components/organisms/Story/Story.store';
 import { IApplication, IQuestion, IRankedQuestion } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreState } from '@core/store/Store';
 import { sortObjects } from '@util/util';
 
 const ApplicationReviewMain: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const communityId: string = useReactiveVar(communityIdVar);
 
   const { data: application } = useFindOne(IApplication, {
     fields: [

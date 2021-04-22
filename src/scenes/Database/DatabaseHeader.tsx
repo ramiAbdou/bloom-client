@@ -1,17 +1,19 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { memberIdVar } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import MainHeader from '@components/containers/Main/MainHeader';
 import { MainNavigationOptionProps } from '@components/containers/Main/MainNavigationButton';
 import { IMember, MemberRole } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { useStoreActions } from '@core/store/Store';
 import useFinalPath from '@hooks/useFinalPath';
 import { LoadingProps, ModalType } from '@util/constants';
 
 const DatbaseHeaderAddButton: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const memberId: string = useReactiveVar(memberIdVar);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const isAdminsPage: boolean = useFinalPath() === 'admins';
