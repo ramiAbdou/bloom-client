@@ -20,9 +20,6 @@ $PREF: 's-directory';
 // ## DIRECTORY CARD
 
 div.#{$PREF}-card {
-  @extend .f;
-  @extend .f-ac;
-
   height: max-content;
   height: 100%;
   padding: 0;
@@ -85,4 +82,24 @@ div.#{$PREF}-card {
   max-width: 100%;
 
   @include OVERFLOW_ELLIPSES(3);
+}
+
+// ## DIRECTORY FILTER QUESTION
+
+.#{$PREF}-filter-question {
+  border-bottom: 1px $gray-5 solid;
+  border-radius: 0;
+  cursor: pointer;
+  display: block;
+  padding: $sm $xs;
+  width: $xxl * 6;
+
+  &:first-child {
+    border-top: 1px $gray-5 solid;
+  }
+}
+
+.#{$PREF}-filter-question-option-list {
+  max-height: $xxl * 4;
+  overflow: scroll;
 }

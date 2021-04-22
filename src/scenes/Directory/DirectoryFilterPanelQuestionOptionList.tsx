@@ -30,7 +30,7 @@ const DirectoryFilterPanelQuestionOptionList: ComponentWithFragments<IQuestion> 
 
   return (
     <Show show={!!isOpen}>
-      <ul className="mt-sm o-list-filter-question-option-list">
+      <ul className="mt-sm s-directory-filter-question-option-list">
         {question.options.map((_: string, i: number) => (
           <DirectoryFilterPanelQuestionOption data={question} i={i} />
         ))}

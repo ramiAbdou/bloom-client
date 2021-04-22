@@ -18,7 +18,7 @@ const DirectoryCard: ComponentWithFragments<IMember> = ({ data: member }) => {
   };
 
   return (
-    <Card noPadding className="s-directory-card" onClick={onClick}>
+    <Card noPadding className="f f-ac s-directory-card" onClick={onClick}>
       <DirectoryCardRole data={member} />
       <DirectoryCardPicture data={member} />
 

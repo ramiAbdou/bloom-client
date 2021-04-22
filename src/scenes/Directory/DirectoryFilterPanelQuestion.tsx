@@ -23,8 +23,8 @@ const DirectoryFilterPanelQuestion: ComponentWithFragments<IQuestion> = ({
     );
   };
 
-  const css: string = cx('o-list-filter-question', {
-    'o-list-filter-question--active': isOpen
+  const css: string = cx('s-directory-filter-question', {
+    's-directory-filter-question--active': isOpen
   });
 
   return (
