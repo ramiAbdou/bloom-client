@@ -1,75 +1,76 @@
 import React from 'react';
 import { memberIdVar, toastQueueVar, useToast } from 'src/App.reactive';
 
-import { useReactiveVar } from '@apollo/client';
+import { gql, useReactiveVar } from '@apollo/client';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { APP } from '@util/constants';
+import { APP, ComponentWithFragments } from '@util/constants';
 import { IEvent, IEventGuest, IMember } from '@util/constants.entities';
 import { EventTiming, getEventTiming } from './Events.util';
 
-interface EventShareButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
-  eventId: string;
-}
-
-const EventShareButton: React.FC<EventShareButtonProps> = ({
-  eventId,
-  large
-}) => {
+const EventShareButton: ComponentWithFragments<
+  IEvent,
+  Partial<Pick<ButtonProps, 'large'>>
+> = ({ data: event, large }) => {
   const memberId: string = useReactiveVar(memberIdVar);
+  const { showToast } = useToast(toastQueueVar);
 
-  const { data: event, loading: loading1 } = useFindOne(IEvent, {
-    fields: [
-      'community.id',
-      'community.urlName',
-      'endTime',
-      'eventGuests.deletedAt',
-      'eventGuests.id',
-      'eventGuests.member.id',
-      'startTime'
-    ],
-    where: { id: eventId }
-  });
+  // const { data: event, loading: loading1 } = useFindOne(IEvent, {
+  //   fields: [
+  //     'eventGuests.deletedAt',
+  //     'eventGuests.id',
+  //     'eventGuests.member.id',
+  //   ],
+  //   where: { id: eventId }
+  // });
 
-  const { data: member, loading: loading2 } = useFindOne(IMember, {
+  const { data: member } = useFindOne(IMember, {
     fields: ['role'],
     where: { id: memberId }
   });
 
-  const { showToast } = useToast(toastQueueVar);
-
-  if (loading1 || loading2) return null;
-
-  const eventUrl: string = `${APP.CLIENT_URL}/${event.community.urlName}/events/${eventId}`;
-
-  const isGoing: boolean = event.eventGuests.some(
+  const isGoing: boolean = event.eventGuests?.some(
     (eventGuest: IEventGuest) => eventGuest.member?.id === memberId
   );
 
-  const isUpcoming: boolean = getEventTiming(event) === EventTiming.UPCOMING;
+  const eventTiming: EventTiming = getEventTiming({
+    endTime: event.endTime,
+    startTime: event.startTime
+  });
 
-  const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.stopPropagation();
-    navigator.clipboard.writeText(eventUrl);
-    showToast({ message: 'Event link copied to clipboard.' });
-  };
-
+  const isUpcoming: boolean = eventTiming === EventTiming.UPCOMING;
   const showOnSmall: boolean = !large && !!isGoing;
 
   const showOnLarge: boolean =
     !!large && (!member.role || (member.role && !!isGoing));
 
+  if (!isUpcoming || (!showOnSmall && !showOnLarge)) return null;
+
+  const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
+
+    const eventUrl: string = `${APP.CLIENT_URL}/${event.community.urlName}/events/${event.id}`;
+
+    navigator.clipboard.writeText(eventUrl);
+    showToast({ message: 'Event link copied to clipboard.' });
+  };
+
   return (
-    <Button
-      fill
-      secondary
-      large={large}
-      show={isUpcoming && (showOnSmall || showOnLarge)}
-      onClick={onClick}
-    >
+    <Button fill secondary large={large} onClick={onClick}>
       Share Event
     </Button>
   );
 };
+
+EventShareButton.fragment = gql`
+  fragment EventShareButtonFragment on events {
+    endTime
+    startTime
+
+    community {
+      urlName
+    }
+  }
+`;
 
 export default EventShareButton;

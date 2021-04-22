@@ -7,9 +7,9 @@ import { ComponentWithFragments } from '@util/constants';
 import { IEvent } from '@util/constants.entities';
 import EventsAspectBackground from './EventsAspectBackground';
 import EventsCardHeader from './EventsCardHeader';
-// import EventsJoinButton from './EventsJoinButton';
+import EventsJoinButton from './EventsJoinButton';
 import EventsRsvpButton from './EventsRsvpButton';
-// import EventsShareButton from './EventsShareButton';
+import EventsShareButton from './EventsShareButton';
 // import EventsViewRecordingButton from './EventsViewRecordingButton';
 
 const EventsCard: ComponentWithFragments<IEvent> = ({ data: event }) => {
@@ -26,9 +26,9 @@ const EventsCard: ComponentWithFragments<IEvent> = ({ data: event }) => {
       <div className="s-events-card-content">
         <EventsCardHeader data={event} />
         <EventsRsvpButton data={event} />
-        {/* <EventsJoinButton eventId={event.id} />
-        <EventsShareButton eventId={event.id} />
-        <EventsViewRecordingButton eventId={event.id} /> */}
+        <EventsJoinButton data={event} />
+        <EventsShareButton data={event} />
+        {/* <EventsViewRecordingButton eventId={event.id} /> */}
       </div>
     </Card>
   );
@@ -37,10 +37,14 @@ const EventsCard: ComponentWithFragments<IEvent> = ({ data: event }) => {
 EventsCard.fragment = gql`
   fragment EventsCardFragment on events {
     ...EventsCardHeaderFragment
+    ...EventsJoinButtonFragment
     ...EventsRsvpButtonFragment
+    ...EventShareButtonFragment
   }
   ${EventsCardHeader.fragment}
+  ${EventsJoinButton.fragment}
   ${EventsRsvpButton.fragment}
+  ${EventsShareButton.fragment}
 `;
 
 export default EventsCard;

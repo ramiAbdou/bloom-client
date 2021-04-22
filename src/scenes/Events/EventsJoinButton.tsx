@@ -1,41 +1,31 @@
 import React from 'react';
-import { memberIdVar } from 'src/App.reactive';
 
-import { useReactiveVar } from '@apollo/client';
+import { gql } from '@apollo/client';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
-import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreActions } from '@core/store/Store';
-import GQL from '@gql/GQL';
-import useGQL from '@gql/hooks/useGQL';
+import { modalVar } from '@core/state/Modal.reactive';
 import useIsMember from '@hooks/useIsMember';
-import { ModalType } from '@util/constants';
-import { IEvent, IEventAttendee } from '@util/constants.entities';
+import { ComponentWithFragments, ModalType } from '@util/constants';
+import { IEvent } from '@util/constants.entities';
 import { EventTiming, getEventTiming } from './Events.util';
 
-interface EventsJoinButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
-  eventId: string;
-}
+type EventsJoinButtonProps = Partial<Pick<ButtonProps, 'large'>>;
 
-const EventsJoinButton: React.FC<EventsJoinButtonProps> = ({
-  eventId,
-  large
-}) => {
-  const memberId: string = useReactiveVar(memberIdVar);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
-
-  const gql: GQL = useGQL();
+const EventsJoinButton: ComponentWithFragments<
+  IEvent,
+  EventsJoinButtonProps
+> = ({ data: event, large }) => {
   const isMember: boolean = useIsMember();
 
-  const { data: event, loading } = useFindOne(IEvent, {
-    fields: ['endTime', 'startTime', 'videoUrl'],
-    where: { id: eventId }
+  const eventTiming: EventTiming = getEventTiming({
+    endTime: event.endTime,
+    startTime: event.startTime
   });
 
-  if (loading) return null;
-
   const isHappeningNowOrStartingSoon: boolean =
-    getEventTiming(event) === EventTiming.HAPPENING_NOW ||
-    getEventTiming(event) === EventTiming.STARTING_SOON;
+    eventTiming === EventTiming.HAPPENING_NOW ||
+    eventTiming === EventTiming.STARTING_SOON;
+
+  if (!isHappeningNowOrStartingSoon) return null;
 
   const onClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -45,23 +35,22 @@ const EventsJoinButton: React.FC<EventsJoinButtonProps> = ({
     e.stopPropagation();
 
     if (!isMember) {
-      showModal({ id: ModalType.CHECK_IN, metadata: eventId });
-      return;
+      modalVar({ id: ModalType.CHECK_IN, metadata: event.id });
     }
 
-    await gql.create(IEventAttendee, {
-      data: { eventId, memberId },
-      fields: [
-        'createdAt',
-        'event.id',
-        'member.id',
-        'member.email',
-        'member.firstName',
-        'member.lastName',
-        'member.pictureUrl'
-      ],
-      modifications: [{ entity: IEvent, field: 'eventAttendees', id: eventId }]
-    });
+    // await gql.create(IEventAttendee, {
+    //   data: { eventId: event.id, memberId },
+    //   fields: [
+    //     'createdAt',
+    //     'event.id',
+    //     'member.id',
+    //     'member.email',
+    //     'member.firstName',
+    //     'member.lastName',
+    //     'member.pictureUrl'
+    //   ],
+    //   modifications: [{ entity: IEvent, field: 'eventAttendees', id: event.id }]
+    // });
   };
 
   return (
@@ -70,12 +59,19 @@ const EventsJoinButton: React.FC<EventsJoinButtonProps> = ({
       primary
       href={isMember ? event.videoUrl : null}
       large={large}
-      show={isHappeningNowOrStartingSoon}
       onClick={onClick}
     >
       Join
     </Button>
   );
 };
+
+EventsJoinButton.fragment = gql`
+  fragment EventsJoinButtonFragment on events {
+    endTime
+    startTime
+    videoUrl
+  }
+`;
 
 export default EventsJoinButton;

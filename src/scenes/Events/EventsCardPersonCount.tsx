@@ -27,11 +27,11 @@ EventsCardPersonCount.fragment = gql`
     endTime
     startTime
 
-    eventAttendees @skip(if: $isUpcoming) {
+    eventAttendees(order_by: { createdAt: desc }) @skip(if: $isUpcoming) {
       id
     }
 
-    eventGuests @include(if: $isUpcoming) {
+    eventGuests(order_by: { createdAt: desc }) @include(if: $isUpcoming) {
       id
     }
   }

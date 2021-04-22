@@ -26,7 +26,7 @@ const EventRsvpButton: ComponentWithFragments<IEvent, EventRsvpButtonProps> = ({
   const isUpcoming: boolean = eventTiming === EventTiming.UPCOMING;
 
   const isAlreadyGoing: boolean = event.eventGuests?.some(
-    (eventGuest: IEventGuest) => eventGuest.memberId === memberId
+    (eventGuest: IEventGuest) => eventGuest.member?.id === memberId
   );
 
   // Don't show if loading, is already going or if the event is not upcoming.

@@ -43,7 +43,7 @@ const SidebarLink: ComponentWithFragments<IMember, SidebarLinkProps> = ({
 }) => {
   const { Icon, onClick, to, title } = props;
 
-  const isActive: boolean = useTopLevelRoute(member?.community.urlName) === to;
+  const isActive: boolean = useTopLevelRoute(member.community.urlName) === to;
 
   // If onClick is supplied, means it is an action.
   if (onClick) return <SidebarLinkAction {...props} />;
@@ -59,7 +59,7 @@ const SidebarLink: ComponentWithFragments<IMember, SidebarLinkProps> = ({
   return (
     <Link
       className={css}
-      to={`/${member?.community.urlName}/${to}`}
+      to={`/${member.community.urlName}/${to}`}
       onClick={onLinkClick}
     >
       <Icon />

@@ -48,14 +48,13 @@ const EventsCardPersonList: ComponentWithFragments<IEvent> = ({
   );
 };
 
-//  <Row className="s-events-card-people" show={!!ids?.length} spacing="xs">
 EventsCardPersonList.fragment = gql`
   fragment EventsCardPersonListFragment on events {
     id
     endTime
     startTime
 
-    eventAttendees @skip(if: $isUpcoming) {
+    eventAttendees(order_by: { createdAt: desc }) @skip(if: $isUpcoming) {
       id
 
       member {
@@ -72,7 +71,7 @@ EventsCardPersonList.fragment = gql`
       }
     }
 
-    eventGuests @include(if: $isUpcoming) {
+    eventGuests(order_by: { createdAt: desc }) @include(if: $isUpcoming) {
       member {
         id
         firstName
