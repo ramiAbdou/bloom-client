@@ -30,7 +30,7 @@ const GET_MEMBER_PROFILE: DocumentNode = gql`
   ${ProfileModalMembershipData.fragments.data}
 `;
 
-const Profile: React.FC = () => {
+const ProfileModal: React.FC = () => {
   const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
   const { data, loading } = useQuery<
@@ -51,4 +51,4 @@ const Profile: React.FC = () => {
   );
 };
 
-export default Profile;
+export default ProfileModal;
