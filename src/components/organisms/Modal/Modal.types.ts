@@ -14,7 +14,6 @@ export interface ModalData {
   className?: string;
   id: ModalType;
   metadata?: any;
-  onClose?: VoidFunction;
   options?: ModalOptions;
   width?: number;
 }
@@ -67,7 +66,6 @@ export const initialModalModel: Partial<ModalModel> = {
   id: null,
   isShowing: false,
   metadata: null,
-  onClose: null,
   options: null,
   width: null
 };

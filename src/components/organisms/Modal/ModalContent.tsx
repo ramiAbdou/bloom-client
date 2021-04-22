@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 
+import { useReactiveVar } from '@apollo/client';
 import AddMemberModal from '@components/modals/AddMember/AddMember';
 import CheckInModal from '@components/modals/CheckIn/CheckIn';
 import EventForm from '@components/modals/EventForm/EventForm';
 import ProfileModal from '@components/modals/ProfileModal/ProfileModal';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import ApplicantsConfirmationForm from '@scenes/Applicants/ApplicantsConfirmationForm';
 import ApplicantsModal from '@scenes/Applicants/ApplicantsModal';
 import EventsConfirmRsvpForm from '@scenes/Events/EventsConfirmRsvpForm';
@@ -20,7 +21,9 @@ import DeleteEventConfirmationForm from '../../modals/EventForm/DeleteEventConfi
 import ModalContainer from './ModalContainer';
 
 const ModalCustomContent: React.FC = () => {
-  const modalId: ModalType = useStoreState(({ modal }) => modal.id);
+  const modalId: ModalType = useReactiveVar(modalVar)?.id;
+
+  console.log(modalId);
 
   switch (modalId) {
     case ModalType.ADD_ADMINS:
@@ -74,15 +77,15 @@ const ModalCustomContent: React.FC = () => {
 };
 
 const ModalContent: React.FC = () => {
-  const className: string = useStoreState(({ modal }) => modal.className);
+  const className: string = useReactiveVar(modalVar)?.options?.className;
+  const confirmation: boolean = useReactiveVar(modalVar)?.options?.confirmation;
 
-  const confirmation: boolean = useStoreState(
-    ({ modal }) => modal.options?.confirmation
+  useEffect(
+    () => () => {
+      modalVar(null);
+    },
+    []
   );
-
-  const clearOptions = useStoreActions(({ modal }) => modal.clearOptions);
-
-  useEffect(() => () => clearOptions(), []);
 
   const css: string = cx(
     'c-modal',

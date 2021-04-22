@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { DocumentNode, gql, useQuery } from '@apollo/client';
+import { DocumentNode, gql, useQuery, useReactiveVar } from '@apollo/client';
+import { modalVar } from '@core/state/Modal.reactive';
 import IdStore from '@core/store/Id.store';
-import { useStoreState } from '@core/store/Store';
 import { IMember } from '@util/constants.entities';
 import ProfileModalHistory from './ProfileModalHistory';
 import ProfileModalMembershipData from './ProfileModalMembershipData';
@@ -31,7 +31,7 @@ const GET_MEMBER_PROFILE: DocumentNode = gql`
 `;
 
 const ProfileModal: React.FC = () => {
-  const memberId: string = useStoreState(({ modal }) => modal.metadata);
+  const memberId: string = useReactiveVar(modalVar)?.metadata as string;
 
   const { data, loading } = useQuery<
     GetMemberProfileResult,

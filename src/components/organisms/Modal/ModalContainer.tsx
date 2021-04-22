@@ -1,9 +1,10 @@
 import { AnimationProps, motion, MotionProps } from 'framer-motion';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { IoClose } from 'react-icons/io5';
 
+import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import useBreakpoint from '@hooks/useBreakpoint';
 import useLockBodyScroll from '@hooks/useLockBodyScroll';
 import { cx } from '@util/util';
@@ -14,11 +15,10 @@ import { cx } from '@util/util';
  * background.
  */
 const ModalBackground: React.FC = () => {
-  const lock: boolean = useStoreState(({ modal }) => modal.options?.lock);
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const lock: boolean = useReactiveVar(modalVar).options?.lock;
 
   const onClick = (): void => {
-    if (!lock) closeModal();
+    if (!lock) modalVar(null);
   };
 
   const css: string = cx('c-modal-bg', { 'c-modal-bg--lock': lock });
@@ -27,11 +27,10 @@ const ModalBackground: React.FC = () => {
 };
 
 const ModalExitButton: React.FC = () => {
-  const lock: boolean = useStoreState(({ modal }) => modal.options?.lock);
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const lock: boolean = useReactiveVar(modalVar).options?.lock;
 
   const onClick = (): void => {
-    closeModal();
+    modalVar(null);
   };
 
   return (
@@ -42,13 +41,9 @@ const ModalExitButton: React.FC = () => {
 };
 
 const ModalContainer: React.FC = ({ children }) => {
-  const onClose = useStoreState(({ modal }) => modal?.onClose);
-  const sheet: boolean = useStoreState(({ modal }) => modal.options?.sheet);
-  const width: number = useStoreState(({ modal }) => modal?.width);
+  const sheet: boolean = useReactiveVar(modalVar).options?.sheet;
 
   useLockBodyScroll();
-
-  useEffect(() => () => onClose && onClose(), []);
 
   const isMobile: boolean = useBreakpoint() === 1;
 
@@ -79,7 +74,7 @@ const ModalContainer: React.FC = ({ children }) => {
         className={css}
         exit={exit}
         initial={initial}
-        style={width ? { width } : {}}
+        // style={width ? { width } : {}}
         transition={{ duration: 0.2 }}
       >
         {children}

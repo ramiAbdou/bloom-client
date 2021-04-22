@@ -2,7 +2,8 @@ import gql from 'graphql-tag';
 import React from 'react';
 
 import Card from '@components/containers/Card/Card';
-import { useStoreActions } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
+// import { useStoreActions } from '@core/store/Store';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 import DirectoryCardFullName from './DirectoryCardFullName';
@@ -11,10 +12,11 @@ import DirectoryCardPosition from './DirectoryCardPosition';
 import DirectoryCardRole from './DirectoryCardRole';
 
 const DirectoryCard: ComponentWithFragments<IMember> = ({ data: member }) => {
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  // const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const onClick = (): void => {
-    showModal({ id: ModalType.PROFILE, metadata: member.id });
+    modalVar({ id: ModalType.PROFILE, metadata: member.id });
+    // showModal({ id: ModalType.PROFILE, metadata: member.id });
   };
 
   return (
