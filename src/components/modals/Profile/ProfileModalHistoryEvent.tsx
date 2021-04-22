@@ -2,9 +2,21 @@ import day from 'dayjs';
 import React from 'react';
 
 import Row from '@components/containers/Row/Row';
-import { MemberHistoryData } from './Profile.types';
 
-const ProfileHistoryEvent: React.FC<MemberHistoryData> = ({
+export type ProfileModalHistoryEventType =
+  | 'Attended Event'
+  | 'Joined Community'
+  | 'Paid Dues'
+  | `RSVP'd to Event`
+  | 'Viewed Event Recording';
+
+export interface ProfileModalHistoryEventData {
+  date: string;
+  event: ProfileModalHistoryEventType;
+  title?: string;
+}
+
+const ProfileModalHistoryEvent: React.FC<ProfileModalHistoryEventData> = ({
   date,
   event,
   title
@@ -26,4 +38,4 @@ const ProfileHistoryEvent: React.FC<MemberHistoryData> = ({
   </Row>
 );
 
-export default ProfileHistoryEvent;
+export default ProfileModalHistoryEvent;
