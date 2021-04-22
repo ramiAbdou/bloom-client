@@ -9,7 +9,7 @@ import {
   ShowProps,
   ValueProps
 } from '@util/constants';
-import { IPaymentMethod } from '@util/db.entities';
+import { IPaymentMethod } from '@util/constants.entities';
 
 export type FormQuestion = {
   category?: QuestionCategory;

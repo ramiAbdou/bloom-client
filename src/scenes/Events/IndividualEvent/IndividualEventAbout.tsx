@@ -3,8 +3,8 @@ import { eventIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import Card from '@components/containers/Card/Card';
-import { IEvent } from '@util/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
+import { IEvent } from '@util/constants.entities';
 
 const IndividualEventAbout: React.FC = () => {
   const eventId: string = useReactiveVar(eventIdVar);

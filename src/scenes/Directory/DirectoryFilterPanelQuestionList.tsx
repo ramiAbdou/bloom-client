@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { DocumentNode, gql, useQuery } from '@apollo/client';
-import { IQuestion } from '@util/db.entities';
+import { IQuestion } from '@util/constants.entities';
 import DirectoryFilterPanelQuestion from './DirectoryFilterPanelQuestion';
 
 interface GetQuestionsByCommunityIdResult {

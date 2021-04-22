@@ -4,11 +4,11 @@ import { memberIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import TableStore from '@components/organisms/Table/Table.store';
-import { IMember, MemberRole } from '@util/db.entities';
 import useFind from '@core/gql/hooks/useFind';
 import { useStoreActions } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { ModalType } from '@util/constants';
+import { IMember, MemberRole } from '@util/constants.entities';
 import { take } from '@util/util';
 import DatabaseAction from '../DatabaseAction';
 

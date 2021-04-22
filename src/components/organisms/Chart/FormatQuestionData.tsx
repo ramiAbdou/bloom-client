@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
-import { IQuestion } from '@util/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionType } from '@util/constants';
+import { IQuestion } from '@util/constants.entities';
 import Chart from './Chart.store';
 import { ChartModelInitArgs, ChartType } from './Chart.types';
 

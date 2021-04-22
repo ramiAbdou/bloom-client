@@ -6,7 +6,7 @@ import Card from '@components/containers/Card/Card';
 import StoryConfirmation from '@components/organisms/Story/StoryConfirmation';
 import StoryPage from '@components/organisms/Story/StoryPage';
 import useFindOne from '@gql/hooks/useFindOne';
-import { ICommunity } from '@util/db.entities';
+import { ICommunity } from '@util/constants.entities';
 
 const ApplicationConfirmationMessage: React.FC = () => {
   const communityId: string = useReactiveVar(communityIdVar);

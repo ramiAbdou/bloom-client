@@ -3,8 +3,8 @@ import { useHistory } from 'react-router-dom';
 import { communityIdVar } from 'src/App.reactive';
 
 import { gql, useReactiveVar } from '@apollo/client';
-import { ICommunity } from '@util/db.entities';
 import { ComponentWithFragments } from '@util/constants';
+import { ICommunity } from '@util/constants.entities';
 import { cx } from '@util/util';
 import SidebarCommunityButtonLogo from './SidebarCommunityButtonLogo';
 

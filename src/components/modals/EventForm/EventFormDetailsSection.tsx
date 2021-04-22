@@ -10,7 +10,7 @@ import FormTime from '@components/organisms/Form/FormTime';
 import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { ShowProps } from '@util/constants';
-import { IEvent } from '@util/db.entities';
+import { IEvent } from '@util/constants.entities';
 
 const EventFormTimeItems: React.FC<ShowProps> = ({ show }) => (
   <Show show={show}>

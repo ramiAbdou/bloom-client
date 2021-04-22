@@ -5,7 +5,7 @@ import { communityIdVar, memberIdVar, userIdVar } from 'src/App.reactive';
 import { useReactiveVar } from '@apollo/client';
 import useFindOne from '@gql/hooks/useFindOne';
 import { UrlNameProps } from '@util/constants';
-import { IMember } from '@util/db.entities';
+import { IMember } from '@util/constants.entities';
 import { updateDocumentColors } from '@util/util';
 
 interface MemberRouteProps extends RouteProps {

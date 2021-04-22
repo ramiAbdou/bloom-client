@@ -1,4 +1,3 @@
-import { ICommunityIntegrations } from '@util/db.entities';
 import {
   APP,
   isDevelopment,
@@ -6,6 +5,7 @@ import {
   isStage,
   UrlNameProps
 } from '@util/constants';
+import { ICommunityIntegrations } from '@util/constants.entities';
 import { buildUrl } from '@util/util';
 import mailchimp from './images/mailchimp.png';
 import stripe from './images/stripe.png';

@@ -6,8 +6,8 @@ import { communityIdVar } from 'src/App.reactive';
 import { useReactiveVar } from '@apollo/client';
 import { PanelAction } from '@components/organisms/Panel/Panel.types';
 import PanelOption from '@components/organisms/Panel/PanelOption';
-import { ICommunity } from '@util/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
+import { ICommunity } from '@util/constants.entities';
 import useLogout from './useLogout';
 
 const SidebarPanel: React.FC = () => {

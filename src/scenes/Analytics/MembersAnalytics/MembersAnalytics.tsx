@@ -5,7 +5,7 @@ import { useReactiveVar } from '@apollo/client';
 import Show from '@components/containers/Show';
 import { QueryResult } from '@gql/GQL.types';
 import useFind from '@gql/hooks/useFind';
-import { IMember } from '@util/db.entities';
+import { IMember } from '@util/constants.entities';
 import MembersAnalyticsCharts from './MembersAnalyticsCharts';
 import MembersAnalyticsInsights from './MembersAnalyticsInsights';
 import MembersAnalyticsPlayground from './MembersAnalyticsPlayground';

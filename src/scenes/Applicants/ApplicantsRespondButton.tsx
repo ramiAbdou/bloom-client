@@ -5,7 +5,7 @@ import Button from '@components/atoms/Button/Button';
 import { ModalData } from '@components/organisms/Modal/Modal.types';
 import { useStoreActions } from '@core/store/Store';
 import { ModalType } from '@util/constants';
-import { MemberStatus } from '@util/db.entities';
+import { MemberStatus } from '@util/constants.entities';
 import { take } from '@util/util';
 
 interface ApplicantsRespondButtonProps {

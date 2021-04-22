@@ -7,7 +7,7 @@ import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import { QuestionType } from '@util/constants';
-import { ICommunityIntegrations } from '@util/db.entities';
+import { ICommunityIntegrations } from '@util/constants.entities';
 
 interface IntegrationsDetail {
   label: string;

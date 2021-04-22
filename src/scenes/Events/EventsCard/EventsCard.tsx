@@ -3,7 +3,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Card from '@components/containers/Card/Card';
-import { IEvent } from '@util/db.entities';
+import { IEvent } from '@util/constants.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import IdStore from '@core/store/Id.store';
 import { IdProps } from '@util/constants';

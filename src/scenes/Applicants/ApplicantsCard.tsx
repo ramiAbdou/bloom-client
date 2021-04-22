@@ -7,7 +7,7 @@ import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/Question
 import IdStore from '@core/store/Id.store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { IdProps, QuestionCategory } from '@util/constants';
-import { IMember, IMemberValue, MemberStatus } from '@util/db.entities';
+import { IMember, IMemberValue, MemberStatus } from '@util/constants.entities';
 import ApplicantsCardHeader from './ApplicantsCardHeader';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 

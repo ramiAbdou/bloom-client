@@ -12,7 +12,7 @@ import GoogleLogo from '@components/images/google.svg';
 import Form from '@components/organisms/Form/Form';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
-import { IMember, MemberRole } from '@util/db.entities';
+import { IMember, MemberRole } from '@util/constants.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import { APP, QuestionCategory, ShowProps } from '@util/constants';
 import { ErrorContext, ErrorType } from '@util/constants.errors';

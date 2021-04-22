@@ -7,7 +7,7 @@ import {
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
 import StoryStore from '@components/organisms/Story/Story.store';
-import { IMember, MemberRole } from '@util/db.entities';
+import { IMember, MemberRole } from '@util/constants.entities';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { ErrorType } from '@util/constants.errors';
 import { MutationEvent } from '@util/constants.events';

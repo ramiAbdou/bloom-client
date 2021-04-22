@@ -2,7 +2,7 @@ import { Masonry } from 'masonic';
 import hash from 'object-hash';
 import React from 'react';
 
-import { IMember } from '@util/db.entities';
+import { IMember } from '@util/constants.entities';
 import DirectoryCard from './DirectoryCard';
 
 interface DirectoryCardListProps {

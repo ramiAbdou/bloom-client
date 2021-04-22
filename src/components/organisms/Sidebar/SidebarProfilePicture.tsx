@@ -2,7 +2,7 @@ import React from 'react';
 
 import { gql } from '@apollo/client';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
-import { IMember } from '@util/db.entities';
+import { IMember } from '@util/constants.entities';
 import { ComponentWithFragments } from '@util/constants';
 
 const SidebarProfilePicture: ComponentWithFragments<IMember> = ({

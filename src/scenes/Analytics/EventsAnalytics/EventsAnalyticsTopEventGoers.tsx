@@ -15,7 +15,7 @@ import TableContent from '@components/organisms/Table/TableContent';
 import useFind from '@core/gql/hooks/useFind';
 import { useStoreActions } from '@core/store/Store';
 import { ModalType, QuestionType } from '@util/constants';
-import { IEvent, IEventAttendee } from '@util/db.entities';
+import { IEvent, IEventAttendee } from '@util/constants.entities';
 import { sortObjects } from '@util/util';
 
 const EventsAnalyticsTopEventGoersTable: React.FC = () => {

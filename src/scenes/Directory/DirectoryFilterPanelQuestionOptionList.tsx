@@ -2,8 +2,8 @@ import React from 'react';
 
 import { gql, useReactiveVar } from '@apollo/client';
 import Show from '@components/containers/Show';
-import { IQuestion } from '@util/db.entities';
 import { ComponentWithFragments } from '@util/constants';
+import { IQuestion } from '@util/constants.entities';
 import { directoryFilterOpenQuestionIdVar } from './Directory.reactive';
 import DirectoryFilterPanelQuestionOption from './DirectoryFilterPanelQuestionOption';
 

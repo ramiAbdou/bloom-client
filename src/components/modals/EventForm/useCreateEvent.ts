@@ -4,7 +4,7 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
-import { EventPrivacy, IEvent } from '@util/db.entities';
+import { EventPrivacy, IEvent } from '@util/constants.entities';
 import { uploadImage } from '@util/imageUtil';
 
 interface FormatEndTimeArgs {

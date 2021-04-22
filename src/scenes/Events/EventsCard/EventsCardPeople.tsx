@@ -2,7 +2,7 @@ import React from 'react';
 
 import Row from '@components/containers/Row/Row';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
-import { IEvent, IEventAttendee, IEventGuest } from '@util/db.entities';
+import { IEvent, IEventAttendee, IEventGuest } from '@util/constants.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import IdStore from '@core/store/Id.store';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';

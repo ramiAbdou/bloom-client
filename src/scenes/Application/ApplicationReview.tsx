@@ -8,7 +8,7 @@ import Form from '@components/organisms/Form/Form';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import StoryStore from '@components/organisms/Story/Story.store';
 import StoryPage from '@components/organisms/Story/StoryPage';
-import { IMemberType } from '@util/db.entities';
+import { IMemberType } from '@util/constants.entities';
 import useFind from '@core/gql/hooks/useFind';
 import ApplicationReviewMain from './ApplicationReviewMain';
 import ApplicationReviewMembership from './ApplicationReviewMembership';

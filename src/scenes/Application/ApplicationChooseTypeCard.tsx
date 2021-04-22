@@ -2,7 +2,7 @@ import React from 'react';
 
 import useFindOne from '@gql/hooks/useFindOne';
 import { IdProps } from '@util/constants';
-import { IMemberType, RecurrenceType } from '@util/db.entities';
+import { IMemberType, RecurrenceType } from '@util/constants.entities';
 import { take } from '@util/util';
 
 const ApplicationChooseTypeCard: React.FC<IdProps> = ({ id: memberTypeId }) => {

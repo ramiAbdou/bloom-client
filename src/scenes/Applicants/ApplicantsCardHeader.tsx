@@ -8,7 +8,7 @@ import { useStoreActions } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { ModalType } from '@util/constants';
-import { IMember } from '@util/db.entities';
+import { IMember } from '@util/constants.entities';
 
 const ApplicantsCardHeaderDetails: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);

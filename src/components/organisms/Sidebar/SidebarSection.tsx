@@ -3,8 +3,8 @@ import React from 'react';
 import { memberIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
-import { IMember } from '@util/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
+import { IMember } from '@util/constants.entities';
 import { SidebarLinkOptions } from './Sidebar.types';
 import SidebarLink from './SidebarLink';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 
 import { gql } from '@apollo/client';
-import { IMember } from '@util/db.entities';
+import { IMember } from '@util/constants.entities';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { ComponentWithFragments } from '@util/constants';
 import SidebarProfileContainer from './SidebarProfileContainer';

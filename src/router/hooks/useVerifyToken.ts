@@ -3,12 +3,12 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { ModalData } from '@components/organisms/Modal/Modal.types';
-import { IEvent } from '@util/db.entities';
 import { useStoreActions } from '@core/store/Store';
 import GQL from '@gql/GQL';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import useGQL from '@gql/hooks/useGQL';
 import { ModalType, VerifyEvent } from '@util/constants';
+import { IEvent } from '@util/constants.entities';
 import { ErrorType } from '@util/constants.errors';
 import { MutationEvent } from '@util/constants.events';
 import { openHref } from '@util/util';

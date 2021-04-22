@@ -4,10 +4,10 @@ import { communityIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import Dropdown from '@components/molecules/Dropdown/Dropdown';
-import { ICommunity, IQuestion } from '@util/db.entities';
 import IdStore from '@core/store/Id.store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';
+import { ICommunity, IQuestion } from '@util/constants.entities';
 import { sortObjects } from '@util/util';
 import TableFilterStore from './TableFilterPanel.store';
 import {

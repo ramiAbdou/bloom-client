@@ -3,7 +3,7 @@ import { Redirect, Route, RouteProps } from 'react-router-dom';
 import { userIdVar } from 'src/App.reactive';
 
 import { DocumentNode, gql, useQuery, useReactiveVar } from '@apollo/client';
-import { IMember } from '@util/db.entities';
+import { IMember } from '@util/constants.entities';
 
 interface GetMembersByUserIdArgs {
   userId: string;

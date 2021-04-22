@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 import React from 'react';
 
-import { IMember } from '@util/db.entities';
 import { ComponentWithFragments } from '@util/constants';
+import { IMember } from '@util/constants.entities';
 
 const DirectoryCardFullName: ComponentWithFragments<IMember> = ({
   data: member

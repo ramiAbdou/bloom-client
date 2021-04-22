@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { gql } from '@apollo/client';
-import { IMember } from '@util/db.entities';
 import { ComponentWithFragments } from '@util/constants';
+import { IMember } from '@util/constants.entities';
 
 const DirectoryCardPosition: ComponentWithFragments<IMember> = ({
   data: member

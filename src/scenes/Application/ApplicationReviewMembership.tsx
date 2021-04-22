@@ -11,7 +11,7 @@ import {
   IMemberType,
   IPaymentMethod,
   RecurrenceType
-} from '@util/db.entities';
+} from '@util/constants.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { take } from '@util/util';
 

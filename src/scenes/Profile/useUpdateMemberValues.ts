@@ -1,4 +1,4 @@
-import { IMemberValue } from '@util/db.entities';
+import { IMemberValue } from '@util/constants.entities';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import {
   FormItemData,

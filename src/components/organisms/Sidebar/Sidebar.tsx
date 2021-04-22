@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { DocumentNode, gql, useQuery } from '@apollo/client';
-import { ICommunity, IMember } from '@util/db.entities';
+import { ICommunity, IMember } from '@util/constants.entities';
 import SidebarAdminSection from './SidebarAdminSection';
 import SidebarCommunityButton from './SidebarCommunityButton';
 import SidebarCommunityList from './SidebarCommunityList';

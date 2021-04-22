@@ -5,7 +5,7 @@ import {
   IEventGuest,
   IEventWatch,
   IMember
-} from '@util/db.entities';
+} from '@util/constants.entities';
 import { sortObjects } from '@util/util';
 import { MemberHistoryData } from './Profile.types';
 

@@ -3,8 +3,8 @@ import React from 'react';
 import { gql, useReactiveVar } from '@apollo/client';
 import Attribute from '@components/atoms/Tag/Attribute';
 import Row from '@components/containers/Row/Row';
-import { IQuestion } from '@util/db.entities';
 import { ComponentWithFragments } from '@util/constants';
+import { IQuestion } from '@util/constants.entities';
 import {
   directoryFilterOpenQuestionIdVar,
   DirectoryFilterSelectedValue,

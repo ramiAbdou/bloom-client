@@ -10,7 +10,7 @@ import {
   IEventAttendee,
   IEventGuest,
   IEventWatch
-} from '@util/db.entities';
+} from '@util/constants.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { QuestionType } from '@util/constants';

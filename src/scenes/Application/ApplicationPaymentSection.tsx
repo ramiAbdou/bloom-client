@@ -13,7 +13,7 @@ import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import StoryStore from '@components/organisms/Story/Story.store';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { IMemberType } from '@util/db.entities';
+import { IMemberType } from '@util/constants.entities';
 import useSavePaymentMethod from './useSavePaymentMethod';
 
 const ApplicationPaymentForm: React.FC = () => {

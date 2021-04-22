@@ -11,7 +11,7 @@ import {
   TableRow
 } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
-import { IQuestion } from '@util/db.entities';
+import { IQuestion } from '@util/constants.entities';
 import { useStoreActions } from '@core/store/Store';
 import GQL from '@gql/GQL';
 import useGQL from '@gql/hooks/useGQL';

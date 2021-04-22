@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { gql } from '@apollo/client';
-import { ICommunity } from '@util/db.entities';
 import { ComponentWithFragments } from '@util/constants';
+import { ICommunity } from '@util/constants.entities';
 
 const SidebarCommunityButtonLogo: ComponentWithFragments<ICommunity> = ({
   data: community

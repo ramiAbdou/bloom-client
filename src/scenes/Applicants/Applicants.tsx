@@ -5,7 +5,7 @@ import { useReactiveVar } from '@apollo/client';
 import MainContent from '@components/containers/Main/MainContent';
 import Scene from '@components/containers/Scene';
 import useFind from '@gql/hooks/useFind';
-import { IMember } from '@util/db.entities';
+import { IMember } from '@util/constants.entities';
 import ApplicantsCardList from './ApplicantsCardList';
 import ApplicantsHeader from './ApplicantsHeader';
 

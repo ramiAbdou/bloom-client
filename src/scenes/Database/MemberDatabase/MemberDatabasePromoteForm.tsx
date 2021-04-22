@@ -8,7 +8,7 @@ import {
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
 import TableStore from '@components/organisms/Table/Table.store';
-import { IMember, MemberRole } from '@util/db.entities';
+import { IMember, MemberRole } from '@util/constants.entities';
 
 const MemberDatabasePromoteFormHeader: React.FC = () => {
   const title: string = 'Promote to admin?';

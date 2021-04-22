@@ -11,7 +11,7 @@ import StoryPage from '@components/organisms/Story/StoryPage';
 import useFind from '@core/gql/hooks/useFind';
 import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';
-import { IMemberType } from '@util/db.entities';
+import { IMemberType } from '@util/constants.entities';
 import ApplicationChooseTypeCard from './ApplicationChooseTypeCard';
 import ApplicationPaymentForm from './ApplicationPaymentSection';
 

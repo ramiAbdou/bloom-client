@@ -7,7 +7,7 @@ import {
 } from '@components/organisms/Form/Form.types';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
-import { IEvent, IEventGuest } from '@util/db.entities';
+import { IEvent, IEventGuest } from '@util/constants.entities';
 import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 

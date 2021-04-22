@@ -3,15 +3,15 @@ import { communityIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import { TableColumn, TableRow } from '@components/organisms/Table/Table.types';
+import useFind from '@core/gql/hooks/useFind';
+import useFindOne from '@core/gql/hooks/useFindOne';
+import { QuestionCategory } from '@util/constants';
 import {
   IMember,
   IMemberValue,
   IQuestion,
   MemberStatus
-} from '@util/db.entities';
-import useFind from '@core/gql/hooks/useFind';
-import useFindOne from '@core/gql/hooks/useFindOne';
-import { QuestionCategory } from '@util/constants';
+} from '@util/constants.entities';
 import { sortObjects } from '@util/util';
 
 interface GetMemberValueArgs {

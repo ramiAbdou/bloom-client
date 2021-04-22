@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import { communityIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
-import { ICommunity } from '@util/db.entities';
 import { useStoreActions } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import { OnClickProps } from '@util/constants';
+import { ICommunity } from '@util/constants.entities';
 import { cx } from '@util/util';
 import { SidebarLinkOptions } from './Sidebar.types';
 import SidebarLinkNotificationCircle from './SidebarLinkNotificationCircle';

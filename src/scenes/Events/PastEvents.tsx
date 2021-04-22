@@ -3,7 +3,7 @@ import { communityIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import MainContent from '@components/containers/Main/MainContent';
-import { IEvent } from '@util/db.entities';
+import { IEvent } from '@util/constants.entities';
 import { QueryResult } from '@gql/GQL.types';
 import useFind from '@gql/hooks/useFind';
 import { now } from '@util/util';

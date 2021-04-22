@@ -8,7 +8,7 @@ import Dropdown from '@components/molecules/Dropdown/Dropdown';
 import useFind from '@core/gql/hooks/useFind';
 import IdStore from '@core/store/Id.store';
 import { QuestionCategory } from '@util/constants';
-import { IMemberType, IQuestion } from '@util/db.entities';
+import { IMemberType, IQuestion } from '@util/constants.entities';
 import { sortObjects } from '@util/util';
 
 const MembersAnalyticsPlaygroundDropdown: React.FC = () => {

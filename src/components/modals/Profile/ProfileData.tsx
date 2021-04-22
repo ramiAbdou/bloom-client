@@ -6,7 +6,7 @@ import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/QuestionBox.types';
 import IdStore from '@core/store/Id.store';
 import useFind from '@gql/hooks/useFind';
-import { IMemberValue } from '@util/db.entities';
+import { IMemberValue } from '@util/constants.entities';
 
 const ProfileDataContent: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);

@@ -5,10 +5,10 @@ import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import Card from '@components/containers/Card/Card';
 import Show from '@components/containers/Show';
-import { IMemberSocials } from '@util/db.entities';
 import { useStoreActions } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { ModalType, SocialBrand } from '@util/constants';
+import { IMemberSocials } from '@util/constants.entities';
 import ProfileCardHeader from './ProfileCardHeader';
 import ProfileSocialValue from './ProfileSocialValue';
 

@@ -12,7 +12,7 @@ import {
   IMemberType,
   IPaymentMethod,
   IQuestion
-} from '@util/db.entities';
+} from '@util/constants.entities';
 
 const useApplyToCommunity = (): OnFormSubmitFunction => {
   const [applyToCommunity] = useBloomMutation<any, ApplyForMembershipArgs>({

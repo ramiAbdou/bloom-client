@@ -6,7 +6,7 @@ import { useReactiveVar } from '@apollo/client';
 import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
 import MainContent from '@components/containers/Main/MainContent';
 import Section from '@components/containers/Section';
-import { IEvent } from '@util/db.entities';
+import { IEvent } from '@util/constants.entities';
 import { QueryResult } from '@gql/GQL.types';
 import useFind from '@gql/hooks/useFind';
 import { sortObjects } from '@util/util';

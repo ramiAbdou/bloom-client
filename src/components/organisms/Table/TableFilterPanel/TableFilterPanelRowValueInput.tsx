@@ -3,10 +3,10 @@ import React from 'react';
 
 import Input from '@components/atoms/Input/Input';
 import Dropdown from '@components/molecules/Dropdown/Dropdown';
-import { IQuestion } from '@util/db.entities';
 import IdStore from '@core/store/Id.store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionType } from '@util/constants';
+import { IQuestion } from '@util/constants.entities';
 import TableFilterStore from './TableFilterPanel.store';
 import { TableFilterArgs } from './TableFilterPanel.types';
 

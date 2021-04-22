@@ -11,7 +11,7 @@ import Show from '@components/containers/Show';
 import IdStore from '@core/store/Id.store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { SocialBrand } from '@util/constants';
-import { IMemberSocials } from '@util/db.entities';
+import { IMemberSocials } from '@util/constants.entities';
 import { cx } from '@util/util';
 
 interface ProfileSocialButtonProps {

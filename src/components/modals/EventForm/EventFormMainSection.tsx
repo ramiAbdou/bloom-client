@@ -5,7 +5,7 @@ import FormLargeTitle from '@components/organisms/Form/FormLargeTitle';
 import FormLongText from '@components/organisms/Form/FormLongText';
 import FormSection from '@components/organisms/Form/FormSection';
 import FormShortText from '@components/organisms/Form/FormShortText';
-import { IEvent } from '@util/db.entities';
+import { IEvent } from '@util/constants.entities';
 import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 

@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 import React from 'react';
 
 import Card from '@components/containers/Card/Card';
-import { IMember } from '@util/db.entities';
+import { IMember } from '@util/constants.entities';
 import { useStoreActions } from '@core/store/Store';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import DirectoryCardFullName from './DirectoryCardFullName';
