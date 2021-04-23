@@ -15,10 +15,12 @@ interface GetMembersByCommunityIdExpandedResult {
 const GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED: DocumentNode = gql`
   query GetMembersByCommunityIdExpanded(
     $communityId: String!
+    $roleExp: String_comparison_exp! = {}
     $searchString: String!
     $searchStringWord: String!
   ) {
     communityId @client @export(as: "communityId")
+    databaseRoleExp @client @export(as: "roleExp")
     databaseSearchString @client @export(as: "searchString")
     databaseSearchStringWord @client @export(as: "searchStringWord")
 
@@ -26,6 +28,7 @@ const GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED: DocumentNode = gql`
       where: {
         communityId: { _eq: $communityId }
         deletedAt: { _is_null: true }
+        role: $roleExp
         status: { _eq: "Accepted" }
         _or: [
           # { bio: { _ilike: $searchStringWord } }
