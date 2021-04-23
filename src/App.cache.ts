@@ -26,7 +26,7 @@ import {
   memberIdVar,
   userIdVar
 } from './App.reactive';
-import { databaseReactiveFields } from './scenes/Database/MemberDatabase/MemberDatabase.reactive';
+import { databaseReactiveFields } from './scenes/Database/MemberDatabase.reactive';
 import { directoryReactiveFields } from './scenes/Directory/Directory.reactive';
 import { eventsReactiveFields } from './scenes/Events/Events.reactive';
 

@@ -7,9 +7,9 @@ import TableStore from '@components/organisms/Table/Table.store';
 import { modalVar } from '@core/state/Modal.reactive';
 import { ModalType } from '@util/constants';
 import { take } from '@util/util';
-import DatabaseAction from '../DatabaseAction';
+import DatabaseAction from './DatabaseAction';
 
-const MemberDatabasePromoteButton: React.FC = () => {
+const DatabasePromoteButton: React.FC = () => {
   const memberId: string = useReactiveVar(memberIdVar);
 
   const tooManySelected = TableStore.useStoreState(
@@ -44,4 +44,4 @@ const MemberDatabasePromoteButton: React.FC = () => {
   );
 };
 
-export default MemberDatabasePromoteButton;
+export default DatabasePromoteButton;

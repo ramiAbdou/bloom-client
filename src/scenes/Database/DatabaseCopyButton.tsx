@@ -5,13 +5,13 @@ import { toastQueueVar, useToast } from 'src/App.reactive';
 import TableStore from '@components/organisms/Table/Table.store';
 import { TableRow } from '@components/organisms/Table/Table.types';
 import { QuestionCategory } from '@util/constants';
-import DatabaseAction from '../DatabaseAction';
+import DatabaseAction from './DatabaseAction';
 
 /**
  * Copies all of the selected members' emails to clipboard, in a
  * comma-separated list.
  */
-const MemberDatabaseCopyButton: React.FC = () => {
+const DatabaseCopyButton: React.FC = () => {
   const { showToast } = useToast(toastQueueVar);
 
   const emails = TableStore.useStoreState(
@@ -40,4 +40,4 @@ const MemberDatabaseCopyButton: React.FC = () => {
   );
 };
 
-export default MemberDatabaseCopyButton;
+export default DatabaseCopyButton;

@@ -7,8 +7,7 @@ import TableStore from '@components/organisms/Table/Table.store';
 import SearchBar from '@components/organisms/Table/TableSeachBar';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { IMember, MemberRole } from '@util/constants.entities';
-import AdminDatabaseDeleteButton from './AdminDatabaseDeleteButton';
-import AdminDatabaseDemoteButton from './AdminDatabaseDemoteButton';
+import DatabaseDemoteButton from './DatabaseDemoteButton';
 
 const AdminDatabaseButtons: React.FC = () => {
   const memberId: string = useReactiveVar(memberIdVar);
@@ -28,8 +27,7 @@ const AdminDatabaseButtons: React.FC = () => {
 
   return (
     <Row show={!!isAnythingSelected && !!isOwner} spacing="xs">
-      <AdminDatabaseDemoteButton />
-      <AdminDatabaseDeleteButton />
+      <DatabaseDemoteButton />
     </Row>
   );
 };

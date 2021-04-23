@@ -7,10 +7,10 @@ import TableStore from '@components/organisms/Table/Table.store';
 import TableFilterButton from '@components/organisms/Table/TableFilterButton';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { IMember, MemberRole } from '@util/constants.entities';
-import MemberDatabaseCopyButton from './MemberDatabaseCopyButton';
-import DeleteMembersButton from './MemberDatabaseDeleteButton';
-import MemberDatabaseExportButton from './MemberDatabaseExportButton';
-import MemberDatabasePromoteButton from './MemberDatabasePromoteButton';
+import DatabaseCopyButton from './DatabaseCopyButton';
+import DatabaseDeleteButton from './DatabaseDeleteButton';
+import DatabaseExportButton from './DatabaseExportButton';
+import DatabasePromoteButton from './DatabasePromoteButton';
 import MemberDatabaseQuickFilters from './MemberDatabaseQuickFilters';
 import MemberDatabaseSearchBar from './MemberDatabaseSearchBar';
 
@@ -32,10 +32,10 @@ const MemberDatabaseButtons: React.FC = () => {
 
   return (
     <Row className="ml-auto" show={!!isAnythingSelected} spacing="xs">
-      <MemberDatabaseCopyButton />
-      <MemberDatabaseExportButton />
-      {isOwner && <MemberDatabasePromoteButton />}
-      <DeleteMembersButton />
+      <DatabaseCopyButton />
+      <DatabaseExportButton />
+      {isOwner && <DatabasePromoteButton />}
+      <DatabaseDeleteButton />
     </Row>
   );
 };

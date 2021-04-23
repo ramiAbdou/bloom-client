@@ -4,9 +4,9 @@ import { IoFilter } from 'react-icons/io5';
 import TableStore from '@components/organisms/Table/Table.store';
 import { useStoreActions } from '@core/store/Store';
 import { PanelType } from '@util/constants';
-import DatabaseAction from '../DatabaseAction';
+import DatabaseAction from './DatabaseAction';
 
-const FilterButton: React.FC = () => {
+const DatabaseFilterButton: React.FC = () => {
   const showPanel = useStoreActions(({ panel }) => panel.showPanel);
 
   const isAnythingSelected: boolean = TableStore.useStoreState(
@@ -28,4 +28,4 @@ const FilterButton: React.FC = () => {
   );
 };
 
-export default FilterButton;
+export default DatabaseFilterButton;

@@ -3,7 +3,7 @@ import React from 'react';
 import MainContent from '@components/containers/Main/MainContent';
 import Scene from '@components/containers/Scene';
 import DatabaseHeader from './DatabaseHeader';
-import MemberDatabase from './MemberDatabase/MemberDatabase';
+import MemberDatabase from './MemberDatabase';
 
 const Database: React.FC = () => (
   <Scene>

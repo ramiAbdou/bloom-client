@@ -14,7 +14,7 @@ import { modalVar } from '@core/state/Modal.reactive';
 // import useGQL from '@gql/hooks/useGQL';
 import { ModalType } from '@util/constants';
 import { IMember, IQuestion } from '@util/constants.entities';
-import { useMemberDatabaseRows } from '../Database.util';
+import { useMemberDatabaseRows } from './Database.util';
 import MemberDatabaseActionRow from './MemberDatabaseActionRow';
 
 interface GetMembersByCommunityIdExpandedResult {

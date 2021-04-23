@@ -14,7 +14,7 @@ import useInviteMembers from './useInviteMembers';
 
 const AddMemberFormActions: React.FC = () => {
   const onSecondaryClick = (): void => {
-    modalVar();
+    modalVar(null);
   };
 
   return (

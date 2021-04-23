@@ -10,7 +10,7 @@ import useFindOne from '@gql/hooks/useFindOne';
 import { ModalType } from '@util/constants';
 import { IMember, MemberRole } from '@util/constants.entities';
 import { take } from '@util/util';
-import DatabaseAction from '../DatabaseAction';
+import DatabaseAction from './DatabaseAction';
 
 /**
  * Returns the appropriate tooltip message based on the Member's permissions
@@ -49,7 +49,7 @@ const useDeleteTooltip = (): string => {
   return tooltip;
 };
 
-const MemberDatabaseDeleteButton: React.FC = () => {
+const DatabaseDeleteButton: React.FC = () => {
   const tooltip: string = useDeleteTooltip();
 
   const onClick = (): void => {
@@ -70,4 +70,4 @@ const MemberDatabaseDeleteButton: React.FC = () => {
   );
 };
 
-export default MemberDatabaseDeleteButton;
+export default DatabaseDeleteButton;

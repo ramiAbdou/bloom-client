@@ -7,9 +7,9 @@ import { useReactiveVar } from '@apollo/client';
 import TableStore from '@components/organisms/Table/Table.store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { ICommunity } from '@util/constants.entities';
-import DatabaseAction from '../DatabaseAction';
+import DatabaseAction from './DatabaseAction';
 
-const MemberDatabaseExportButton: React.FC = () => {
+const DatabaseExportButton: React.FC = () => {
   const communityId: string = useReactiveVar(communityIdVar);
   const { showToast } = useToast(toastQueueVar);
 
@@ -56,4 +56,4 @@ const MemberDatabaseExportButton: React.FC = () => {
   );
 };
 
-export default MemberDatabaseExportButton;
+export default DatabaseExportButton;
