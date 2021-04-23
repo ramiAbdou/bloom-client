@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { useTableState } from './Table.state';
 import TableStore from './Table.store';
-import { useTableState } from './Table.tracked';
 import { TableColumn } from './Table.types';
 import HeaderCell from './TableHeaderCell';
 

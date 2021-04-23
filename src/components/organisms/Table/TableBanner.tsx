@@ -19,7 +19,7 @@ import Row from '@components/containers/Row/Row';
 import {
   useTableDispatch,
   useTableState
-} from '@components/organisms/Table/Table.tracked';
+} from '@components/organisms/Table/Table.state';
 import TableStore from './Table.store';
 import { TableRow, TableState } from './Table.types';
 import { getBannerButtonTitle, getBannerMessage } from './Table.util';

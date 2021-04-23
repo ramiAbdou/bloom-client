@@ -2,7 +2,7 @@ import hash from 'object-hash';
 import React from 'react';
 
 import Show from '@components/containers/Show';
-import { useTableState } from '@components/organisms/Table/Table.tracked';
+import { useTableState } from './Table.state';
 import TableStore from './Table.store';
 import { TableRow as TableRowProps } from './Table.types';
 import TableHeaderRow from './TableHeaderRow';

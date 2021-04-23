@@ -4,8 +4,8 @@ import { IoExit } from 'react-icons/io5';
 import { communityIdVar, toastQueueVar, useToast } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
+import { useTableState } from '@components/organisms/Table/Table.state';
 import TableStore from '@components/organisms/Table/Table.store';
-import { useTableState } from '@components/organisms/Table/Table.tracked';
 import { TableState } from '@components/organisms/Table/Table.types';
 import useFindOne from '@gql/hooks/useFindOne';
 import { ICommunity } from '@util/constants.entities';

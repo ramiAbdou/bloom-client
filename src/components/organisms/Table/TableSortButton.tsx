@@ -6,7 +6,7 @@ import Button from '@components/atoms/Button/Button';
 import {
   useTableDispatch,
   useTableState
-} from '@components/organisms/Table/Table.tracked';
+} from '@components/organisms/Table/Table.state';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import { cx } from '@util/util';
 import { TableSortDirection } from './Table.types';

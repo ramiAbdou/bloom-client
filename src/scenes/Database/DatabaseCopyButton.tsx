@@ -2,11 +2,11 @@ import React from 'react';
 import { IoCopy } from 'react-icons/io5';
 import { toastQueueVar, useToast } from 'src/App.reactive';
 
-import TableStore from '@components/organisms/Table/Table.store';
 import {
   getColumn,
   useTableState
-} from '@components/organisms/Table/Table.tracked';
+} from '@components/organisms/Table/Table.state';
+import TableStore from '@components/organisms/Table/Table.store';
 import {
   TableColumn,
   TableRow,

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { cx } from '@util/util';
 import TableStore from './Table.store';
-import { useTableState } from './Table.tracked';
+import { useTableState } from './Table.state';
 import {
   TableColumn,
   TableRow as TableRowProps,

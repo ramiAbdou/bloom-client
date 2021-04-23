@@ -5,8 +5,8 @@ import { cx } from '@util/util';
 import { getTableCellClass } from './Table.util';
 import TableCellContent from './TableCellContent';
 import TableRowCheckbox from './TableRowCheckbox';
-import { useTableState } from '@components/organisms/Table/Table.tracked';
-import { getColumn } from './Table.tracked';
+import { useTableState } from '@components/organisms/Table/Table.state';
+import { getColumn } from './Table.state';
 
 interface TableCellProps extends ValueProps {
   columnId: string;

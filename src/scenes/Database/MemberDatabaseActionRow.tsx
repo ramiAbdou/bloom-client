@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Row from '@components/containers/Row/Row';
-import { useTableState } from '@components/organisms/Table/Table.tracked';
+import { useTableState } from '@components/organisms/Table/Table.state';
 import { TableState } from '@components/organisms/Table/Table.types';
 import TableFilterButton from '@components/organisms/Table/TableFilterButton';
 import useMemberRole from '@core/hooks/useMemberRole';

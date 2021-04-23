@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
 
-import { useTableState } from '@components/organisms/Table/Table.tracked';
+import { useTableState } from '@components/organisms/Table/Table.state';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import { PanelType } from '@util/constants';
 import { cx } from '@util/util';

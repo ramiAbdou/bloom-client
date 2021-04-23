@@ -2,12 +2,8 @@ import React from 'react';
 
 import Checkbox from '@components/atoms/Checkbox/Checkbox';
 import { TableState } from '@components/organisms/Table/Table.types';
+import { getColumnIndex, useTableDispatch, useTableState } from './Table.state';
 import TableStore from './Table.store';
-import {
-  getColumnIndex,
-  useTableDispatch,
-  useTableState
-} from './Table.tracked';
 
 interface TableRowCheckboxProps {
   columnId: string;

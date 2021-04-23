@@ -8,7 +8,7 @@ import {
 } from '@components/organisms/Form/Form.types';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
-import { useTableState } from '@components/organisms/Table/Table.tracked';
+import { useTableState } from '@components/organisms/Table/Table.state';
 import { modalVar } from '@core/state/Modal.reactive';
 import { IMember } from '@util/constants.entities';
 import { now } from '@util/util';

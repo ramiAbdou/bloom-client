@@ -5,7 +5,7 @@ import Pill from '@components/atoms/Tag/Pill';
 import {
   getColumn,
   useTableState
-} from '@components/organisms/Table/Table.tracked';
+} from '@components/organisms/Table/Table.state';
 import { QuestionCategory, QuestionType } from '@util/constants';
 import { TableColumn } from './Table.types';
 

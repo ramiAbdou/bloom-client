@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Checkbox from '@components/atoms/Checkbox/Checkbox';
+import { useTableDispatch, useTableState } from './Table.state';
 import TableStore from './Table.store';
-import { useTableDispatch, useTableState } from './Table.tracked';
 import { TableRow, TableState } from './Table.types';
 import TablePaginationStore from './TablePagination/TablePagination.store';
 

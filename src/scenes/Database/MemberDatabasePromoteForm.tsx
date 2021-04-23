@@ -11,7 +11,7 @@ import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmat
 import {
   useTableDispatch,
   useTableState
-} from '@components/organisms/Table/Table.tracked';
+} from '@components/organisms/Table/Table.state';
 import { modalVar } from '@core/state/Modal.reactive';
 import { IMember, MemberRole } from '@util/constants.entities';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoArrowDownCircle } from 'react-icons/io5';
 
-import { useTableState } from '@components/organisms/Table/Table.tracked';
+import { useTableState } from '@components/organisms/Table/Table.state';
 import { modalVar } from '@core/state/Modal.reactive';
 import { ModalType } from '@util/constants';
 import DatabaseAction from './DatabaseAction';
