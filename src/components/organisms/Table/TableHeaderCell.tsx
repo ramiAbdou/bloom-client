@@ -4,11 +4,11 @@ import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import { PanelType } from '@util/constants';
 import { cx } from '@util/util';
+import { useTableSortColumnId, useTableSortDirection } from './Table.state';
 import TableStore from './Table.store';
-import { TableColumn } from './Table.types';
+import { TableColumn, TableSortDirection } from './Table.types';
 import { getTableCellClass } from './Table.util';
 import TableHeaderCheckbox from './TableHeaderCheckbox';
-import TableSortStore from './TableSort/TableSort.store';
 
 interface TableHeaderCellProps extends TableColumn {
   i: number;
@@ -22,13 +22,8 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
   id,
   title
 }) => {
-  const sortColumnId: string = TableSortStore.useStoreState(
-    (state) => state.sortColumnId
-  );
-
-  const direction = TableSortStore.useStoreState(
-    (state) => state.sortDirection
-  );
+  const sortColumnId: string = useTableSortColumnId();
+  const sortDirection: TableSortDirection = useTableSortDirection();
 
   const hasCheckbox = TableStore.useStoreState(
     ({ options }) => options.hasCheckbox
@@ -47,7 +42,7 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
     }
   };
 
-  const isSortedColumn = sortColumnId === id;
+  const isSortedColumn: boolean = sortColumnId === id;
 
   const css: string = cx(getTableCellClass({ category, type }), {
     'o-table-th--panel': isPanelShowing,
@@ -55,8 +50,11 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
     'o-table-th--sorted': isSortedColumn
   });
 
-  const showCaretUp = isSortedColumn && direction === 'ASC';
-  const showCaretDown = isSortedColumn && direction === 'DESC';
+  const showCaretUp: boolean =
+    isSortedColumn && sortDirection === TableSortDirection.ASC;
+
+  const showCaretDown: boolean =
+    isSortedColumn && sortDirection === TableSortDirection.DESC;
 
   return (
     <th

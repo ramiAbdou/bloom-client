@@ -38,6 +38,7 @@
     "autoprefixer": "^10.1.0",
     "aws-sdk": "^2.827.0",
     "change-case": "^4.1.2",
+    "constate": "^3.2.0",
     "dayjs": "^1.9.7",
     "deepmerge": "^4.2.2",
     "easy-peasy": "^4.0.1",

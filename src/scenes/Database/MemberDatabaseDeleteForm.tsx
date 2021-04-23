@@ -8,17 +8,14 @@ import {
 } from '@components/organisms/Form/Form.types';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
-import TableStore from '@components/organisms/Table/Table.store';
+import { useTableSelectedRowIds } from '@components/organisms/Table/Table.state';
 import { modalVar } from '@core/state/Modal.reactive';
 import { IMember } from '@util/constants.entities';
 import { now } from '@util/util';
 
 const MemberDatabaseDeleteFormHeader: React.FC = () => {
-  const memberIds: string[] = TableStore.useStoreState(
-    ({ selectedRowIds }) => selectedRowIds
-  );
-
-  const title: string = `Remove ${memberIds?.length} member(s)?`;
+  const selectedRowIds: string[] = useTableSelectedRowIds();
+  const title: string = `Remove ${selectedRowIds?.length} member(s)?`;
 
   const description: string =
     'Are you sure you want to remove these member(s)? They will no longer have access to your community and they will not show up in the member database.';
@@ -27,9 +24,7 @@ const MemberDatabaseDeleteFormHeader: React.FC = () => {
 };
 
 const MemberDatabaseDeleteForm: React.FC = () => {
-  const memberIds: string[] = TableStore.useStoreState(
-    ({ selectedRowIds }) => selectedRowIds
-  );
+  const selectedRowIds: string[] = useTableSelectedRowIds();
 
   const onSubmit: OnFormSubmitFunction = async ({
     gql,
@@ -50,7 +45,7 @@ const MemberDatabaseDeleteForm: React.FC = () => {
     modalVar(null);
 
     showToast({
-      message: `${memberIds.length} member(s) removed from the community.`
+      message: `${selectedRowIds.length} member(s) removed from the community.`
     });
   };
 

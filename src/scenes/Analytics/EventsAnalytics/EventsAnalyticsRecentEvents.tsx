@@ -13,7 +13,6 @@ import {
   TableRow
 } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
-import TableSearchBar from '@components/organisms/Table/TableSeachBar';
 import useFind from '@core/gql/hooks/useFind';
 import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionType } from '@util/constants';
@@ -82,7 +81,7 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
 
   return (
     <Table columns={columns} options={options}>
-      <TableSearchBar className="mb-sm--nlc" />
+      {/* <SearchBar className="mb-sm--nlc" /> */}
       <TableContent
         emptyMessage="Looks like nobody has attended an event yet."
         rows={rows}

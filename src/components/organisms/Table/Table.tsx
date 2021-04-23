@@ -2,6 +2,7 @@ import React from 'react';
 
 import { ShowProps } from '@util/constants';
 import PanelLocal from '../Panel/PanelLocal';
+import { TableProvider } from './Table.state';
 import TableStore, { tableModel } from './Table.store';
 import {
   defaultTableOptions,
@@ -13,7 +14,6 @@ import TableBanner from './TableBanner';
 import TableFilterStore from './TableFilterPanel/TableFilterPanel.store';
 import TablePagination from './TablePagination/TablePagination';
 import TablePaginationStore from './TablePagination/TablePagination.store';
-import TableSortStore from './TableSort/TableSort.store';
 
 interface TableProps extends ShowProps {
   columns: TableColumn[];
@@ -37,9 +37,9 @@ const Table: React.FC<TableProps> = ({
   };
 
   return (
-    <TableStore.Provider runtimeModel={runtimeModel}>
-      <TablePaginationStore.Provider>
-        <TableSortStore.Provider>
+    <TableProvider>
+      <TableStore.Provider runtimeModel={runtimeModel}>
+        <TablePaginationStore.Provider>
           <TableFilterStore.Provider>
             {TableActions && <TableActions />}
             <TableBanner />
@@ -47,9 +47,9 @@ const Table: React.FC<TableProps> = ({
             <TablePagination />
             <PanelLocal />
           </TableFilterStore.Provider>
-        </TableSortStore.Provider>
-      </TablePaginationStore.Provider>
-    </TableStore.Provider>
+        </TablePaginationStore.Provider>
+      </TableStore.Provider>
+    </TableProvider>
   );
 };
 

@@ -1,17 +1,21 @@
 import React from 'react';
 import { communityIdVar, memberIdVar } from 'src/App.reactive';
 
-import { useReactiveVar } from '@apollo/client';
-import Button from '@components/atoms/Button/Button';
+import { gql, useReactiveVar } from '@apollo/client';
 import Card from '@components/containers/Card/Card';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/QuestionBox.types';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { modalVar } from '@core/state/Modal.reactive';
 import useFind from '@gql/hooks/useFind';
-import { ModalType, QuestionCategory } from '@util/constants';
+import {
+  ComponentWithFragments,
+  ModalType,
+  QuestionCategory
+} from '@util/constants';
 import { ICommunity, IMember, IMemberValue } from '@util/constants.entities';
 import ProfileCardHeader from './ProfileCardHeader';
+import ProfileMembershipOnboardingButton from './ProfileMembershipOnboardingButton';
 
 const ProfileMembershipHeader: React.FC = () => {
   const communityId: string = useReactiveVar(communityIdVar);
@@ -76,28 +80,9 @@ const ProfileMembershipContent: React.FC = () => {
   return <QuestionBox handleNull="HIDE_VALUE" items={items} />;
 };
 
-const ProfileMembershipOnboardingContainer: React.FC = () => {
-  const memberId: string = useReactiveVar(memberIdVar);
-
-  const { data: member, loading } = useFindOne(IMember, {
-    fields: ['memberValues.id'],
-    where: { id: memberId }
-  });
-
-  if (loading) return null;
-
-  const onClick = (): void => {
-    modalVar({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });
-  };
-
-  return (
-    <Button fill primary show={!!member.memberValues} onClick={onClick}>
-      + Fill Out Membership Information
-    </Button>
-  );
-};
-
-const ProfileMembershipCard: React.FC = () => {
+const ProfileMembershipCard: ComponentWithFragments<IMember> = ({
+  data: member
+}) => {
   const memberId: string = useReactiveVar(memberIdVar);
 
   const { loading } = useFind(IMemberValue, {
@@ -107,11 +92,18 @@ const ProfileMembershipCard: React.FC = () => {
 
   return (
     <Card className="s-profile-card--membership" show={!loading}>
-      <ProfileMembershipHeader />
-      <ProfileMembershipContent />
-      <ProfileMembershipOnboardingContainer />
+      {/* <ProfileMembershipHeader />
+      <ProfileMembershipContent /> */}
+      <ProfileMembershipOnboardingButton data={member} />
     </Card>
   );
 };
+
+ProfileMembershipCard.fragment = gql`
+  fragment ProfileMembershipCardFragment on members {
+    ...ProfileMembershipOnboardingButtonFragment
+  }
+  ${ProfileMembershipOnboardingButton.fragment}
+`;
 
 export default ProfileMembershipCard;

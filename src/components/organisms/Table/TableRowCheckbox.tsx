@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Checkbox from '@components/atoms/Checkbox/Checkbox';
+import { useTableToggleRowIds } from './Table.state';
 import TableStore from './Table.store';
 import { TableColumn } from './Table.types';
 
@@ -13,6 +14,8 @@ const TableRowCheckbox: React.FC<TableRowCheckboxProps> = ({
   columnId,
   rowId
 }) => {
+  const toggleRowIds = useTableToggleRowIds();
+
   const columnIndex: number = TableStore.useStoreState(({ columns }) =>
     columns.findIndex((element: TableColumn) => element.id === columnId)
   );
@@ -25,10 +28,8 @@ const TableRowCheckbox: React.FC<TableRowCheckboxProps> = ({
     selectedRowIds.includes(rowId)
   );
 
-  const toggleRow = TableStore.useStoreActions((state) => state.toggleRow);
-
   const onChange = (): void => {
-    toggleRow(rowId);
+    toggleRowIds([rowId]);
   };
 
   return (

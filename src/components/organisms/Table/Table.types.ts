@@ -54,19 +54,39 @@ export const defaultTableOptions: TableOptions = {
 // ## TABLE MODEL
 
 export type TableModel = {
-  clearSelectedRows: Action<TableModel>;
   columns: TableColumn[];
   filteredRows: TableRow[];
   filters: Record<string, any>;
   options: TableOptions;
   removeFilter: Action<TableModel, string>;
   rows: TableRow[];
-  searchString: string;
   selectedRowIds: string[];
   setFilter: Action<TableModel, TableQuickFilterArgs>;
-  setSearchString: Action<TableModel, string>;
-  toggleRow: Action<TableModel, string>;
-  toggleRows: Action<TableModel, string[]>;
   updateColumn: Action<TableModel, Partial<TableColumn>>;
   setRows: Action<TableModel, TableRow[]>;
 };
+
+// ## TABLE STATE
+
+export interface TableOptionsState {
+  checkbox?: boolean;
+}
+
+export enum TableSortDirection {
+  ASC = 'ASC',
+  DESC = 'DESC'
+}
+
+export interface SortTableArgs {
+  sortColumnId: string;
+  sortDirection: TableSortDirection;
+}
+
+export interface TableState extends TableOptionsState {
+  resetRowIds: () => void;
+  selectedRowIds: string[];
+  sortColumnId: string;
+  sortDirection: TableSortDirection;
+  sortTable: (sortTableArgs: SortTableArgs) => void;
+  toggleRowIds: (rowIds: string[]) => void;
+}

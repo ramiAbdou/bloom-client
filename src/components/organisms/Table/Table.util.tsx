@@ -1,9 +1,8 @@
 import { State } from 'easy-peasy';
-import { matchSorter } from 'match-sorter';
 
 import { QuestionCategory, QuestionType } from '@util/constants';
 import { cx } from '@util/util';
-import { TableColumn, TableModel, TableRow } from './Table.types';
+import { TableModel, TableRow } from './Table.types';
 import { TableFilterFunction } from './TableFilterPanel/TableFilterPanel.types';
 import { TablePaginationValue } from './TablePagination/TablePagination.types';
 
@@ -158,7 +157,6 @@ export const runFilters = (args: RunFiltersArgs): TableRow[] => {
   const filters: Record<string, TableFilterFunction> =
     args.filters ?? args.state.filters;
 
-  const searchString: string = args.searchString ?? args.state.searchString;
   const { state } = args;
   const rows: TableRow[] = [...state.rows];
 
@@ -168,23 +166,23 @@ export const runFilters = (args: RunFiltersArgs): TableRow[] => {
     )
   );
 
-  if (!searchString) return filteredRows;
+  // const columns: TableColumn[] = [...state.columns];
 
-  const columns: TableColumn[] = [...state.columns];
+  // const firstNameColumnId: string = columns.find(
+  //   ({ category }) => category === QuestionCategory.FIRST_NAME
+  // )?.id;
 
-  const firstNameColumnId: string = columns.find(
-    ({ category }) => category === QuestionCategory.FIRST_NAME
-  )?.id;
+  // const lastNameColumnId: string = columns.find(
+  //   ({ category }) => category === QuestionCategory.LAST_NAME
+  // )?.id;
 
-  const lastNameColumnId: string = columns.find(
-    ({ category }) => category === QuestionCategory.LAST_NAME
-  )?.id;
+  return filteredRows;
 
-  return matchSorter(filteredRows, searchString, {
-    keys: [
-      ...[...state.columns].map(({ id }) => id),
-      (row: TableRow) => `${row[firstNameColumnId]} ${row[lastNameColumnId]}`
-    ],
-    threshold: matchSorter.rankings.ACRONYM
-  });
+  // return matchSorter(filteredRows, searchString, {
+  //   keys: [
+  //     ...[...state.columns].map(({ id }) => id),
+  //     (row: TableRow) => `${row[firstNameColumnId]} ${row[lastNameColumnId]}`
+  //   ],
+  //   threshold: matchSorter.rankings.ACRONYM
+  // });
 };

@@ -22,7 +22,7 @@ const MemberDatabaseButtons: React.FC = () => {
   return (
     <Row className="ml-auto" show={!!isAnythingSelected} spacing="xs">
       <DatabaseCopyButton />
-      <DatabaseExportButton />
+      {/* <DatabaseExportButton /> */}
       {isOwner && <DatabasePromoteButton />}
       <DatabaseDeleteButton />
     </Row>

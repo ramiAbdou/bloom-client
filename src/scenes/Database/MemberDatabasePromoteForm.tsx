@@ -8,7 +8,10 @@ import {
 } from '@components/organisms/Form/Form.types';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
-import TableStore from '@components/organisms/Table/Table.store';
+import {
+  useTableResetRowIds,
+  useTableSelectedRowIds
+} from '@components/organisms/Table/Table.state';
 import { modalVar } from '@core/state/Modal.reactive';
 import { IMember, MemberRole } from '@util/constants.entities';
 
@@ -22,13 +25,8 @@ const MemberDatabasePromoteFormHeader: React.FC = () => {
 };
 
 const MemberDatabasePromoteForm: React.FC = () => {
-  const memberIds = TableStore.useStoreState(
-    ({ selectedRowIds }) => selectedRowIds
-  );
-
-  const clearSelectedRows = TableStore.useStoreActions(
-    (state) => state.clearSelectedRows
-  );
+  const selectedRowIds: string[] = useTableSelectedRowIds();
+  const resetRowIds: VoidFunction = useTableResetRowIds();
 
   const onSubmit: OnFormSubmitFunction = async ({
     gql,
@@ -47,8 +45,12 @@ const MemberDatabasePromoteForm: React.FC = () => {
     }
 
     modalVar(null);
-    showToast({ message: `${memberIds.length} member(s) promoted to admin.` });
-    clearSelectedRows();
+
+    showToast({
+      message: `${selectedRowIds.length} member(s) promoted to admin.`
+    });
+
+    resetRowIds();
   };
 
   return (
