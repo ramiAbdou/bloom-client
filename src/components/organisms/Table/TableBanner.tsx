@@ -16,7 +16,8 @@ import React from 'react';
 import Button from '@components/atoms/Button/Button';
 import Card from '@components/containers/Card/Card';
 import Row from '@components/containers/Row/Row';
-import { useTableToggleRowIds } from './Table.state';
+import { useTableToggleRowIds } from '@components/organisms/Table/Table.state';
+import { useTableState } from '@components/organisms/Table/Table.tracked';
 import TableStore from './Table.store';
 import { TableRow } from './Table.types';
 import { getBannerButtonTitle, getBannerMessage } from './Table.util';
@@ -53,8 +54,10 @@ const TableBannerMessage: React.FC = () => {
     (state) => state.ceiling
   );
 
+  const { selectedRowIds } = useTableState();
+
   const message: string = TableStore.useStoreState((state) =>
-    getBannerMessage({ ...state, ceiling, floor })
+    getBannerMessage({ ...state, ceiling, floor, selectedRowIds })
   );
 
   return <p>{message}</p>;

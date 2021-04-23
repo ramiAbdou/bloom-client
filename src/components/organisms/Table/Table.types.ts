@@ -57,9 +57,9 @@ export type TableModel = {
   filteredRows: TableRow[];
   filters: Record<string, any>;
   options: TableOptions;
+  selectedRowIds: string[];
   removeFilter: Action<TableModel, string>;
   rows: TableRow[];
-  selectedRowIds: string[];
   setFilter: Action<TableModel, TableQuickFilterArgs>;
   setRows: Action<TableModel, TableRow[]>;
 };
@@ -86,6 +86,7 @@ export interface SortTableArgs {
 
 export interface TableInitialState {
   columns: TableColumn[];
+  rows: TableRow[];
 }
 
 export interface TableState extends TableOptionsState {
@@ -93,10 +94,19 @@ export interface TableState extends TableOptionsState {
   getColumn: (columnArgs: GetColumnArgs) => TableColumn;
   getColumnIndex: (columnArgs: GetColumnArgs) => number;
   resetRowIds: () => void;
+  rows: TableRow[];
   selectedRowIds: string[];
   sortColumnId: string;
   sortDirection: TableSortDirection;
   sortTable: (sortTableArgs: SortTableArgs) => void;
   toggleRowIds: (rowIds: string[]) => void;
   updateColumn: (columnId: string, updatedColumn: Partial<TableColumn>) => void;
+}
+
+export interface TableStateOnly {
+  columns: TableColumn[];
+  rows: TableRow[];
+  selectedRowIds: string[];
+  sortColumnId: string;
+  sortDirection: TableSortDirection;
 }

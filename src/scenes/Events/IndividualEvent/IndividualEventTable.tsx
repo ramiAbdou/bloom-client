@@ -39,6 +39,7 @@ const IndividualEventTableContent: React.FC = () => {
         TableActions={IndividualEventTableActions}
         columns={columns}
         options={options}
+        rows={[]}
       >
         <TableContent small rows={rows} />
       </Table>

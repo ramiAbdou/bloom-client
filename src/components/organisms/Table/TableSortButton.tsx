@@ -3,13 +3,10 @@ import React from 'react';
 import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
 
 import Button from '@components/atoms/Button/Button';
+import { useTableState } from '@components/organisms/Table/Table.tracked';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import { cx } from '@util/util';
-import {
-  useTableSortColumnId,
-  useTableSortDirection,
-  useTableSortTable
-} from './Table.state';
+import { useTableSortTable } from './Table.state';
 import { TableSortDirection } from './Table.types';
 
 interface TableSortButtonProps {
@@ -18,8 +15,7 @@ interface TableSortButtonProps {
 
 const TableSortButton: React.FC<TableSortButtonProps> = ({ direction }) => {
   const columnId: string = useStoreState(({ panel }) => panel.metadata);
-  const sortColumnId: string = useTableSortColumnId();
-  const sortDirection: TableSortDirection = useTableSortDirection();
+  const { sortColumnId, sortDirection } = useTableState();
   const sortTable = useTableSortTable();
 
   const closePanel: ActionCreator<void> = useStoreActions(

@@ -91,7 +91,7 @@ const EventsAnalyticsTopEventGoersTable: React.FC = () => {
   };
 
   return (
-    <Table columns={columns} options={options}>
+    <Table columns={columns} options={options} rows={[]}>
       <TableContent
         emptyMessage="Looks like nobody has attended an event yet."
         rows={rows}

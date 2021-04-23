@@ -8,10 +8,8 @@ import {
 } from '@components/organisms/Form/Form.types';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
-import {
-  useTableResetRowIds,
-  useTableSelectedRowIds
-} from '@components/organisms/Table/Table.state';
+import { useTableResetRowIds } from '@components/organisms/Table/Table.state';
+import { useTableState } from '@components/organisms/Table/Table.tracked';
 import { modalVar } from '@core/state/Modal.reactive';
 import { IMember, MemberRole } from '@util/constants.entities';
 
@@ -25,7 +23,7 @@ const MemberDatabasePromoteFormHeader: React.FC = () => {
 };
 
 const MemberDatabasePromoteForm: React.FC = () => {
-  const selectedRowIds: string[] = useTableSelectedRowIds();
+  const { selectedRowIds } = useTableState();
   const resetRowIds: VoidFunction = useTableResetRowIds();
 
   const onSubmit: OnFormSubmitFunction = async ({

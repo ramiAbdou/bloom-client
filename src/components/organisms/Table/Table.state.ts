@@ -1,20 +1,26 @@
 import constate from 'constate';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   GetColumnArgs,
   SortTableArgs,
   TableColumn,
   TableInitialState,
+  TableRow,
   TableSortDirection,
   TableState
 } from './Table.types';
 
-const useTable = (initialState: TableInitialState): TableState => {
+const useTable = (initialState?: TableInitialState): TableState => {
   const [columns, setColumns] = useState<TableColumn[]>(initialState.columns);
+  const [rows, setRows] = useState<TableRow[]>([]);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
   const [sortColumnId, setSortColumnId] = useState<string>(null);
   const [sortDirection, setSortDirection] = useState<TableSortDirection>(null);
+
+  useEffect(() => {
+    setRows(initialState.rows);
+  }, [initialState.rows]);
 
   /**
    * Returns the TableColumn.
@@ -104,6 +110,7 @@ const useTable = (initialState: TableInitialState): TableState => {
     getColumn,
     getColumnIndex,
     resetRowIds,
+    rows,
     selectedRowIds,
     sortColumnId,
     sortDirection,
@@ -115,25 +122,17 @@ const useTable = (initialState: TableInitialState): TableState => {
 
 export const [
   TableProvider,
-  useTableColumns,
   useTableGetColumn,
   useTableGetColumnIndex,
   useTableResetRowIds,
-  useTableSelectedRowIds,
-  useTableSortColumnId,
-  useTableSortDirection,
   useTableSortTable,
   useTableToggleRowIds,
   useTableUpdateColumn
 ] = constate(
   useTable,
-  (value) => value.columns,
   (value) => value.getColumn,
   (value) => value.getColumnIndex,
   (value) => value.resetRowIds,
-  (value) => value.selectedRowIds,
-  (value) => value.sortColumnId,
-  (value) => value.sortDirection,
   (value) => value.sortTable,
   (value) => value.toggleRowIds,
   (value) => value.updateColumn

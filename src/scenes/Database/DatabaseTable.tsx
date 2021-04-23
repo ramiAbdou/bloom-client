@@ -61,8 +61,6 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
   //   // if (!error) updateColumn({ id, title });
   // };
 
-  console.log(rows);
-
   const options: TableOptions = {
     hasCheckbox: true,
     // onRenameColumn,
@@ -76,6 +74,7 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
       TableActions={MemberDatabaseActionRow}
       columns={columns}
       options={options}
+      rows={rows}
     >
       <TableContent rows={rows} />
     </Table>

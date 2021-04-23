@@ -13,9 +13,12 @@ import { TablePaginationValue } from './TablePagination/TablePagination.types';
  * @param state Entire table state.
  */
 export const getBannerButtonTitle = (state: State<TableModel>): string => {
-  const { filteredRows, rows, selectedRowIds } = state;
+  const { filteredRows, rows } = state;
   const numMembers: number = rows.length;
   const numFilteredMembers: number = filteredRows.length;
+
+  // NEED TO FIX
+  const selectedRowIds = [];
 
   const isAllSelected: boolean =
     !!selectedRowIds.length && selectedRowIds.length === filteredRows.length;

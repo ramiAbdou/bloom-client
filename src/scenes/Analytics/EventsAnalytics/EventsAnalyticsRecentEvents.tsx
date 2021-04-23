@@ -80,7 +80,7 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
   };
 
   return (
-    <Table columns={columns} options={options}>
+    <Table columns={columns} options={options} rows={[]}>
       {/* <SearchBar className="mb-sm--nlc" /> */}
       <TableContent
         emptyMessage="Looks like nobody has attended an event yet."

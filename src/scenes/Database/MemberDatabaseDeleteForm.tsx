@@ -8,13 +8,13 @@ import {
 } from '@components/organisms/Form/Form.types';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
-import { useTableSelectedRowIds } from '@components/organisms/Table/Table.state';
+import { useTableState } from '@components/organisms/Table/Table.tracked';
 import { modalVar } from '@core/state/Modal.reactive';
 import { IMember } from '@util/constants.entities';
 import { now } from '@util/util';
 
 const MemberDatabaseDeleteFormHeader: React.FC = () => {
-  const selectedRowIds: string[] = useTableSelectedRowIds();
+  const { selectedRowIds } = useTableState();
   const title: string = `Remove ${selectedRowIds?.length} member(s)?`;
 
   const description: string =
@@ -24,7 +24,7 @@ const MemberDatabaseDeleteFormHeader: React.FC = () => {
 };
 
 const MemberDatabaseDeleteForm: React.FC = () => {
-  const selectedRowIds: string[] = useTableSelectedRowIds();
+  const { selectedRowIds } = useTableState();
 
   const onSubmit: OnFormSubmitFunction = async ({
     gql,

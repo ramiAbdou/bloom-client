@@ -2,6 +2,7 @@ import hash from 'object-hash';
 import React from 'react';
 
 import Show from '@components/containers/Show';
+import { useTableState } from '@components/organisms/Table/Table.tracked';
 import TableStore from './Table.store';
 import { TableRow as TableRowProps } from './Table.types';
 import TableHeaderRow from './TableHeaderRow';
@@ -40,9 +41,10 @@ const TableRows: React.FC<TableRowsProps> = ({ rows }) => {
 
 const TableContent: React.FC<TableContentProps> = ({
   emptyMessage: eMessage,
-  small,
-  rows
+  small
 }) => {
+  const { rows } = useTableState();
+
   const emptyMessage: string = TableStore.useStoreState((state) =>
     !state.rows?.length ? eMessage : null
   );

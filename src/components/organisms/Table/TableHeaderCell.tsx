@@ -1,10 +1,10 @@
 import React from 'react';
 import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
 
+import { useTableState } from '@components/organisms/Table/Table.tracked';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import { PanelType } from '@util/constants';
 import { cx } from '@util/util';
-import { useTableSortColumnId, useTableSortDirection } from './Table.state';
 import TableStore from './Table.store';
 import { TableColumn, TableSortDirection } from './Table.types';
 import { getTableCellClass } from './Table.util';
@@ -22,8 +22,7 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
   id,
   title
 }) => {
-  const sortColumnId: string = useTableSortColumnId();
-  const sortDirection: TableSortDirection = useTableSortDirection();
+  const { sortColumnId, sortDirection } = useTableState();
 
   const hasCheckbox = TableStore.useStoreState(
     ({ options }) => options.hasCheckbox
