@@ -1,13 +1,12 @@
 import React from 'react';
 
+import { useTableColumns } from './Table.state';
 import TableStore from './Table.store';
 import { TableColumn } from './Table.types';
 import HeaderCell from './TableHeaderCell';
 
 const TableHeaderRow: React.FC = () => {
-  const columns: TableColumn[] = TableStore.useStoreState(
-    (state) => state.columns
-  );
+  const columns: TableColumn[] = useTableColumns();
 
   const hasData: boolean = TableStore.useStoreState(
     (state) => !!state.filteredRows.length

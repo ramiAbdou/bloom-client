@@ -20,7 +20,6 @@ const TableSortButton: React.FC<TableSortButtonProps> = ({ direction }) => {
   const columnId: string = useStoreState(({ panel }) => panel.metadata);
   const sortColumnId: string = useTableSortColumnId();
   const sortDirection: TableSortDirection = useTableSortDirection();
-
   const sortTable = useTableSortTable();
 
   const closePanel: ActionCreator<void> = useStoreActions(
@@ -31,12 +30,7 @@ const TableSortButton: React.FC<TableSortButtonProps> = ({ direction }) => {
     columnId === sortColumnId && direction === sortDirection;
 
   const onClick = (): void => {
-    sortTable(
-      isSorted
-        ? { sortColumnId: null, sortDirection: null }
-        : { sortColumnId: columnId, sortDirection: direction }
-    );
-
+    sortTable({ sortColumnId: columnId, sortDirection: direction });
     closePanel();
   };
 

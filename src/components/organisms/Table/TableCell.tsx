@@ -1,9 +1,8 @@
 import React from 'react';
 
-import { QuestionCategory, QuestionType, ValueProps } from '@util/constants';
+import { QuestionType, ValueProps } from '@util/constants';
 import { cx } from '@util/util';
-import TableStore from './Table.store';
-import { TableColumn } from './Table.types';
+import { useTableGetColumn } from './Table.state';
 import { getTableCellClass } from './Table.util';
 import TableCellContent from './TableCellContent';
 import TableRowCheckbox from './TableRowCheckbox';
@@ -14,19 +13,8 @@ interface TableCellProps extends ValueProps {
 }
 
 const TableCell: React.FC<TableCellProps> = ({ columnId, rowId, value }) => {
-  const columnIndex: number = TableStore.useStoreState(({ columns }) =>
-    columns.findIndex((column: TableColumn) => column.id === columnId)
-  );
-
-  const category: QuestionCategory = TableStore.useStoreState(({ columns }) => {
-    const column: TableColumn = columns[columnIndex];
-    return column?.category;
-  });
-
-  const type: QuestionType = TableStore.useStoreState(({ columns }) => {
-    const column: TableColumn = columns[columnIndex];
-    return column?.type;
-  });
+  const getColumnById = useTableGetColumn();
+  const { category, type } = getColumnById({ columnId });
 
   const css: string = cx(getTableCellClass({ category, type }), {
     'o-table-td--multiple-select': type === QuestionType.MULTIPLE_SELECT

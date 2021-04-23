@@ -32,12 +32,11 @@ const Table: React.FC<TableProps> = ({
 
   const runtimeModel: TableModel = {
     ...tableModel,
-    columns,
     options: { ...defaultTableOptions, ...options }
   };
 
   return (
-    <TableProvider>
+    <TableProvider columns={columns}>
       <TableStore.Provider runtimeModel={runtimeModel}>
         <TablePaginationStore.Provider>
           <TableFilterStore.Provider>

@@ -54,7 +54,6 @@ export const defaultTableOptions: TableOptions = {
 // ## TABLE MODEL
 
 export type TableModel = {
-  columns: TableColumn[];
   filteredRows: TableRow[];
   filters: Record<string, any>;
   options: TableOptions;
@@ -62,7 +61,6 @@ export type TableModel = {
   rows: TableRow[];
   selectedRowIds: string[];
   setFilter: Action<TableModel, TableQuickFilterArgs>;
-  updateColumn: Action<TableModel, Partial<TableColumn>>;
   setRows: Action<TableModel, TableRow[]>;
 };
 
@@ -77,16 +75,28 @@ export enum TableSortDirection {
   DESC = 'DESC'
 }
 
+export type GetColumnArgs = { columnId?: string } & {
+  category?: QuestionCategory;
+};
+
 export interface SortTableArgs {
   sortColumnId: string;
   sortDirection: TableSortDirection;
 }
 
+export interface TableInitialState {
+  columns: TableColumn[];
+}
+
 export interface TableState extends TableOptionsState {
+  columns: TableColumn[];
+  getColumn: (columnArgs: GetColumnArgs) => TableColumn;
+  getColumnIndex: (columnArgs: GetColumnArgs) => number;
   resetRowIds: () => void;
   selectedRowIds: string[];
   sortColumnId: string;
   sortDirection: TableSortDirection;
   sortTable: (sortTableArgs: SortTableArgs) => void;
   toggleRowIds: (rowIds: string[]) => void;
+  updateColumn: (columnId: string, updatedColumn: Partial<TableColumn>) => void;
 }

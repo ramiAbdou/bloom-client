@@ -2,7 +2,6 @@ import { action, createContextStore } from 'easy-peasy';
 
 import {
   defaultTableOptions,
-  TableColumn,
   TableModel,
   TableQuickFilterArgs,
   TableRow
@@ -10,8 +9,6 @@ import {
 import { runFilters } from './Table.util';
 
 export const tableModel: TableModel = {
-  columns: [],
-
   filteredRows: [],
 
   filters: {},
@@ -55,29 +52,12 @@ export const tableModel: TableModel = {
 
   setRows: action((state, rows: TableRow[]) => {
     return { ...state, filteredRows: rows, rows, selectedRowIds: [] };
-  }),
-
-  updateColumn: action(
-    ({ columns, ...state }, updatedColumn: Partial<TableColumn>) => {
-      return {
-        ...state,
-        columns: columns.map((column) => {
-          if (column.id !== updatedColumn.id) return column;
-          return { ...column, ...updatedColumn };
-        })
-      };
-    }
-  )
+  })
 };
 
 const TableStore = createContextStore<TableModel>(
   (model: TableModel) => {
-    return {
-      ...model,
-      columns: [...model.columns]?.map((column: TableColumn) => {
-        return { ...column, id: column.id ?? column.title };
-      })
-    };
+    return { ...model };
   },
   { disableImmer: true }
 );

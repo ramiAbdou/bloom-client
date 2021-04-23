@@ -3,7 +3,7 @@ import React from 'react';
 import Attribute from '@components/atoms/Tag/Attribute';
 import Pill from '@components/atoms/Tag/Pill';
 import { QuestionCategory, QuestionType } from '@util/constants';
-import TableStore from './Table.store';
+import { useTableGetColumn } from './Table.state';
 import { TableColumn } from './Table.types';
 
 interface TableCellContentProps {
@@ -15,18 +15,11 @@ const TableCellContent: React.FC<TableCellContentProps> = ({
   columnId,
   value
 }) => {
-  const columnIndex: number = TableStore.useStoreState(({ columns }) =>
-    columns.findIndex((element: TableColumn) => element.id === columnId)
-  );
+  const getColumn = useTableGetColumn();
 
-  const {
-    category,
-    format,
-    render,
-    type
-  }: TableColumn = TableStore.useStoreState(
-    ({ columns }) => (columns[columnIndex] ?? {}) as TableColumn
-  );
+  const { category, format, render, type }: TableColumn = getColumn({
+    columnId
+  });
 
   // Custom rendering for of the cell value.
   if (render) return <>{render(value as string)}</>;

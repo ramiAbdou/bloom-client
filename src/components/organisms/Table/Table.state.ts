@@ -1,22 +1,70 @@
 import constate from 'constate';
 import { useState } from 'react';
 
-import { SortTableArgs, TableSortDirection, TableState } from './Table.types';
+import {
+  GetColumnArgs,
+  SortTableArgs,
+  TableColumn,
+  TableInitialState,
+  TableSortDirection,
+  TableState
+} from './Table.types';
 
-const useTable = (): TableState => {
+const useTable = (initialState: TableInitialState): TableState => {
+  const [columns, setColumns] = useState<TableColumn[]>(initialState.columns);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
   const [sortColumnId, setSortColumnId] = useState<string>(null);
   const [sortDirection, setSortDirection] = useState<TableSortDirection>(null);
 
+  /**
+   * Returns the TableColumn.
+   *
+   * @param columnId - ID of the TableColumn to return.
+   */
+  const getColumn = ({ columnId, category }: GetColumnArgs): TableColumn =>
+    columns.find((column: TableColumn) => {
+      if (category) return column.category === category;
+      return column.id === columnId;
+    });
+
+  /**
+   * Returns the index of the TableColumn.
+   *
+   * @param columnId - ID of the TableColumn to return.
+   */
+  const getColumnIndex = ({ columnId, category }: GetColumnArgs): number =>
+    columns.findIndex((column: TableColumn) => {
+      if (category) return column.category === category;
+      return column.id === columnId;
+    });
+
+  /**
+   * Sets the setSelectedRowIds to an empty array.
+   */
   const resetRowIds = (): void => {
     setSelectedRowIds([]);
   };
 
+  /**
+   * Sets the sortColumnId and sortDirection value. If the column is already
+   * sorted in that direction, it "undoes" the sorting.
+   *
+   * @param args.sortColumnId - ID of the TableColumn to sort.
+   * @param args.sortDirection - The TableSortDirection to sort in.
+   */
   const sortTable = (args: SortTableArgs) => {
-    setSortColumnId(args.sortColumnId);
-    setSortDirection(args.sortDirection);
+    const isAlreadySorted: boolean =
+      args.sortColumnId === sortColumnId &&
+      args.sortDirection === sortDirection;
+
+    setSortColumnId(isAlreadySorted ? null : args.sortColumnId);
+    setSortDirection(isAlreadySorted ? null : args.sortDirection);
   };
 
+  /**
+   * @todo Needs some optimization.
+   * @param rowIds - IDs of the TableRow(s) to select or unselect.
+   */
   const toggleRowIds = (rowIds: string[]): void => {
     const someAlreadySelected: boolean = rowIds.some((rowId: string) => {
       const isAlreadySelected: boolean = !!selectedRowIds.find(
@@ -35,30 +83,58 @@ const useTable = (): TableState => {
     );
   };
 
+  /**
+   *
+   * @param columnId
+   * @param updatedColumn
+   */
+  const updateColumn = (
+    columnId: string,
+    updatedColumn: Partial<TableColumn>
+  ): void => {
+    const updatedColumns: TableColumn[] = columns.map((column: TableColumn) =>
+      column.id === columnId ? { ...column, ...updatedColumn } : column
+    );
+
+    setColumns(updatedColumns);
+  };
+
   return {
+    columns,
+    getColumn,
+    getColumnIndex,
     resetRowIds,
     selectedRowIds,
     sortColumnId,
     sortDirection,
     sortTable,
-    toggleRowIds
+    toggleRowIds,
+    updateColumn
   };
 };
 
 export const [
   TableProvider,
+  useTableColumns,
+  useTableGetColumn,
+  useTableGetColumnIndex,
   useTableResetRowIds,
   useTableSelectedRowIds,
   useTableSortColumnId,
   useTableSortDirection,
   useTableSortTable,
-  useTableToggleRowIds
+  useTableToggleRowIds,
+  useTableUpdateColumn
 ] = constate(
   useTable,
+  (value) => value.columns,
+  (value) => value.getColumn,
+  (value) => value.getColumnIndex,
   (value) => value.resetRowIds,
   (value) => value.selectedRowIds,
   (value) => value.sortColumnId,
   (value) => value.sortDirection,
   (value) => value.sortTable,
-  (value) => value.toggleRowIds
+  (value) => value.toggleRowIds,
+  (value) => value.updateColumn
 );

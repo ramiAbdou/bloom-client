@@ -4,13 +4,16 @@ import { IoExit } from 'react-icons/io5';
 import { communityIdVar, toastQueueVar, useToast } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
+import { useTableColumns } from '@components/organisms/Table/Table.state';
 import TableStore from '@components/organisms/Table/Table.store';
+import { TableColumn } from '@components/organisms/Table/Table.types';
 import useFindOne from '@gql/hooks/useFindOne';
 import { ICommunity } from '@util/constants.entities';
 import DatabaseAction from './DatabaseAction';
 
 const DatabaseExportButton: React.FC = () => {
   const communityId: string = useReactiveVar(communityIdVar);
+  const columns: TableColumn[] = useTableColumns();
   const { showToast } = useToast(toastQueueVar);
 
   const { data: community, loading } = useFindOne(ICommunity, {
@@ -19,11 +22,9 @@ const DatabaseExportButton: React.FC = () => {
   });
 
   // Formatted in a way that CSV Link can properly read it.
-  const headers = TableStore.useStoreState(({ columns }) =>
-    columns.map(({ id, title }) => {
-      return { key: id, label: title };
-    })
-  );
+  const headers = columns.map(({ id, title }) => {
+    return { key: id, label: title };
+  });
 
   const data = TableStore.useStoreState(({ filteredRows, selectedRowIds }) =>
     selectedRowIds.map((rowId: string) => {
