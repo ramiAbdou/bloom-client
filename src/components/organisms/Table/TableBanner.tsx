@@ -16,15 +16,17 @@ import React from 'react';
 import Button from '@components/atoms/Button/Button';
 import Card from '@components/containers/Card/Card';
 import Row from '@components/containers/Row/Row';
-import { useTableToggleRowIds } from '@components/organisms/Table/Table.state';
-import { useTableState } from '@components/organisms/Table/Table.tracked';
+import {
+  useTableDispatch,
+  useTableState
+} from '@components/organisms/Table/Table.tracked';
 import TableStore from './Table.store';
 import { TableRow } from './Table.types';
 import { getBannerButtonTitle, getBannerMessage } from './Table.util';
 import TablePaginationStore from './TablePagination/TablePagination.store';
 
 const TableBannerButton: React.FC = () => {
-  const toggleRowIds = useTableToggleRowIds();
+  const tableDispatch = useTableDispatch();
 
   const title: string = TableStore.useStoreState((state) =>
     getBannerButtonTitle(state)
@@ -35,7 +37,7 @@ const TableBannerButton: React.FC = () => {
   );
 
   const onClick = () => {
-    toggleRowIds(allRowIds);
+    tableDispatch({ rowIds: allRowIds, type: 'TOGGLE_ROW_IDS' });
   };
 
   return (

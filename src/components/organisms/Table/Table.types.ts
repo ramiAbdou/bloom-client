@@ -89,24 +89,17 @@ export interface TableInitialState {
   rows: TableRow[];
 }
 
-export interface TableState extends TableOptionsState {
-  columns: TableColumn[];
-  getColumn: (columnArgs: GetColumnArgs) => TableColumn;
-  getColumnIndex: (columnArgs: GetColumnArgs) => number;
-  resetRowIds: () => void;
-  rows: TableRow[];
-  selectedRowIds: string[];
-  sortColumnId: string;
-  sortDirection: TableSortDirection;
-  sortTable: (sortTableArgs: SortTableArgs) => void;
-  toggleRowIds: (rowIds: string[]) => void;
-  updateColumn: (columnId: string, updatedColumn: Partial<TableColumn>) => void;
-}
-
 export interface TableStateOnly {
   columns: TableColumn[];
   rows: TableRow[];
   selectedRowIds: string[];
   sortColumnId: string;
   sortDirection: TableSortDirection;
+}
+
+export interface TableState extends TableStateOnly {
+  getColumn: (columnArgs: GetColumnArgs) => TableColumn;
+  getColumnIndex: (columnArgs: GetColumnArgs) => number;
+  sortTable: (sortTableArgs: SortTableArgs) => void;
+  updateColumn: (columnId: string, updatedColumn: Partial<TableColumn>) => void;
 }

@@ -14,7 +14,7 @@ import {
 const useTable = (initialState?: TableInitialState): TableState => {
   const [columns, setColumns] = useState<TableColumn[]>(initialState.columns);
   const [rows, setRows] = useState<TableRow[]>([]);
-  const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
+  const [selectedRowIds] = useState<string[]>([]);
   const [sortColumnId, setSortColumnId] = useState<string>(null);
   const [sortDirection, setSortDirection] = useState<TableSortDirection>(null);
 
@@ -45,13 +45,6 @@ const useTable = (initialState?: TableInitialState): TableState => {
     });
 
   /**
-   * Sets the setSelectedRowIds to an empty array.
-   */
-  const resetRowIds = (): void => {
-    setSelectedRowIds([]);
-  };
-
-  /**
    * Sets the sortColumnId and sortDirection value. If the column is already
    * sorted in that direction, it "undoes" the sorting.
    *
@@ -65,28 +58,6 @@ const useTable = (initialState?: TableInitialState): TableState => {
 
     setSortColumnId(isAlreadySorted ? null : args.sortColumnId);
     setSortDirection(isAlreadySorted ? null : args.sortDirection);
-  };
-
-  /**
-   * @todo Needs some optimization.
-   * @param rowIds - IDs of the TableRow(s) to select or unselect.
-   */
-  const toggleRowIds = (rowIds: string[]): void => {
-    const someAlreadySelected: boolean = rowIds.some((rowId: string) => {
-      const isAlreadySelected: boolean = !!selectedRowIds.find(
-        (selectedRowId: string) => rowId === selectedRowId
-      );
-
-      return isAlreadySelected;
-    });
-
-    setSelectedRowIds(
-      someAlreadySelected
-        ? selectedRowIds.filter(
-            (selectedRowId: string) => !rowIds.includes(selectedRowId)
-          )
-        : [...selectedRowIds, ...rowIds]
-    );
   };
 
   /**
@@ -109,13 +80,11 @@ const useTable = (initialState?: TableInitialState): TableState => {
     columns,
     getColumn,
     getColumnIndex,
-    resetRowIds,
     rows,
     selectedRowIds,
     sortColumnId,
     sortDirection,
     sortTable,
-    toggleRowIds,
     updateColumn
   };
 };
@@ -124,16 +93,12 @@ export const [
   TableProvider,
   useTableGetColumn,
   useTableGetColumnIndex,
-  useTableResetRowIds,
   useTableSortTable,
-  useTableToggleRowIds,
   useTableUpdateColumn
 ] = constate(
   useTable,
   (value) => value.getColumn,
   (value) => value.getColumnIndex,
-  (value) => value.resetRowIds,
   (value) => value.sortTable,
-  (value) => value.toggleRowIds,
   (value) => value.updateColumn
 );

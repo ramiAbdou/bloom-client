@@ -1,13 +1,13 @@
 import React from 'react';
 
 import Checkbox from '@components/atoms/Checkbox/Checkbox';
-import { useTableToggleRowIds } from './Table.state';
 import TableStore from './Table.store';
+import { useTableDispatch } from './Table.tracked';
 import { TableRow } from './Table.types';
 import TablePaginationStore from './TablePagination/TablePagination.store';
 
 const TableHeaderCheckbox: React.FC = () => {
-  const toggleRowIds = useTableToggleRowIds();
+  const tableDispatch = useTableDispatch();
 
   const floor: number = TablePaginationStore.useStoreState(
     (state) => state.floor
@@ -33,7 +33,7 @@ const TableHeaderCheckbox: React.FC = () => {
   );
 
   const onChange = (): void => {
-    toggleRowIds(currentPageRowIds);
+    tableDispatch({ rowIds: currentPageRowIds, type: 'TOGGLE_ROW_IDS' });
   };
 
   return (
