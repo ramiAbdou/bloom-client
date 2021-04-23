@@ -41,10 +41,42 @@ export const getColumnIndex = (
   });
 
 /**
+ * Returns the [floor, ceiling] of the page.
+ *
+ * @example
+ * // Returns [0, 24].
+ * getRange({ page: 0, rowsPerPage: 25 })
+ *
+ * @example
+ * // Returns [25, 49].
+ * getRange({ page: 1, rowsPerPage: 25 })
+ */
+export const getRange = (state: TableState): [number, number] => {
+  const floor: number = state.page * state.rowsPerPage;
+
+  const ceiling: number =
+    state.page * state.rowsPerPage + state.rowsPerPage - 1;
+
+  return [floor, ceiling];
+};
+
+/**
  * Sets the setSelectedRowIds to an empty array.
  */
 const resetSelectedRowIds = (state: TableState): TableState => {
   return { ...state, selectedRowIds: [] };
+};
+
+/**
+ * Sets the page.
+ */
+const setPage = (state: TableState, page: number): TableState => {
+  // When going to a new page, we need to ensure that the scroll position is
+  // set to 0 so they start at the top of the page.
+  const element = document.getElementById('o-table-ctr');
+  element.scroll({ top: 0 });
+
+  return { ...state, page };
 };
 
 /**
@@ -101,6 +133,9 @@ const tableReducer = (state: TableState, action: TableAction): TableState => {
     case 'RESET_SELECTED_ROW_IDS':
       return resetSelectedRowIds(state);
 
+    case 'SET_PAGE':
+      return setPage(state, action.page);
+
     case 'SET_ROWS':
       return setRows(state, action.rows);
 
@@ -120,7 +155,9 @@ const useTableValue = ({ columns, options, rows }: TableInitialState) =>
     columns,
     filteredRows: rows,
     options: { ...defaultTableOptions, ...options },
+    page: 0,
     rows,
+    rowsPerPage: 25,
     selectedRowIds: [],
     sortColumnId: null,
     sortDirection: null

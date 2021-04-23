@@ -1,24 +1,20 @@
-import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
 import { ValueProps } from '@util/constants';
 import { cx } from '@util/util';
-import TablePaginationStore from './TablePagination.store';
+import { useTableDispatch, useTableState } from '../Table.state';
+import { TableDispatch, TableState } from '../Table.types';
 
 const TablePaginationNumberButton: React.FC<ValueProps> = ({ value }) => {
-  const isSelected: boolean = TablePaginationStore.useStoreState(
-    (state) => state.page === value
-  );
+  const { page }: TableState = useTableState();
+  const tableDispatch: TableDispatch = useTableDispatch();
 
-  const setPage: ActionCreator<number> = TablePaginationStore.useStoreActions(
-    (state) => state.setPage
-  );
-
+  const isSelected: boolean = page === value;
   const isEllipses: boolean = value === '...';
 
   const onClick = (): void => {
-    if (!isEllipses) setPage(value);
+    if (!isEllipses) tableDispatch({ page: value, type: 'SET_PAGE' });
   };
 
   const css: string = cx('o-table-pagination-num', {

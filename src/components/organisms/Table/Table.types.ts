@@ -37,7 +37,6 @@ export interface TableRow extends Pick<IdProps, 'id'>, Record<string, any> {}
 // ## TABLE MODEL
 
 export type TableModel = {
-  filteredRows: TableRow[];
   filters: Record<string, any>;
   removeFilter: Action<TableModel, string>;
   setFilter: Action<TableModel, TableQuickFilterArgs>;
@@ -51,6 +50,8 @@ export interface SortTableArgs {
   sortColumnId: string;
   sortDirection: TableSortDirection;
 }
+
+export type TablePaginationValue = number | '...';
 
 export enum TableSortDirection {
   ASC = 'ASC',
@@ -82,7 +83,9 @@ export interface TableState {
   columns: TableColumn[];
   filteredRows: TableRow[];
   options: TableOptions;
+  page: number;
   rows: TableRow[];
+  rowsPerPage: number;
   selectedRowIds: string[];
   sortColumnId: string;
   sortDirection: TableSortDirection;
@@ -90,6 +93,7 @@ export interface TableState {
 
 export type TableAction =
   | { type: 'RESET_SELECTED_ROW_IDS' }
+  | { type: 'SET_PAGE'; page: number }
   | { type: 'SET_ROWS'; rows: TableRow[] }
   | {
       type: 'SORT_TABLE';
@@ -97,3 +101,5 @@ export type TableAction =
       sortDirection: TableSortDirection;
     }
   | { type: 'TOGGLE_ROW_IDS'; rowIds: string[] };
+
+export type TableDispatch = React.Dispatch<TableAction>;

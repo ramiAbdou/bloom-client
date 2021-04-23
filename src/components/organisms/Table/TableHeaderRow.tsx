@@ -1,18 +1,13 @@
 import React from 'react';
 
 import { useTableState } from './Table.state';
-import TableStore from './Table.store';
-import { TableColumn } from './Table.types';
+import { TableColumn, TableState } from './Table.types';
 import HeaderCell from './TableHeaderCell';
 
 const TableHeaderRow: React.FC = () => {
-  const { columns } = useTableState();
+  const { columns, filteredRows }: TableState = useTableState();
 
-  const hasData: boolean = TableStore.useStoreState(
-    (state) => !!state.filteredRows.length
-  );
-
-  const customStyle: React.CSSProperties = !hasData
+  const customStyle: React.CSSProperties = !filteredRows.length
     ? { borderBottom: 'none' }
     : {};
 

@@ -4,8 +4,6 @@ import { TableModel, TableQuickFilterArgs, TableRow } from './Table.types';
 import { runFilters } from './Table.util';
 
 export const tableModel: TableModel = {
-  filteredRows: [],
-
   filters: {},
 
   removeFilter: action((state, filterId: string) => {

@@ -12,6 +12,7 @@ import {
   useTableDispatch,
   useTableState
 } from '@components/organisms/Table/Table.state';
+import { TableDispatch } from '@components/organisms/Table/Table.types';
 import { modalVar } from '@core/state/Modal.reactive';
 import { IMember, MemberRole } from '@util/constants.entities';
 
@@ -25,7 +26,7 @@ const MemberDatabasePromoteFormHeader: React.FC = () => {
 };
 
 const MemberDatabasePromoteForm: React.FC = () => {
-  const tableDispatch = useTableDispatch();
+  const tableDispatch: TableDispatch = useTableDispatch();
   const { selectedRowIds } = useTableState();
 
   const onSubmit: OnFormSubmitFunction = async ({

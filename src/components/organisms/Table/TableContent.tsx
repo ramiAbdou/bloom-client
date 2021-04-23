@@ -1,10 +1,9 @@
 import hash from 'object-hash';
 import React from 'react';
 
-import { useTableState } from './Table.state';
-import { TableRow as TableRowProps } from './Table.types';
+import { getRange, useTableState } from './Table.state';
+import { TableRow as TableRowProps, TableState } from './Table.types';
 import TableHeaderRow from './TableHeaderRow';
-import TablePaginationStore from './TablePagination/TablePagination.store';
 import TableRow from './TableRow';
 
 interface TableContentProps {
@@ -18,14 +17,8 @@ interface TableRowsProps {
 }
 
 const TableRows: React.FC<TableRowsProps> = ({ rows }) => {
-  const floor: number = TablePaginationStore.useStoreState(
-    (state) => state.floor
-  );
-
-  const ceiling: number = TablePaginationStore.useStoreState(
-    (state) => state.ceiling
-  );
-
+  const tableState: TableState = useTableState();
+  const [floor, ceiling]: [number, number] = getRange(tableState);
   const rowsOnPage: TableRowProps[] = [...rows].slice(floor, ceiling);
 
   return (

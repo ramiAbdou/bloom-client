@@ -1,26 +1,20 @@
-import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 
 import Button from '@components/atoms/Button/Button';
-import TableStore from '../Table.store';
-import TablePaginationStore from './TablePagination.store';
+import { useTableDispatch, useTableState } from '../Table.state';
+import { TableDispatch, TableState } from '../Table.types';
 
 const TablePaginationNextButton: React.FC = () => {
-  const page: number = TablePaginationStore.useStoreState(
-    (state) => state.page
-  );
+  const { filteredRows, page }: TableState = useTableState();
+  const tableDispatch: TableDispatch = useTableDispatch();
 
-  const numPages: number = TableStore.useStoreState((state) =>
-    Math.ceil(state.filteredRows.length / 25)
-  );
-
-  const setPage: ActionCreator<number> = TablePaginationStore.useStoreActions(
-    (state) => state.setPage
-  );
+  const pagesCount: number = Math.ceil(filteredRows.length / 25);
 
   const onClick = (): void => {
-    if (page < numPages - 1) setPage(page + 1);
+    if (page < pagesCount - 1) {
+      tableDispatch({ page: page + 1, type: 'SET_PAGE' });
+    }
   };
 
   return (

@@ -9,7 +9,7 @@ import {
 } from '@components/organisms/Table/Table.state';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import { cx } from '@util/util';
-import { TableSortDirection } from './Table.types';
+import { TableDispatch, TableSortDirection } from './Table.types';
 
 interface TableSortButtonProps {
   direction: TableSortDirection;
@@ -18,7 +18,7 @@ interface TableSortButtonProps {
 const TableSortButton: React.FC<TableSortButtonProps> = ({ direction }) => {
   const columnId: string = useStoreState(({ panel }) => panel.metadata);
   const { sortColumnId, sortDirection } = useTableState();
-  const tableDispatch = useTableDispatch();
+  const tableDispatch: TableDispatch = useTableDispatch();
 
   const closePanel: ActionCreator<void> = useStoreActions(
     ({ panel }) => panel.closePanel

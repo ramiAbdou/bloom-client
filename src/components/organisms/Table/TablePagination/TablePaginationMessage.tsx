@@ -1,29 +1,20 @@
 import React from 'react';
 
-import { useTableState } from '../Table.state';
-import TableStore from '../Table.store';
+import { getRange, useTableState } from '../Table.state';
 import { TableState } from '../Table.types';
-import TablePaginationStore from './TablePagination.store';
 
 const TablePaginationMessage: React.FC = () => {
-  const { options }: TableState = useTableState();
+  const tableState: TableState = useTableState();
+  const { filteredRows, options }: TableState = tableState;
 
-  const floor: number = TablePaginationStore.useStoreState(
-    (state) => state.floor
-  );
-
-  const ceiling: number = TablePaginationStore.useStoreState(
-    (state) => state.ceiling
-  );
-
-  const rowsCount: number = TableStore.useStoreState(
-    ({ filteredRows }) => filteredRows?.length
-  );
-
+  // If showCount is disabled, don't show the count!
   if (!options?.showCount) return null;
 
+  const [floor, ceiling]: [number, number] = getRange(tableState);
+  const rowsCount: number = filteredRows?.length;
+
   const message: string = rowsCount
-    ? `Displaying ${floor + 1}-${ceiling} of ${rowsCount} results.`
+    ? `Displaying ${floor + 1}-${ceiling + 1} of ${rowsCount} results.`
     : 'No results found.';
 
   return <p className="meta">{message}</p>;

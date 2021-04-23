@@ -1,20 +1,18 @@
 import React from 'react';
 
 import Row from '@components/containers/Row/Row';
-import TableStore from '../Table.store';
+import { useTableState } from '../Table.state';
+import { TableState } from '../Table.types';
 import TablePaginationButtonList from './TablePaginationButtonList';
 import TablePaginationMessage from './TablePaginationMessage';
-// import useUpdateRange from './useUpdateRange';
 
 const TablePagination: React.FC = () => {
-  // useUpdateRange();
+  const { filteredRows }: TableState = useTableState();
 
-  const hasRows: boolean = TableStore.useStoreState(
-    (state) => !!state.filteredRows?.length
-  );
+  if (!filteredRows?.length) return null;
 
   return (
-    <Row wrap className="mt-sm" gap="sm" justify="sb" show={hasRows}>
+    <Row wrap className="mt-sm" gap="sm" justify="sb">
       <TablePaginationMessage />
       <TablePaginationButtonList />
     </Row>

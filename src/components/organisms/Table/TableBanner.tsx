@@ -17,24 +17,23 @@ import Button from '@components/atoms/Button/Button';
 import Card from '@components/containers/Card/Card';
 import Row from '@components/containers/Row/Row';
 import {
+  getRange,
   useTableDispatch,
   useTableState
 } from '@components/organisms/Table/Table.state';
 import TableStore from './Table.store';
-import { TableRow, TableState } from './Table.types';
-import { getBannerButtonTitle, getBannerMessage } from './Table.util';
-import TablePaginationStore from './TablePagination/TablePagination.store';
+import { TableDispatch, TableRow, TableState } from './Table.types';
+import { getBannerButtonTitle } from './Table.util';
 
 const TableBannerButton: React.FC = () => {
-  const tableDispatch = useTableDispatch();
+  const { filteredRows }: TableState = useTableState();
+  const tableDispatch: TableDispatch = useTableDispatch();
 
   const title: string = TableStore.useStoreState((state) =>
     getBannerButtonTitle(state)
   );
 
-  const allRowIds: string[] = TableStore.useStoreState((state) =>
-    state.filteredRows.map((row: TableRow) => row.id)
-  );
+  const allRowIds: string[] = filteredRows.map((row: TableRow) => row.id);
 
   const onClick = () => {
     tableDispatch({ rowIds: allRowIds, type: 'TOGGLE_ROW_IDS' });
@@ -48,15 +47,11 @@ const TableBannerButton: React.FC = () => {
 };
 
 const TableBannerMessage: React.FC = () => {
-  const floor: number = TablePaginationStore.useStoreState(
-    (state) => state.floor
-  );
+  const tableState: TableState = useTableState();
+  // const { filteredRows, selectedRowIds }: TableState = tableState;
 
-  const ceiling: number = TablePaginationStore.useStoreState(
-    (state) => state.ceiling
-  );
+  const [floor, ceiling]: [number, number] = getRange(tableState);
 
-  const { selectedRowIds } = useTableState();
   const message = '';
 
   // const message: string = TableStore.useStoreState((state) =>
@@ -67,15 +62,10 @@ const TableBannerMessage: React.FC = () => {
 };
 
 const TableBanner: React.FC = () => {
-  const { filteredRows, selectedRowIds }: TableState = useTableState();
+  const tableState: TableState = useTableState();
+  const { filteredRows, selectedRowIds }: TableState = tableState;
 
-  const floor: number = TablePaginationStore.useStoreState(
-    (state) => state.floor
-  );
-
-  const ceiling: number = TablePaginationStore.useStoreState(
-    (state) => state.ceiling
-  );
+  const [floor, ceiling]: [number, number] = getRange(tableState);
 
   const allRowsOnPageSelected: boolean = filteredRows
     .slice(floor, ceiling)
