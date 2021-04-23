@@ -31,7 +31,6 @@ const GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED: DocumentNode = gql`
         role: $roleExp
         status: { _eq: "Accepted" }
         _or: [
-          # { bio: { _ilike: $searchStringWord } }
           { email: { _ilike: $searchStringWord } }
           { firstName: { _ilike: $searchString } }
           { lastName: { _ilike: $searchString } }
