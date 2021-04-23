@@ -1,16 +1,14 @@
 import React from 'react';
 import { IoTrash } from 'react-icons/io5';
-import { memberIdVar } from 'src/App.reactive';
 
-import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import Row from '@components/containers/Row/Row';
 import FormMultipleSelect from '@components/organisms/Form/FormMultipleSelect';
 import FormShortText from '@components/organisms/Form/FormShortText';
+import useMemberRole from '@core/hooks/useMemberRole';
 import IdStore from '@core/store/Id.store';
-import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';
-import { IMember, MemberRole } from '@util/constants.entities';
+import { MemberRole } from '@util/constants.entities';
 import AddMemberStore from './AddMember.store';
 
 const AddMemberInputTrashButton: React.FC = () => {
@@ -31,18 +29,11 @@ const AddMemberInputTrashButton: React.FC = () => {
 };
 
 const AddMemberInput: React.FC = () => {
-  const memberId: string = useReactiveVar(memberIdVar);
   const id: string = IdStore.useStoreState((state) => state.id);
   const admin = AddMemberStore.useStoreState((state) => state.admin);
 
-  const { data: member, loading } = useFindOne(IMember, {
-    fields: ['role'],
-    where: { id: memberId }
-  });
-
-  if (loading) return null;
-
-  const isOwner: boolean = member.role === MemberRole.OWNER;
+  const role: MemberRole = useMemberRole();
+  const isOwner: boolean = role === MemberRole.OWNER;
 
   return (
     <Row align="baseline" className="mo-add-member-input" spacing="xs">

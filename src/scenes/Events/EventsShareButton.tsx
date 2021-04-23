@@ -3,9 +3,9 @@ import { memberIdVar, toastQueueVar, useToast } from 'src/App.reactive';
 
 import { gql, useReactiveVar } from '@apollo/client';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
-import useFindOne from '@core/gql/hooks/useFindOne';
+import useMemberRole from '@core/hooks/useMemberRole';
 import { APP, ComponentWithFragments } from '@util/constants';
-import { IEvent, IEventGuest, IMember } from '@util/constants.entities';
+import { IEvent, IEventGuest, MemberRole } from '@util/constants.entities';
 import { EventTiming, getEventTiming } from './Events.util';
 
 const EventsShareButton: ComponentWithFragments<
@@ -14,20 +14,7 @@ const EventsShareButton: ComponentWithFragments<
 > = ({ data: event, large }) => {
   const memberId: string = useReactiveVar(memberIdVar);
   const { showToast } = useToast(toastQueueVar);
-
-  // const { data: event, loading: loading1 } = useFindOne(IEvent, {
-  //   fields: [
-  //     'eventGuests.deletedAt',
-  //     'eventGuests.id',
-  //     'eventGuests.member.id',
-  //   ],
-  //   where: { id: eventId }
-  // });
-
-  const { data: member } = useFindOne(IMember, {
-    fields: ['role'],
-    where: { id: memberId }
-  });
+  const role: MemberRole = useMemberRole();
 
   const isGoing: boolean = event.eventGuests?.some(
     (eventGuest: IEventGuest) => eventGuest.member?.id === memberId
@@ -40,9 +27,7 @@ const EventsShareButton: ComponentWithFragments<
 
   const isUpcoming: boolean = eventTiming === EventTiming.UPCOMING;
   const showOnSmall: boolean = !large && !!isGoing;
-
-  const showOnLarge: boolean =
-    !!large && (!member.role || (member.role && !!isGoing));
+  const showOnLarge: boolean = !!large && (!role || (role && !!isGoing));
 
   if (!isUpcoming || (!showOnSmall && !showOnLarge)) return null;
 

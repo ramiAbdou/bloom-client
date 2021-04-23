@@ -1,5 +1,5 @@
 import React from 'react';
-import { eventIdVar, memberIdVar } from 'src/App.reactive';
+import { eventIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import Separator from '@components/atoms/Separator';
@@ -8,8 +8,9 @@ import Row from '@components/containers/Row/Row';
 import Section from '@components/containers/Section';
 import SidebarHamburgerButton from '@components/organisms/Sidebar/SidebarHamburgerButton';
 import useFindOne from '@core/gql/hooks/useFindOne';
+import useMemberRole from '@core/hooks/useMemberRole';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { IEvent, IMember } from '@util/constants.entities';
+import { IEvent, MemberRole } from '@util/constants.entities';
 
 const IndividualEventInsightsAttendeesCard: React.FC = () => {
   const eventId: string = useReactiveVar(eventIdVar);
@@ -69,17 +70,12 @@ const IndividualEventInsightsWatchesCard: React.FC = () => {
 };
 
 const IndividualEventInsights: React.FC = () => {
-  const memberId: string = useReactiveVar(memberIdVar);
+  const role: MemberRole = useMemberRole();
 
-  const { data: member, loading } = useFindOne(IMember, {
-    fields: ['role'],
-    where: { id: memberId }
-  });
-
-  if (loading) return null;
+  if (!role) return null;
 
   return (
-    <Section className="s-events-individual-insights" show={!!member.role}>
+    <Section className="s-events-individual-insights">
       <SidebarHamburgerButton />
 
       <Row spacing="sm">
