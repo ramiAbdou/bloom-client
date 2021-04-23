@@ -2,10 +2,11 @@ import React from 'react';
 
 import { QuestionType, ValueProps } from '@util/constants';
 import { cx } from '@util/util';
-import { useTableGetColumn } from './Table.state';
 import { getTableCellClass } from './Table.util';
 import TableCellContent from './TableCellContent';
 import TableRowCheckbox from './TableRowCheckbox';
+import { useTableState } from '@components/organisms/Table/Table.tracked';
+import { getColumn } from './Table.tracked';
 
 interface TableCellProps extends ValueProps {
   columnId: string;
@@ -13,8 +14,8 @@ interface TableCellProps extends ValueProps {
 }
 
 const TableCell: React.FC<TableCellProps> = ({ columnId, rowId, value }) => {
-  const getColumnById = useTableGetColumn();
-  const { category, type } = getColumnById({ columnId });
+  const state = useTableState();
+  const { category, type } = getColumn(state, { columnId });
 
   const css: string = cx(getTableCellClass({ category, type }), {
     'o-table-td--multiple-select': type === QuestionType.MULTIPLE_SELECT

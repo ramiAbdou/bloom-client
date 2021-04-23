@@ -2,6 +2,8 @@ import React from 'react';
 import { IoFilter } from 'react-icons/io5';
 
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
+import { useTableState } from '@components/organisms/Table/Table.tracked';
+import { TableState } from '@components/organisms/Table/Table.types';
 import { useStoreActions } from '@core/store/Store';
 import useTooltip from '@hooks/useTooltip';
 import { PanelType } from '@util/constants';
@@ -22,13 +24,11 @@ const TableFilterButtonNumActiveTag: React.FC = () => {
   return <div>{numActiveFilters}</div>;
 };
 
-const TableFilterButton: React.FC<Partial<ButtonProps>> = (props) => {
-  const { className } = props;
+const TableFilterButton: React.FC<Partial<ButtonProps>> = ({ className }) => {
+  const { selectedRowIds }: TableState = useTableState();
   const showPanel = useStoreActions(({ panel }) => panel.showPanel);
 
-  const isAnythingSelected: boolean = TableStore.useStoreState(
-    ({ selectedRowIds }) => !!selectedRowIds.length
-  );
+  const isAnythingSelected: boolean = !!selectedRowIds.length;
 
   const onClick = () => showPanel({ id: PanelType.FILTER_TABLE });
   const ref: React.MutableRefObject<HTMLElement> = useTooltip('Filter');

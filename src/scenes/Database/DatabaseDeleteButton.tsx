@@ -3,7 +3,8 @@ import { IoTrash } from 'react-icons/io5';
 import { memberIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
-import TableStore from '@components/organisms/Table/Table.store';
+import { useTableState } from '@components/organisms/Table/Table.tracked';
+import { TableState } from '@components/organisms/Table/Table.types';
 import useFind from '@core/gql/hooks/useFind';
 import { modalVar } from '@core/state/Modal.reactive';
 import useFindOne from '@gql/hooks/useFindOne';
@@ -18,10 +19,7 @@ import DatabaseAction from './DatabaseAction';
  */
 const useDeleteTooltip = (): string => {
   const memberId: string = useReactiveVar(memberIdVar);
-
-  const selectedRowIds = TableStore.useStoreState(
-    (state) => state.selectedRowIds
-  );
+  const { selectedRowIds }: TableState = useTableState();
 
   const { data: members, loading: loading1 } = useFind(IMember, {
     where: { id: { _in: selectedRowIds } }

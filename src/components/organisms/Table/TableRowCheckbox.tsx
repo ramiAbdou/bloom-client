@@ -1,9 +1,13 @@
 import React from 'react';
 
 import Checkbox from '@components/atoms/Checkbox/Checkbox';
-import { useTableGetColumnIndex } from './Table.state';
+import { TableState } from '@components/organisms/Table/Table.types';
 import TableStore from './Table.store';
-import { useTableDispatch } from './Table.tracked';
+import {
+  getColumnIndex,
+  useTableDispatch,
+  useTableState
+} from './Table.tracked';
 
 interface TableRowCheckboxProps {
   columnId: string;
@@ -14,18 +18,15 @@ const TableRowCheckbox: React.FC<TableRowCheckboxProps> = ({
   columnId,
   rowId
 }) => {
+  const state: TableState = useTableState();
   const tableDispatch = useTableDispatch();
-  const getColumnIndex = useTableGetColumnIndex();
-
-  const columnIndex: number = getColumnIndex({ columnId });
+  const columnIndex: number = getColumnIndex(state, { columnId });
 
   const hasCheckbox: boolean = TableStore.useStoreState(
     ({ options }) => !!options.hasCheckbox
   );
 
-  const isSelected: boolean = TableStore.useStoreState(({ selectedRowIds }) =>
-    selectedRowIds.includes(rowId)
-  );
+  const isSelected: boolean = state.selectedRowIds.includes(rowId);
 
   const onChange = (): void => {
     tableDispatch({ rowIds: [rowId], type: 'TOGGLE_ROW_IDS' });

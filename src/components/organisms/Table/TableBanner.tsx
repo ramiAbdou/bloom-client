@@ -21,7 +21,7 @@ import {
   useTableState
 } from '@components/organisms/Table/Table.tracked';
 import TableStore from './Table.store';
-import { TableRow } from './Table.types';
+import { TableRow, TableState } from './Table.types';
 import { getBannerButtonTitle, getBannerMessage } from './Table.util';
 import TablePaginationStore from './TablePagination/TablePagination.store';
 
@@ -66,6 +66,8 @@ const TableBannerMessage: React.FC = () => {
 };
 
 const TableBanner: React.FC = () => {
+  const { selectedRowIds }: TableState = useTableState();
+
   const floor: number = TablePaginationStore.useStoreState(
     (state) => state.floor
   );
@@ -75,7 +77,7 @@ const TableBanner: React.FC = () => {
   );
 
   const isAllPageSelected: boolean = TableStore.useStoreState(
-    ({ filteredRows, selectedRowIds }) => {
+    ({ filteredRows }) => {
       const allRowsOnPageSelected: boolean = filteredRows
         .slice(floor, ceiling)
         .every(({ id: rowId }) => selectedRowIds.includes(rowId as string));

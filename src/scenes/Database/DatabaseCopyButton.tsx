@@ -2,9 +2,16 @@ import React from 'react';
 import { IoCopy } from 'react-icons/io5';
 import { toastQueueVar, useToast } from 'src/App.reactive';
 
-import { useTableGetColumn } from '@components/organisms/Table/Table.state';
 import TableStore from '@components/organisms/Table/Table.store';
-import { TableColumn, TableRow } from '@components/organisms/Table/Table.types';
+import {
+  getColumn,
+  useTableState
+} from '@components/organisms/Table/Table.tracked';
+import {
+  TableColumn,
+  TableRow,
+  TableState
+} from '@components/organisms/Table/Table.types';
 import { QuestionCategory } from '@util/constants';
 import DatabaseAction from './DatabaseAction';
 
@@ -13,16 +20,17 @@ import DatabaseAction from './DatabaseAction';
  * comma-separated list.
  */
 const DatabaseCopyButton: React.FC = () => {
-  const getColumn = useTableGetColumn();
+  const state: TableState = useTableState();
+
   const { showToast } = useToast(toastQueueVar);
 
   // Get the column that has EMAIL as the category.
-  const emailColumn: TableColumn = getColumn({
+  const emailColumn: TableColumn = getColumn(state, {
     category: QuestionCategory.EMAIL
   });
 
-  const emails = TableStore.useStoreState(({ rows, selectedRowIds }) =>
-    selectedRowIds.map((rowId: string) => {
+  const emails = TableStore.useStoreState(({ rows }) =>
+    state.selectedRowIds.map((rowId: string) => {
       const selectedRow = rows.find((row: TableRow) => row.id === rowId) || {};
 
       return selectedRow[emailColumn.id];

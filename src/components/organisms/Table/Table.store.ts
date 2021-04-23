@@ -33,8 +33,6 @@ export const tableModel: TableModel = {
 
   rows: [],
 
-  selectedRowIds: [],
-
   setFilter: action((state, { filterId, filter }: TableQuickFilterArgs) => {
     const updatedFilters = { ...state.filters, [filterId]: filter };
 

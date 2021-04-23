@@ -2,11 +2,12 @@ import React from 'react';
 
 import Checkbox from '@components/atoms/Checkbox/Checkbox';
 import TableStore from './Table.store';
-import { useTableDispatch } from './Table.tracked';
-import { TableRow } from './Table.types';
+import { useTableDispatch, useTableState } from './Table.tracked';
+import { TableRow, TableState } from './Table.types';
 import TablePaginationStore from './TablePagination/TablePagination.store';
 
 const TableHeaderCheckbox: React.FC = () => {
+  const { selectedRowIds }: TableState = useTableState();
   const tableDispatch = useTableDispatch();
 
   const floor: number = TablePaginationStore.useStoreState(
@@ -22,15 +23,12 @@ const TableHeaderCheckbox: React.FC = () => {
     return rowsOnPage.map((row: TableRow) => row.id);
   });
 
-  const isAllPageSelected: boolean = TableStore.useStoreState(
-    ({ selectedRowIds }) => {
-      const allRowsOnPageSelected: boolean = currentPageRowIds.every(
-        (rowId: string) => selectedRowIds.includes(rowId)
-      );
-
-      return !!selectedRowIds.length && allRowsOnPageSelected;
-    }
+  const allRowsOnPageSelected: boolean = currentPageRowIds.every(
+    (rowId: string) => selectedRowIds.includes(rowId)
   );
+
+  const isAllPageSelected: boolean =
+    !!selectedRowIds.length && allRowsOnPageSelected;
 
   const onChange = (): void => {
     tableDispatch({ rowIds: currentPageRowIds, type: 'TOGGLE_ROW_IDS' });

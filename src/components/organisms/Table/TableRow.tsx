@@ -3,22 +3,24 @@ import React from 'react';
 import { cx } from '@util/util';
 import TableStore from './Table.store';
 import { useTableState } from './Table.tracked';
-import { TableColumn, TableRow as TableRowProps } from './Table.types';
+import {
+  TableColumn,
+  TableRow as TableRowProps,
+  TableState
+} from './Table.types';
 import TableRowCell from './TableCell';
 
 const TableRow: React.FC<TableRowProps> = (row) => {
+  const { columns, selectedRowIds }: TableState = useTableState();
+
   const onRowClick = TableStore.useStoreState(
     ({ options }) => options.onRowClick
   );
 
-  const { columns } = useTableState();
-
-  const isSelected: boolean = TableStore.useStoreState(({ selectedRowIds }) =>
-    selectedRowIds.includes(row?.id)
-  );
+  const isRowSelected: boolean = selectedRowIds.includes(row?.id);
 
   const css: string = cx('', {
-    'o-table-tr--active': isSelected,
+    'o-table-tr--active': isRowSelected,
     'o-table-tr--clickable': !!onRowClick
   });
 

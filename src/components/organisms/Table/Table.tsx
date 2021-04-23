@@ -1,7 +1,6 @@
 import React from 'react';
 
 import PanelLocal from '../Panel/PanelLocal';
-import { TableProvider as TProvider } from './Table.state';
 import TableStore, { tableModel } from './Table.store';
 import { TableProvider } from './Table.tracked';
 import {
@@ -34,19 +33,17 @@ const Table: React.FC<TableProps> = ({
 
   return (
     <TableProvider columns={columns} rows={rows}>
-      <TProvider columns={columns} rows={rows}>
-        <TableStore.Provider runtimeModel={runtimeModel}>
-          <TablePaginationStore.Provider>
-            <TableFilterStore.Provider>
-              {TableActions && <TableActions />}
-              <TableBanner />
-              {children}
-              <TablePagination />
-              <PanelLocal />
-            </TableFilterStore.Provider>
-          </TablePaginationStore.Provider>
-        </TableStore.Provider>
-      </TProvider>
+      <TableStore.Provider runtimeModel={runtimeModel}>
+        <TablePaginationStore.Provider>
+          <TableFilterStore.Provider>
+            {TableActions && <TableActions />}
+            <TableBanner />
+            {children}
+            <TablePagination />
+            <PanelLocal />
+          </TableFilterStore.Provider>
+        </TablePaginationStore.Provider>
+      </TableStore.Provider>
     </TableProvider>
   );
 };

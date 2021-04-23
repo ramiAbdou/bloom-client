@@ -6,13 +6,14 @@ import { communityIdVar, toastQueueVar, useToast } from 'src/App.reactive';
 import { useReactiveVar } from '@apollo/client';
 import TableStore from '@components/organisms/Table/Table.store';
 import { useTableState } from '@components/organisms/Table/Table.tracked';
+import { TableState } from '@components/organisms/Table/Table.types';
 import useFindOne from '@gql/hooks/useFindOne';
 import { ICommunity } from '@util/constants.entities';
 import DatabaseAction from './DatabaseAction';
 
 const DatabaseExportButton: React.FC = () => {
   const communityId: string = useReactiveVar(communityIdVar);
-  const { columns } = useTableState();
+  const { columns, selectedRowIds }: TableState = useTableState();
   const { showToast } = useToast(toastQueueVar);
 
   const { data: community, loading } = useFindOne(ICommunity, {
@@ -25,7 +26,7 @@ const DatabaseExportButton: React.FC = () => {
     return { key: id, label: title };
   });
 
-  const data = TableStore.useStoreState(({ filteredRows, selectedRowIds }) =>
+  const data = TableStore.useStoreState(({ filteredRows }) =>
     selectedRowIds.map((rowId: string) => {
       // We return every piece of data in the selected row except for the
       // ID of the row, which is just the member ID in this case.

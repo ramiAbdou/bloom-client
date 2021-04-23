@@ -2,8 +2,11 @@ import React from 'react';
 
 import Attribute from '@components/atoms/Tag/Attribute';
 import Pill from '@components/atoms/Tag/Pill';
+import {
+  getColumn,
+  useTableState
+} from '@components/organisms/Table/Table.tracked';
 import { QuestionCategory, QuestionType } from '@util/constants';
-import { useTableGetColumn } from './Table.state';
 import { TableColumn } from './Table.types';
 
 interface TableCellContentProps {
@@ -15,9 +18,9 @@ const TableCellContent: React.FC<TableCellContentProps> = ({
   columnId,
   value
 }) => {
-  const getColumn = useTableGetColumn();
+  const state = useTableState();
 
-  const { category, format, render, type }: TableColumn = getColumn({
+  const { category, format, render, type }: TableColumn = getColumn(state, {
     columnId
   });
 

@@ -1,21 +1,20 @@
 import React from 'react';
 
 import Row from '@components/containers/Row/Row';
-import TableStore from '@components/organisms/Table/Table.store';
+import { useTableState } from '@components/organisms/Table/Table.tracked';
+import { TableState } from '@components/organisms/Table/Table.types';
 import TableFilterButton from '@components/organisms/Table/TableFilterButton';
 import useMemberRole from '@core/hooks/useMemberRole';
 import { MemberRole } from '@util/constants.entities';
 import DatabaseCopyButton from './DatabaseCopyButton';
 import DatabaseDeleteButton from './DatabaseDeleteButton';
-import DatabaseExportButton from './DatabaseExportButton';
 import DatabasePromoteButton from './DatabasePromoteButton';
 import MemberDatabaseQuickFilters from './MemberDatabaseQuickFilters';
 import MemberDatabaseSearchBar from './MemberDatabaseSearchBar';
 
 const MemberDatabaseButtons: React.FC = () => {
-  const isAnythingSelected: boolean = TableStore.useStoreState(
-    ({ selectedRowIds }) => !!selectedRowIds.length
-  );
+  const { selectedRowIds }: TableState = useTableState();
+  const isAnythingSelected: boolean = !!selectedRowIds.length;
 
   const isOwner: boolean = useMemberRole() === MemberRole.OWNER;
 

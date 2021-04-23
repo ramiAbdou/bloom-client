@@ -8,7 +8,7 @@ import {
 } from '@components/organisms/Form/Form.types';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
-import TableStore from '@components/organisms/Table/Table.store';
+import { useTableState } from '@components/organisms/Table/Table.tracked';
 import { modalVar } from '@core/state/Modal.reactive';
 import { IMember } from '@util/constants.entities';
 
@@ -22,9 +22,7 @@ const AdminDatabaseDemoteFormHeader: React.FC = () => {
 };
 
 const AdminDatabaseDemoteForm: React.FC = () => {
-  const memberIds = TableStore.useStoreState(
-    ({ selectedRowIds }) => selectedRowIds
-  );
+  const { selectedRowIds: memberIds } = useTableState();
 
   const onSubmit: OnFormSubmitFunction = async ({
     gql,
