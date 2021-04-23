@@ -28,7 +28,6 @@ const TableRows: React.FC<TableRowsProps> = ({ rows }) => {
   );
 
   const rowsOnPage: TableRowProps[] = [...rows].slice(floor, ceiling);
-  console.log('rowsOnPage', rowsOnPage, floor, ceiling);
 
   return (
     <tbody>

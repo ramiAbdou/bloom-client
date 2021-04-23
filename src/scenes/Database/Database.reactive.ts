@@ -1,5 +1,7 @@
 import { makeVar, ReactiveVar } from '@apollo/client';
 
+export const databaseSortColumnId: ReactiveVar<string> = makeVar<string>(null);
+
 /**
  * Returns the search string used in the PastEventsList.
  */

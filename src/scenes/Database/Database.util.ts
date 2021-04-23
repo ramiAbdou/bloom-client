@@ -1,4 +1,3 @@
-import { DocumentNode, gql } from '@apollo/client';
 import { TableRow } from '@components/organisms/Table/Table.types';
 import { QuestionCategory } from '@util/constants';
 import { IMember, IMemberValue, IQuestion } from '@util/constants.entities';
@@ -6,14 +5,13 @@ import { IMember, IMemberValue, IQuestion } from '@util/constants.entities';
 interface GetMemberValueArgs {
   member: IMember;
   question: IQuestion;
-  value: string;
 }
 
 /**
  * Returns the appropriate value based on the IMember data as well as the
  * IUser attached.
  */
-const getMemberValue = ({ member, question, value }: GetMemberValueArgs) => {
+const getMemberValue = ({ member, question }: GetMemberValueArgs) => {
   const { bio, email, firstName, joinedAt, lastName, pictureUrl } = member;
 
   const {
@@ -45,41 +43,45 @@ const getMemberValue = ({ member, question, value }: GetMemberValueArgs) => {
     return member.eventAttendees?.length ?? 0;
   }
 
-  return value;
+  return member.memberValues.find(
+    (memberValue: IMemberValue) => memberValue.questionId === question.id
+  )?.value;
 };
 
 interface UseMemberDatabaseRowsArgs {
-  data: IMember[];
+  members: IMember[];
+  questions: IQuestion[];
 }
 
-type UseMemberDatabaseRowsFunction = { fragment: DocumentNode } & ((
-  args: UseMemberDatabaseRowsArgs
-) => TableRow[]);
-
-export const useMemberDatabaseRows: UseMemberDatabaseRowsFunction = ({
-  data: members
+export const useMemberDatabaseRows = ({
+  members,
+  questions
 }: UseMemberDatabaseRowsArgs): TableRow[] => {
-  const rows: TableRow[] = members?.map((member: IMember) =>
-    member.memberValues.reduce(
-      (row: TableRow, memberValue: IMemberValue) => {
-        return {
-          ...row,
-          [memberValue.question.id]: getMemberValue({
-            member,
-            question: memberValue.question,
-            value: memberValue.value
-          })
-        };
-      },
-      { id: member.id }
-    )
+  const rows: TableRow[] = members?.map(
+    (member: IMember) =>
+      questions.reduce(
+        (row, question: IQuestion) => {
+          return {
+            ...row,
+            [question.id]: getMemberValue({ member, question })
+          };
+        },
+        { id: member.id }
+      )
+    // member.memberValues.reduce(
+    //   (row: TableRow, memberValue: IMemberValue) => {
+    //     return {
+    //       ...row,
+    //       [memberValue.question.id]: getMemberValue({
+    //         member,
+    //         question: memberValue.question,
+    //         value: memberValue.value
+    //       })
+    //     };
+    //   },
+    //   { id: member.id }
+    // )
   );
 
   return rows;
 };
-
-useMemberDatabaseRows.fragment = gql`
-  fragment UseMemberDatabaseRowsFragment on members {
-    id
-  }
-`;
