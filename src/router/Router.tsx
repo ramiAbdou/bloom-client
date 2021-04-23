@@ -38,7 +38,13 @@ const Router: React.FC = () => {
           path="/:urlName/applicants"
         />
 
-        <MemberRoute admin component={Database} path="/:urlName/database" />
+        <MemberRoute
+          admin
+          exact
+          component={Database}
+          path="/:urlName/database"
+        />
+
         <MemberRoute exact component={Directory} path="/:urlName/directory" />
         <Route component={Events} path="/:urlName/events" />
 

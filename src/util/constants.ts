@@ -42,7 +42,6 @@ export interface ComponentWithFragments<T, S = unknown>
  */
 
 export enum ModalType {
-  ADD_ADMINS = 'ADD_ADMINS',
   ADD_MEMBERS = 'ADD_MEMBERS',
   APPLICANT = 'APPLICANT',
   APPLICANT_CONFIRMATION = 'APPLICANT_CONFIRMATION',

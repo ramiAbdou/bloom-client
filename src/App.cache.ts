@@ -26,6 +26,7 @@ import {
   memberIdVar,
   userIdVar
 } from './App.reactive';
+import { databaseReactiveFields } from './scenes/Database/MemberDatabase/MemberDatabase.reactive';
 import { directoryReactiveFields } from './scenes/Directory/Directory.reactive';
 import { eventsReactiveFields } from './scenes/Events/Events.reactive';
 
@@ -63,6 +64,7 @@ const cache: InMemoryCache = new InMemoryCache({
     Query: {
       fields: {
         ...reactiveTypePolicies,
+        ...databaseReactiveFields,
         ...directoryReactiveFields,
         ...eventsReactiveFields,
         applications: resolveReadQuery(IApplication),

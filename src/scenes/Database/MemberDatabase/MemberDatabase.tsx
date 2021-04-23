@@ -1,70 +1,142 @@
-import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
-import { ModalData } from '@components/organisms/Modal/Modal.types';
-import ModalLocal from '@components/organisms/Modal/ModalLocal';
+import { DocumentNode, gql, useQuery } from '@apollo/client';
 import Table from '@components/organisms/Table/Table';
 import {
-  RenameColumnFunction,
-  TableColumn,
+  // RenameColumnFunction,
+  // TableColumn,
   TableOptions,
   TableRow
 } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
-import { useStoreActions } from '@core/store/Store';
-import GQL from '@gql/GQL';
-import useGQL from '@gql/hooks/useGQL';
+import { modalVar } from '@core/state/Modal.reactive';
+// import GQL from '@gql/GQL';
+// import useGQL from '@gql/hooks/useGQL';
 import { ModalType } from '@util/constants';
-import { IQuestion } from '@util/constants.entities';
-import {
-  useMemberDatabaseColumns,
-  useMemberDatabaseRows
-} from '../Database.util';
-import MemberDatabaseActions from './MemberDatabaseActions';
+import { IMember, IQuestion } from '@util/constants.entities';
+import { useMemberDatabaseRows } from '../Database.util';
+import MemberDatabaseActionRow from './MemberDatabaseActionRow';
+
+interface GetMembersByCommunityIdExpandedResult {
+  members: IMember[];
+  questions: IQuestion[];
+}
+
+const GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED: DocumentNode = gql`
+  query GetMembersByCommunityIdExpanded(
+    $communityId: String!
+    $searchString: String!
+    $searchStringWord: String!
+  ) {
+    communityId @client @export(as: "communityId")
+    databaseSearchString @client @export(as: "searchString")
+    databaseSearchStringWord @client @export(as: "searchStringWord")
+
+    members(
+      where: {
+        communityId: { _eq: $communityId }
+        deletedAt: { _is_null: true }
+        status: { _eq: "Accepted" }
+        _or: [
+          # { bio: { _ilike: $searchStringWord } }
+          { email: { _ilike: $searchStringWord } }
+          { firstName: { _ilike: $searchString } }
+          { lastName: { _ilike: $searchString } }
+        ]
+      }
+      limit: 25
+    ) {
+      bio
+      email
+      firstName
+      id
+      lastName
+      joinedAt
+      role
+      status
+
+      memberSocials {
+        facebookUrl
+        instagramUrl
+        linkedInUrl
+      }
+
+      memberType {
+        name
+      }
+
+      memberValues {
+        id
+        value
+
+        question {
+          category
+          id
+        }
+      }
+    }
+
+    questions(
+      where: {
+        category: { _neq: "DUES_STATUS" }
+        communityId: { _eq: $communityId }
+      }
+      order_by: { rank: asc }
+    ) {
+      category
+      id
+      title
+      type
+    }
+  }
+`;
 
 const MemberDatabase: React.FC = () => {
-  const showModal: ActionCreator<ModalData> = useStoreActions(
-    ({ modal }) => modal.showModal
+  const { data, error } = useQuery<GetMembersByCommunityIdExpandedResult>(
+    GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED
   );
 
-  const gql: GQL = useGQL();
+  const questions: IQuestion[] = data?.questions ?? [];
+
+  console.log(error);
+  // const gql: GQL = useGQL();
 
   // Massage the member data into valid row data by mapping the question ID
   // to the value for each member.
-  const rows: TableRow[] = useMemberDatabaseRows();
-  const columns: TableColumn[] = useMemberDatabaseColumns();
+  const rows: TableRow[] = useMemberDatabaseRows({ data: data?.members ?? [] });
+  // const columns: TableColumn[] = useMemberDatabaseColumns();
 
-  const onRenameColumn: RenameColumnFunction = async ({
-    column,
-    updateColumn
-  }) => {
-    const { title, id } = column;
+  if (!questions?.length) return null;
 
-    const { error } = await gql.update(IQuestion, {
-      data: { title },
-      where: { id }
-    });
+  // console.log(rows);
 
-    if (!error) updateColumn({ id, title });
-  };
+  // const onRenameColumn: RenameColumnFunction = async ({
+  //   column,
+  //   updateColumn
+  // }) => {
+  //   // const { title, id } = column;
+  //   // const { error } = await gql.update(IQuestion, {
+  //   //   data: { title },
+  //   //   where: { id }
+  //   // });
+  //   // if (!error) updateColumn({ id, title });
+  // };
 
   const options: TableOptions = {
     hasCheckbox: true,
-    onRenameColumn,
+    // onRenameColumn,
     onRowClick: ({ id: memberId }: TableRow) => {
-      showModal({ id: ModalType.PROFILE, metadata: memberId });
+      modalVar({ id: ModalType.PROFILE, metadata: memberId });
     }
   };
 
   return (
     <Table
-      TableActions={MemberDatabaseActions}
-      columns={columns}
+      TableActions={MemberDatabaseActionRow}
+      columns={questions}
       options={options}
-      show={!!columns?.length}
     >
       <TableContent rows={rows} />
-      <ModalLocal />
     </Table>
   );
 };

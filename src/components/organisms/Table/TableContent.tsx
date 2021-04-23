@@ -2,15 +2,11 @@ import hash from 'object-hash';
 import React from 'react';
 
 import Show from '@components/containers/Show';
-import { sortObjects } from '@util/util';
 import TableStore from './Table.store';
 import { TableRow as TableRowProps } from './Table.types';
 import TableHeaderRow from './TableHeaderRow';
 import TablePaginationStore from './TablePagination/TablePagination.store';
 import TableRow from './TableRow';
-import TableSortStore from './TableSort/TableSort.store';
-import { TableSortDirection } from './TableSort/TableSort.types';
-import useUpdateTableRows from './useUpdateTableRows';
 
 interface TableContentProps {
   emptyMessage?: string;
@@ -18,7 +14,11 @@ interface TableContentProps {
   rows?: TableRowProps[];
 }
 
-const TableBody: React.FC = () => {
+interface TableRowsProps {
+  rows: TableRowProps[];
+}
+
+const TableRows: React.FC<TableRowsProps> = ({ rows }) => {
   const floor: number = TablePaginationStore.useStoreState(
     (state) => state.floor
   );
@@ -27,31 +27,12 @@ const TableBody: React.FC = () => {
     (state) => state.ceiling
   );
 
-  // Fetching these values forces React to re-render, which in the case of
-  // sorting, we do want to re-render our data.
-  const sortColumnId: string = TableSortStore.useStoreState(
-    (state) => state.sortColumnId
-  );
-
-  const sortDirection: TableSortDirection = TableSortStore.useStoreState(
-    (state) => state.sortDirection
-  );
-
-  const filteredRowsOnPage: TableRowProps = TableStore.useStoreState(
-    (state) => {
-      const sortedRows: TableRowProps[] = [
-        ...state.filteredRows
-      ].sort((a: TableRowProps, b: TableRowProps) =>
-        sortObjects(a, b, sortColumnId, sortDirection)
-      );
-
-      return sortedRows.slice(floor, ceiling);
-    }
-  );
+  const rowsOnPage: TableRowProps[] = [...rows].slice(floor, ceiling);
+  console.log('rowsOnPage', rowsOnPage, floor, ceiling);
 
   return (
     <tbody>
-      {filteredRowsOnPage.map((row: TableRowProps) => (
+      {rowsOnPage.map((row: TableRowProps) => (
         <TableRow key={hash(row)} {...row} />
       ))}
     </tbody>
@@ -63,8 +44,6 @@ const TableContent: React.FC<TableContentProps> = ({
   small,
   rows
 }) => {
-  useUpdateTableRows(rows);
-
   const emptyMessage: string = TableStore.useStoreState((state) =>
     !state.rows?.length ? eMessage : null
   );
@@ -78,7 +57,7 @@ const TableContent: React.FC<TableContentProps> = ({
       <div id="o-table-ctr" style={{ maxHeight: small && '45vh' }}>
         <table className="o-table">
           <TableHeaderRow />
-          <TableBody />
+          <TableRows rows={rows} />
         </table>
       </div>
 

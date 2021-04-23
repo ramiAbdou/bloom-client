@@ -5,7 +5,6 @@ import { useReactiveVar } from '@apollo/client';
 import Row from '@components/containers/Row/Row';
 import TableStore from '@components/organisms/Table/Table.store';
 import TableFilterButton from '@components/organisms/Table/TableFilterButton';
-import SearchBar from '@components/organisms/Table/TableSeachBar';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { IMember, MemberRole } from '@util/constants.entities';
 import MemberDatabaseCopyButton from './MemberDatabaseCopyButton';
@@ -13,6 +12,7 @@ import DeleteMembersButton from './MemberDatabaseDeleteButton';
 import MemberDatabaseExportButton from './MemberDatabaseExportButton';
 import MemberDatabasePromoteButton from './MemberDatabasePromoteButton';
 import MemberDatabaseQuickFilters from './MemberDatabaseQuickFilters';
+import MemberDatabaseSearchBar from './MemberDatabaseSearchBar';
 
 const MemberDatabaseButtons: React.FC = () => {
   const memberId: string = useReactiveVar(memberIdVar);
@@ -40,13 +40,13 @@ const MemberDatabaseButtons: React.FC = () => {
   );
 };
 
-const MemberDatabaseActions: React.FC = () => (
+const MemberDatabaseActionRow: React.FC = () => (
   <Row noMarginBottom wrap className="mb-sm--nlc" gap="sm" justify="sb">
-    <SearchBar placeholder="Search members..." />
+    <MemberDatabaseSearchBar />
     <MemberDatabaseQuickFilters />
     <TableFilterButton className="ml-auto" />
     <MemberDatabaseButtons />
   </Row>
 );
 
-export default MemberDatabaseActions;
+export default MemberDatabaseActionRow;

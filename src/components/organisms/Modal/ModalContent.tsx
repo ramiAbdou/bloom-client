@@ -24,9 +24,6 @@ const ModalCustomContent: React.FC = () => {
   const modalId: ModalType = useReactiveVar(modalVar)?.id;
 
   switch (modalId) {
-    case ModalType.ADD_ADMINS:
-      return <AddMemberModal admin />;
-
     case ModalType.ADD_MEMBERS:
       return <AddMemberModal />;
 
