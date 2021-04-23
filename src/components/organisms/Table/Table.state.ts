@@ -2,30 +2,15 @@ import { useReducer } from 'react';
 import { createContainer } from 'react-tracked';
 
 import {
+  defaultTableOptions,
   GetColumnArgs,
   SortTableArgs,
+  TableAction,
   TableColumn,
   TableInitialState,
-  TableSortDirection,
+  TableRow,
   TableState
 } from '@components/organisms/Table/Table.types';
-
-type TableAction =
-  | { type: 'RESET_SELECTED_ROW_IDS' }
-  | {
-      type: 'SORT_TABLE';
-      sortColumnId: string;
-      sortDirection: TableSortDirection;
-    }
-  | { type: 'TOGGLE_ROW_IDS'; rowIds: string[] };
-
-const initialTableState: TableState = {
-  columns: [],
-  rows: [],
-  selectedRowIds: [],
-  sortColumnId: null,
-  sortDirection: null
-};
 
 /**
  * Returns the TableColumn.
@@ -63,16 +48,20 @@ const resetSelectedRowIds = (state: TableState): TableState => {
 };
 
 /**
+ * Sets the rows and filteredRows.
+ */
+const setRows = (state: TableState, rows: TableRow[]): TableState => {
+  return { ...state, filteredRows: rows, rows };
+};
+
+/**
  * Sets the sortColumnId and sortDirection value. If the column is already
  * sorted in that direction, it "undoes" the sorting.
  *
  * @param args.sortColumnId - ID of the TableColumn to sort.
  * @param args.sortDirection - The TableSortDirection to sort in.
  */
-const sortTable = (
-  state: TableState,
-  args: SortTableArgs
-): TableState => {
+const sortTable = (state: TableState, args: SortTableArgs): TableState => {
   const isAlreadySorted: boolean =
     args.sortColumnId === state.sortColumnId &&
     args.sortDirection === state.sortDirection;
@@ -88,10 +77,7 @@ const sortTable = (
  * @todo Needs some optimization.
  * @param rowIds - IDs of the TableRow(s) to select or unselect.
  */
-const toggleRowIds = (
-  state: TableState,
-  rowIds: string[]
-): TableState => {
+const toggleRowIds = (state: TableState, rowIds: string[]): TableState => {
   const someAlreadySelected: boolean = rowIds.some((rowId: string) => {
     const isAlreadySelected: boolean = !!state.selectedRowIds.find(
       (selectedRowId: string) => rowId === selectedRowId
@@ -110,13 +96,13 @@ const toggleRowIds = (
   };
 };
 
-const tableReducer = (
-  state: TableState,
-  action: TableAction
-): TableState => {
+const tableReducer = (state: TableState, action: TableAction): TableState => {
   switch (action.type) {
     case 'RESET_SELECTED_ROW_IDS':
       return resetSelectedRowIds(state);
+
+    case 'SET_ROWS':
+      return setRows(state, action.rows);
 
     case 'SORT_TABLE':
       return sortTable(state, { ...action });
@@ -129,8 +115,16 @@ const tableReducer = (
   }
 };
 
-const useTableValue = ({ columns, rows }: TableInitialState) =>
-  useReducer(tableReducer, { ...initialTableState, columns, rows });
+const useTableValue = ({ columns, options, rows }: TableInitialState) =>
+  useReducer(tableReducer, {
+    columns,
+    filteredRows: rows,
+    options: { ...defaultTableOptions, ...options },
+    rows,
+    selectedRowIds: [],
+    sortColumnId: null,
+    sortDirection: null
+  });
 
 export const {
   Provider: TableProvider,

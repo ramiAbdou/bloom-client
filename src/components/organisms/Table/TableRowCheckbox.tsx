@@ -15,12 +15,9 @@ const TableRowCheckbox: React.FC<TableRowCheckboxProps> = ({
   rowId
 }) => {
   const state: TableState = useTableState();
+  const { options }: TableState = state;
   const tableDispatch = useTableDispatch();
   const columnIndex: number = getColumnIndex(state, { columnId });
-
-  const hasCheckbox: boolean = TableStore.useStoreState(
-    ({ options }) => !!options.hasCheckbox
-  );
 
   const isSelected: boolean = state.selectedRowIds.includes(rowId);
 
@@ -32,7 +29,7 @@ const TableRowCheckbox: React.FC<TableRowCheckboxProps> = ({
     <Checkbox
       checked={isSelected}
       className="o-table-select"
-      show={columnIndex === 0 && hasCheckbox}
+      show={columnIndex === 0 && options.hasCheckbox}
       onChange={onChange}
     />
   );

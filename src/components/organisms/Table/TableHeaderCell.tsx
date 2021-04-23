@@ -5,8 +5,7 @@ import { useTableState } from '@components/organisms/Table/Table.state';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import { PanelType } from '@util/constants';
 import { cx } from '@util/util';
-import TableStore from './Table.store';
-import { TableColumn, TableSortDirection } from './Table.types';
+import { TableColumn, TableSortDirection, TableState } from './Table.types';
 import { getTableCellClass } from './Table.util';
 import TableHeaderCheckbox from './TableHeaderCheckbox';
 
@@ -22,21 +21,13 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
   id,
   title
 }) => {
-  const { sortColumnId, sortDirection } = useTableState();
-
-  const hasCheckbox = TableStore.useStoreState(
-    ({ options }) => options.hasCheckbox
-  );
-
-  const isSortable = TableStore.useStoreState(
-    ({ options }) => options.isSortable
-  );
+  const { options, sortColumnId, sortDirection }: TableState = useTableState();
 
   const isPanelShowing = useStoreState(({ panel }) => panel.id === id);
   const showPanel = useStoreActions(({ panel }) => panel.showPanel);
 
-  const onClick = () => {
-    if (isSortable) {
+  const onClick = (): void => {
+    if (options.isSortable) {
       showPanel({ id: PanelType.TABLE_COLUMN, metadata: id });
     }
   };
@@ -45,7 +36,7 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
 
   const css: string = cx(getTableCellClass({ category, type }), {
     'o-table-th--panel': isPanelShowing,
-    'o-table-th--sortable': isSortable,
+    'o-table-th--sortable': options.isSortable,
     'o-table-th--sorted': isSortedColumn
   });
 
@@ -62,7 +53,7 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
       onClick={onClick}
     >
       <div>
-        {!i && hasCheckbox && <TableHeaderCheckbox />}
+        {!i && options.hasCheckbox && <TableHeaderCheckbox />}
         {!hideTitle && <p>{title}</p>}
         {showCaretUp && <IoCaretUp />}
         {showCaretDown && <IoCaretDown />}

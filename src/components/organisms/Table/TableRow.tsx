@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { cx } from '@util/util';
-import TableStore from './Table.store';
 import { useTableState } from './Table.state';
 import {
   TableColumn,
@@ -11,21 +10,17 @@ import {
 import TableRowCell from './TableCell';
 
 const TableRow: React.FC<TableRowProps> = (row) => {
-  const { columns, selectedRowIds }: TableState = useTableState();
-
-  const onRowClick = TableStore.useStoreState(
-    ({ options }) => options.onRowClick
-  );
+  const { columns, options, selectedRowIds }: TableState = useTableState();
 
   const isRowSelected: boolean = selectedRowIds.includes(row?.id);
 
   const css: string = cx('', {
     'o-table-tr--active': isRowSelected,
-    'o-table-tr--clickable': !!onRowClick
+    'o-table-tr--clickable': !!options.onRowClick
   });
 
   const onClick = (): void => {
-    if (onRowClick) onRowClick(row);
+    if (options.onRowClick) options.onRowClick(row);
   };
 
   return (

@@ -1,23 +1,39 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import PanelLocal from '../Panel/PanelLocal';
-import TableStore, { tableModel } from './Table.store';
-import { TableProvider } from './Table.state';
-import {
-  defaultTableOptions,
-  TableInitialState,
-  TableModel,
-  TableOptions
-} from './Table.types';
+import { TableProvider, useTableDispatch } from './Table.state';
+import TableStore from './Table.store';
+import { TableInitialState } from './Table.types';
 import TableBanner from './TableBanner';
 import TableFilterStore from './TableFilterPanel/TableFilterPanel.store';
 import TablePagination from './TablePagination/TablePagination';
 import TablePaginationStore from './TablePagination/TablePagination.store';
 
 interface TableProps extends TableInitialState {
-  options?: TableOptions;
   TableActions?: React.FC;
 }
+
+const TableContent: React.FC<Partial<TableProps>> = ({
+  children,
+  rows,
+  TableActions
+}) => {
+  const tableDispatch = useTableDispatch();
+
+  useEffect(() => {
+    tableDispatch({ rows, type: 'SET_ROWS' });
+  }, [rows]);
+
+  return (
+    <>
+      {TableActions && <TableActions />}
+      <TableBanner />
+      {children}
+      <TablePagination />
+      <PanelLocal />
+    </>
+  );
+};
 
 const Table: React.FC<TableProps> = ({
   children,
@@ -25,27 +41,18 @@ const Table: React.FC<TableProps> = ({
   options,
   rows,
   TableActions
-}) => {
-  const runtimeModel: TableModel = {
-    ...tableModel,
-    options: { ...defaultTableOptions, ...options }
-  };
-
-  return (
-    <TableProvider columns={columns} rows={rows}>
-      <TableStore.Provider runtimeModel={runtimeModel}>
-        <TablePaginationStore.Provider>
-          <TableFilterStore.Provider>
-            {TableActions && <TableActions />}
-            <TableBanner />
+}) => (
+  <TableProvider columns={columns} options={options} rows={rows}>
+    <TableStore.Provider>
+      <TablePaginationStore.Provider>
+        <TableFilterStore.Provider>
+          <TableContent TableActions={TableActions} rows={rows}>
             {children}
-            <TablePagination />
-            <PanelLocal />
-          </TableFilterStore.Provider>
-        </TablePaginationStore.Provider>
-      </TableStore.Provider>
-    </TableProvider>
-  );
-};
+          </TableContent>
+        </TableFilterStore.Provider>
+      </TablePaginationStore.Provider>
+    </TableStore.Provider>
+  </TableProvider>
+);
 
 export default Table;

@@ -12,24 +12,23 @@ import { TablePaginationValue } from './TablePagination/TablePagination.types';
  *
  * @param state Entire table state.
  */
-export const getBannerButtonTitle = (state: State<TableModel>): string => {
-  const { filteredRows, rows } = state;
-  const numMembers: number = rows.length;
-  const numFilteredMembers: number = filteredRows.length;
+export const getBannerButtonTitle = (state: State<TableModel>): string => '';
+// const { filteredRows, rows } = state;
+// const numMembers: number = rows.length;
+// const numFilteredMembers: number = filteredRows.length;
 
-  // NEED TO FIX
-  const selectedRowIds = [];
+// // NEED TO FIX
+// const selectedRowIds = [];
 
-  const isAllSelected: boolean =
-    !!selectedRowIds.length && selectedRowIds.length === filteredRows.length;
+// const isAllSelected: boolean =
+//   !!selectedRowIds.length && selectedRowIds.length === filteredRows.length;
 
-  if (isAllSelected) return 'Clear Selection';
-  if (numMembers === numFilteredMembers) {
-    return `Select All ${numMembers} Rows in Database`;
-  }
+// if (isAllSelected) return 'Clear Selection';
+// if (numMembers === numFilteredMembers) {
+//   return `Select All ${numMembers} Rows in Database`;
+// }
 
-  return `Select All ${numFilteredMembers} Filtered Rows`;
-};
+// return `Select All ${numFilteredMembers} Filtered Rows`;
 
 interface GetBannerMessageArgs {
   ceiling: number;
@@ -156,18 +155,18 @@ interface RunFiltersArgs {
  * Returns the filtered Table rows based on the active filters as well as
  * the Table search string.
  */
-export const runFilters = (args: RunFiltersArgs): TableRow[] => {
-  const filters: Record<string, TableFilterFunction> =
-    args.filters ?? args.state.filters;
+export const runFilters = (args: RunFiltersArgs): TableRow[] =>
+  // const filters: Record<string, TableFilterFunction> =
+  // args.filters ?? args.state.filters;
 
-  const { state } = args;
-  const rows: TableRow[] = [...state.rows];
+  // const { state } = args;
+  // const rows: TableRow[] = [...state.rows];
 
-  const filteredRows: TableRow[] = rows?.filter((row) =>
-    Object.values(filters)?.every((tableFilter: TableFilterFunction) =>
-      tableFilter(row)
-    )
-  );
+  // const filteredRows: TableRow[] = rows?.filter((row) =>
+  //   Object.values(filters)?.every((tableFilter: TableFilterFunction) =>
+  //     tableFilter(row)
+  //   )
+  // );
 
   // const columns: TableColumn[] = [...state.columns];
 
@@ -178,14 +177,14 @@ export const runFilters = (args: RunFiltersArgs): TableRow[] => {
   // const lastNameColumnId: string = columns.find(
   //   ({ category }) => category === QuestionCategory.LAST_NAME
   // )?.id;
+  [];
 
-  return filteredRows;
+// return filteredRows;
 
-  // return matchSorter(filteredRows, searchString, {
-  //   keys: [
-  //     ...[...state.columns].map(({ id }) => id),
-  //     (row: TableRow) => `${row[firstNameColumnId]} ${row[lastNameColumnId]}`
-  //   ],
-  //   threshold: matchSorter.rankings.ACRONYM
-  // });
-};
+// return matchSorter(filteredRows, searchString, {
+//   keys: [
+//     ...[...state.columns].map(({ id }) => id),
+//     (row: TableRow) => `${row[firstNameColumnId]} ${row[lastNameColumnId]}`
+//   ],
+//   threshold: matchSorter.rankings.ACRONYM
+// });

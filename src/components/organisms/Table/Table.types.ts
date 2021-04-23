@@ -34,7 +34,28 @@ export type RenameColumnFunction = (args: OnRenameColumnArgs) => Promise<void>;
 
 export interface TableRow extends Pick<IdProps, 'id'>, Record<string, any> {}
 
-// ## TABLE OPTIONS
+// ## TABLE MODEL
+
+export type TableModel = {
+  filteredRows: TableRow[];
+  filters: Record<string, any>;
+  removeFilter: Action<TableModel, string>;
+  setFilter: Action<TableModel, TableQuickFilterArgs>;
+};
+
+// ## TABLE STATE
+
+export type GetColumnArgs = { category?: QuestionCategory; columnId?: string };
+
+export interface SortTableArgs {
+  sortColumnId: string;
+  sortDirection: TableSortDirection;
+}
+
+export enum TableSortDirection {
+  ASC = 'ASC',
+  DESC = 'DESC'
+}
 
 export type TableOptions = {
   hasCheckbox?: boolean;
@@ -51,45 +72,28 @@ export const defaultTableOptions: TableOptions = {
   showCount: true
 };
 
-// ## TABLE MODEL
-
-export type TableModel = {
-  filteredRows: TableRow[];
-  filters: Record<string, any>;
-  options: TableOptions;
-  removeFilter: Action<TableModel, string>;
-  rows: TableRow[];
-  setFilter: Action<TableModel, TableQuickFilterArgs>;
-  setRows: Action<TableModel, TableRow[]>;
-};
-
-// ## TABLE STATE
-
-export interface TableOptionsState {
-  checkbox?: boolean;
-}
-
-export enum TableSortDirection {
-  ASC = 'ASC',
-  DESC = 'DESC'
-}
-
-export type GetColumnArgs = { category?: QuestionCategory; columnId?: string };
-
-export interface SortTableArgs {
-  sortColumnId: string;
-  sortDirection: TableSortDirection;
-}
-
 export interface TableInitialState {
   columns: TableColumn[];
+  options?: TableOptions;
   rows: TableRow[];
 }
 
 export interface TableState {
   columns: TableColumn[];
+  filteredRows: TableRow[];
+  options: TableOptions;
   rows: TableRow[];
   selectedRowIds: string[];
   sortColumnId: string;
   sortDirection: TableSortDirection;
 }
+
+export type TableAction =
+  | { type: 'RESET_SELECTED_ROW_IDS' }
+  | { type: 'SET_ROWS'; rows: TableRow[] }
+  | {
+      type: 'SORT_TABLE';
+      sortColumnId: string;
+      sortDirection: TableSortDirection;
+    }
+  | { type: 'TOGGLE_ROW_IDS'; rowIds: string[] };

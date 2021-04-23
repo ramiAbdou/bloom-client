@@ -1,10 +1,13 @@
 import React from 'react';
 
-import Show from '@components/containers/Show';
+import { useTableState } from '../Table.state';
 import TableStore from '../Table.store';
+import { TableState } from '../Table.types';
 import TablePaginationStore from './TablePagination.store';
 
 const TablePaginationMessage: React.FC = () => {
+  const { options }: TableState = useTableState();
+
   const floor: number = TablePaginationStore.useStoreState(
     (state) => state.floor
   );
@@ -17,19 +20,13 @@ const TablePaginationMessage: React.FC = () => {
     ({ filteredRows }) => filteredRows?.length
   );
 
-  const showCount: boolean = TableStore.useStoreState(
-    ({ options }) => options.showCount
-  );
+  if (!options?.showCount) return null;
 
   const message: string = rowsCount
     ? `Displaying ${floor + 1}-${ceiling} of ${rowsCount} results.`
     : 'No results found.';
 
-  return (
-    <Show show={!!showCount}>
-      <p className="meta">{message}</p>
-    </Show>
-  );
+  return <p className="meta">{message}</p>;
 };
 
 export default TablePaginationMessage;

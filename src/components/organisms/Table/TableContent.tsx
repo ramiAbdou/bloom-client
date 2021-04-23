@@ -1,9 +1,7 @@
 import hash from 'object-hash';
 import React from 'react';
 
-import Show from '@components/containers/Show';
 import { useTableState } from './Table.state';
-import TableStore from './Table.store';
 import { TableRow as TableRowProps } from './Table.types';
 import TableHeaderRow from './TableHeaderRow';
 import TablePaginationStore from './TablePagination/TablePagination.store';
@@ -43,18 +41,16 @@ const TableContent: React.FC<TableContentProps> = ({
   emptyMessage: eMessage,
   small
 }) => {
-  const { rows } = useTableState();
+  const { options, rows } = useTableState();
 
-  const emptyMessage: string = TableStore.useStoreState((state) =>
-    !state.rows?.length ? eMessage : null
-  );
+  if (!rows?.length && options.hideIfEmpty) {
+    return null;
+  }
 
-  const show: boolean = TableStore.useStoreState(
-    (state) => !!state.rows?.length || !state.options.hideIfEmpty
-  );
+  const emptyMessage: string = !rows?.length ? eMessage : null;
 
   return (
-    <Show show={show}>
+    <>
       <div id="o-table-ctr" style={{ maxHeight: small && '45vh' }}>
         <table className="o-table">
           <TableHeaderRow />
@@ -63,7 +59,7 @@ const TableContent: React.FC<TableContentProps> = ({
       </div>
 
       {emptyMessage && <p className="mt-sm">{emptyMessage}</p>}
-    </Show>
+    </>
   );
 };
 

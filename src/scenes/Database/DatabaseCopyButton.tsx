@@ -6,7 +6,6 @@ import {
   getColumn,
   useTableState
 } from '@components/organisms/Table/Table.state';
-import TableStore from '@components/organisms/Table/Table.store';
 import {
   TableColumn,
   TableRow,
@@ -20,22 +19,22 @@ import DatabaseAction from './DatabaseAction';
  * comma-separated list.
  */
 const DatabaseCopyButton: React.FC = () => {
-  const state: TableState = useTableState();
+  const tableState: TableState = useTableState();
+  const { selectedRowIds, rows }: TableState = tableState;
 
   const { showToast } = useToast(toastQueueVar);
 
   // Get the column that has EMAIL as the category.
-  const emailColumn: TableColumn = getColumn(state, {
+  const emailColumn: TableColumn = getColumn(tableState, {
     category: QuestionCategory.EMAIL
   });
 
-  const emails = TableStore.useStoreState(({ rows }) =>
-    state.selectedRowIds.map((rowId: string) => {
-      const selectedRow = rows.find((row: TableRow) => row.id === rowId) || {};
+  const emails: string[] = selectedRowIds.map((rowId: string) => {
+    const selectedRow: TableRow =
+      rows.find((row: TableRow) => row.id === rowId) || {};
 
-      return selectedRow[emailColumn.id];
-    })
-  );
+    return selectedRow[emailColumn.id];
+  });
 
   const onClick = () => {
     navigator.clipboard.writeText(emails.join(','));

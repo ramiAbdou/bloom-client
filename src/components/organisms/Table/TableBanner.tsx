@@ -57,16 +57,17 @@ const TableBannerMessage: React.FC = () => {
   );
 
   const { selectedRowIds } = useTableState();
+  const message = '';
 
-  const message: string = TableStore.useStoreState((state) =>
-    getBannerMessage({ ...state, ceiling, floor, selectedRowIds })
-  );
+  // const message: string = TableStore.useStoreState((state) =>
+  //   getBannerMessage({ ...state, ceiling, floor, selectedRowIds })
+  // );
 
   return <p>{message}</p>;
 };
 
 const TableBanner: React.FC = () => {
-  const { selectedRowIds }: TableState = useTableState();
+  const { filteredRows, selectedRowIds }: TableState = useTableState();
 
   const floor: number = TablePaginationStore.useStoreState(
     (state) => state.floor
@@ -76,15 +77,12 @@ const TableBanner: React.FC = () => {
     (state) => state.ceiling
   );
 
-  const isAllPageSelected: boolean = TableStore.useStoreState(
-    ({ filteredRows }) => {
-      const allRowsOnPageSelected: boolean = filteredRows
-        .slice(floor, ceiling)
-        .every(({ id: rowId }) => selectedRowIds.includes(rowId as string));
+  const allRowsOnPageSelected: boolean = filteredRows
+    .slice(floor, ceiling)
+    .every(({ id: rowId }) => selectedRowIds.includes(rowId as string));
 
-      return !!selectedRowIds.length && allRowsOnPageSelected;
-    }
-  );
+  const isAllPageSelected: boolean =
+    !!selectedRowIds.length && allRowsOnPageSelected;
 
   return (
     <Card className="mb-xs--nlc" show={isAllPageSelected}>

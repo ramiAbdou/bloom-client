@@ -4,10 +4,11 @@ import Form from '@components/organisms/Form/Form';
 import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { useStoreState } from '@core/store/Store';
-import TableStore from './Table.store';
-import { RenameColumnFunction } from './Table.types';
+import { useTableState } from './Table.state';
+import { TableState } from './Table.types';
 
 const TableColumnPanelRenameForm: React.FC = () => {
+  const { options }: TableState = useTableState();
   const columnId: string = useStoreState(({ panel }) => panel.metadata);
   // const updateColumn = useTableUpdateColumn();
 
@@ -18,10 +19,6 @@ const TableColumnPanelRenameForm: React.FC = () => {
 
   //   return result?.title;
   // });
-
-  const onRenameColumn: RenameColumnFunction = TableStore.useStoreState(
-    ({ options }) => options.onRenameColumn
-  );
 
   // const updateColumn: ActionCreator<
   //   Partial<TableColumn>
@@ -43,7 +40,7 @@ const TableColumnPanelRenameForm: React.FC = () => {
   };
 
   return (
-    <Form show={!!onRenameColumn} onSubmit={onSubmit}>
+    <Form show={!!options.onRenameColumn} onSubmit={onSubmit}>
       {/* <FormShortText id="TABLE_COLUMN" value={title} /> */}
       <FormSubmitButton invisible />
     </Form>
