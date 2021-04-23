@@ -1,12 +1,13 @@
 import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
-import { useStoreActions } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import { TitleProps } from '@util/constants';
 
 const ModalCloseButton: React.FC<TitleProps> = ({ title }) => {
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const onClick = () => closeModal();
+  const onClick = (): void => {
+    modalVar(null);
+  };
 
   return (
     <Button secondary onClick={onClick}>

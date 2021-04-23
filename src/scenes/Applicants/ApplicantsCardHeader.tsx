@@ -3,8 +3,8 @@ import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
 import Row from '@components/containers/Row/Row';
+import { modalVar } from '@core/state/Modal.reactive';
 import IdStore from '@core/store/Id.store';
-import { useStoreActions } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { ModalType } from '@util/constants';
@@ -33,11 +33,10 @@ const ApplicantsCardHeaderDetails: React.FC = () => {
 
 const ApplicantsCardHeaderExpandButton: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
   const isMobile: boolean = useBreakpoint() === 1;
 
   const onClick = () => {
-    showModal({ id: ModalType.APPLICANT, metadata: memberId });
+    modalVar({ id: ModalType.APPLICANT, metadata: memberId });
   };
 
   return (

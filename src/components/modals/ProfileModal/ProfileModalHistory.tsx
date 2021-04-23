@@ -4,7 +4,7 @@ import { memberIdVar } from 'src/App.reactive';
 import { gql, useReactiveVar } from '@apollo/client';
 import Separator from '@components/atoms/Separator';
 import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
-import { useStoreState } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import { ComponentWithFragments } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 import ProfileModalHistoryEventList from './ProfileModalHistoryEventList';
@@ -12,7 +12,7 @@ import ProfileModalHistoryEventList from './ProfileModalHistoryEventList';
 const ProfileModalHistory: ComponentWithFragments<IMember> = ({
   data: member
 }) => {
-  const memberId: string = useStoreState(({ modal }) => modal.metadata);
+  const memberId: string = useReactiveVar(modalVar)?.metadata as string;
   const authenticatedMemberId: string = useReactiveVar(memberIdVar);
   const isMyProfile: boolean = memberId === authenticatedMemberId;
 

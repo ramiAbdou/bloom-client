@@ -1,16 +1,17 @@
 import React from 'react';
 
+import { useReactiveVar } from '@apollo/client';
 import Row from '@components/containers/Row/Row';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/QuestionBox.types';
-import { useStoreState } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';
 import { IMember, IMemberValue, MemberStatus } from '@util/constants.entities';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
 const ApplicantsModalTitle: React.FC = () => {
-  const memberId: string = useStoreState(({ modal }) => modal.metadata);
+  const memberId: string = useReactiveVar(modalVar)?.metadata as string;
 
   const { data: member, loading } = useFindOne(IMember, {
     fields: ['firstName', 'lastName'],
@@ -25,7 +26,7 @@ const ApplicantsModalTitle: React.FC = () => {
 };
 
 const ApplicantsModalItems: React.FC = () => {
-  const memberId: string = useStoreState(({ modal }) => modal.metadata);
+  const memberId: string = useReactiveVar(modalVar)?.metadata as string;
 
   const { data: member, loading } = useFindOne(IMember, {
     fields: [
@@ -74,7 +75,7 @@ const ApplicantsModalItems: React.FC = () => {
 };
 
 const ApplicantsModalActionContainer: React.FC = () => {
-  const memberId: string = useStoreState(({ modal }) => modal.metadata);
+  const memberId: string = useReactiveVar(modalVar)?.metadata as string;
 
   return (
     <Row equal spacing="xs">

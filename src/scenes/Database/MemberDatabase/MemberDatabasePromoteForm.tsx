@@ -9,6 +9,7 @@ import {
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
 import TableStore from '@components/organisms/Table/Table.store';
+import { modalVar } from '@core/state/Modal.reactive';
 import { IMember, MemberRole } from '@util/constants.entities';
 
 const MemberDatabasePromoteFormHeader: React.FC = () => {
@@ -30,7 +31,6 @@ const MemberDatabasePromoteForm: React.FC = () => {
   );
 
   const onSubmit: OnFormSubmitFunction = async ({
-    closeModal,
     gql,
     setError
   }: OnFormSubmitArgs) => {
@@ -46,7 +46,7 @@ const MemberDatabasePromoteForm: React.FC = () => {
       return;
     }
 
-    closeModal();
+    modalVar(null);
     showToast({ message: `${memberIds.length} member(s) promoted to admin.` });
     clearSelectedRows();
   };

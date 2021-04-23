@@ -5,6 +5,7 @@ import { useReactiveVar } from '@apollo/client';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import Row from '@components/containers/Row/Row';
 import useFindOne from '@core/gql/hooks/useFindOne';
+import { modalVar } from '@core/state/Modal.reactive';
 import { useStoreActions } from '@core/store/Store';
 import { ModalType, PanelType } from '@util/constants';
 import { IEvent, IEventGuest, IMember } from '@util/constants.entities';
@@ -46,7 +47,6 @@ const EventsAddRecordingButton: React.FC<Partial<ButtonProps>> = (props) => {
 const EventsEditEventButton: React.FC = () => {
   const eventId: string = useReactiveVar(eventIdVar);
   const memberId: string = useReactiveVar(memberIdVar);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const { data: event, loading: loading1 } = useFindOne(IEvent, {
     fields: ['endTime', 'eventGuests.id', 'eventGuests.member.id', 'startTime'],
@@ -63,7 +63,7 @@ const EventsEditEventButton: React.FC = () => {
   const isPast: boolean = getEventTiming(event) === EventTiming.PAST;
 
   const onClick = () => {
-    showModal({ id: ModalType.CREATE_EVENT, metadata: eventId });
+    modalVar({ id: ModalType.CREATE_EVENT, metadata: eventId });
   };
 
   return (

@@ -5,7 +5,7 @@ import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import { QuestionType } from '@util/constants';
 import { ICommunityIntegrations } from '@util/constants.entities';
 
@@ -50,9 +50,13 @@ const useIntegrationsDetails = (name: string): IntegrationsDetail[] => {
   return [];
 };
 
+interface IntegrationData {
+  name: string;
+  logo: string;
+}
+
 const IntegrationsDetailsModal: React.FC = () => {
-  const { name, logo } = useStoreState(({ modal }) => modal.metadata ?? {});
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const { name, logo } = useReactiveVar(modalVar)?.metadata as IntegrationData;
   const details: IntegrationsDetail[] = useIntegrationsDetails(name);
 
   return (
@@ -76,7 +80,7 @@ const IntegrationsDetailsModal: React.FC = () => {
         })}
       />
 
-      <Button secondary onClick={() => closeModal()}>
+      <Button secondary onClick={() => modalVar(null)}>
         Close
       </Button>
     </>

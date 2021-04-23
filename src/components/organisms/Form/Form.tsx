@@ -54,14 +54,13 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
       setError(null);
       setIsLoading(true);
 
-      const { modal, panel } = globalStore?.getActions() ?? {};
+      const { panel } = globalStore?.getActions() ?? {};
 
       const { goForward, setValue: setStoryValue } =
         storyStore?.getActions() ?? {};
 
       try {
         await onSubmit({
-          closeModal: modal?.closeModal,
           closePanel: panel?.closePanel,
           goForward,
           gql,

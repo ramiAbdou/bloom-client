@@ -2,6 +2,7 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
+import { modalVar } from '@core/state/Modal.reactive';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { ICommunityIntegrations } from '@util/constants.entities';
 import { MutationEvent } from '@util/constants.events';
@@ -19,11 +20,7 @@ const useMailchimpSubmit = (): OnFormSubmitFunction => {
     types: { mailchimpListId: { required: true } }
   });
 
-  const onSubmit = async ({
-    closeModal,
-    items,
-    setError
-  }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
     const selectedMailchimpList = items.MAILCHIMP_LIST_ID?.value;
 
     const { id: mailchimpListId } = options.find(
@@ -37,7 +34,7 @@ const useMailchimpSubmit = (): OnFormSubmitFunction => {
       return;
     }
 
-    closeModal();
+    modalVar(null);
   };
 
   return onSubmit;

@@ -1,4 +1,3 @@
-import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 import { eventIdVar } from 'src/App.reactive';
 
@@ -6,9 +5,8 @@ import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import Card from '@components/containers/Card/Card';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
-import { ModalData } from '@components/organisms/Modal/Modal.types';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreActions } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import useIsMember from '@hooks/useIsMember';
 import { IdProps, ModalType } from '@util/constants';
 import { IEvent, IEventGuest } from '@util/constants.entities';
@@ -17,10 +15,6 @@ import { EventTiming, getEventTiming } from '../Events.util';
 
 const IndividualEventGuest: React.FC<IdProps> = ({ id: guestId }) => {
   const isMember: boolean = useIsMember();
-
-  const showModal: ActionCreator<ModalData> = useStoreActions(
-    ({ modal }) => modal.showModal
-  );
 
   const { data: eventGuest, loading } = useFindOne(IEventGuest, {
     fields: [
@@ -46,7 +40,7 @@ const IndividualEventGuest: React.FC<IdProps> = ({ id: guestId }) => {
 
   const onClick = (): void => {
     if (isMember && eventGuest.member?.id) {
-      showModal({ id: ModalType.PROFILE, metadata: eventGuest.member?.id });
+      modalVar({ id: ModalType.PROFILE, metadata: eventGuest.member?.id });
     }
   };
 

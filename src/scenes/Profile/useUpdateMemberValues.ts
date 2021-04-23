@@ -5,6 +5,7 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
+import { modalVar } from '@core/state/Modal.reactive';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { IMemberValue } from '@util/constants.entities';
 import { MutationEvent } from '@util/constants.events';
@@ -20,11 +21,7 @@ const useUpdateMemberValues = (): OnFormSubmitFunction => {
     types: { items: { required: true, type: '[MemberValueArgs!]' } }
   });
 
-  const onSubmit = async ({
-    closeModal,
-    items,
-    setError
-  }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
     const data: MemberValueInput[] = Object.values(items).map(
       (item: FormItemData) => {
         const { questionId, value } = item;
@@ -39,7 +36,7 @@ const useUpdateMemberValues = (): OnFormSubmitFunction => {
       return;
     }
 
-    closeModal();
+    modalVar(null);
     showToast({ message: 'Membership information updated.' });
   };
 

@@ -1,11 +1,12 @@
 import React from 'react';
 
+import { useReactiveVar } from '@apollo/client';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
-import { useStoreState } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import EventFormDeleteButton from './EventFormDeleteButton';
 
 const EventFormActions: React.FC = () => {
-  const eventId: string = useStoreState(({ modal }) => modal.metadata);
+  const eventId: string = useReactiveVar(modalVar)?.metadata as string;
 
   return (
     <>

@@ -9,7 +9,7 @@ import Row from '@components/containers/Row/Row';
 import MailTo from '@components/molecules/MailTo';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreActions } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { ModalType } from '@util/constants';
 import { IMember } from '@util/constants.entities';
@@ -17,7 +17,6 @@ import ProfileCardHeader, { ProfileEditButton } from './ProfileCardHeader';
 
 const ProfilePersonalHeader: React.FC = () => {
   const memberId: string = useReactiveVar(memberIdVar);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const { data: member, loading } = useFindOne(IMember, {
     fields: ['firstName', 'lastName'],
@@ -27,7 +26,7 @@ const ProfilePersonalHeader: React.FC = () => {
   if (loading) return null;
 
   const onClick = (): void => {
-    showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
+    modalVar({ id: ModalType.EDIT_PERSONAL_INFORMATION });
   };
 
   const fullName: string = `${member.firstName} ${member.lastName}`;
@@ -80,7 +79,6 @@ const ProfilePersonalBio: React.FC = () => {
 
 const ProfilePersonalOnboardingContainer: React.FC = () => {
   const memberId: string = useReactiveVar(memberIdVar);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const { data: member, loading } = useFindOne(IMember, {
     fields: ['bio', 'pictureUrl'],
@@ -89,7 +87,9 @@ const ProfilePersonalOnboardingContainer: React.FC = () => {
 
   if (loading || (member.bio && member.pictureUrl)) return null;
 
-  const onClick = () => showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
+  const onClick = (): void => {
+    modalVar({ id: ModalType.EDIT_PERSONAL_INFORMATION });
+  };
 
   return (
     <Row spacing="xs">
@@ -120,11 +120,10 @@ const ProfilePersonalMainContent: React.FC = () => (
 
 const ProfilePersonalPictureRow: React.FC = () => {
   const memberId: string = useReactiveVar(memberIdVar);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
   const isMobile: boolean = useBreakpoint() === 1;
 
-  const onClick = () => {
-    showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
+  const onClick = (): void => {
+    modalVar({ id: ModalType.EDIT_PERSONAL_INFORMATION });
   };
 
   return (

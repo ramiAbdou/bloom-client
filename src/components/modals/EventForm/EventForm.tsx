@@ -1,8 +1,9 @@
 import React from 'react';
 
+import { useReactiveVar } from '@apollo/client';
 import Form from '@components/organisms/Form/Form';
 import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
-import { useStoreState } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import EventFormActions from './EventFormActions';
 import EventFormDetailsSection from './EventFormDetailsSection';
 import EventFormMainSection from './EventFormMainSection';
@@ -12,7 +13,7 @@ import useCreateEvent from './useCreateEvent';
 import useUpdateEvent from './useUpdateEvent';
 
 const EventForm: React.FC = () => {
-  const eventId: string = useStoreState(({ modal }) => modal.metadata);
+  const eventId: string = useReactiveVar(modalVar)?.metadata as string;
 
   const createEvent: OnFormSubmitFunction = useCreateEvent();
   const updateEvent: OnFormSubmitFunction = useUpdateEvent();

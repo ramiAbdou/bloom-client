@@ -4,6 +4,7 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
+import { modalVar } from '@core/state/Modal.reactive';
 import GQL from '@gql/GQL';
 import useGQL from '@gql/hooks/useGQL';
 import { IMemberSocials } from '@util/constants.entities';
@@ -11,11 +12,7 @@ import { IMemberSocials } from '@util/constants.entities';
 const useUpdateMemberSocials = (): OnFormSubmitFunction => {
   const gql: GQL = useGQL();
 
-  const onSubmit = async ({
-    closeModal,
-    items,
-    setError
-  }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
     const facebookUrl: string = items.FACEBOOK_URL?.value as string;
     const instagramUrl: string = items.INSTAGRAM_URL?.value as string;
     const linkedInUrl: string = items.LINKED_IN_URL?.value as string;
@@ -31,7 +28,7 @@ const useUpdateMemberSocials = (): OnFormSubmitFunction => {
       return;
     }
 
-    closeModal();
+    modalVar(null);
     showToast({ message: 'Social media updated.' });
   };
 

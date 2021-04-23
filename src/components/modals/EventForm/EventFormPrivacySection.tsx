@@ -1,14 +1,15 @@
 import React from 'react';
 
+import { useReactiveVar } from '@apollo/client';
 import FormMultipleChoice from '@components/organisms/Form/FormMultipleChoice';
 import FormSection from '@components/organisms/Form/FormSection';
 import FormSectionHeader from '@components/organisms/Form/FormSectionHeader';
-import { useStoreState } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import useFindOne from '@gql/hooks/useFindOne';
 import { EventPrivacy, IEvent } from '@util/constants.entities';
 
 const EventFormPrivacySection: React.FC = () => {
-  const eventId: string = useStoreState(({ modal }) => modal.metadata);
+  const eventId: string = useReactiveVar(modalVar)?.metadata as string;
 
   const { data: event, loading } = useFindOne(IEvent, {
     fields: ['privacy'],

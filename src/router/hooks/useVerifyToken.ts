@@ -1,9 +1,7 @@
-import { ActionCreator } from 'easy-peasy';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { ModalData } from '@components/organisms/Modal/Modal.types';
-import { useStoreActions } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import GQL from '@gql/GQL';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import useGQL from '@gql/hooks/useGQL';
@@ -26,10 +24,6 @@ interface VerifiedToken {
  * if user logs in from email.
  */
 const useVerifyToken = (): boolean => {
-  const showModal: ActionCreator<ModalData> = useStoreActions(
-    ({ modal }) => modal.showModal
-  );
-
   const token: string = new URLSearchParams(window.location.search).get(
     'token'
   );
@@ -55,7 +49,7 @@ const useVerifyToken = (): boolean => {
         error === ErrorType.EVENT_FINISHED ||
         error === ErrorType.EVENT_HASNT_STARTED
       ) {
-        showModal({ id: ModalType.EVENT_ERROR, metadata: error });
+        modalVar({ id: ModalType.EVENT_ERROR, metadata: error });
       }
 
       // If there is no data, then there is nothing left to query/do.

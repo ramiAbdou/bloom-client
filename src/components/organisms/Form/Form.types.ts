@@ -60,7 +60,6 @@ export interface FormProps extends ClassNameProps, ShowProps {
 }
 
 export interface OnFormSubmitArgs {
-  closeModal?: ActionCreator;
   closePanel?: ActionCreator;
   goForward?: ActionCreator;
   gql: GQL;

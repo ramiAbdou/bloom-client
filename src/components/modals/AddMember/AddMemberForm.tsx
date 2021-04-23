@@ -6,15 +6,16 @@ import Form from '@components/organisms/Form/Form';
 import FormErrorMessage from '@components/organisms/Form/FormErrorMessage';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
+import { modalVar } from '@core/state/Modal.reactive';
 import IdStore from '@core/store/Id.store';
-import { useStoreActions } from '@core/store/Store';
 import AddMemberStore from './AddMember.store';
 import AddMemberInput from './AddMemberInput';
 import useInviteMembers from './useInviteMembers';
 
 const AddMemberFormActions: React.FC = () => {
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const onSecondaryClick = () => closeModal();
+  const onSecondaryClick = (): void => {
+    modalVar();
+  };
 
   return (
     <Row wrap gap="xs">

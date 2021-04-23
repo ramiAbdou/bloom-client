@@ -1,16 +1,15 @@
 import React from 'react';
 
+import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import { ModalType } from '@util/constants';
 
 const DeleteEventButton: React.FC = () => {
-  const eventId: string = useStoreState(({ modal }) => modal.metadata);
-  // const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const eventId: string = useReactiveVar(modalVar)?.metadata as string;
 
   const onClick = (): void => {
-    showModal({
+    modalVar({
       id: ModalType.CONFIRM_DELETE_EVENT,
       metadata: eventId,
       options: { confirmation: true }

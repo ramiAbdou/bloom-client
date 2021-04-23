@@ -5,6 +5,7 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
+import { modalVar } from '@core/state/Modal.reactive';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { QuestionCategory } from '@util/constants';
 import { MutationEvent } from '@util/constants.events';
@@ -21,11 +22,7 @@ const useInviteMembers = (): OnFormSubmitFunction => {
     types: { members: { required: true, type: '[InviteMemberInput!]' } }
   });
 
-  const onSubmit = async ({
-    closeModal,
-    items,
-    setError
-  }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
     // In the first pass, format all the values by looking at the item's
     // category and id.
     const memberData: Record<string, AddMemberInput> = Object.values(
@@ -52,7 +49,7 @@ const useInviteMembers = (): OnFormSubmitFunction => {
     }
 
     showToast({ message: `${members.length} members(s) invited.` });
-    closeModal();
+    modalVar(null);
   };
 
   return onSubmit;

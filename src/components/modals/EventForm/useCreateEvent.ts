@@ -5,6 +5,7 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
+import { modalVar } from '@core/state/Modal.reactive';
 import { EventPrivacy, IEvent } from '@util/constants.entities';
 import { uploadImage } from '@util/imageUtil';
 
@@ -41,12 +42,7 @@ const formatStartTime = ({ startDate, startTime }: FormatStartTimeArgs) => {
 };
 
 const useCreateEvent = (): OnFormSubmitFunction => {
-  const onSubmit = async ({
-    closeModal,
-    gql,
-    items,
-    setError
-  }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ gql, items, setError }: OnFormSubmitArgs) => {
     const description: string = items.EVENT_DESCRIPTION?.value as string;
     const privacy: EventPrivacy = items.PRIVACY?.value as EventPrivacy;
     const summary: string = items.EVENT_SUMMARY?.value as string;
@@ -128,7 +124,7 @@ const useCreateEvent = (): OnFormSubmitFunction => {
       return;
     }
 
-    closeModal();
+    modalVar(null);
     showToast({ message: 'Event created.' });
   };
 

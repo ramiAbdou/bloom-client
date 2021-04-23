@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useReactiveVar } from '@apollo/client';
 import Row from '@components/containers/Row/Row';
 import Show from '@components/containers/Show';
 import FormDate from '@components/organisms/Form/FormDate';
@@ -7,7 +8,7 @@ import FormSection from '@components/organisms/Form/FormSection';
 import FormSectionHeader from '@components/organisms/Form/FormSectionHeader';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormTime from '@components/organisms/Form/FormTime';
-import { useStoreState } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import useFindOne from '@gql/hooks/useFindOne';
 import { ShowProps } from '@util/constants';
 import { IEvent } from '@util/constants.entities';
@@ -27,7 +28,7 @@ const EventFormTimeItems: React.FC<ShowProps> = ({ show }) => (
 );
 
 const EventFormDetailsSection: React.FC = () => {
-  const eventId: string = useStoreState(({ modal }) => modal.metadata);
+  const eventId: string = useReactiveVar(modalVar)?.metadata as string;
 
   const { data: event, loading } = useFindOne(IEvent, {
     fields: ['videoUrl'],

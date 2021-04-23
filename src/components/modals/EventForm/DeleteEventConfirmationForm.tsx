@@ -10,18 +10,17 @@ import {
 } from '@components/organisms/Form/Form.types';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
-import { useStoreState } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import { ICommunity, IEvent } from '@util/constants.entities';
 import { now } from '@util/util';
 
 const DeleteEventConfirmationForm: React.FC = () => {
   const communityId: string = useReactiveVar(communityIdVar);
-  const eventId: string = useStoreState(({ modal }) => modal.metadata);
+  const eventId: string = useReactiveVar(modalVar)?.metadata as string;
 
   const { push } = useHistory();
 
   const onSubmit: OnFormSubmitFunction = async ({
-    closeModal,
     gql,
     setError
   }: OnFormSubmitArgs) => {
@@ -44,7 +43,7 @@ const DeleteEventConfirmationForm: React.FC = () => {
 
     // Close the modal, show a confirmation toast and push to upcoming events
     // page.
-    closeModal();
+    modalVar(null);
     showToast({ message: 'Event deleted.' });
     push(`/${urlName}/events/upcoming`);
   };

@@ -11,7 +11,7 @@ import {
   TableRow
 } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
-import { useStoreActions } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import useFindOne from '@gql/hooks/useFindOne';
 import { ModalType } from '@util/constants';
 import { IEvent, IMember } from '@util/constants.entities';
@@ -22,15 +22,13 @@ import {
 import IndividualEventTableActions from './IndividualEventTableActions';
 
 const IndividualEventTableContent: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
-
   const rows: TableRow[] = useIndividualEventTableRows();
   const columns: TableColumn[] = useIndividualEventTableColumns();
 
   const options: TableOptions = {
     hideIfEmpty: true,
     onRowClick: (row: TableRow) => {
-      showModal({ id: ModalType.PROFILE, metadata: row?.id });
+      modalVar({ id: ModalType.PROFILE, metadata: row?.id });
     },
     showCount: true
   };

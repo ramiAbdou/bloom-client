@@ -5,7 +5,7 @@ import { eventIdVar } from 'src/App.reactive';
 import { useReactiveVar } from '@apollo/client';
 import ModalCloseButton from '@components/organisms/Modal/ModalCloseButton';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreState } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import { IEvent } from '@util/constants.entities';
 import { ErrorType } from '@util/constants.errors';
 
@@ -14,9 +14,9 @@ const IndividualEventErrorModal: React.FC = () => {
 
   const error:
     | ErrorType.EVENT_FINISHED
-    | ErrorType.EVENT_HASNT_STARTED = useStoreState(
-    ({ modal }) => modal.metadata
-  );
+    | ErrorType.EVENT_HASNT_STARTED = useReactiveVar(modalVar)?.metadata as
+    | ErrorType.EVENT_FINISHED
+    | ErrorType.EVENT_HASNT_STARTED;
 
   const { data: event, loading } = useFindOne(IEvent, {
     fields: ['startTime', 'title'],

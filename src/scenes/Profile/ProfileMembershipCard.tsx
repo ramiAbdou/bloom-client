@@ -1,4 +1,3 @@
-import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 import { communityIdVar, memberIdVar } from 'src/App.reactive';
 
@@ -7,9 +6,8 @@ import Button from '@components/atoms/Button/Button';
 import Card from '@components/containers/Card/Card';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/QuestionBox.types';
-import { ModalData } from '@components/organisms/Modal/Modal.types';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreActions } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import useFind from '@gql/hooks/useFind';
 import { ModalType, QuestionCategory } from '@util/constants';
 import { ICommunity, IMember, IMemberValue } from '@util/constants.entities';
@@ -17,7 +15,6 @@ import ProfileCardHeader from './ProfileCardHeader';
 
 const ProfileMembershipHeader: React.FC = () => {
   const communityId: string = useReactiveVar(communityIdVar);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const { data: community, loading } = useFindOne(ICommunity, {
     fields: ['name'],
@@ -27,7 +24,7 @@ const ProfileMembershipHeader: React.FC = () => {
   if (loading) return null;
 
   const onClick = (): void => {
-    showModal({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });
+    modalVar({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });
   };
 
   return (
@@ -82,10 +79,6 @@ const ProfileMembershipContent: React.FC = () => {
 const ProfileMembershipOnboardingContainer: React.FC = () => {
   const memberId: string = useReactiveVar(memberIdVar);
 
-  const showModal: ActionCreator<ModalData> = useStoreActions(
-    ({ modal }) => modal.showModal
-  );
-
   const { data: member, loading } = useFindOne(IMember, {
     fields: ['memberValues.id'],
     where: { id: memberId }
@@ -94,7 +87,7 @@ const ProfileMembershipOnboardingContainer: React.FC = () => {
   if (loading) return null;
 
   const onClick = (): void => {
-    showModal({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });
+    modalVar({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });
   };
 
   return (

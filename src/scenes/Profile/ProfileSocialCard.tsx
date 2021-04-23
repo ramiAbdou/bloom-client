@@ -5,7 +5,7 @@ import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import Card from '@components/containers/Card/Card';
 import Show from '@components/containers/Show';
-import { useStoreActions } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import useFindOne from '@gql/hooks/useFindOne';
 import { ModalType, SocialBrand } from '@util/constants';
 import { IMemberSocials } from '@util/constants.entities';
@@ -14,7 +14,6 @@ import ProfileSocialValue from './ProfileSocialValue';
 
 const ProfileSocialOnboardingContainer: React.FC = () => {
   const memberId: string = useReactiveVar(memberIdVar);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const { data: memberSocials, loading } = useFindOne(IMemberSocials, {
     fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
@@ -30,7 +29,7 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
     !!memberSocials.twitterUrl;
 
   const onClick = (): void => {
-    showModal({ id: ModalType.EDIT_SOCIAL_MEDIA });
+    modalVar({ id: ModalType.EDIT_SOCIAL_MEDIA });
   };
 
   return (
@@ -49,7 +48,6 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
 
 const ProfileSocialHeader: React.FC = () => {
   const memberId: string = useReactiveVar(memberIdVar);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const { data: memberSocials, loading } = useFindOne(IMemberSocials, {
     fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
@@ -64,7 +62,10 @@ const ProfileSocialHeader: React.FC = () => {
     !!memberSocials.linkedInUrl ||
     !!memberSocials.twitterUrl;
 
-  const onClick = () => showModal({ id: ModalType.EDIT_SOCIAL_MEDIA });
+  const onClick = (): void => {
+    modalVar({ id: ModalType.EDIT_SOCIAL_MEDIA });
+  };
+
   return (
     <ProfileCardHeader
       canEdit={isSocialLinked}

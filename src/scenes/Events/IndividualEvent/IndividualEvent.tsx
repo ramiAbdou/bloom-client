@@ -5,7 +5,7 @@ import { communityIdVar, eventIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import Show from '@components/containers/Show';
-import { useStoreActions } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import useFindOne from '@gql/hooks/useFindOne';
 import useIsMember from '@hooks/useIsMember';
 import { ModalType } from '@util/constants';
@@ -47,7 +47,6 @@ const IndividualEventContent: React.FC = () => {
     where: { id: eventId }
   });
 
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
   const isMember: boolean = useIsMember();
 
   const isMembersOnly: boolean = event.privacy === EventPrivacy.MEMBERS_ONLY;
@@ -57,7 +56,7 @@ const IndividualEventContent: React.FC = () => {
   // event or there was an issue logging in, show a locked modal.
   useEffect(() => {
     if (!isMember && !!communityId && (isMembersOnly || hasCookieError)) {
-      showModal({
+      modalVar({
         id: ModalType.CHECK_IN,
         metadata: eventId,
         options: { lock: isMembersOnly }

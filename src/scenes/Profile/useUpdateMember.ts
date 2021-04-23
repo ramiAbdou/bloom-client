@@ -5,16 +5,12 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
+import { modalVar } from '@core/state/Modal.reactive';
 import { IMember } from '@util/constants.entities';
 import { uploadImage } from '@util/imageUtil';
 
 const useUpdateMember = (): OnFormSubmitFunction => {
-  const onSubmit = async ({
-    closeModal,
-    gql,
-    items,
-    setError
-  }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ gql, items, setError }: OnFormSubmitArgs) => {
     const bio: string = items.BIO?.value as string;
     const firstName: string = items.FIRST_NAME?.value as string;
     const lastName: string = items.LAST_NAME?.value as string;
@@ -50,8 +46,8 @@ const useUpdateMember = (): OnFormSubmitFunction => {
       return;
     }
 
+    modalVar(null);
     showToast({ message: 'Personal information updated.' });
-    closeModal();
   };
 
   return onSubmit;

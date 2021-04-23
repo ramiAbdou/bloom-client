@@ -8,18 +8,15 @@
 
 import { createStore, createTypedHooks, Store } from 'easy-peasy';
 
-import modal from '@components/organisms/Modal/Modal.store';
-import { ModalModel } from '@components/organisms/Modal/Modal.types';
 import panel from '@components/organisms/Panel/Panel.store';
 import { PanelModel } from '@components/organisms/Panel/Panel.types';
 
 export interface StoreModel {
-  modal: ModalModel;
   panel: PanelModel;
 }
 
 export const store: Store<StoreModel> = createStore<StoreModel>(
-  { modal, panel },
+  { panel },
   { disableImmer: true }
 );
 

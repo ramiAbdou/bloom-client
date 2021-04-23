@@ -1,6 +1,7 @@
 import React from 'react';
 import { showToast } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Form from '@components/organisms/Form/Form';
 import {
   OnFormSubmitArgs,
@@ -8,7 +9,7 @@ import {
 } from '@components/organisms/Form/Form.types';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
-import { useStoreState } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import { IMember, MemberStatus } from '@util/constants.entities';
 
 interface ApplicantsConfirmationModalMetadata {
@@ -17,15 +18,13 @@ interface ApplicantsConfirmationModalMetadata {
 }
 
 const ApplicantsConfirmationFormHeader: React.FC = () => {
-  const applicantIds: string[] = useStoreState(
-    ({ modal }) =>
-      (modal.metadata as ApplicantsConfirmationModalMetadata).applicantIds
-  );
+  const applicantIds: string[] = (useReactiveVar(modalVar)
+    ?.metadata as ApplicantsConfirmationModalMetadata)?.applicantIds;
 
-  const response: MemberStatus.ACCEPTED | MemberStatus.REJECTED = useStoreState(
-    ({ modal }) =>
-      (modal.metadata as ApplicantsConfirmationModalMetadata).response
-  );
+  const response:
+    | MemberStatus.ACCEPTED
+    | MemberStatus.REJECTED = (useReactiveVar(modalVar)
+    ?.metadata as ApplicantsConfirmationModalMetadata)?.response;
 
   const applicantsCount: number = applicantIds.length;
   const verb: string = response === MemberStatus.ACCEPTED ? 'Accept' : 'Reject';
@@ -44,20 +43,15 @@ const ApplicantsConfirmationFormHeader: React.FC = () => {
 };
 
 const ApplicantsConfirmationForm: React.FC = () => {
-  const applicantIds: string[] = useStoreState(
-    ({ modal }) =>
-      (modal.metadata as ApplicantsConfirmationModalMetadata).applicantIds
-  );
+  const applicantIds: string[] = (useReactiveVar(modalVar)
+    ?.metadata as ApplicantsConfirmationModalMetadata)?.applicantIds;
 
-  const response: MemberStatus.ACCEPTED | MemberStatus.REJECTED = useStoreState(
-    ({ modal }) =>
-      (modal.metadata as ApplicantsConfirmationModalMetadata).response
-  );
+  const response:
+    | MemberStatus.ACCEPTED
+    | MemberStatus.REJECTED = (useReactiveVar(modalVar)
+    ?.metadata as ApplicantsConfirmationModalMetadata)?.response;
 
-  const onSubmit: OnFormSubmitFunction = async ({
-    closeModal,
-    gql
-  }: OnFormSubmitArgs) => {
+  const onSubmit: OnFormSubmitFunction = async ({ gql }: OnFormSubmitArgs) => {
     const { error } = await gql.updateMany(IMember, {
       data: { status: response },
       where: { id: { _in: applicantIds } }
@@ -67,7 +61,7 @@ const ApplicantsConfirmationForm: React.FC = () => {
       throw new Error(error);
     }
 
-    closeModal();
+    modalVar(null);
     showToast({ message: `Member(s) have been ${response.toLowerCase()}.` });
   };
 

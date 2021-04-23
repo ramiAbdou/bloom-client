@@ -1,9 +1,7 @@
-import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
-import { ModalData } from '@components/organisms/Modal/Modal.types';
-import { useStoreActions } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import { ModalType } from '@util/constants';
 import { MemberStatus } from '@util/constants.entities';
 import { take } from '@util/util';
@@ -19,15 +17,11 @@ const ApplicantsRespondButton: React.FC<ApplicantsRespondButtonProps> = ({
   applicantIds,
   response
 }) => {
-  const showModal: ActionCreator<ModalData> = useStoreActions(
-    ({ modal }) => modal.showModal
-  );
-
   // If no pending applicants, shouldn't be able to respond to anything.
   if (!applicantIds?.length) return null;
 
   const onClick = (): void => {
-    showModal({
+    modalVar({
       id: ModalType.APPLICANT_CONFIRMATION,
       metadata: { applicantIds, response }
     });

@@ -9,6 +9,7 @@ import {
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
 import TableStore from '@components/organisms/Table/Table.store';
+import { modalVar } from '@core/state/Modal.reactive';
 import { IMember } from '@util/constants.entities';
 import { now } from '@util/util';
 
@@ -31,7 +32,6 @@ const MemberDatabaseDeleteForm: React.FC = () => {
   );
 
   const onSubmit: OnFormSubmitFunction = async ({
-    closeModal,
     gql,
     setError
   }: OnFormSubmitArgs) => {
@@ -47,7 +47,7 @@ const MemberDatabaseDeleteForm: React.FC = () => {
       return;
     }
 
-    closeModal();
+    modalVar(null);
 
     showToast({
       message: `${memberIds.length} member(s) removed from the community.`

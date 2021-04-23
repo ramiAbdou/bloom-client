@@ -4,14 +4,13 @@ import { memberIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import TableStore from '@components/organisms/Table/Table.store';
-import { useStoreActions } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import { ModalType } from '@util/constants';
 import { take } from '@util/util';
 import DatabaseAction from '../DatabaseAction';
 
 const MemberDatabasePromoteButton: React.FC = () => {
   const memberId: string = useReactiveVar(memberIdVar);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const tooManySelected = TableStore.useStoreState(
     ({ selectedRowIds }) => selectedRowIds.length > 15
@@ -28,7 +27,7 @@ const MemberDatabasePromoteButton: React.FC = () => {
   ]);
 
   const onClick = (): void => {
-    showModal({
+    modalVar({
       id: ModalType.PROMOTE_MEMBERS,
       options: { confirmation: true }
     });

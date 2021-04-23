@@ -1,22 +1,18 @@
 import { showToast } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
-import { useStoreState } from '@core/store/Store';
+import { modalVar } from '@core/state/Modal.reactive';
 import { EventPrivacy, IEvent } from '@util/constants.entities';
 import { uploadImage } from '@util/imageUtil';
 
 const useUpdateEvent = (): OnFormSubmitFunction => {
-  const eventId: string = useStoreState(({ modal }) => modal.metadata);
+  const eventId: string = useReactiveVar(modalVar)?.metadata as string;
 
-  const onSubmit = async ({
-    closeModal,
-    gql,
-    items,
-    setError
-  }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ gql, items, setError }: OnFormSubmitArgs) => {
     const base64String: string = items.COVER_IMAGE?.value as string;
     const description: string = items.EVENT_DESCRIPTION?.value as string;
     const privacy: EventPrivacy = items.PRIVACY?.value as EventPrivacy;
@@ -54,8 +50,8 @@ const useUpdateEvent = (): OnFormSubmitFunction => {
       return;
     }
 
+    modalVar(null);
     showToast({ message: 'Event updated.' });
-    closeModal();
   };
 
   return onSubmit;
