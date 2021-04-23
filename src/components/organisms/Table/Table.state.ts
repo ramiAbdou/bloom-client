@@ -53,9 +53,12 @@ export const getColumnIndex = (
  */
 export const getRange = (state: TableState): [number, number] => {
   const floor: number = state.page * state.rowsPerPage;
+  const filteredRowsCount: number = state.filteredRows.length;
 
   const ceiling: number =
-    state.page * state.rowsPerPage + state.rowsPerPage - 1;
+    filteredRowsCount - floor >= state.rowsPerPage
+      ? floor + state.rowsPerPage - 1
+      : floor + filteredRowsCount - 1;
 
   return [floor, ceiling];
 };
@@ -84,6 +87,13 @@ const setPage = (state: TableState, page: number): TableState => {
  */
 const setRows = (state: TableState, rows: TableRow[]): TableState => {
   return { ...state, filteredRows: rows, rows };
+};
+
+/**
+ * Sets the rows and filteredRows.
+ */
+const setTotalCount = (state: TableState, totalCount: number): TableState => {
+  return { ...state, totalCount };
 };
 
 /**
@@ -139,6 +149,9 @@ const tableReducer = (state: TableState, action: TableAction): TableState => {
     case 'SET_ROWS':
       return setRows(state, action.rows);
 
+    case 'SET_TOTAL_COUNT':
+      return setTotalCount(state, action.totalCount);
+
     case 'SORT_TABLE':
       return sortTable(state, { ...action });
 
@@ -150,17 +163,23 @@ const tableReducer = (state: TableState, action: TableAction): TableState => {
   }
 };
 
-const useTableValue = ({ columns, options, rows }: TableInitialState) =>
+const useTableValue = ({
+  columns,
+  options,
+  rows,
+  totalCount
+}: TableInitialState) =>
   useReducer(tableReducer, {
     columns,
     filteredRows: rows,
     options: { ...defaultTableOptions, ...options },
     page: 0,
     rows,
-    rowsPerPage: 25,
+    rowsPerPage: 50,
     selectedRowIds: [],
     sortColumnId: null,
-    sortDirection: null
+    sortDirection: null,
+    totalCount
   });
 
 export const {

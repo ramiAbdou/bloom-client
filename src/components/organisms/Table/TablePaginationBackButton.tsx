@@ -2,8 +2,8 @@ import React from 'react';
 import { IoChevronBackOutline } from 'react-icons/io5';
 
 import Button from '@components/atoms/Button/Button';
-import { useTableDispatch, useTableState } from '../Table.state';
-import { TableDispatch, TableState } from '../Table.types';
+import { useTableDispatch, useTableState } from './Table.state';
+import { TableDispatch, TableState } from './Table.types';
 
 const TablePaginationBackButton: React.FC = () => {
   const { page }: TableState = useTableState();

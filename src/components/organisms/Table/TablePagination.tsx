@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Row from '@components/containers/Row/Row';
-import { useTableState } from '../Table.state';
-import { TableState } from '../Table.types';
+import { useTableState } from './Table.state';
+import { TableState } from './Table.types';
 import TablePaginationButtonList from './TablePaginationButtonList';
 import TablePaginationMessage from './TablePaginationMessage';
 

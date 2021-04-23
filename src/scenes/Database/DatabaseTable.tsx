@@ -13,19 +13,22 @@ import TableContent from '@components/organisms/Table/TableContent';
 import { modalVar } from '@core/state/Modal.reactive';
 // import GQL from '@gql/GQL';
 // import useGQL from '@gql/hooks/useGQL';
-import { ModalType, QuestionCategory } from '@util/constants';
+import { AggregateCount, ModalType, QuestionCategory } from '@util/constants';
 import { IMember, IQuestion } from '@util/constants.entities';
+import { databaseOffsetVar } from './Database.reactive';
 import { useMemberDatabaseRows } from './Database.util';
 import MemberDatabaseActionRow from './MemberDatabaseActionRow';
 
 interface DatabaseTableProps {
   members: IMember[];
   questions: IQuestion[];
+  totalMembersCount: AggregateCount;
 }
 
 const DatabaseTable: React.FC<DatabaseTableProps> = ({
   members,
-  questions
+  questions,
+  totalMembersCount
 }) => {
   members = members ?? [];
   questions = questions ?? [];
@@ -49,6 +52,8 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
 
   if (!questions?.length) return null;
 
+  console.log(totalMembersCount);
+
   // const onRenameColumn: RenameColumnFunction = async ({
   //   column,
   //   updateColumn
@@ -60,6 +65,10 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
   //   // });
   //   // if (!error) updateColumn({ id, title });
   // };
+
+  const onOffsetChange = (offset: number): void => {
+    databaseOffsetVar(offset);
+  };
 
   const options: TableOptions = {
     hasCheckbox: true,
@@ -75,8 +84,10 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
       columns={columns}
       options={options}
       rows={rows}
+      totalCount={totalMembersCount.aggregate.count}
+      onOffsetChange={onOffsetChange}
     >
-      <TableContent rows={rows} />
+      <TableContent />
     </Table>
   );
 };

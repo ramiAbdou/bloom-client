@@ -2,14 +2,14 @@ import React from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 
 import Button from '@components/atoms/Button/Button';
-import { useTableDispatch, useTableState } from '../Table.state';
-import { TableDispatch, TableState } from '../Table.types';
+import { useTableDispatch, useTableState } from './Table.state';
+import { TableDispatch, TableState } from './Table.types';
 
 const TablePaginationNextButton: React.FC = () => {
-  const { filteredRows, page }: TableState = useTableState();
+  const { page, rowsPerPage, totalCount }: TableState = useTableState();
   const tableDispatch: TableDispatch = useTableDispatch();
 
-  const pagesCount: number = Math.ceil(filteredRows.length / 25);
+  const pagesCount: number = Math.ceil(totalCount / rowsPerPage);
 
   const onClick = (): void => {
     if (page < pagesCount - 1) {

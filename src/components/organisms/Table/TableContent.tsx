@@ -1,38 +1,29 @@
 import hash from 'object-hash';
 import React from 'react';
 
-import { getRange, useTableState } from './Table.state';
-import { TableRow as TableRowProps, TableState } from './Table.types';
+import { useTableState } from './Table.state';
+import { TableRow as TableRowProps } from './Table.types';
 import TableHeaderRow from './TableHeaderRow';
 import TableRow from './TableRow';
 
 interface TableContentProps {
   emptyMessage?: string;
-  small?: boolean;
-  rows?: TableRowProps[];
 }
 
 interface TableRowsProps {
   rows: TableRowProps[];
 }
 
-const TableRows: React.FC<TableRowsProps> = ({ rows }) => {
-  const tableState: TableState = useTableState();
-  const [floor, ceiling]: [number, number] = getRange(tableState);
-  const rowsOnPage: TableRowProps[] = [...rows].slice(floor, ceiling);
-
-  return (
-    <tbody>
-      {rowsOnPage.map((row: TableRowProps) => (
-        <TableRow key={hash(row)} {...row} />
-      ))}
-    </tbody>
-  );
-};
+const TableRows: React.FC<TableRowsProps> = ({ rows }) => (
+  <tbody>
+    {rows.map((row: TableRowProps) => (
+      <TableRow key={hash(row)} {...row} />
+    ))}
+  </tbody>
+);
 
 const TableContent: React.FC<TableContentProps> = ({
-  emptyMessage: eMessage,
-  small
+  emptyMessage: eMessage
 }) => {
   const { options, rows } = useTableState();
 
@@ -44,7 +35,7 @@ const TableContent: React.FC<TableContentProps> = ({
 
   return (
     <>
-      <div id="o-table-ctr" style={{ maxHeight: small && '45vh' }}>
+      <div id="o-table-ctr" style={{ maxHeight: options.small && '45vh' }}>
         <table className="o-table">
           <TableHeaderRow />
           <TableRows rows={rows} />

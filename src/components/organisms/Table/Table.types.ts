@@ -65,6 +65,7 @@ export type TableOptions = {
   onRenameColumn?: RenameColumnFunction;
   onRowClick?: (row: TableRow) => void;
   showCount?: boolean;
+  small?: boolean;
 };
 
 export const defaultTableOptions: TableOptions = {
@@ -77,6 +78,7 @@ export interface TableInitialState {
   columns: TableColumn[];
   options?: TableOptions;
   rows: TableRow[];
+  totalCount: number;
 }
 
 export interface TableState {
@@ -89,12 +91,14 @@ export interface TableState {
   selectedRowIds: string[];
   sortColumnId: string;
   sortDirection: TableSortDirection;
+  totalCount: number;
 }
 
 export type TableAction =
   | { type: 'RESET_SELECTED_ROW_IDS' }
   | { type: 'SET_PAGE'; page: number }
   | { type: 'SET_ROWS'; rows: TableRow[] }
+  | { type: 'SET_TOTAL_COUNT'; totalCount: number }
   | {
       type: 'SORT_TABLE';
       sortColumnId: string;

@@ -37,6 +37,10 @@ export interface ComponentWithFragments<T, S = unknown>
   fragment: DocumentNode;
 }
 
+export type AggregateCount = {
+  aggregate: { count: number };
+};
+
 /**
  * SYSTEM TYPES - Includes modal, panel and more.
  */

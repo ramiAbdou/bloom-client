@@ -30,7 +30,8 @@ const IndividualEventTableContent: React.FC = () => {
     onRowClick: (row: TableRow) => {
       modalVar({ id: ModalType.PROFILE, metadata: row?.id });
     },
-    showCount: true
+    showCount: true,
+    small: true
   };
 
   return (
@@ -39,9 +40,10 @@ const IndividualEventTableContent: React.FC = () => {
         TableActions={IndividualEventTableActions}
         columns={columns}
         options={options}
-        rows={[]}
+        rows={rows}
+        totalCount={0}
       >
-        <TableContent small rows={rows} />
+        <TableContent />
       </Table>
     </Section>
   );

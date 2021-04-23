@@ -2,16 +2,16 @@ import { nanoid } from 'nanoid';
 import React from 'react';
 
 import Row from '@components/containers/Row/Row';
-import { useTableState } from '../Table.state';
-import { TablePaginationValue, TableState } from '../Table.types';
-import { getPaginationValues } from '../Table.util';
+import { useTableState } from './Table.state';
+import { TablePaginationValue, TableState } from './Table.types';
+import { getPaginationValues } from './Table.util';
 import TablePaginationBackButton from './TablePaginationBackButton';
 import TablePaginationNextButton from './TablePaginationNextButton';
 import TablePaginationNumberButton from './TablePaginationNumberButton';
 
 const TablePaginationNumberButtonList: React.FC = () => {
-  const { filteredRows, page }: TableState = useTableState();
-  const numPages: number = Math.ceil(filteredRows.length / 25);
+  const { page, rowsPerPage, totalCount }: TableState = useTableState();
+  const numPages: number = Math.ceil(totalCount / rowsPerPage);
 
   const paginationValues: TablePaginationValue[] = getPaginationValues(
     Array.from(Array(numPages).keys()),
@@ -28,9 +28,9 @@ const TablePaginationNumberButtonList: React.FC = () => {
 };
 
 const TablePaginationButtonList: React.FC = () => {
-  const { filteredRows, rowsPerPage }: TableState = useTableState();
+  const { filteredRows, totalCount }: TableState = useTableState();
 
-  if (filteredRows.length < rowsPerPage) return null;
+  if (totalCount <= filteredRows.length) return null;
 
   return (
     <Row>
