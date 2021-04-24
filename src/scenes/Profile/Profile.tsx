@@ -20,9 +20,13 @@ const GET_MEMBER_PROFILE_BY_MEMBER_ID: DocumentNode = gql`
     member(id: $memberId) {
       id
       ...ProfileMembershipCardFragment
+      ...ProfilePersonalCardFragment
+      ...ProfileSocialCardFragment
     }
   }
   ${ProfileMembershipCard.fragment}
+  ${ProfilePersonalCard.fragment}
+  ${ProfileSocialCard.fragment}
 `;
 
 const Profile: React.FC = () => {
@@ -43,12 +47,12 @@ const Profile: React.FC = () => {
 
         <div className="s-profile pt-md--d">
           <div>
-            <ProfilePersonalCard />
-            <ProfileSocialCard />
+            {member && <ProfilePersonalCard data={member} />}
+            {member && <ProfileSocialCard data={member} />}
             {member && <ProfileMembershipCard data={member} />}
           </div>
 
-          <ProfileSocialCard />
+          {member && <ProfileSocialCard data={member} />}
         </div>
       </MainContent>
     </Scene>
