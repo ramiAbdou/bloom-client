@@ -52,9 +52,9 @@ const IndividualEventGuest: React.FC<IdProps> = ({ id: guestId }) => {
     <Button className={css} onClick={onClick}>
       <ProfilePicture
         fontSize={16}
-        memberId={eventGuest.member?.id}
+        // memberId={eventGuest.member?.id}
         size={36}
-        supporterId={eventGuest.supporter?.id}
+        // supporterId={eventGuest.supporter?.id}
       />
 
       <p className="body--bold">{fullName}</p>

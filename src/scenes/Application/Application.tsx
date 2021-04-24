@@ -6,10 +6,8 @@ import useFindOne from '@gql/hooks/useFindOne';
 import { UrlNameProps } from '@util/constants';
 import { IApplication } from '@util/constants.entities';
 import { communityIdVar } from '../../App.reactive';
-import ApplicationChooseTypePage from './ApplicationChooseType';
 import ApplicationConfirmationPage from './ApplicationConfirmation';
 import ApplicationMainPage from './ApplicationMain';
-import ApplicationReviewPage from './ApplicationReview';
 
 const Application: React.FC = () => {
   const { urlName } = useParams() as UrlNameProps;
@@ -59,8 +57,6 @@ const Application: React.FC = () => {
     <div className="s-application-ctr">
       <Story>
         <ApplicationMainPage />
-        <ApplicationChooseTypePage />
-        <ApplicationReviewPage />
         <ApplicationConfirmationPage />
       </Story>
     </div>

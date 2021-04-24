@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import { BaseProps } from '@util/constants';
-import { Identifier } from '@util/constants.entities';
 import { cx } from '@util/util';
 
 interface ProfilePictureProps extends BaseProps {
@@ -9,9 +8,7 @@ interface ProfilePictureProps extends BaseProps {
   firstName?: string;
   fontSize?: number;
   lastName?: string;
-  memberId?: Identifier;
   pictureUrl?: string;
-  supporterId?: Identifier;
   size?: number;
 }
 
@@ -49,19 +46,9 @@ const ProfilePictureContent: React.FC<ProfilePictureProps> = ({
 };
 
 const ProfilePicture: React.FC<ProfilePictureProps> = (props) => {
-  const {
-    circle = true,
-    className,
-    firstName,
-    lastName,
-    memberId,
-    size,
-    supporterId
-  } = props;
+  const { circle = true, className, firstName, lastName, size } = props;
 
-  if (!memberId && !supporterId && (!firstName || !lastName)) {
-    return null;
-  }
+  if (!firstName || !lastName) return null;
 
   const css: string = cx(
     'm-profile-picture',
