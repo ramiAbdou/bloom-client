@@ -4,9 +4,9 @@ import { communityIdVar, isLoaderShowingVar } from 'src/App.reactive';
 
 import { DocumentNode, gql, useQuery } from '@apollo/client';
 import Story from '@components/organisms/Story/Story';
-import useFindOne from '@gql/hooks/useFindOne';
 import { UrlNameProps } from '@util/constants';
 import { IApplication } from '@util/constants.entities';
+import { updateDocumentColors } from '@util/util';
 import ApplicationConfirmationPage from './ApplicationConfirmationPage';
 import ApplicationMainPage from './ApplicationMainPage';
 
@@ -38,58 +38,29 @@ const Application: React.FC = () => {
 
   console.log(data, error);
 
-  // const { data: application, loading } = useFindOne(IApplication, {
-  //   fields: [
-  //     'id',
-  //     'community.id',
-  //     'community.logoUrl',
-  //     'community.name',
-  //     'community.primaryColor',
-  //     'community.urlName',
-  //     'community.communityIntegrations.id',
-  //     'community.communityIntegrations.communityId',
-  //     'community.communityIntegrations.stripeAccountId',
-  //     'community.memberTypes.amount',
-  //     'community.memberTypes.id',
-  //     'community.memberTypes.name',
-  //     'community.memberTypes.recurrence',
-  //     'description',
-  //     'rankedQuestions.id',
-  //     'rankedQuestions.rank',
-  //     'rankedQuestions.application.id',
-  //     'rankedQuestions.question.category',
-  //     'rankedQuestions.question.description',
-  //     'rankedQuestions.question.id',
-  //     'rankedQuestions.question.options',
-  //     'rankedQuestions.question.required',
-  //     'rankedQuestions.question.title',
-  //     'rankedQuestions.question.type',
-  //     'rankedQuestions.question.community.id',
-  //     'title'
-  //   ],
-  //   where: { community: { urlName } }
-  // });
+  const application: IApplication = data?.applications?.length
+    ? data?.applications[0]
+    : null;
 
-  // useEffect(() => {
-  //   if (application.id) communityIdVar(application.community.id);
-  // }, [application]);
+  useEffect(() => {
+    if (application?.id) {
+      communityIdVar(application.community.id);
+      updateDocumentColors(application.community.primaryColor);
+    }
+  }, [application]);
 
   useEffect(() => {
     isLoaderShowingVar(loading);
   }, [loading]);
 
-  if (loading) return null;
   if (error) return <Redirect to="/login" />;
-
-  const application: IApplication = data?.applications?.length
-    ? data?.applications[0]
-    : null;
+  if (loading || !application) return null;
 
   return (
     <div className="s-application-ctr">
       <Story>
         {application && <ApplicationMainPage data={application} />}
-        {/* <ApplicationConfirmationPage /> */}
+        <ApplicationConfirmationPage />
       </Story>
     </div>
   );

@@ -15,7 +15,3 @@ interface ModalData {
 }
 
 export const modalVar: ReactiveVar<ModalData> = makeVar<ModalData>(null);
-
-// export const modalOptions: Record<ModalType, ModalData> = {
-
-// };
