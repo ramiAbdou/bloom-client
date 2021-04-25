@@ -8,7 +8,7 @@ import StoryPage from '@components/organisms/Story/StoryPage';
 import useFindOne from '@gql/hooks/useFindOne';
 import { ICommunity } from '@util/constants.entities';
 
-const ApplicationConfirmationMessage: React.FC = () => {
+const ApplicationConfirmationPageMessage: React.FC = () => {
   const communityId: string = useReactiveVar(communityIdVar);
 
   const { data: community, loading } = useFindOne(ICommunity, {
@@ -30,7 +30,7 @@ const ApplicationConfirmationMessage: React.FC = () => {
   );
 };
 
-const ApplicationConfirmation: React.FC = () => {
+const ApplicationConfirmationPage: React.FC = () => {
   const communityId: string = useReactiveVar(communityIdVar);
 
   const { data: community, loading } = useFindOne(ICommunity, {
@@ -48,11 +48,11 @@ const ApplicationConfirmation: React.FC = () => {
     >
       <Card>
         <StoryConfirmation title="Application Received">
-          <ApplicationConfirmationMessage />
+          <ApplicationConfirmationPageMessage />
         </StoryConfirmation>
       </Card>
     </StoryPage>
   );
 };
 
-export default ApplicationConfirmation;
+export default ApplicationConfirmationPage;
