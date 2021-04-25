@@ -30,11 +30,9 @@ const GET_MEMBER_PROFILE_BY_MEMBER_ID: DocumentNode = gql`
 `;
 
 const Profile: React.FC = () => {
-  const { data, loading, error } = useQuery<GetMemberProfileByMemberIdResult>(
+  const { data, loading } = useQuery<GetMemberProfileByMemberIdResult>(
     GET_MEMBER_PROFILE_BY_MEMBER_ID
   );
-
-  console.log(data, error);
 
   if (loading) return null;
 

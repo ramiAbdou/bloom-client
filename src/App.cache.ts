@@ -24,6 +24,7 @@ import {
   communityIdVar,
   eventIdVar,
   memberIdVar,
+  memberSocialsIdVar,
   userIdVar
 } from './App.reactive';
 import { databaseReactiveFields } from './scenes/Database/Database.reactive';
@@ -56,6 +57,7 @@ const reactiveTypePolicies = {
   communityId: { read: (): string => communityIdVar() },
   eventId: { read: (): string => eventIdVar() },
   memberId: { read: (): string => memberIdVar() },
+  memberSocialsId: { read: (): string => memberSocialsIdVar() },
   userId: { read: (): string => userIdVar() }
 };
 

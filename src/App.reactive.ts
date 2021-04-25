@@ -7,6 +7,7 @@ import { makeVar, ReactiveVar } from '@apollo/client';
 export const communityIdVar: ReactiveVar<string> = makeVar<string>(null);
 export const eventIdVar: ReactiveVar<string> = makeVar<string>(null);
 export const memberIdVar: ReactiveVar<string> = makeVar<string>(null);
+export const memberSocialsIdVar: ReactiveVar<string> = makeVar<string>(null);
 export const userIdVar: ReactiveVar<string> = makeVar<string>(null);
 
 // ## LOADER

@@ -5,14 +5,20 @@ $PREF: 'o-form';
 .#{$PREF}--spacing-md {
   > .#{$PREF}-item,
   .t-row > .#{$PREF}-item,
-  .#{$PREF}-section > .#{$PREF}-item { margin-bottom: $md; }
+  ul > .#{$PREF}-item,
+  .#{$PREF}-section > .#{$PREF}-item {
+    margin-bottom: $md;
+  }
 }
 
 .#{$PREF}--spacing-lg {
   > .#{$PREF}-item,
+  ul > .#{$PREF}-item,
   > .t-row,
   > .#{$PREF}-section > .#{$PREF}-item,
-  > .#{$PREF}-section > .t-row { margin-bottom: $lg; }
+  > .#{$PREF}-section > .t-row {
+    margin-bottom: $lg;
+  }
 }
 
 // ## FORM DESCRIPTION
@@ -21,11 +27,21 @@ $PREF: 'o-form';
   color: $gray-2;
   margin-bottom: $sm;
 
-  &:last-child { @extend .meta; color: $gray-3; margin: $xs 0 0 0; }
+  &:last-child {
+    @extend .meta;
+
+    color: $gray-3;
+    margin: $xs 0 0 0;
+  }
 }
 
-.#{$PREF}-error { color: $red; margin-top: $xxs; }
-.t-row > .#{$PREF}-item > .#{$PREF}-error { width: max-content; }
+.#{$PREF}-error {
+  color: $red;
+  margin-top: $xxs;
+}
+.t-row > .#{$PREF}-item > .#{$PREF}-error {
+  width: max-content;
+}
 
 // ## FORM LABEL
 
@@ -37,11 +53,25 @@ $PREF: 'o-form';
   margin-bottom: $xs;
   width: 100%;
 
-  > svg { color: $green; margin-right: $xs; }
-  > div.c-misc-tip { color: $primary; margin-left: $xxs; }
-  > h4 { color: $gray-2; }
+  > svg {
+    color: $green;
+    margin-right: $xs;
+  }
 
-  &--required > h4::after { color: $red; content: '*'; margin-left: $xxs; }
+  > div.c-misc-tip {
+    color: $primary;
+    margin-left: $xxs;
+  }
+
+  > h4 {
+    color: $gray-2;
+  }
+
+  &--required > h4::after {
+    color: $red;
+    content: '*';
+    margin-left: $xxs;
+  }
 }
 
 // ## FORM HEADER
@@ -50,24 +80,37 @@ $PREF: 'o-form';
   margin-bottom: $md;
 
   > h1:first-of-type,
-  > h2:first-of-type { margin-bottom: $xs; }
+  > h2:first-of-type {
+    margin-bottom: $xs;
+  }
 }
 
 // ## FORM SUBMIT BUTTON
 
 .#{$PREF}-submit {
-  &--invisible { display: none; }
-  &--sticky { bottom: $md; position: sticky; }
+  &--invisible {
+    display: none;
+  }
+
+  &--sticky {
+    bottom: $md;
+    position: sticky;
+  }
 }
 
-// ## FORM COVER IMAGE UPLOAD 
+// ## FORM COVER IMAGE UPLOAD
 
 .#{$PREF}-item--cover-image-aspect {
   border-radius: $xs;
   overflow: hidden;
-  
-  > *:first-child { border-radius: $xs; }
-  > div:first-child { background-color: $primary-bg; }
+
+  > *:first-child {
+    border-radius: $xs;
+  }
+
+  > div:first-child {
+    background-color: $primary-bg;
+  }
 
   > svg {
     margin: auto;
@@ -102,18 +145,25 @@ $PREF: 'o-form';
     z-index: 11;
   }
 
-  > input { display: none; }
-  ~ .meta { margin-top: $xs; }
+  > input {
+    display: none;
+  }
+
+  ~ .meta {
+    margin-top: $xs;
+  }
 }
 
-// ## FORM IMAGE UPLOAD 
+// ## FORM IMAGE UPLOAD
 
 .#{$PREF}-item--image {
-  > input { display: none; }
+  > input {
+    display: none;
+  }
 
   > button {
     @extend .flex-acc;
-  
+
     background-size: cover;
     border-radius: 50%;
     height: $xl * 2;
@@ -128,7 +178,11 @@ $PREF: 'o-form';
     width: auto;
   }
 
-  > button > svg { @extend .react-icon--xl; color: white; }
+  > button > svg {
+    @extend .react-icon--xl;
+
+    color: white;
+  }
 }
 
 // ## FORM LARGE TITLE
@@ -140,14 +194,21 @@ $PREF: 'o-form';
   resize: none;
   width: 100%;
 
-  &:not(&--error):focus ~ hr { border-bottom: 1px $primary solid; }
-  &--error ~ hr { border-bottom: 1px $red solid; }
+  &:not(&--error):focus ~ hr {
+    border-bottom: 1px $primary solid;
+  }
+
+  &--error ~ hr {
+    border-bottom: 1px $red solid;
+  }
 }
 
 // ## FORM DATE PICKER
 
 .#{$PREF}-item--date {
-  > .react-datepicker-wrapper { @extend .c-misc-input; }
+  > .react-datepicker-wrapper {
+    @extend .c-misc-input;
+  }
 
   > .react-datepicker-wrapper > *,
   > .react-datepicker-wrapper > * > * {
@@ -167,13 +228,21 @@ $PREF: 'o-form';
   padding: $xs;
 }
 
-.react-datepicker__month { margin: 0; }
+.react-datepicker__month {
+  margin: 0;
+}
 
 .react-datepicker__day-names,
-.react-datepicker__week { @extend .flex-acsb; padding: $xxs; }
+.react-datepicker__week {
+  @extend .flex-acsb;
+
+  padding: $xxs;
+}
 
 .react-datepicker__day-names > *:not(:last-child),
-.react-datepicker__week > *:not(:last-child) { margin: 0 $xxs 0 0; }
+.react-datepicker__week > *:not(:last-child) {
+  margin: 0 $xxs 0 0;
+}
 
 .react-datepicker__current-month {
   @extend .body--bold;
@@ -182,8 +251,13 @@ $PREF: 'o-form';
   text-align: center;
 }
 
-.react-datepicker__header { background-color: white !important; }
-.react-datepicker__navigation { top: $sm !important; }
+.react-datepicker__header {
+  background-color: white !important;
+}
+
+.react-datepicker__navigation {
+  top: $sm !important;
+}
 
 .react-datepicker__day,
 .react-datepicker__time-list-item {
@@ -193,9 +267,17 @@ $PREF: 'o-form';
   height: initial !important;
   outline: none;
 
-  &--disabled { color: $gray-4 !important; }
-  &--selected { background-color: $primary !important; }
-  &--today { font-weight: initial !important; }
+  &--disabled {
+    color: $gray-4 !important;
+  }
+
+  &--selected {
+    background-color: $primary !important;
+  }
+
+  &--today {
+    font-weight: initial !important;
+  }
 
   &--keyboard-selected {
     background-color: initial !important;
@@ -205,7 +287,10 @@ $PREF: 'o-form';
 
 .react-datepicker__time-list-item {
   padding: $xs 0 !important;
-  &:not(:last-child) { margin-bottom: $xs; }
+
+  &:not(:last-child) {
+    margin-bottom: $xs;
+  }
 }
 
 /* stylelint-disable */
@@ -218,4 +303,6 @@ $PREF: 'o-form';
 
 // ## STRIPE ELEMENT OVERRIDING STYLES
 
-.__PrivateStripeElement { width: 100%; }
+.__PrivateStripeElement {
+  width: 100%;
+}

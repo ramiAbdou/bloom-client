@@ -29,11 +29,13 @@ const ProfileSocialCardHeader: ComponentWithFragments<IMemberSocials> = ({
 };
 
 ProfileSocialCardHeader.fragment = gql`
-  fragment ProfileSocialCardHeaderFragment on memberSocials {
-    facebookUrl
-    instagramUrl
-    linkedInUrl
-    twitterUrl
+  fragment ProfileSocialCardHeaderFragment on members {
+    memberSocials {
+      facebookUrl
+      instagramUrl
+      linkedInUrl
+      twitterUrl
+    }
   }
 `;
 

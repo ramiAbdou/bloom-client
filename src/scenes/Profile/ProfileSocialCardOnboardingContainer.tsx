@@ -36,11 +36,13 @@ const ProfileSocialCardOnboardingContainer: ComponentWithFragments<IMember> = ({
 };
 
 ProfileSocialCardOnboardingContainer.fragment = gql`
-  fragment ProfileSocialCardOnboardingContainerFragment on memberSocials {
-    facebookUrl
-    instagramUrl
-    linkedInUrl
-    twitterUrl
+  fragment ProfileSocialCardOnboardingContainerFragment on members {
+    memberSocials {
+      facebookUrl
+      instagramUrl
+      linkedInUrl
+      twitterUrl
+    }
   }
 `;
 

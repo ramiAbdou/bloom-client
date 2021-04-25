@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
-import { communityIdVar, memberIdVar, userIdVar } from 'src/App.reactive';
+import {
+  communityIdVar,
+  memberIdVar,
+  memberSocialsIdVar,
+  userIdVar
+} from 'src/App.reactive';
 
 import { DocumentNode, gql, useQuery, useReactiveVar } from '@apollo/client';
 import { UrlNameProps } from '@util/constants';
@@ -32,6 +37,10 @@ const GET_MEMBER_BY_COMMUNITY_URL_NAME: DocumentNode = gql`
       community {
         id
         primaryColor
+      }
+
+      memberSocials {
+        id
       }
     }
   }
@@ -74,6 +83,7 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
 
     communityIdVar(member.community.id);
     memberIdVar(member.id);
+    memberSocialsIdVar(member.memberSocials.id);
 
     // As we set the active entities, we must also update the document
     // colors with the community's primary color.

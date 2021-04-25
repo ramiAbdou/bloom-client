@@ -20,11 +20,9 @@ const ProfileSocialCard: ComponentWithFragments<IMember> = ({
 
 ProfileSocialCard.fragment = gql`
   fragment ProfileSocialCardFragment on members {
-    memberSocials {
-      ...ProfileSocialCardHeaderFragment
-      ...ProfileSocialCardOnboardingContainerFragment
-      ...ProfileSocialCardValueListFragment
-    }
+    ...ProfileSocialCardHeaderFragment
+    ...ProfileSocialCardOnboardingContainerFragment
+    ...ProfileSocialCardValueListFragment
   }
   ${ProfileSocialCardHeader.fragment}
   ${ProfileSocialCardOnboardingContainer.fragment}

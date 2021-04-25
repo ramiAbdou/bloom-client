@@ -32,11 +32,13 @@ const ProfileSocialCardValueList: ComponentWithFragments<IMemberSocials> = ({
 );
 
 ProfileSocialCardValueList.fragment = gql`
-  fragment ProfileSocialCardValueListFragment on memberSocials {
-    facebookUrl
-    instagramUrl
-    linkedInUrl
-    twitterUrl
+  fragment ProfileSocialCardValueListFragment on members {
+    memberSocials {
+      facebookUrl
+      instagramUrl
+      linkedInUrl
+      twitterUrl
+    }
   }
 `;
 
