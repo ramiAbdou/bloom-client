@@ -13,7 +13,7 @@ import IndividualEventErrorModal from '@scenes/Events/IndividualEvent/Individual
 import IntegrationsDetailsModal from '@scenes/Integrations/IntegrationsDetailsModal';
 import IntegrationsMailchimpModal from '@scenes/Integrations/IntegrationsMailchimpModal';
 import ProfileMembershipForm from '@scenes/Profile/ProfileMembershipForm';
-import ProfilePersonalModal from '@scenes/Profile/ProfilePersonalModal';
+import ProfilePersonalModalForm from '@scenes/Profile/ProfilePersonalModalForm';
 import ProfileSocialModalForm from '@scenes/Profile/ProfileSocialModalForm';
 import { ModalType } from '@util/constants';
 import { cx } from '@util/util';
@@ -49,7 +49,7 @@ const ModalCustomContent: React.FC = () => {
       return <ProfileMembershipForm />;
 
     case ModalType.EDIT_PERSONAL_INFORMATION:
-      return <ProfilePersonalModal />;
+      return <ProfilePersonalModalForm />;
 
     case ModalType.EDIT_SOCIAL_MEDIA:
       return <ProfileSocialModalForm />;

@@ -18,11 +18,11 @@ const ProfilePersonalCardOnboardingContainer: ComponentWithFragments<IMember> = 
 
   return (
     <Row spacing="xs">
-      <Button primary show={!!member.pictureUrl} onClick={onClick}>
+      <Button primary show={!member.pictureUrl} onClick={onClick}>
         + Add Profile Picture
       </Button>
 
-      <Button primary show={!!member.bio} onClick={onClick}>
+      <Button primary show={!member.bio} onClick={onClick}>
         + Add Bio
       </Button>
     </Row>

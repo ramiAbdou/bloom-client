@@ -17,14 +17,22 @@ interface UpdateMemberSocialsArgs {
 
 const UPDATE_MEMBER_SOCIALS: DocumentNode = gql`
   mutation UpdateMemberSocials(
-    $facebookUrl: String!
+    $facebookUrl: String
+    $instagramUrl: String
+    $linkedInUrl: String
     $memberSocialsId: String!
+    $twitterUrl: String
   ) {
     memberSocialsId @client @export(as: "memberSocialsId")
 
     updateMemberSocials(
       pk_columns: { id: $memberSocialsId }
-      _set: { facebookUrl: $facebookUrl }
+      _set: {
+        facebookUrl: $facebookUrl
+        instagramUrl: $instagramUrl
+        linkedInUrl: $linkedInUrl
+        twitterUrl: $twitterUrl
+      }
     ) {
       facebookUrl
       id
