@@ -2,7 +2,6 @@ import React from 'react';
 import { TooltipPayload } from 'recharts';
 
 import { useChartState } from './Chart.state';
-import Chart from './Chart.store';
 import { ChartState } from './Chart.types';
 
 export type ChartTooltipProps = {
@@ -16,8 +15,6 @@ export type ChartTooltipProps = {
 export default ({ active, label, payload }: ChartTooltipProps): JSX.Element => {
   const { data }: ChartState = useChartState();
 
-  const totalResponses = Chart.useStoreState((state) => state.totalResponses);
-
   // Only show the tooltip if it active.
   if (!active || (!label && !payload?.length)) return null;
 
@@ -25,10 +22,9 @@ export default ({ active, label, payload }: ChartTooltipProps): JSX.Element => {
 
   const { value } = data.find(({ name }) => name === label);
 
-  const percentageOfTotal = (
-    ((value as number) / totalResponses) *
-    100
-  ).toFixed(2);
+  const percentageOfTotal = (((value as number) / data?.length) * 100).toFixed(
+    2
+  );
 
   return (
     <div className="o-chart-tooltip">

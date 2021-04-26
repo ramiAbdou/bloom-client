@@ -10,7 +10,8 @@ import {
 } from 'recharts';
 
 import Row from '@components/containers/Row/Row';
-import Chart from './Chart.store';
+import { useChartState } from './Chart.state';
+import { ChartState } from './Chart.types';
 import ChartTooltip, { ChartTooltipProps } from './Tooltip';
 
 // Pie chart colors for all of the different options.
@@ -41,7 +42,7 @@ const PieChartLegend: React.FC<PieChartLegendProps> = ({ payload }) => (
 );
 
 const PieChart: React.FC = () => {
-  const data = Chart.useStoreState((state) => state.data);
+  const { data }: ChartState = useChartState();
 
   if (!data?.length) return null;
 

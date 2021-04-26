@@ -4,7 +4,6 @@ import { BaseProps } from '@util/constants';
 import { cx } from '@util/util';
 import BarChart from './BarChart';
 import { ChartProvider, useChartDispatch } from './Chart.state';
-import ChartStore, { chartModel } from './Chart.store';
 import { ChartDispatch, ChartInitialState, ChartType } from './Chart.types';
 import ChartHeader from './ChartHeader';
 // import FormatQuestionData from './FormatQuestionData';
@@ -37,21 +36,16 @@ const ChartContent: React.FC<ChartInitialState> = ({ data, title, type }) => {
 
 const Chart: React.FC<ChartInitialState & BaseProps> = ({
   className,
-  options,
   ...args
 }) => {
   const css: string = cx('o-chart', {}, className);
 
   return (
     <ChartProvider {...args}>
-      <ChartStore.Provider runtimeModel={{ ...chartModel, options }}>
-        {/* {questionId && <FormatQuestionData questionId={questionId} />} */}
-
-        <div className={css}>
-          <ChartHeader />
-          <ChartContent {...args} />
-        </div>
-      </ChartStore.Provider>
+      <div className={css}>
+        <ChartHeader />
+        <ChartContent {...args} />
+      </div>
     </ChartProvider>
   );
 };

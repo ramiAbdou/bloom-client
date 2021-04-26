@@ -30,7 +30,6 @@ export enum ChartType {
 
 export interface ChartModelInitArgs extends BaseProps {
   data?: ChartData[];
-  interval?: number;
   options?: ChartOptions;
   questionId?: string;
   totalResponses?: number;

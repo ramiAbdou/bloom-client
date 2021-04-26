@@ -65,7 +65,6 @@
     "react-textarea-autosize": "^8.3.0",
     "react-tracked": "^1.7.0",
     "recharts": "^1.8.5",
-    "stopword": "^1.0.5",
     "use-onclickoutside": "^0.3.1",
     "validator": "^13.1.17"
   },

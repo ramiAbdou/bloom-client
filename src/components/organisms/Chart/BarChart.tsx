@@ -22,8 +22,6 @@ const BarChart: React.FC = () => {
   const xAxisOptions = useXAxisOptions();
   const yAxisOptions = useYAxisOptions();
 
-  console.log('bar chart data', data);
-
   if (!data?.length) return null;
 
   // Allows the chart to be large/not squish and is scrollable.
