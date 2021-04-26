@@ -27,6 +27,7 @@ import {
   memberSocialsIdVar,
   userIdVar
 } from './App.reactive';
+import { analyticsReactiveFields } from './scenes/Analytics/Analytics.reactive';
 import { databaseReactiveFields } from './scenes/Database/Database.reactive';
 import { directoryReactiveFields } from './scenes/Directory/Directory.reactive';
 import { eventsReactiveFields } from './scenes/Events/Events.reactive';
@@ -66,6 +67,7 @@ const cache: InMemoryCache = new InMemoryCache({
     Query: {
       fields: {
         ...reactiveTypePolicies,
+        ...analyticsReactiveFields,
         ...databaseReactiveFields,
         ...directoryReactiveFields,
         ...eventsReactiveFields,

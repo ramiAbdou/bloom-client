@@ -7,17 +7,17 @@ import { MainNavigationOptionProps } from '@components/containers/Main/MainNavig
 const AnalyticsHeader: React.FC = () => {
   const { push } = useHistory();
 
+  const onEventsClick = (): void => {
+    push('events');
+  };
+
+  const onMembersClick = (): void => {
+    push('members');
+  };
+
   const options: MainNavigationOptionProps[] = [
-    {
-      onClick: () => push('members'),
-      pathname: 'members',
-      title: 'Members'
-    },
-    {
-      onClick: () => push('events'),
-      pathname: 'events',
-      title: 'Events'
-    }
+    { onClick: onMembersClick, pathname: 'members', title: 'Members' },
+    { onClick: onEventsClick, pathname: 'events', title: 'Events' }
   ];
 
   return <MainHeader options={options} title="Analytics" />;

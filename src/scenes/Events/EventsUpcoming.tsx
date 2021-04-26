@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { DocumentNode, gql, useQuery } from '@apollo/client';
-import MainContent from '@components/containers/Main/MainContent';
 import Section from '@components/containers/Section';
 import { IEvent } from '@util/constants.entities';
 import { now } from '@util/util';
@@ -52,14 +51,14 @@ const EventsUpcoming: React.FC = () => {
   const events: IEvent[] = data?.events;
 
   return (
-    <MainContent>
+    <>
       <EventsHeader loading={loading} />
 
       <Section>
         <h2 className="mb-sm">Upcoming Events</h2>
         {events && <EventsUpcomingList events={events} />}
       </Section>
-    </MainContent>
+    </>
   );
 };
 

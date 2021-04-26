@@ -5,13 +5,13 @@ import Section from '@components/containers/Section';
 import MembersAnalyticsActiveMembersCard from './MembersAnalyticsActiveCard';
 import MembersAnalyticsTotalMembersCard from './MembersAnalyticsTotalCard';
 
-const MembersAnalyticsInsights: React.FC = () => (
+const MembersAnalyticsOverviewSection: React.FC = () => (
   <Section>
     <Row wrap gap="xs">
-      <MembersAnalyticsTotalMembersCard />
-      <MembersAnalyticsActiveMembersCard />
+      <MembersAnalyticsTotalMembersCard count={100} />
+      <MembersAnalyticsActiveMembersCard count={100} />
     </Row>
   </Section>
 );
 
-export default MembersAnalyticsInsights;
+export default MembersAnalyticsOverviewSection;

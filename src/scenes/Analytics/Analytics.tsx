@@ -12,9 +12,7 @@ const Analytics: React.FC = () => (
 
     <Switch>
       <Route component={EventsAnalytics} path="/:urlName/analytics/events" />
-
       <Route component={MembersAnalytics} path="/:urlName/analytics/members" />
-
       <Redirect to="/:urlName/analytics/members" />
     </Switch>
   </Scene>
