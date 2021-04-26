@@ -7,7 +7,7 @@ import EventForm from '@components/modals/EventForm/EventForm';
 import ProfileModal from '@components/modals/ProfileModal/ProfileModal';
 import { modalVar } from '@core/state/Modal.reactive';
 import ApplicantsConfirmationForm from '@scenes/Applicants/ApplicantsConfirmationForm';
-import ApplicantsModal from '@scenes/Applicants/ApplicantsModal';
+import ApplicantsViewModal from '@scenes/Applicants/ApplicantsViewModal';
 import EventsConfirmRsvpModal from '@scenes/Events/EventsConfirmRsvpModal';
 import IndividualEventErrorModal from '@scenes/Events/IndividualEvent/IndividualEventErrorModal';
 import IntegrationsDetailsModal from '@scenes/Integrations/IntegrationsDetailsModal';
@@ -26,9 +26,6 @@ const ModalCustomContent: React.FC = () => {
   switch (modalId) {
     case ModalType.ADD_MEMBERS:
       return <AddMemberModal />;
-
-    case ModalType.APPLICANT:
-      return <ApplicantsModal />;
 
     case ModalType.APPLICANT_CONFIRMATION:
       return <ApplicantsConfirmationForm />;
@@ -65,6 +62,9 @@ const ModalCustomContent: React.FC = () => {
 
     case ModalType.PROFILE:
       return <ProfileModal />;
+
+    case ModalType.VIEW_APPLICANT:
+      return <ApplicantsViewModal />;
 
     default:
       return null;

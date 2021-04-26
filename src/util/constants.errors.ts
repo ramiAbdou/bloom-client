@@ -11,3 +11,7 @@ export enum ErrorType {
   NOT_MEMBER = 'NOT_MEMBER',
   USER_NOT_FOUND = 'USER_NOT_FOUND'
 }
+
+export enum UniqueConstraint {
+  MEMBERS_COMMUNITY_ID_EMAIL_UNIQUE = 'members_community_id_email_unique'
+}

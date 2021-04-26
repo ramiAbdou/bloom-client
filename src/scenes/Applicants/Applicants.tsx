@@ -1,40 +1,46 @@
 import React from 'react';
-import { communityIdVar } from 'src/App.reactive';
 
-import { useReactiveVar } from '@apollo/client';
+import { DocumentNode, gql, useQuery } from '@apollo/client';
 import MainContent from '@components/containers/Main/MainContent';
 import Scene from '@components/containers/Scene';
-import useFind from '@gql/hooks/useFind';
 import { IMember } from '@util/constants.entities';
+import ApplicantsCard from './ApplicantsCard';
 import ApplicantsCardList from './ApplicantsCardList';
 import ApplicantsHeader from './ApplicantsHeader';
 
-const Applicants: React.FC = () => {
-  const communityId: string = useReactiveVar(communityIdVar);
+interface GetApplicantsByCommunityIdResult {
+  members: IMember[];
+}
 
-  const { loading } = useFind(IMember, {
-    fields: [
-      'community.id',
-      'createdAt',
-      'email',
-      'id',
-      'firstName',
-      'lastName',
-      'memberType.id',
-      'memberValues.id',
-      'memberValues.question.id',
-      'memberValues.value',
-      'role',
-      'status'
-    ],
-    where: { communityId, status: 'Pending' }
-  });
+const GET_APPLICANTS_BY_COMMUNITY_ID: DocumentNode = gql`
+  query GetApplicantsByCommunityId($communityId: String!) {
+    communityId @client @export(as: "communityId")
+
+    members(
+      where: { communityId: { _eq: $communityId }, status: { _eq: "Pending" } }
+      order_by: { createdAt: desc }
+    ) {
+      id
+      ...ApplicantsCardFragment
+    }
+  }
+  ${ApplicantsCard.fragment}
+`;
+
+const Applicants: React.FC = () => {
+  const { data, loading } = useQuery<GetApplicantsByCommunityIdResult>(
+    GET_APPLICANTS_BY_COMMUNITY_ID
+  );
+
+  if (loading) return null;
+
+  const applicants: IMember[] = data?.members;
 
   return (
     <Scene>
       <MainContent>
-        <ApplicantsHeader loading={loading} />
-        {!loading && <ApplicantsCardList />}
+        <ApplicantsHeader applicants={applicants} loading={loading} />
+        {applicants && <ApplicantsCardList applicants={applicants} />}
       </MainContent>
     </Scene>
   );

@@ -57,30 +57,16 @@ export const useMemberDatabaseRows = ({
   members,
   questions
 }: UseMemberDatabaseRowsArgs): TableRow[] => {
-  const rows: TableRow[] = members?.map(
-    (member: IMember) =>
-      questions.reduce(
-        (row, question: IQuestion) => {
-          return {
-            ...row,
-            [question.id]: getMemberValue({ member, question })
-          };
-        },
-        { id: member.id }
-      )
-    // member.memberValues.reduce(
-    //   (row: TableRow, memberValue: IMemberValue) => {
-    //     return {
-    //       ...row,
-    //       [memberValue.question.id]: getMemberValue({
-    //         member,
-    //         question: memberValue.question,
-    //         value: memberValue.value
-    //       })
-    //     };
-    //   },
-    //   { id: member.id }
-    // )
+  const rows: TableRow[] = members?.map((member: IMember) =>
+    questions.reduce(
+      (row, question: IQuestion) => {
+        return {
+          ...row,
+          [question.id]: getMemberValue({ member, question })
+        };
+      },
+      { id: member.id }
+    )
   );
 
   return rows;

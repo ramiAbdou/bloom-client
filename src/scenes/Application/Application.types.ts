@@ -5,8 +5,3 @@ export interface ApplyForMembershipArgs {
   paymentMethodId?: string;
   urlName: string;
 }
-
-export interface IsEmailTakenArgs {
-  communityId: string;
-  email: string;
-}

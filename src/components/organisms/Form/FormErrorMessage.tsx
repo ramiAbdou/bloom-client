@@ -11,7 +11,6 @@ import FormStore from './Form.store';
  */
 const FormErrorMessage: React.FC<ErrorMessageProps> = (props) => {
   const error = FormStore.useStoreState((state) => state.error);
-
   return <ErrorMessage {...props}>{error}</ErrorMessage>;
 };
 
