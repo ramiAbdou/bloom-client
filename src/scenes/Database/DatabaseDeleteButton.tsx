@@ -6,8 +6,8 @@ import { useReactiveVar } from '@apollo/client';
 import { useTableState } from '@components/organisms/Table/Table.state';
 import { TableState } from '@components/organisms/Table/Table.types';
 import useFind from '@core/gql/hooks/useFind';
+import useMemberRole from '@core/hooks/useMemberRole';
 import { modalVar } from '@core/state/Modal.reactive';
-import useFindOne from '@gql/hooks/useFindOne';
 import { ModalType } from '@util/constants';
 import { IMember, MemberRole } from '@util/constants.entities';
 import { take } from '@util/util';
@@ -21,21 +21,18 @@ const useDeleteTooltip = (): string => {
   const memberId: string = useReactiveVar(memberIdVar);
   const { selectedRowIds }: TableState = useTableState();
 
+  const role: MemberRole = useMemberRole();
+
   const { data: members, loading: loading1 } = useFind(IMember, {
     where: { id: { _in: selectedRowIds } }
   });
 
-  const { data: member, loading: loading2 } = useFindOne(IMember, {
-    fields: ['role'],
-    where: { id: memberId }
-  });
-
-  if (loading1 || loading2) return null;
+  if (loading1) return null;
 
   const isSelfSelected: boolean = selectedRowIds.includes(memberId);
 
   const hasPermissions: boolean =
-    member.role === MemberRole.OWNER ||
+    role === MemberRole.OWNER ||
     members.every((entity: IMember) => !entity.role);
 
   const tooltip: string = take([

@@ -24,6 +24,17 @@ const GET_EVENTS_UPCOMING_BY_COMMUNITY_ID: DocumentNode = gql`
   ) {
     communityId @client @export(as: "communityId")
 
+    getEvents {
+      id
+      eventAttendees {
+        id
+
+        member {
+          firstName
+        }
+      }
+    }
+
     events(
       where: {
         communityId: { _eq: $communityId }

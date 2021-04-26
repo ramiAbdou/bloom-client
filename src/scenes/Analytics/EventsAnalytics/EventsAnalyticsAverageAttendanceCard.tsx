@@ -14,8 +14,6 @@ const EventsAnalyticsAverageAttendanceCard: ComponentWithFragments<
     0
   );
 
-  console.log(events);
-
   const averageAttendeesCount: number = Math.ceil(
     attendeesCount / events.length
   );

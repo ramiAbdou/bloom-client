@@ -7,7 +7,7 @@ import AnalyticsHeader from '../AnalyticsHeader';
 import EventAnalyticsChart from './EventAnalyticsChart';
 import EventsAnalyticsOverviewSection from './EventsAnalyticsOverviewSection';
 import EventsAnalyticsRecentEventsSection from './EventsAnalyticsRecentEventsSection';
-import EventsAnalyticsTopEventGoers from './EventsAnalyticsTopEventGoers';
+import EventsAnalyticsTopGoersSection from './EventsAnalyticsTopGoersSection';
 
 interface GetEventsAnalyticsArgs {
   currentTimestamp: string;
@@ -42,14 +42,10 @@ const EventsAnalyticsEmptyMessage: React.FC = () => (
 );
 
 const EventsAnalytics: React.FC = () => {
-  // const communityId: string = useReactiveVar(communityIdVar);
-
-  const { data, error, loading } = useQuery<
+  const { data, loading } = useQuery<
     GetEventsAnalyticsResult,
     GetEventsAnalyticsArgs
   >(GET_EVENTS_ANALYTICS, { variables: { currentTimestamp: now() } });
-
-  console.log(data, error);
 
   const events: IEvent[] = data?.events;
 
@@ -60,9 +56,7 @@ const EventsAnalytics: React.FC = () => {
       {!!events?.length && <EventsAnalyticsOverviewSection data={events} />}
       <EventAnalyticsChart />
       {!!events?.length && <EventsAnalyticsRecentEventsSection data={events} />}
-      {/* 
-      <EventsAnalyticsRecentEvents />
-      <EventsAnalyticsTopEventGoers /> */}
+      {!!events?.length && <EventsAnalyticsTopGoersSection data={events} />}
     </>
   );
 };

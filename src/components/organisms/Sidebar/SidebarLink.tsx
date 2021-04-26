@@ -64,7 +64,7 @@ const SidebarLink: ComponentWithFragments<IMember, SidebarLinkProps> = ({
     >
       <Icon />
       {title}
-      <SidebarLinkNotificationCircle to={to} />
+      <SidebarLinkNotificationCircle data={member.community} to={to} />
     </Link>
   );
 };
@@ -73,8 +73,10 @@ SidebarLink.fragment = gql`
   fragment SidebarLinkFragment on members {
     community {
       urlName
+      ...SidebarLinkNotificationCircleFragment
     }
   }
+  ${SidebarLinkNotificationCircle.fragment}
 `;
 
 export default SidebarLink;
