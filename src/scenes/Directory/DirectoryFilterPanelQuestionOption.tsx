@@ -23,10 +23,6 @@ const DirectoryFilterPanelQuestionOption: ComponentWithFragments<
     directoryFilterSelectedValuesVar
   );
 
-  // const questionId: string = IdStore.useStoreState((state) => state.id);
-
-  // const setFilter = ListFilterStore.useStoreActions((state) => state.setFilter);
-
   const responsesCount: number = question.memberValues.filter(
     (memberValue: IMemberValue) => memberValue?.value === option
   )?.length;

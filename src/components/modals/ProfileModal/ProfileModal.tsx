@@ -2,7 +2,6 @@ import React from 'react';
 
 import { DocumentNode, gql, useQuery, useReactiveVar } from '@apollo/client';
 import { modalVar } from '@core/state/Modal.reactive';
-import IdStore from '@core/store/Id.store';
 import { IMember } from '@util/constants.entities';
 import ProfileModalHistory from './ProfileModalHistory';
 import ProfileModalMembershipData from './ProfileModalMembershipData';
@@ -43,11 +42,11 @@ const ProfileModal: React.FC = () => {
   if (loading || !member) return null;
 
   return (
-    <IdStore.Provider runtimeModel={{ id: memberId }}>
+    <>
       <ProfileModalPersonal data={member} />
       <ProfileModalMembershipData data={member} />
       <ProfileModalHistory data={member} />
-    </IdStore.Provider>
+    </>
   );
 };
 

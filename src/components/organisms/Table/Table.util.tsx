@@ -1,5 +1,3 @@
-import { State } from 'easy-peasy';
-
 import { QuestionCategory, QuestionType } from '@util/constants';
 import { cx } from '@util/util';
 import { TableModel, TablePaginationValue, TableRow } from './Table.types';
@@ -11,7 +9,7 @@ import { TableFilterFunction } from './TableFilterPanel/TableFilterPanel.types';
  *
  * @param state Entire table state.
  */
-export const getBannerButtonTitle = (state: State<TableModel>): string => '';
+export const getBannerButtonTitle = (state: unknown): string => '';
 // const { filteredRows, rows } = state;
 // const numMembers: number = rows.length;
 // const numFilteredMembers: number = filteredRows.length;
