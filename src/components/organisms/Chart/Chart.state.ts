@@ -9,11 +9,14 @@ import {
   ChartType
 } from './Chart.types';
 
-export const getChartTotalCount = (state: Pick<ChartState, 'data'>): number =>
-  state.data.reduce(
+export const getChartTotalCount = (state: Pick<ChartState, 'data'>): number => {
+  if (!state.data) return 0;
+
+  return state.data.reduce(
     (totalCount: number, value: ChartData) => totalCount + Number(value.value),
     0
   );
+};
 
 /**
  * Sets the data of the Chart.

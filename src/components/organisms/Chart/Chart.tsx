@@ -6,7 +6,6 @@ import BarChart from './BarChart';
 import { ChartProvider, useChartDispatch } from './Chart.state';
 import { ChartDispatch, ChartInitialState, ChartType } from './Chart.types';
 import ChartHeader from './ChartHeader';
-// import FormatQuestionData from './FormatQuestionData';
 import PieChart from './PieChart';
 import TimeSeriesChart from './TimeSeriesChart';
 

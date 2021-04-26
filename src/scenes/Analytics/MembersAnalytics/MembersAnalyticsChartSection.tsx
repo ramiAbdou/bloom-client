@@ -5,7 +5,7 @@ import Section from '@components/containers/Section';
 import MembersAnalyticsActiveMembersChart from './MembersAnalyticsActiveChart';
 import MembersAnalyticsTotalMembersChart from './MembersAnalyticsTotalChart';
 
-const MembersAnalyticsCharts: React.FC = () => (
+const MembersAnalyticsChartSection: React.FC = () => (
   <Section>
     <Row wrap gap="sm">
       <MembersAnalyticsTotalMembersChart />
@@ -14,4 +14,4 @@ const MembersAnalyticsCharts: React.FC = () => (
   </Section>
 );
 
-export default MembersAnalyticsCharts;
+export default MembersAnalyticsChartSection;

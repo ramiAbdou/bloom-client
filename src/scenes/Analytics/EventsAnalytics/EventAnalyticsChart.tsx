@@ -12,7 +12,7 @@ const EventAnalyticsChart: React.FC = () => {
     queryName: 'getEventAttendeesSeries'
   });
 
-  if (loading) return null;
+  if (loading || !data) return null;
 
   return (
     <Section>

@@ -16,8 +16,18 @@ const MembersAnalyticsPlaygroundChart: ComponentWithFragments<IQuestion> = ({
       : ChartType.BAR;
 
   const chartRecord: Record<string, number> = question.memberValues.reduce(
-    (acc: Record<string, number>, { value }: IMemberValue) => {
-      return { ...acc, [value]: acc[value] ? acc[value] + 1 : 1 };
+    (acc: Record<string, number>, memberValue: IMemberValue) => {
+      const values: string[] =
+        question.type === QuestionType.MULTIPLE_SELECT
+          ? memberValue.value.split(',')
+          : [memberValue.value];
+
+      return values.reduce((allValuesAcc: Record<string, number>, value) => {
+        return {
+          ...allValuesAcc,
+          [value]: allValuesAcc[value] ? allValuesAcc[value] + 1 : 1
+        };
+      }, acc);
     },
     {}
   );

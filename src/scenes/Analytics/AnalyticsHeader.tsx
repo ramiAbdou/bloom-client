@@ -3,8 +3,9 @@ import { useHistory } from 'react-router-dom';
 
 import MainHeader from '@components/containers/Main/MainHeader';
 import { MainNavigationOptionProps } from '@components/containers/Main/MainNavigationButton';
+import { LoadingProps } from '@util/constants';
 
-const AnalyticsHeader: React.FC = () => {
+const AnalyticsHeader: React.FC<LoadingProps> = ({ loading }) => {
   const { push } = useHistory();
 
   const onEventsClick = (): void => {
@@ -20,7 +21,7 @@ const AnalyticsHeader: React.FC = () => {
     { onClick: onEventsClick, pathname: 'events', title: 'Events' }
   ];
 
-  return <MainHeader options={options} title="Analytics" />;
+  return <MainHeader loading={loading} options={options} title="Analytics" />;
 };
 
 export default AnalyticsHeader;
