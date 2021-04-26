@@ -15,7 +15,7 @@ import ChartTooltip, { ChartTooltipProps } from './Tooltip';
 
 // Pie chart colors for all of the different options.
 
-const COLORS = [
+const COLORS: string[] = [
   '#40a8c4',
   '#00C49F',
   '#B2DF8A',

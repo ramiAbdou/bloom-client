@@ -110,7 +110,6 @@ export default ({
 }: Pick<ChartModelInitArgs, 'questionId'>): any => {
   const currentQuestionId = Chart.useStoreState((state) => state.questionId);
   const currentType = Chart.useStoreState((state) => state.type);
-  const setData = Chart.useStoreActions((state) => state.setData);
   const setQuestionId = Chart.useStoreActions((state) => state.setQuestionId);
   const setType = Chart.useStoreActions((state) => state.setType);
 
@@ -155,7 +154,7 @@ export default ({
 
   useEffect(() => {
     if (data !== null && totalResponses !== null) {
-      setData({ data, totalResponses });
+      // setData({ data, totalResponses });
     }
   }, [data, totalResponses]);
 

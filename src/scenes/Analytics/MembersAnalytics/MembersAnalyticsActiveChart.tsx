@@ -11,11 +11,12 @@ const MembersAnalyticsActiveChart: React.FC = () => {
     queryName: 'getActiveMembersSeries'
   });
 
+  if (loading) return null;
+
   return (
     <Chart
       className="f-1 w-100--mt"
       data={data}
-      show={!loading}
       title="Active Users in Last 30 Days"
       type={ChartType.TIME_SERIES}
     />

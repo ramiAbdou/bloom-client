@@ -8,12 +8,24 @@ import MembersAnalyticsPlaygroundChart from './MembersAnalyticsPlaygroundChart';
 import MembersAnalyticsPlaygroundDropdown from './MembersAnalyticsPlaygroundDropdown';
 
 interface GetMembersAnalyticsPlaygroundResult {
+  question: IQuestion;
   questions: IQuestion[];
 }
 
 const GET_MEMBERS_ANALYTICS_PLAYGROUND: DocumentNode = gql`
-  query GetMembersAnalyticsPlayground($communityId: String!) {
+  query GetMembersAnalyticsPlayground(
+    $communityId: String!
+    $membersAnalyticsPlaygroundQuestionId: String! = ""
+  ) {
     communityId @client @export(as: "communityId")
+    membersAnalyticsPlaygroundQuestionId
+      @client
+      @export(as: "membersAnalyticsPlaygroundQuestionId")
+
+    question(id: $membersAnalyticsPlaygroundQuestionId) {
+      id
+      ...MembersAnalyticsPlaygroundChartFragment
+    }
 
     questions(
       where: {
@@ -24,6 +36,7 @@ const GET_MEMBERS_ANALYTICS_PLAYGROUND: DocumentNode = gql`
           { category: { _eq: "GENDER" } }
           { category: { _eq: "MEMBER_TYPE" } }
         ]
+        type: { _neq: "LONG_TEXT" }
       }
       order_by: { rank: asc }
     ) {
@@ -31,6 +44,7 @@ const GET_MEMBERS_ANALYTICS_PLAYGROUND: DocumentNode = gql`
       ...MembersAnalyticsPlaygroundDropdownFragment
     }
   }
+  ${MembersAnalyticsPlaygroundChart.fragment}
   ${MembersAnalyticsPlaygroundDropdown.fragment}
 `;
 
@@ -49,7 +63,10 @@ const MembersAnalyticsPlaygroundSection: React.FC = () => {
     GET_MEMBERS_ANALYTICS_PLAYGROUND
   );
 
+  const question: IQuestion = data?.question;
   const questions: IQuestion[] = data?.questions;
+
+  console.log(question);
 
   return (
     <Section>
@@ -63,7 +80,7 @@ const MembersAnalyticsPlaygroundSection: React.FC = () => {
       <div className="s-analytics-members-playground">
         <MembersAnalyticsPlaygroundDescription />
         {questions && <MembersAnalyticsPlaygroundDropdown data={questions} />}
-        <MembersAnalyticsPlaygroundChart />
+        {question && <MembersAnalyticsPlaygroundChart data={question} />}
       </div>
     </Section>
   );

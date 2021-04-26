@@ -1,23 +1,22 @@
 import { YAxisProps } from 'recharts';
 
-import ChartStore from './Chart.store';
-import { ChartFormat } from './Chart.types';
+import { useChartState } from './Chart.state';
+import { ChartFormat, ChartState, ChartYAxisOptions } from './Chart.types';
 
 const useYAxisOptions = (): Partial<YAxisProps> => {
-  const format: ChartFormat = ChartStore.useStoreState(
-    ({ options }) => options?.format
-  );
+  const { options }: ChartState = useChartState();
 
-  const yOptions = ChartStore.useStoreState(({ options }) => options?.yAxis);
+  const format: ChartFormat = options?.format;
+  const yAxisOptions: ChartYAxisOptions = options?.yAxis;
 
   return {
-    domain: yOptions?.domain ?? [
+    domain: yAxisOptions?.domain ?? [
       (dataMin: number) => Math.round(dataMin * 0.8),
       'auto'
     ],
     padding: { bottom: 16 },
     tickFormatter: (value) => (format === 'MONEY' ? `$${value}` : value),
-    width: yOptions?.width ?? 48
+    width: yAxisOptions?.width ?? 48
   };
 };
 

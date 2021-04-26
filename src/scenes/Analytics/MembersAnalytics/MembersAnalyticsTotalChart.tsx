@@ -11,11 +11,12 @@ const MembersAnalyticsTotalChart: React.FC = () => {
     queryName: 'getMembersSeries'
   });
 
+  if (loading) return null;
+
   return (
     <Chart
       className="f-1 w-100--mt"
       data={data}
-      show={!loading}
       title="Total Members"
       type={ChartType.TIME_SERIES}
     />

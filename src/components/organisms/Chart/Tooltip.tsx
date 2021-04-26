@@ -1,7 +1,9 @@
 import React from 'react';
 import { TooltipPayload } from 'recharts';
 
+import { useChartState } from './Chart.state';
 import Chart from './Chart.store';
+import { ChartState } from './Chart.types';
 
 export type ChartTooltipProps = {
   active?: boolean;
@@ -12,7 +14,8 @@ export type ChartTooltipProps = {
 // The tooltip data that we need will either come from the label if it is a bar
 // chart, or from the payload if it is a pie chart. Subject to change.
 export default ({ active, label, payload }: ChartTooltipProps): JSX.Element => {
-  const data = Chart.useStoreState((state) => state.data);
+  const { data }: ChartState = useChartState();
+
   const totalResponses = Chart.useStoreState((state) => state.totalResponses);
 
   // Only show the tooltip if it active.

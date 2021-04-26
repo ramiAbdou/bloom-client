@@ -1,7 +1,7 @@
 import { makeVar, ReactiveVar } from '@apollo/client';
 
 export const membersAnalyticsPlaygroundQuestionIdVar: ReactiveVar<string> = makeVar<string>(
-  null
+  ''
 );
 
 interface AnalyticsReactiveFields {

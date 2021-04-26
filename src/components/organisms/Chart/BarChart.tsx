@@ -8,33 +8,26 @@ import {
   XAxis,
   YAxis
 } from 'recharts';
-import { communityIdVar } from 'src/App.reactive';
 
-import { useReactiveVar } from '@apollo/client';
-import useFindOne from '@gql/hooks/useFindOne';
-import { ICommunity } from '@util/constants.entities';
-import Chart from './Chart.store';
+import useCommunityPrimaryColor from '@core/hooks/useCommunityPrimaryColor';
+import { useChartState } from './Chart.state';
+import { ChartState } from './Chart.types';
 import ChartTooltip, { ChartTooltipProps } from './Tooltip';
 import useXAxisOptions from './useXAxisOptions';
 import useYAxisOptions from './useYAxisOptions';
 
 const BarChart: React.FC = () => {
-  const communityId: string = useReactiveVar(communityIdVar);
-
-  const { data: community, loading } = useFindOne(ICommunity, {
-    fields: ['primaryColor'],
-    where: { id: communityId }
-  });
-
-  const data = Chart.useStoreState((state) => state.data);
-
+  const { data }: ChartState = useChartState();
+  const primaryColor: string = useCommunityPrimaryColor();
   const xAxisOptions = useXAxisOptions();
   const yAxisOptions = useYAxisOptions();
 
-  if (loading || !data?.length) return null;
+  console.log('bar chart data', data);
+
+  if (!data?.length) return null;
 
   // Allows the chart to be large/not squish and is scrollable.
-  const minWidth = data.length * 24;
+  const minWidth: number = data.length * 24;
 
   return (
     <ResponsiveContainer height={360} minWidth={minWidth}>
@@ -51,7 +44,7 @@ const BarChart: React.FC = () => {
           content={(props: ChartTooltipProps) => <ChartTooltip {...props} />}
           wrapperStyle={{ visibility: 'visible' }}
         />
-        <Bar dataKey="value" fill={community.primaryColor} />
+        <Bar dataKey="value" fill={primaryColor} />
       </RechartsBarChart>
     </ResponsiveContainer>
   );

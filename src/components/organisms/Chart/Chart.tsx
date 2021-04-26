@@ -1,52 +1,58 @@
 import React, { useEffect } from 'react';
 
+import { BaseProps } from '@util/constants';
 import { cx } from '@util/util';
 import BarChart from './BarChart';
+import { ChartProvider, useChartDispatch } from './Chart.state';
 import ChartStore, { chartModel } from './Chart.store';
-import { ChartModelInitArgs, ChartType } from './Chart.types';
+import { ChartDispatch, ChartInitialState, ChartType } from './Chart.types';
 import ChartHeader from './ChartHeader';
-import FormatQuestionData from './FormatQuestionData';
+// import FormatQuestionData from './FormatQuestionData';
 import PieChart from './PieChart';
 import TimeSeriesChart from './TimeSeriesChart';
 
-const ChartContent = (data: ChartModelInitArgs) => {
-  const chartType = ChartStore.useStoreState((state) => state.type);
-  const setData = ChartStore.useStoreActions((state) => state.setData);
+const ChartContent: React.FC<ChartInitialState> = ({ data, title, type }) => {
+  const chartDispatch: ChartDispatch = useChartDispatch();
 
   useEffect(() => {
-    // Only time we'll need to update the data is if the title/type are set.
-    if (data) setData(data);
+    chartDispatch({ data, type: 'SET_DATA' });
   }, [data]);
+
+  useEffect(() => {
+    chartDispatch({ chartType: type, type: 'SET_TYPE' });
+  }, [type]);
+
+  useEffect(() => {
+    chartDispatch({ title, type: 'SET_TITLE' });
+  }, [title]);
 
   return (
     <>
-      {chartType === ChartType.BAR && <BarChart />}
-      {chartType === ChartType.PIE && <PieChart />}
-      {chartType === ChartType.TIME_SERIES && <TimeSeriesChart />}
+      {type === ChartType.BAR && <BarChart />}
+      {type === ChartType.PIE && <PieChart />}
+      {type === ChartType.TIME_SERIES && <TimeSeriesChart />}
     </>
   );
 };
 
-const Chart: React.FC<ChartModelInitArgs> = ({
+const Chart: React.FC<ChartInitialState & BaseProps> = ({
   className,
   options,
-  questionId,
-  show,
   ...args
 }) => {
-  if (show === false) return null;
-
   const css: string = cx('o-chart', {}, className);
 
   return (
-    <ChartStore.Provider runtimeModel={{ ...chartModel, options }}>
-      {questionId && <FormatQuestionData questionId={questionId} />}
+    <ChartProvider {...args}>
+      <ChartStore.Provider runtimeModel={{ ...chartModel, options }}>
+        {/* {questionId && <FormatQuestionData questionId={questionId} />} */}
 
-      <div className={css}>
-        <ChartHeader />
-        <ChartContent {...args} />
-      </div>
-    </ChartStore.Provider>
+        <div className={css}>
+          <ChartHeader />
+          <ChartContent {...args} />
+        </div>
+      </ChartStore.Provider>
+    </ChartProvider>
   );
 };
 

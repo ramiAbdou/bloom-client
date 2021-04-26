@@ -13,7 +13,6 @@ import {
 import { communityIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
-import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { ICommunity } from '@util/constants.entities';

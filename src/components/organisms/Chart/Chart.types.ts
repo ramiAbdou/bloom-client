@@ -37,3 +37,24 @@ export interface ChartModelInitArgs extends BaseProps {
   title?: string;
   type?: ChartType;
 }
+
+export interface ChartInitialState {
+  data: ChartData[];
+  options?: ChartOptions;
+  title: string;
+  type?: ChartType;
+}
+
+export interface ChartState {
+  data: ChartData[];
+  options: ChartOptions;
+  title: string;
+  type: ChartType;
+}
+
+export type ChartAction =
+  | { type: 'SET_DATA'; data: ChartData[] }
+  | { type: 'SET_TITLE'; title: string }
+  | { type: 'SET_TYPE'; chartType: ChartType };
+
+export type ChartDispatch = React.Dispatch<ChartAction>;
