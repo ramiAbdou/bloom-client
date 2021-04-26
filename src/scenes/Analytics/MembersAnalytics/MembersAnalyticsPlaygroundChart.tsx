@@ -32,8 +32,6 @@ const MembersAnalyticsPlaygroundChart: ComponentWithFragments<IQuestion> = ({
       return { name: data[0], value: data[1] };
     });
 
-  console.log(chartData);
-
   return <Chart data={chartData} title={question.title} type={chartType} />;
 };
 

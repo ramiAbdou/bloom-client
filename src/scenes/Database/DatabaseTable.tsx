@@ -52,8 +52,6 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
 
   if (!questions?.length) return null;
 
-  console.log(totalMembersCount);
-
   // const onRenameColumn: RenameColumnFunction = async ({
   //   column,
   //   updateColumn

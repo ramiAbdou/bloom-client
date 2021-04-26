@@ -12,7 +12,7 @@ import {
 import Row from '@components/containers/Row/Row';
 import { useChartState } from './Chart.state';
 import { ChartState } from './Chart.types';
-import ChartTooltip, { ChartTooltipProps } from './Tooltip';
+import ChartTooltip, { ChartTooltipProps } from './ChartTooltip';
 
 // Pie chart colors for all of the different options.
 

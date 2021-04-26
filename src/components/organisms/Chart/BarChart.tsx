@@ -12,7 +12,7 @@ import {
 import useCommunityPrimaryColor from '@core/hooks/useCommunityPrimaryColor';
 import { useChartState } from './Chart.state';
 import { ChartState } from './Chart.types';
-import ChartTooltip, { ChartTooltipProps } from './Tooltip';
+import ChartTooltip, { ChartTooltipProps } from './ChartTooltip';
 import useXAxisOptions from './useXAxisOptions';
 import useYAxisOptions from './useYAxisOptions';
 

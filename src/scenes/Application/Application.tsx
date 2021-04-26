@@ -36,8 +36,6 @@ const Application: React.FC = () => {
     GetApplicationByCommunityUrlNameArgs
   >(GET_APPLICATION_BY_COMMUNITY_URL_NAME, { variables: { urlName } });
 
-  console.log(data, error);
-
   const application: IApplication = data?.applications?.length
     ? data?.applications[0]
     : null;

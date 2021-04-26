@@ -66,8 +66,6 @@ const MembersAnalyticsPlaygroundSection: React.FC = () => {
   const question: IQuestion = data?.question;
   const questions: IQuestion[] = data?.questions;
 
-  console.log(question);
-
   return (
     <Section>
       <LoadingHeader

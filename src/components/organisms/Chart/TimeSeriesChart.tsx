@@ -15,7 +15,7 @@ import useBreakpoint from '@hooks/useBreakpoint';
 import { take } from '@util/util';
 import { useChartState } from './Chart.state';
 import { ChartState } from './Chart.types';
-import { ChartTooltipProps } from './Tooltip';
+import { ChartTooltipProps } from './ChartTooltip';
 import useXAxisOptions from './useXAxisOptions';
 import useYAxisOptions from './useYAxisOptions';
 
