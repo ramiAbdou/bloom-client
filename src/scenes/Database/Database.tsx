@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { DocumentNode, gql, useQuery } from '@apollo/client';
-import MainContent from '@components/containers/Main/MainContent';
 import Scene from '@components/containers/Scene';
 import { AggregateCount } from '@util/constants';
 import { IMember, IQuestion } from '@util/constants.entities';
@@ -116,10 +115,8 @@ const Database: React.FC = () => {
 
   return (
     <Scene>
-      <MainContent>
-        <DatabaseHeader loading={loading} />
-        <DatabaseTable {...data} />
-      </MainContent>
+      <DatabaseHeader loading={loading} />
+      <DatabaseTable {...data} />
     </Scene>
   );
 };

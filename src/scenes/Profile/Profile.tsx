@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { DocumentNode, gql, useQuery } from '@apollo/client';
-import MainContent from '@components/containers/Main/MainContent';
 import Scene from '@components/containers/Scene';
 import SidebarHamburgerButton from '@components/organisms/Sidebar/SidebarHamburgerButton';
 import { IMember } from '@util/constants.entities';
@@ -40,19 +39,17 @@ const Profile: React.FC = () => {
 
   return (
     <Scene>
-      <MainContent>
-        <SidebarHamburgerButton className="pt-md" />
+      <SidebarHamburgerButton className="pt-md" />
 
-        <div className="s-profile pt-md--d">
-          <div>
-            {member && <ProfilePersonalCard data={member} />}
-            {member && <ProfileSocialCard data={member} />}
-            {member && <ProfileMembershipCard data={member} />}
-          </div>
-
+      <div className="s-profile pt-md--d">
+        <div>
+          {member && <ProfilePersonalCard data={member} />}
           {member && <ProfileSocialCard data={member} />}
+          {member && <ProfileMembershipCard data={member} />}
         </div>
-      </MainContent>
+
+        {member && <ProfileSocialCard data={member} />}
+      </div>
     </Scene>
   );
 };

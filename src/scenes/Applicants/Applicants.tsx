@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { DocumentNode, gql, useQuery } from '@apollo/client';
-import MainContent from '@components/containers/Main/MainContent';
 import Scene from '@components/containers/Scene';
 import { IMember } from '@util/constants.entities';
 import ApplicantsCard from './ApplicantsCard';
@@ -38,10 +37,8 @@ const Applicants: React.FC = () => {
 
   return (
     <Scene>
-      <MainContent>
-        <ApplicantsHeader applicants={applicants} loading={loading} />
-        {applicants && <ApplicantsCardList applicants={applicants} />}
-      </MainContent>
+      <ApplicantsHeader applicants={applicants} loading={loading} />
+      {applicants && <ApplicantsCardList applicants={applicants} />}
     </Scene>
   );
 };

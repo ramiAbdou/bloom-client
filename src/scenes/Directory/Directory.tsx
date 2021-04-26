@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { DocumentNode, gql, useQuery } from '@apollo/client';
-import MainContent from '@components/containers/Main/MainContent';
 import Scene from '@components/containers/Scene';
 import PanelLocal from '@components/organisms/Panel/PanelLocal';
 import { IMember } from '@util/constants.entities';
@@ -64,11 +63,11 @@ const DirectoryContent: React.FC = () => {
   );
 
   return (
-    <MainContent>
+    <>
       <DirectoryHeader count={data?.members?.length ?? 0} loading={loading} />
       <DirectoryActionRow />
       {!loading && <DirectoryCardList {...data} />}
-    </MainContent>
+    </>
   );
 };
 
