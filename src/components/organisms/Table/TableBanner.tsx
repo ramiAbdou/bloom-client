@@ -65,11 +65,9 @@ const TableBanner: React.FC = () => {
   const tableState: TableState = useTableState();
   const { filteredRows, selectedRowIds }: TableState = tableState;
 
-  const [floor, ceiling]: [number, number] = getRange(tableState);
-
-  const allRowsOnPageSelected: boolean = filteredRows
-    .slice(floor, ceiling)
-    .every(({ id: rowId }) => selectedRowIds.includes(rowId as string));
+  const allRowsOnPageSelected: boolean = filteredRows.every(({ id: rowId }) =>
+    selectedRowIds.includes(rowId as string)
+  );
 
   const isAllPageSelected: boolean =
     !!selectedRowIds.length && allRowsOnPageSelected;

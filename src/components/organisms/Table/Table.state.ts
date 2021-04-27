@@ -53,7 +53,9 @@ export const getColumnIndex = (
  * // Returns [25, 49].
  * getRange({ page: 1, rowsPerPage: 25 })
  */
-export const getRange = (state: TableState): [number, number] => {
+export const getRange = (
+  state: Pick<TableState, 'filteredRows' | 'page' | 'rowsPerPage'>
+): [number, number] => {
   const floor: number = state.page * state.rowsPerPage;
   const filteredRowsCount: number = state.filteredRows.length;
 
@@ -149,6 +151,8 @@ const toggleRowIds = (state: TableState, rowIds: string[]): TableState => {
 
     return isAlreadySelected;
   });
+
+  console.log('ROW IDS', rowIds);
 
   return {
     ...state,
