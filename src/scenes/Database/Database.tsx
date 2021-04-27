@@ -17,6 +17,7 @@ interface GetMembersByCommunityIdExpandedResult {
 const GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED: DocumentNode = gql`
   query GetMembersByCommunityIdExpanded(
     $communityId: String!
+    $filtersExp: members_bool_exp! = {}
     $offset: Int!
     $orderByExp: [members_order_by!]
     $roleExp: String_comparison_exp! = {}
@@ -24,6 +25,7 @@ const GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED: DocumentNode = gql`
     $searchStringWord: String!
   ) {
     communityId @client @export(as: "communityId")
+    databaseFiltersExp @client @export(as: "filtersExp")
     databaseOffset @client @export(as: "offset")
     databaseOrderByExp @client @export(as: "orderByExp")
     databaseRoleExp @client @export(as: "roleExp")
@@ -32,14 +34,19 @@ const GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED: DocumentNode = gql`
 
     totalMembersCount: members_aggregate(
       where: {
-        communityId: { _eq: $communityId }
-        deletedAt: { _is_null: true }
-        role: $roleExp
-        status: { _eq: "Accepted" }
-        _or: [
-          { email: { _ilike: $searchStringWord } }
-          { firstName: { _ilike: $searchString } }
-          { lastName: { _ilike: $searchString } }
+        _and: [
+          { communityId: { _eq: $communityId } }
+          { deletedAt: { _is_null: true } }
+          { role: $roleExp }
+          { status: { _eq: "Accepted" } }
+          {
+            _or: [
+              { email: { _ilike: $searchStringWord } }
+              { firstName: { _ilike: $searchString } }
+              { lastName: { _ilike: $searchString } }
+            ]
+          }
+          $filtersExp
         ]
       }
     ) {
@@ -50,14 +57,19 @@ const GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED: DocumentNode = gql`
 
     members(
       where: {
-        communityId: { _eq: $communityId }
-        deletedAt: { _is_null: true }
-        role: $roleExp
-        status: { _eq: "Accepted" }
-        _or: [
-          { email: { _ilike: $searchStringWord } }
-          { firstName: { _ilike: $searchString } }
-          { lastName: { _ilike: $searchString } }
+        _and: [
+          { communityId: { _eq: $communityId } }
+          { deletedAt: { _is_null: true } }
+          { role: $roleExp }
+          { status: { _eq: "Accepted" } }
+          {
+            _or: [
+              { email: { _ilike: $searchStringWord } }
+              { firstName: { _ilike: $searchString } }
+              { lastName: { _ilike: $searchString } }
+            ]
+          }
+          $filtersExp
         ]
       }
       limit: 50
@@ -99,6 +111,7 @@ const GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED: DocumentNode = gql`
     ) {
       category
       id
+      options
       title
       type
     }
@@ -106,11 +119,15 @@ const GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED: DocumentNode = gql`
 `;
 
 const Database: React.FC = () => {
-  const { data, loading } = useQuery<GetMembersByCommunityIdExpandedResult>(
+  const {
+    data,
+    error,
+    loading
+  } = useQuery<GetMembersByCommunityIdExpandedResult>(
     GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED
   );
 
-  console.log(data, loading);
+  console.log(data, error, loading);
 
   useEffect(
     () => () => {

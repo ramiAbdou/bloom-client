@@ -4,7 +4,7 @@ import { useStoreState } from '@core/store/Store';
 import DirectoryFilterPanel from '@scenes/Directory/DirectoryFilterPanel';
 import { PanelType } from '@util/constants';
 import TableColumnPanel from '../Table/TableColumnPanel';
-import TableFilterPanel from '../Table/TableFilterPanel/TableFilterPanel';
+import TableFilterPanel from '../Table/TableFilterPanel';
 
 const PanelLocalContent: React.FC = () => {
   const panelId: PanelType = useStoreState(({ panel }) => panel.id);

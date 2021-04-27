@@ -4,7 +4,6 @@ import React from 'react';
 import Button from '@components/atoms/Button/Button';
 import Row from '@components/containers/Row/Row';
 import { useStoreActions } from '@core/store/Store';
-import TableFilterPanelStore from './TableFilterPanel.store';
 import TableFilterPanelApplyButton from './TableFilterPanelApplyButton';
 
 const TableFilterPanelCloseButton: React.FC = () => {
@@ -24,12 +23,10 @@ const TableFilterPanelCloseButton: React.FC = () => {
 };
 
 const TableFilterPanelActions: React.FC = () => {
-  const hasFilters: boolean = TableFilterPanelStore.useStoreState(
-    (state) => !!Object.values(state.filters)?.length
-  );
+  
 
   return (
-    <Row show={hasFilters} spacing="xs">
+    <Row spacing="xs">
       <TableFilterPanelApplyButton />
       <TableFilterPanelCloseButton />
     </Row>

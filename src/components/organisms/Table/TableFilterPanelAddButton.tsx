@@ -1,16 +1,14 @@
-import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
-import TableFilterPanelStore from './TableFilterPanel.store';
+import { useTableDispatch } from './Table.state';
+import { TableDispatch } from './Table.types';
 
 const TableFilterPanelAddButton: React.FC = () => {
-  const addEmptyFilter: ActionCreator<void> = TableFilterPanelStore.useStoreActions(
-    (state) => state.addEmptyFilter
-  );
+  const tableDispatch: TableDispatch = useTableDispatch();
 
   const onClick = (): void => {
-    addEmptyFilter();
+    tableDispatch({ type: 'ADD_FILTER' });
   };
 
   return (

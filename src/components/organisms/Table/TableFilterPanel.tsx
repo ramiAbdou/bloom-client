@@ -1,7 +1,8 @@
 import React from 'react';
 
 import Row from '@components/containers/Row/Row';
-import TableFilterPanelStore from './TableFilterPanel.store';
+import { useTableState } from './Table.state';
+import { TableState } from './Table.types';
 import TableFilterPanelActions from './TableFilterPanelActions';
 import TableFilterPanelAddButton from './TableFilterPanelAddButton';
 import TableFilterPanelClearButton from './TableFilterPanelClearButton';
@@ -15,13 +16,11 @@ const TableFilterPanelHeader: React.FC = () => (
 );
 
 const TableFilterPanelRowList: React.FC = () => {
-  const filterIds: string[] = TableFilterPanelStore.useStoreState(
-    (state) => state.filterIds
-  );
+  const { allFilterIds }: TableState = useTableState();
 
   return (
     <ul className="mb-sm--nlc">
-      {filterIds.map((filterId: string) => (
+      {allFilterIds.map((filterId: string) => (
         <TableFilterPanelRow key={filterId} id={filterId} />
       ))}
     </ul>

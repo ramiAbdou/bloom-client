@@ -10,17 +10,21 @@ import {
 } from './Table.state';
 import TableStore from './Table.store';
 import {
+  OnApplyFiltersArgs,
   SortTableArgs,
+  TableColumn,
   TableDispatch,
+  TableFilter,
+  TableFilterExpanded,
   TableInitialState,
   TableState
 } from './Table.types';
 import TableBanner from './TableBanner';
-import TableFilterStore from './TableFilterPanel/TableFilterPanel.store';
 import TablePagination from './TablePagination';
 
 interface TableProps extends TableInitialState {
   emptyMessage?: string;
+  onApplyFilters?: (args: OnApplyFiltersArgs) => void;
   onOffsetChange?: (offset: number) => void;
   onSortColumn?: (args: SortTableArgs) => void;
   TableActions?: React.FC;
@@ -29,13 +33,24 @@ interface TableProps extends TableInitialState {
 const TableLayout: React.FC<Partial<TableProps>> = ({
   children,
   emptyMessage,
+  onApplyFilters,
   onOffsetChange,
   onSortColumn,
   rows,
   TableActions,
   totalCount
 }) => {
-  const state: TableState = useTableState();
+  const {
+    appliedFilterIds,
+    columns,
+    filters,
+    filterJoinOperator,
+    page,
+    rowsPerPage,
+    sortColumnId,
+    sortDirection
+  }: TableState = useTableState();
+
   const tableDispatch: TableDispatch = useTableDispatch();
 
   useEffect(() => {
@@ -44,18 +59,40 @@ const TableLayout: React.FC<Partial<TableProps>> = ({
   }, [rows]);
 
   useEffect(() => {
-    if (onSortColumn) {
-      onSortColumn({
-        column: getColumn(state, { columnId: state.sortColumnId }),
-        sortColumnId: state.sortColumnId,
-        sortDirection: state.sortDirection
-      });
-    }
-  }, [state.sortColumnId, state.sortDirection]);
+    if (!appliedFilterIds.length || !onApplyFilters) return;
+
+    const expandedFilters: TableFilterExpanded[] = appliedFilterIds.map(
+      (filterId: string) => {
+        const filter: TableFilter = filters[filterId];
+
+        return {
+          ...filter,
+          column: columns.find(
+            (column: TableColumn) => column.id === filter.columnId
+          )
+        };
+      }
+    );
+
+    onApplyFilters({
+      filters: expandedFilters,
+      joinOperator: filterJoinOperator
+    });
+  }, [appliedFilterIds, filterJoinOperator]);
 
   useEffect(() => {
-    if (onOffsetChange) onOffsetChange(state.page * state.rowsPerPage);
-  }, [state.page]);
+    if (onOffsetChange) onOffsetChange(page * rowsPerPage);
+  }, [page]);
+
+  useEffect(() => {
+    if (onSortColumn) {
+      onSortColumn({
+        column: getColumn({ columns }, { columnId: sortColumnId }),
+        sortColumnId,
+        sortDirection
+      });
+    }
+  }, [sortColumnId, sortDirection]);
 
   return (
     <>
@@ -74,6 +111,7 @@ const Table: React.FC<TableProps> = ({
   columns,
   emptyMessage,
   options,
+  onApplyFilters,
   onOffsetChange,
   onSortColumn,
   rows,
@@ -87,18 +125,17 @@ const Table: React.FC<TableProps> = ({
     totalCount={totalCount}
   >
     <TableStore.Provider>
-      <TableFilterStore.Provider>
-        <TableLayout
-          TableActions={TableActions}
-          emptyMessage={emptyMessage}
-          rows={rows}
-          totalCount={totalCount}
-          onOffsetChange={onOffsetChange}
-          onSortColumn={onSortColumn}
-        >
-          {children}
-        </TableLayout>
-      </TableFilterStore.Provider>
+      <TableLayout
+        TableActions={TableActions}
+        emptyMessage={emptyMessage}
+        rows={rows}
+        totalCount={totalCount}
+        onApplyFilters={onApplyFilters}
+        onOffsetChange={onOffsetChange}
+        onSortColumn={onSortColumn}
+      >
+        {children}
+      </TableLayout>
     </TableStore.Provider>
   </TableProvider>
 );

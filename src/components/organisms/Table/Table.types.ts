@@ -9,6 +9,7 @@ export interface TableColumn {
   format?: (value: boolean | string) => string;
   hideTitle?: boolean;
   id: string;
+  options?: string[];
   render?: (value: string) => JSX.Element;
   title?: string;
   type?: QuestionType;
@@ -46,10 +47,38 @@ export type TableModel = {
 
 export type GetColumnArgs = { category?: QuestionCategory; columnId?: string };
 
+export interface OnApplyFiltersArgs {
+  filters: TableFilterExpanded[];
+  joinOperator: TableFilterJoinOperatorType;
+}
+
 export interface SortTableArgs {
   column?: TableColumn;
   sortColumnId: string;
   sortDirection: TableSortDirection;
+}
+
+export interface TableFilter {
+  columnId: string;
+  operator: TableFilterOperatorType;
+  value: string;
+}
+
+export interface TableFilterExpanded {
+  column: TableColumn;
+  operator: TableFilterOperatorType;
+  value: string;
+}
+
+export enum TableFilterJoinOperatorType {
+  AND = 'and',
+  OR = 'or'
+}
+
+export enum TableFilterOperatorType {
+  INCLUDES = 'includes',
+  IS = 'is',
+  IS_NOT = 'is not'
 }
 
 export type TablePaginationValue = number | '...';
@@ -88,8 +117,12 @@ export interface TableInitialState {
 }
 
 export interface TableState {
+  allFilterIds: string[];
+  appliedFilterIds: string[];
   columns: TableColumn[];
+  filterJoinOperator: TableFilterJoinOperatorType;
   filteredRows: TableRow[];
+  filters: Record<string, TableFilter>;
   isAllRowsSelected: boolean;
   options: TableOptions;
   page: number;
@@ -102,7 +135,20 @@ export interface TableState {
 }
 
 export type TableAction =
+  | { type: 'ADD_FILTER' }
+  | { type: 'APPLY_FILTERS' }
+  | { type: 'CLEAR_FILTERS' }
+  | { type: 'REMOVE_FILTER'; filterId: string }
   | { type: 'RESET_SELECTED_ROW_IDS' }
+  | {
+      type: 'SET_FILTER';
+      filterId: string;
+      updatedFilter: Partial<TableFilter>;
+    }
+  | {
+      type: 'SET_FILTER_JOIN_OPERATOR';
+      filterJoinOperator: TableFilterJoinOperatorType;
+    }
   | { type: 'SET_PAGE'; page: number }
   | { type: 'SET_ROWS'; rows: TableRow[] }
   | { type: 'SET_TOTAL_COUNT'; totalCount: number }

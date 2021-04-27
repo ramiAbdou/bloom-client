@@ -1,7 +1,6 @@
 import { action, createContextStore } from 'easy-peasy';
 
-import { TableModel, TableQuickFilterArgs, TableRow } from './Table.types';
-import { runFilters } from './Table.util';
+import { TableModel, TableQuickFilterArgs } from './Table.types';
 
 export const tableModel: TableModel = {
   filters: {},
@@ -10,14 +9,8 @@ export const tableModel: TableModel = {
     const updatedFilters = { ...state.filters };
     delete updatedFilters[filterId];
 
-    const updatedFilteredRows: TableRow[] = runFilters({
-      filters: updatedFilters,
-      state
-    });
-
     return {
       ...state,
-      filteredRows: updatedFilteredRows,
       filters: updatedFilters
     };
   }),
@@ -25,14 +18,8 @@ export const tableModel: TableModel = {
   setFilter: action((state, { filterId, filter }: TableQuickFilterArgs) => {
     const updatedFilters = { ...state.filters, [filterId]: filter };
 
-    const updatedFilteredRows: TableRow[] = runFilters({
-      filters: updatedFilters,
-      state
-    });
-
     return {
       ...state,
-      filteredRows: updatedFilteredRows,
       filters: updatedFilters
     };
   })

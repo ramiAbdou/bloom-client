@@ -9,7 +9,7 @@ import FormHeader from '@components/organisms/Form/FormHeader';
 import FormItem from '@components/organisms/Form/FormItem';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { QuestionCategory, QuestionType } from '@util/constants';
+import { QuestionType } from '@util/constants';
 import { IMember, IMemberValue } from '@util/constants.entities';
 import useUpdateMemberValues from './useUpdateMemberValues';
 
@@ -36,11 +36,7 @@ const ProfileMembershipForm: React.FC = () => {
   if (loading) return null;
 
   const items: FormItemData[] = member.memberValues
-    ?.filter(
-      (memberValue: IMemberValue) =>
-        !memberValue.question.category ||
-        memberValue.question.category === QuestionCategory.GENDER
-    )
+    ?.filter((memberValue: IMemberValue) => !memberValue.question.category)
     ?.sort((a: IMemberValue, b: IMemberValue) => {
       if (a.question.rank < b.question.rank) return -1;
       if (a.question.rank > b.question.rank) return 1;

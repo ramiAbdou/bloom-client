@@ -1,7 +1,6 @@
 import { QuestionCategory, QuestionType } from '@util/constants';
 import { cx } from '@util/util';
-import { TablePaginationValue, TableRow } from './Table.types';
-import { TableFilterFunction } from './TableFilterPanel/TableFilterPanel.types';
+import { TablePaginationValue } from './Table.types';
 
 /**
  * RETURNS an array of pagination values inserting ellipses at the correct
@@ -78,47 +77,3 @@ export const getTableCellClass = (args: GetTableCellClassArgs): string => {
     'o-table-cell--xs': isDuesStatus
   });
 };
-
-interface RunFiltersArgs {
-  filters?: Record<string, TableFilterFunction>;
-  searchString?: string;
-  state: unknown;
-}
-
-/**
- * Returns the filtered Table rows based on the active filters as well as
- * the Table search string.
- */
-export const runFilters = (args: RunFiltersArgs): TableRow[] =>
-  // const filters: Record<string, TableFilterFunction> =
-  // args.filters ?? args.state.filters;
-
-  // const { state } = args;
-  // const rows: TableRow[] = [...state.rows];
-
-  // const filteredRows: TableRow[] = rows?.filter((row) =>
-  //   Object.values(filters)?.every((tableFilter: TableFilterFunction) =>
-  //     tableFilter(row)
-  //   )
-  // );
-
-  // const columns: TableColumn[] = [...state.columns];
-
-  // const firstNameColumnId: string = columns.find(
-  //   ({ category }) => category === QuestionCategory.FIRST_NAME
-  // )?.id;
-
-  // const lastNameColumnId: string = columns.find(
-  //   ({ category }) => category === QuestionCategory.LAST_NAME
-  // )?.id;
-  [];
-
-// return filteredRows;
-
-// return matchSorter(filteredRows, searchString, {
-//   keys: [
-//     ...[...state.columns].map(({ id }) => id),
-//     (row: TableRow) => `${row[firstNameColumnId]} ${row[lastNameColumnId]}`
-//   ],
-//   threshold: matchSorter.rankings.ACRONYM
-// });

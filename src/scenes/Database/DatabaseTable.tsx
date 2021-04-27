@@ -4,6 +4,7 @@ import React from 'react';
 import { useReactiveVar } from '@apollo/client';
 import Table from '@components/organisms/Table/Table';
 import {
+  OnApplyFiltersArgs,
   SortTableArgs,
   TableColumn,
   TableOptions,
@@ -12,7 +13,11 @@ import {
 import { modalVar } from '@core/state/Modal.reactive';
 import { AggregateCount, ModalType, QuestionCategory } from '@util/constants';
 import { IMember, IQuestion } from '@util/constants.entities';
-import { databaseOffsetVar, databaseSortArgsVar } from './Database.reactive';
+import {
+  databaseFiltersVar,
+  databaseOffsetVar,
+  databaseSortArgsVar
+} from './Database.reactive';
 import { useMemberDatabaseRows } from './Database.util';
 import DatabaseActionRow from './DatabaseActionRow';
 
@@ -69,11 +74,15 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
   //   // if (!error) updateColumn({ id, title });
   // };
 
+  const onApplyFilters = (args: OnApplyFiltersArgs) => {
+    databaseFiltersVar(args);
+  };
+
   const onOffsetChange = (offset: number): void => {
     databaseOffsetVar(offset);
   };
 
-  const onSortColumn = (args: SortTableArgs) => {
+  const onSortColumn = (args: SortTableArgs): void => {
     databaseSortArgsVar(args);
   };
 
@@ -91,6 +100,7 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
       options={options}
       rows={rows}
       totalCount={totalMembersCount.aggregate.count}
+      onApplyFilters={onApplyFilters}
       onOffsetChange={onOffsetChange}
       onSortColumn={onSortColumn}
     >

@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import { useReducer } from 'react';
 import { createContainer } from 'react-tracked';
 
@@ -7,6 +8,9 @@ import {
   SortTableArgs,
   TableAction,
   TableColumn,
+  TableFilter,
+  TableFilterJoinOperatorType,
+  TableFilterOperatorType,
   TableInitialState,
   TableRow,
   TableSortDirection,
@@ -20,7 +24,7 @@ import {
  * @param columnId - ID of the TableColumn to return.
  */
 export const getColumn = (
-  state: TableState,
+  state: Pick<TableState, 'columns'>,
   { columnId, category }: GetColumnArgs
 ): TableColumn =>
   state.columns.find((column: TableColumn) => {
@@ -67,11 +71,86 @@ export const getRange = (
   return [floor, ceiling];
 };
 
+const addFilter = (state: TableState): TableState => {
+  const newFilterId: string = nanoid();
+
+  return {
+    ...state,
+    allFilterIds: [...state.allFilterIds, newFilterId],
+    filters: {
+      ...state.filters,
+      [newFilterId]: {
+        columnId: null,
+        operator: TableFilterOperatorType.IS,
+        value: null
+      }
+    }
+  };
+};
+
+const applyFilters = (state: TableState): TableState => {
+  return {
+    ...state,
+    appliedFilterIds: [...state.allFilterIds]
+  };
+};
+
+const clearFilters = (state: TableState): TableState => {
+  const initialFilterId: string = nanoid();
+
+  return {
+    ...state,
+    allFilterIds: [initialFilterId],
+    appliedFilterIds: [],
+    filters: {
+      [initialFilterId]: {
+        columnId: null,
+        operator: TableFilterOperatorType.IS,
+        value: null
+      }
+    }
+  };
+};
+
+const removeFilter = (state: TableState, filterId: string): TableState => {
+  return {
+    ...state,
+    allFilterIds: state.allFilterIds.filter(
+      (value: string) => value !== filterId
+    )
+  };
+};
+
 /**
  * Sets the setSelectedRowIds to an empty array.
  */
 const resetSelectedRowIds = (state: TableState): TableState => {
   return { ...state, selectedRowIds: [] };
+};
+
+interface SetFilterArgs {
+  filterId: string;
+  updatedFilter: Partial<TableFilter>;
+}
+
+const setFilter = (
+  state: TableState,
+  { filterId, updatedFilter }: SetFilterArgs
+): TableState => {
+  return {
+    ...state,
+    filters: {
+      ...state.filters,
+      [filterId]: { ...state.filters[filterId], ...updatedFilter }
+    }
+  };
+};
+
+const setFilterJoinOperator = (
+  state: TableState,
+  filterJoinOperator
+): TableState => {
+  return { ...state, filterJoinOperator };
 };
 
 /**
@@ -165,8 +244,26 @@ const toggleRowIds = (state: TableState, rowIds: string[]): TableState => {
 
 const tableReducer = (state: TableState, action: TableAction): TableState => {
   switch (action.type) {
+    case 'ADD_FILTER':
+      return addFilter(state);
+
+    case 'APPLY_FILTERS':
+      return applyFilters(state);
+
+    case 'CLEAR_FILTERS':
+      return clearFilters(state);
+
+    case 'REMOVE_FILTER':
+      return removeFilter(state, action.filterId);
+
     case 'RESET_SELECTED_ROW_IDS':
       return resetSelectedRowIds(state);
+
+    case 'SET_FILTER':
+      return setFilter(state, { ...action });
+
+    case 'SET_FILTER_JOIN_OPERATOR':
+      return setFilterJoinOperator(state, action.filterJoinOperator);
 
     case 'SET_PAGE':
       return setPage(state, action.page);
@@ -199,10 +296,22 @@ const useTableValue = ({
   options,
   rows,
   totalCount
-}: TableInitialState) =>
-  useReducer(tableReducer, {
+}: TableInitialState) => {
+  const initialFilterId: string = nanoid();
+
+  return useReducer(tableReducer, {
+    allFilterIds: [initialFilterId],
+    appliedFilterIds: [],
     columns,
+    filterJoinOperator: TableFilterJoinOperatorType.AND,
     filteredRows: rows,
+    filters: {
+      [initialFilterId]: {
+        columnId: null,
+        operator: TableFilterOperatorType.IS,
+        value: null
+      }
+    },
     isAllRowsSelected: false,
     options: { ...defaultTableOptions, ...options },
     page: 0,
@@ -213,6 +322,7 @@ const useTableValue = ({
     sortDirection: null,
     totalCount
   });
+};
 
 export const {
   Provider: TableProvider,

@@ -1,6 +1,23 @@
 import { makeVar, ReactiveVar } from '@apollo/client';
-import { SortTableArgs } from '@components/organisms/Table/Table.types';
+import {
+  OnApplyFiltersArgs,
+  SortTableArgs,
+  TableFilterExpanded,
+  TableFilterJoinOperatorType,
+  TableFilterOperatorType
+} from '@components/organisms/Table/Table.types';
 import { QuestionCategory } from '@util/constants';
+import { take } from '@util/util';
+
+export const databaseFiltersVar: ReactiveVar<OnApplyFiltersArgs> = makeVar<OnApplyFiltersArgs>(
+  null
+);
+
+export const databaseIsAdminsOnlyVar: ReactiveVar<boolean> = makeVar<boolean>(
+  false
+);
+
+export const databaseOffsetVar: ReactiveVar<number> = makeVar<number>(0);
 
 export const databaseSortArgsVar: ReactiveVar<SortTableArgs> = makeVar<SortTableArgs>(
   null
@@ -10,34 +27,100 @@ export const databaseSortDirectionVar: ReactiveVar<boolean> = makeVar<boolean>(
   false
 );
 
-export const databaseIsAdminsOnlyVar: ReactiveVar<boolean> = makeVar<boolean>(
-  false
-);
-
-export const databaseOffsetVar: ReactiveVar<number> = makeVar<number>(0);
-
 /**
  * Returns the search string used in the PastEventsList.
  */
 export const databaseSearchStringVar: ReactiveVar<string> = makeVar<string>('');
 
 export const clearDatabaseReactiveFields = (): void => {
-  databaseSortArgsVar(null);
-  databaseSortDirectionVar(null);
+  databaseFiltersVar(null);
   databaseIsAdminsOnlyVar(false);
   databaseOffsetVar(0);
+  databaseSortArgsVar(null);
+  databaseSortDirectionVar(null);
   databaseSearchStringVar('');
 };
 
 interface DatabaseReactiveFields {
+  databaseFiltersExp: { read: () => Record<string, unknown> };
   databaseOffset: { read: () => number };
-  databaseRoleExp: { read: () => Record<string, unknown> };
   databaseOrderByExp: { read: () => Record<string, unknown> };
+  databaseRoleExp: { read: () => Record<string, unknown> };
   databaseSearchString: { read: () => string };
   databaseSearchStringWord: { read: () => string };
 }
 
 export const databaseReactiveFields: DatabaseReactiveFields = {
+  databaseFiltersExp: {
+    read: (): Record<string, unknown> => {
+      const args: OnApplyFiltersArgs = databaseFiltersVar();
+      const filters: TableFilterExpanded[] = args?.filters;
+      const joinOperator: TableFilterJoinOperatorType = args?.joinOperator;
+
+      if (!filters?.length || !joinOperator) return {};
+
+      const mappedJoinOperator =
+        joinOperator === TableFilterJoinOperatorType.AND ? '_and' : '_or';
+
+      return {
+        [mappedJoinOperator]: filters.map(
+          ({ column, operator, value }: TableFilterExpanded) => {
+            const mappedOperator: string = take([
+              [operator === TableFilterOperatorType.IS, '_eq'],
+              [operator === TableFilterOperatorType.IS_NOT, '_neq']
+              // [operator === TableFilterOperatorType.INCLUDES, '_neq'],
+            ]);
+
+            switch (column.category) {
+              case QuestionCategory.BIO:
+                return { bio: { [mappedOperator]: value } };
+
+              case QuestionCategory.EMAIL:
+                return { email: { [mappedOperator]: value } };
+
+              case QuestionCategory.FACEBOOK_URL:
+                return {
+                  memberSocials: { facebookUrl: { [mappedOperator]: value } }
+                };
+
+              case QuestionCategory.FIRST_NAME:
+                return { firstName: { [mappedOperator]: value } };
+
+              case QuestionCategory.INSTAGRAM_URL:
+                return {
+                  memberSocials: { instagramUrl: { [mappedOperator]: value } }
+                };
+
+              case QuestionCategory.JOINED_AT:
+                return { joinedAt: { [mappedOperator]: value } };
+
+              case QuestionCategory.LAST_NAME:
+                return { lastName: { [mappedOperator]: value } };
+
+              case QuestionCategory.LINKED_IN_URL:
+                return {
+                  memberSocials: { linkedInUrl: { [mappedOperator]: value } }
+                };
+
+              case QuestionCategory.MEMBER_TYPE:
+                return {
+                  memberType: { name: { [mappedOperator]: value } }
+                };
+
+              case QuestionCategory.TWITTER_URL:
+                return {
+                  memberSocials: { twitterUrl: { [mappedOperator]: value } }
+                };
+
+              default:
+                return {};
+            }
+          }
+        )
+      };
+    }
+  },
+
   databaseOffset: { read: (): number => databaseOffsetVar() },
 
   databaseOrderByExp: {

@@ -8,20 +8,11 @@ import { useStoreActions } from '@core/store/Store';
 import useTooltip from '@hooks/useTooltip';
 import { PanelType } from '@util/constants';
 import { cx } from '@util/util';
-import TableStore from './Table.store';
-import TableFilterPanelStore from './TableFilterPanel/TableFilterPanel.store';
 
 const TableFilterButtonNumActiveTag: React.FC = () => {
-  const isCustomFilterApplied: boolean = TableStore.useStoreState((state) =>
-    Object.keys(state.filters).includes('FILTER_CUSTOM')
-  );
-
-  const numActiveFilters: number = TableFilterPanelStore.useStoreState(
-    (state) => state.filterIds.length
-  );
-
-  if (!isCustomFilterApplied || numActiveFilters === 0) return null;
-  return <div>{numActiveFilters}</div>;
+  const { appliedFilterIds }: TableState = useTableState();
+  const appliedFiltersCount: number = appliedFilterIds.length;
+  return appliedFiltersCount ? <div>{appliedFiltersCount}</div> : null;
 };
 
 const TableFilterButton: React.FC<Partial<ButtonProps>> = ({ className }) => {
