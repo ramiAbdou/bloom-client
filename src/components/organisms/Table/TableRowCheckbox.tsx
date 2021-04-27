@@ -24,7 +24,7 @@ const TableRowCheckbox: React.FC<TableRowCheckboxProps> = ({
   const isSelected: boolean = state.selectedRowIds.includes(rowId);
 
   const onChange = (): void => {
-    tableDispatch({ rowIds: [rowId], type: 'TOGGLE_ROW_IDS' });
+    tableDispatch({ rowId, type: 'TOGGLE_ROW_ID', wasToggled: isSelected });
   };
 
   return (

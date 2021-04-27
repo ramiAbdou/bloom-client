@@ -10,35 +10,35 @@ interface TableContentProps {
   emptyMessage?: string;
 }
 
-interface TableRowsProps {
-  rows: TableRowProps[];
-}
+const TableBody: React.FC = () => {
+  const { filteredRows } = useTableState();
 
-const TableRows: React.FC<TableRowsProps> = ({ rows }) => (
-  <tbody>
-    {rows.map((row: TableRowProps) => (
-      <TableRow key={hash(row)} {...row} />
-    ))}
-  </tbody>
-);
+  return (
+    <tbody>
+      {filteredRows.map((row: TableRowProps) => (
+        <TableRow key={hash(row)} {...row} />
+      ))}
+    </tbody>
+  );
+};
 
 const TableContent: React.FC<TableContentProps> = ({
   emptyMessage: eMessage
 }) => {
-  const { options, rows } = useTableState();
+  const { filteredRows, options } = useTableState();
 
-  if (!rows?.length && options.hideIfEmpty) {
+  if (!filteredRows?.length && options.hideIfEmpty) {
     return null;
   }
 
-  const emptyMessage: string = !rows?.length ? eMessage : null;
+  const emptyMessage: string = !filteredRows?.length ? eMessage : null;
 
   return (
     <>
       <div id="o-table-ctr" style={{ maxHeight: options.small && '45vh' }}>
         <table className="o-table">
           <TableHeaderRow />
-          <TableRows rows={rows} />
+          <TableBody />
         </table>
       </div>
 

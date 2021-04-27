@@ -9,7 +9,9 @@ import {
   TableColumn,
   TableInitialState,
   TableRow,
-  TableState
+  TableSortDirection,
+  TableState,
+  ToggleRowIdArgs
 } from '@components/organisms/Table/Table.types';
 
 /**
@@ -108,10 +110,30 @@ const sortTable = (state: TableState, args: SortTableArgs): TableState => {
     args.sortColumnId === state.sortColumnId &&
     args.sortDirection === state.sortDirection;
 
+  const sortColumnId: string = isAlreadySorted ? null : args.sortColumnId;
+
+  const sortDirection: TableSortDirection = isAlreadySorted
+    ? null
+    : args.sortDirection;
+
   return {
     ...state,
-    sortColumnId: isAlreadySorted ? null : args.sortColumnId,
-    sortDirection: isAlreadySorted ? null : args.sortDirection
+    sortColumnId,
+    sortDirection
+  };
+};
+
+const toggleRowId = (
+  state: TableState,
+  { rowId, wasToggled }: ToggleRowIdArgs
+) => {
+  return {
+    ...state,
+    selectedRowIds: wasToggled
+      ? state.selectedRowIds.filter(
+          (selectedRowId: string) => rowId !== selectedRowId
+        )
+      : [...state.selectedRowIds, rowId]
   };
 };
 
@@ -154,6 +176,9 @@ const tableReducer = (state: TableState, action: TableAction): TableState => {
 
     case 'SORT_TABLE':
       return sortTable(state, { ...action });
+
+    case 'TOGGLE_ROW_ID':
+      return toggleRowId(state, { ...action });
 
     case 'TOGGLE_ROW_IDS':
       return toggleRowIds(state, action.rowIds);

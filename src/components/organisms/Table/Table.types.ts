@@ -47,6 +47,7 @@ export type TableModel = {
 export type GetColumnArgs = { category?: QuestionCategory; columnId?: string };
 
 export interface SortTableArgs {
+  column?: TableColumn;
   sortColumnId: string;
   sortDirection: TableSortDirection;
 }
@@ -56,6 +57,11 @@ export type TablePaginationValue = number | '...';
 export enum TableSortDirection {
   ASC = 'ASC',
   DESC = 'DESC'
+}
+
+export interface ToggleRowIdArgs {
+  rowId: string;
+  wasToggled: boolean;
 }
 
 export type TableOptions = {
@@ -104,6 +110,7 @@ export type TableAction =
       sortColumnId: string;
       sortDirection: TableSortDirection;
     }
+  | { type: 'TOGGLE_ROW_ID'; rowId: string; wasToggled: boolean }
   | { type: 'TOGGLE_ROW_IDS'; rowIds: string[] };
 
 export type TableDispatch = React.Dispatch<TableAction>;

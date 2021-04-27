@@ -145,7 +145,7 @@ export const getTableCellClass = (args: GetTableCellClassArgs): string => {
 interface RunFiltersArgs {
   filters?: Record<string, TableFilterFunction>;
   searchString?: string;
-  state: State<TableModel>;
+  state: unknown;
 }
 
 /**

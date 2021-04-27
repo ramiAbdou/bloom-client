@@ -1,8 +1,10 @@
 import day from 'dayjs';
 import React from 'react';
 
+import { useReactiveVar } from '@apollo/client';
 import Table from '@components/organisms/Table/Table';
 import {
+  SortTableArgs,
   TableColumn,
   // RenameColumnFunction,
   // TableColumn,
@@ -15,7 +17,8 @@ import { modalVar } from '@core/state/Modal.reactive';
 // import useGQL from '@gql/hooks/useGQL';
 import { AggregateCount, ModalType, QuestionCategory } from '@util/constants';
 import { IMember, IQuestion } from '@util/constants.entities';
-import { databaseOffsetVar } from './Database.reactive';
+import { sortObjects } from '@util/util';
+import { databaseOffsetVar, databaseSortArgsVar } from './Database.reactive';
 import { useMemberDatabaseRows } from './Database.util';
 import MemberDatabaseActionRow from './MemberDatabaseActionRow';
 
@@ -30,6 +33,8 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
   questions,
   totalMembersCount
 }) => {
+  const sortArgs: SortTableArgs = useReactiveVar(databaseSortArgsVar);
+
   members = members ?? [];
   questions = questions ?? [];
 
@@ -38,6 +43,13 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
   // Massage the member data into valid row data by mapping the question ID
   // to the value for each member.
   const rows: TableRow[] = useMemberDatabaseRows({ members, questions });
+
+  const sortedRows: TableRow[] =
+    sortArgs?.sortColumnId && !sortArgs?.column?.category
+      ? rows.sort((a: TableRow, b: TableRow) =>
+          sortObjects(a, b, sortArgs?.sortColumnId, sortArgs?.sortDirection)
+        )
+      : rows;
 
   const columns: TableColumn[] = questions.map((question: IQuestion) => {
     if (question.category === QuestionCategory.JOINED_AT) {
@@ -68,6 +80,11 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
     databaseOffsetVar(offset);
   };
 
+  const onSortColumn = (args) => {
+    databaseSortArgsVar(args);
+    console.log(args);
+  };
+
   const options: TableOptions = {
     hasCheckbox: true,
     // onRenameColumn,
@@ -81,9 +98,10 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
       TableActions={MemberDatabaseActionRow}
       columns={columns}
       options={options}
-      rows={rows}
+      rows={sortedRows}
       totalCount={totalMembersCount.aggregate.count}
       onOffsetChange={onOffsetChange}
+      onSortColumn={onSortColumn}
     >
       <TableContent />
     </Table>

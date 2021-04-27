@@ -17,12 +17,14 @@ const GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED: DocumentNode = gql`
   query GetMembersByCommunityIdExpanded(
     $communityId: String!
     $offset: Int!
+    $orderByExp: [members_order_by!]
     $roleExp: String_comparison_exp! = {}
     $searchString: String!
     $searchStringWord: String!
   ) {
     communityId @client @export(as: "communityId")
     databaseOffset @client @export(as: "offset")
+    databaseOrderByExp @client @export(as: "orderByExp")
     databaseRoleExp @client @export(as: "roleExp")
     databaseSearchString @client @export(as: "searchString")
     databaseSearchStringWord @client @export(as: "searchStringWord")
@@ -59,7 +61,7 @@ const GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED: DocumentNode = gql`
       }
       limit: 50
       offset: $offset
-      order_by: { joinedAt: desc }
+      order_by: $orderByExp
     ) {
       bio
       email
@@ -103,9 +105,15 @@ const GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED: DocumentNode = gql`
 `;
 
 const Database: React.FC = () => {
-  const { data, loading } = useQuery<GetMembersByCommunityIdExpandedResult>(
+  const {
+    data,
+    error,
+    loading
+  } = useQuery<GetMembersByCommunityIdExpandedResult>(
     GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED
   );
+
+  console.log(data?.members, error);
 
   return (
     <Scene>
