@@ -8,10 +8,9 @@ import ProfileModal from '@components/modals/ProfileModal/ProfileModal';
 import { modalVar } from '@core/state/Modal.reactive';
 import ApplicantsConfirmationForm from '@scenes/Applicants/ApplicantsConfirmationForm';
 import ApplicantsViewModal from '@scenes/Applicants/ApplicantsViewModal';
+import DatabaseDeleteMembersModalForm from '@scenes/Database/DatabaseDeleteMembersModalForm';
 import EventsConfirmRsvpModal from '@scenes/Events/EventsConfirmRsvpModal';
 import IndividualEventErrorModal from '@scenes/Events/IndividualEvent/IndividualEventErrorModal';
-import IntegrationsDetailsModal from '@scenes/Integrations/IntegrationsDetailsModal';
-import IntegrationsMailchimpModal from '@scenes/Integrations/IntegrationsMailchimpModal';
 import ProfileMembershipForm from '@scenes/Profile/ProfileMembershipForm';
 import ProfilePersonalModalForm from '@scenes/Profile/ProfilePersonalModalForm';
 import ProfileSocialModalForm from '@scenes/Profile/ProfileSocialModalForm';
@@ -42,6 +41,9 @@ const ModalCustomContent: React.FC = () => {
     case ModalType.CREATE_EVENT:
       return <EventForm />;
 
+    case ModalType.DELETE_MEMBERS:
+      return <DatabaseDeleteMembersModalForm />;
+
     case ModalType.EDIT_MEMBERSHIP_INFORMATION:
       return <ProfileMembershipForm />;
 
@@ -53,12 +55,6 @@ const ModalCustomContent: React.FC = () => {
 
     case ModalType.EVENT_ERROR:
       return <IndividualEventErrorModal />;
-
-    case ModalType.INTEGRATIONS_DETAILS:
-      return <IntegrationsDetailsModal />;
-
-    case ModalType.MAILCHIMP_FLOW:
-      return <IntegrationsMailchimpModal />;
 
     case ModalType.PROFILE:
       return <ProfileModal />;

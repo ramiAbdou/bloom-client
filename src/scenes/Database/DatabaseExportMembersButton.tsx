@@ -10,7 +10,7 @@ import useFindOne from '@gql/hooks/useFindOne';
 import { ICommunity } from '@util/constants.entities';
 import DatabaseAction from './DatabaseAction';
 
-const DatabaseExportButton: React.FC = () => {
+const DatabaseExportMembersButton: React.FC = () => {
   const communityId: string = useReactiveVar(communityIdVar);
   const { columns, filteredRows, selectedRowIds }: TableState = useTableState();
   const { showToast } = useToast(toastQueueVar);
@@ -53,4 +53,4 @@ const DatabaseExportButton: React.FC = () => {
   );
 };
 
-export default DatabaseExportButton;
+export default DatabaseExportMembersButton;

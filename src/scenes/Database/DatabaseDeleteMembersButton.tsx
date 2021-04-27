@@ -44,12 +44,14 @@ const useDeleteTooltip = (): string => {
   return tooltip;
 };
 
-const DatabaseDeleteButton: React.FC = () => {
+const DatabaseDeleteMembersButton: React.FC = () => {
+  const tableState: TableState = useTableState();
   const tooltip: string = useDeleteTooltip();
 
   const onClick = (): void => {
     modalVar({
       id: ModalType.DELETE_MEMBERS,
+      metadata: tableState,
       options: { confirmation: true }
     });
   };
@@ -65,4 +67,4 @@ const DatabaseDeleteButton: React.FC = () => {
   );
 };
 
-export default DatabaseDeleteButton;
+export default DatabaseDeleteMembersButton;

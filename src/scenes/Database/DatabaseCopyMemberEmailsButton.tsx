@@ -18,7 +18,7 @@ import DatabaseAction from './DatabaseAction';
  * Copies all of the selected members' emails to clipboard, in a
  * comma-separated list.
  */
-const DatabaseCopyButton: React.FC = () => {
+const DatabaseCopyMemberEmailsButton: React.FC = () => {
   const tableState: TableState = useTableState();
   const { selectedRowIds, rows }: TableState = tableState;
 
@@ -46,4 +46,4 @@ const DatabaseCopyButton: React.FC = () => {
   );
 };
 
-export default DatabaseCopyButton;
+export default DatabaseCopyMemberEmailsButton;

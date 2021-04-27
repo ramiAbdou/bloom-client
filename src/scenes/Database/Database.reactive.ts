@@ -21,6 +21,14 @@ export const databaseOffsetVar: ReactiveVar<number> = makeVar<number>(0);
  */
 export const databaseSearchStringVar: ReactiveVar<string> = makeVar<string>('');
 
+export const clearDatabaseReactiveFields = (): void => {
+  databaseSortArgsVar(null);
+  databaseSortDirectionVar(null);
+  databaseIsAdminsOnlyVar(false);
+  databaseOffsetVar(0);
+  databaseSearchStringVar('');
+};
+
 interface DatabaseReactiveFields {
   databaseOffset: { read: () => number };
   databaseRoleExp: { read: () => Record<string, unknown> };

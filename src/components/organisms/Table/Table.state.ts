@@ -144,7 +144,7 @@ const toggleRowId = (
  * @param rowIds - IDs of the TableRow(s) to select or unselect.
  */
 const toggleRowIds = (state: TableState, rowIds: string[]): TableState => {
-  const someAlreadySelected: boolean = rowIds.some((rowId: string) => {
+  const allAlreadySelected: boolean = rowIds.every((rowId: string) => {
     const isAlreadySelected: boolean = !!state.selectedRowIds.find(
       (selectedRowId: string) => rowId === selectedRowId
     );
@@ -156,11 +156,8 @@ const toggleRowIds = (state: TableState, rowIds: string[]): TableState => {
 
   return {
     ...state,
-    selectedRowIds: someAlreadySelected
-      ? state.selectedRowIds.filter(
-          (selectedRowId: string) => !rowIds.includes(selectedRowId)
-        )
-      : [...state.selectedRowIds, ...rowIds]
+    selectedRowIds:
+      allAlreadySelected && state.selectedRowIds.length ? [] : rowIds
   };
 };
 

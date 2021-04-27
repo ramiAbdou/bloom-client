@@ -1,6 +1,7 @@
 import React from 'react';
 import { showToast } from 'src/App.reactive';
 
+import { useReactiveVar } from '@apollo/client';
 import Form from '@components/organisms/Form/Form';
 import {
   OnFormSubmitArgs,
@@ -9,6 +10,7 @@ import {
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
 import { useTableState } from '@components/organisms/Table/Table.state';
+import { TableState } from '@components/organisms/Table/Table.types';
 import { modalVar } from '@core/state/Modal.reactive';
 import { IMember } from '@util/constants.entities';
 import { now } from '@util/util';
@@ -23,8 +25,8 @@ const MemberDatabaseDeleteFormHeader: React.FC = () => {
   return <FormHeader description={description} title={title} />;
 };
 
-const MemberDatabaseDeleteForm: React.FC = () => {
-  const { selectedRowIds } = useTableState();
+const DatabaseDeleteMemberModalForm: React.FC = () => {
+  const { selectedRowIds } = useReactiveVar(modalVar)?.metadata as TableState;
 
   const onSubmit: OnFormSubmitFunction = async ({
     gql,
@@ -61,4 +63,4 @@ const MemberDatabaseDeleteForm: React.FC = () => {
   );
 };
 
-export default MemberDatabaseDeleteForm;
+export default DatabaseDeleteMemberModalForm;

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { DocumentNode, gql, useQuery } from '@apollo/client';
 import Scene from '@components/containers/Scene';
 import { AggregateCount } from '@util/constants';
 import { IMember, IQuestion } from '@util/constants.entities';
+import { clearDatabaseReactiveFields } from './Database.reactive';
 import DatabaseHeader from './DatabaseHeader';
 import DatabaseTable from './DatabaseTable';
 
@@ -111,6 +112,13 @@ const Database: React.FC = () => {
     loading
   } = useQuery<GetMembersByCommunityIdExpandedResult>(
     GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED
+  );
+
+  useEffect(
+    () => () => {
+      clearDatabaseReactiveFields();
+    },
+    []
   );
 
   console.log(data?.members, error);

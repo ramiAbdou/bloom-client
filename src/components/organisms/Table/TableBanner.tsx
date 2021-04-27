@@ -17,27 +17,35 @@ import Button from '@components/atoms/Button/Button';
 import Card from '@components/containers/Card/Card';
 import Row from '@components/containers/Row/Row';
 import {
-  getRange,
   useTableDispatch,
   useTableState
 } from '@components/organisms/Table/Table.state';
-import TableStore from './Table.store';
+import { take } from '@util/util';
 import { TableDispatch, TableRow, TableState } from './Table.types';
-import { getBannerButtonTitle } from './Table.util';
 
 const TableBannerButton: React.FC = () => {
-  const { filteredRows }: TableState = useTableState();
-  const tableDispatch: TableDispatch = useTableDispatch();
+  const {
+    filteredRows,
+    rowsPerPage,
+    selectedRowIds,
+    totalCount
+  }: TableState = useTableState();
 
-  const title: string = TableStore.useStoreState((state) =>
-    getBannerButtonTitle(state)
-  );
+  const tableDispatch: TableDispatch = useTableDispatch();
 
   const allRowIds: string[] = filteredRows.map((row: TableRow) => row.id);
 
-  const onClick = () => {
+  const onClick = (): void => {
     tableDispatch({ rowIds: allRowIds, type: 'TOGGLE_ROW_IDS' });
   };
+
+  const title: string = take([
+    [selectedRowIds.length === totalCount, 'Clear Selection'],
+    [
+      selectedRowIds.length === rowsPerPage,
+      `Select All ${totalCount} Rows in Database`
+    ]
+  ]);
 
   return (
     <Button tertiary onClick={onClick}>
@@ -47,12 +55,22 @@ const TableBannerButton: React.FC = () => {
 };
 
 const TableBannerMessage: React.FC = () => {
-  const tableState: TableState = useTableState();
-  // const { filteredRows, selectedRowIds }: TableState = tableState;
+  const {
+    rowsPerPage,
+    selectedRowIds,
+    totalCount
+  }: TableState = useTableState();
 
-  const [floor, ceiling]: [number, number] = getRange(tableState);
-
-  const message = '';
+  const message: string = take([
+    [
+      selectedRowIds.length === totalCount,
+      `All ${totalCount} rows are selected.`
+    ],
+    [
+      selectedRowIds.length === rowsPerPage,
+      `All ${rowsPerPage} rows on this page are selected.`
+    ]
+  ]);
 
   // const message: string = TableStore.useStoreState((state) =>
   //   getBannerMessage({ ...state, ceiling, floor, selectedRowIds })
@@ -63,17 +81,18 @@ const TableBannerMessage: React.FC = () => {
 
 const TableBanner: React.FC = () => {
   const tableState: TableState = useTableState();
-  const { filteredRows, selectedRowIds }: TableState = tableState;
 
-  const allRowsOnPageSelected: boolean = filteredRows.every(({ id: rowId }) =>
-    selectedRowIds.includes(rowId as string)
-  );
+  const { rowsPerPage, selectedRowIds, totalCount }: TableState = tableState;
 
-  const isAllPageSelected: boolean =
-    !!selectedRowIds.length && allRowsOnPageSelected;
+  if (
+    selectedRowIds.length !== totalCount &&
+    selectedRowIds.length !== rowsPerPage
+  ) {
+    return null;
+  }
 
   return (
-    <Card className="mb-xs--nlc" show={isAllPageSelected}>
+    <Card className="mb-xs--nlc">
       <Row justify="center" spacing="xs">
         <TableBannerMessage />
         <TableBannerButton />

@@ -6,8 +6,9 @@ import { TableState } from '@components/organisms/Table/Table.types';
 import TableFilterButton from '@components/organisms/Table/TableFilterButton';
 import useMemberRole from '@core/hooks/useMemberRole';
 import { MemberRole } from '@util/constants.entities';
-import DatabaseCopyButton from './DatabaseCopyButton';
-import DatabaseDeleteButton from './DatabaseDeleteButton';
+import DatabaseCopyMemberEmailsButton from './DatabaseCopyMemberEmailsButton';
+import DatabaseDeleteMembersButton from './DatabaseDeleteMembersButton';
+import DatabaseExportMembersButton from './DatabaseExportMembersButton';
 import DatabasePromoteButton from './DatabasePromoteButton';
 import MemberDatabaseQuickFilters from './MemberDatabaseQuickFilters';
 import MemberDatabaseSearchBar from './MemberDatabaseSearchBar';
@@ -20,10 +21,10 @@ const MemberDatabaseButtons: React.FC = () => {
 
   return (
     <Row className="ml-auto" show={!!isAnythingSelected} spacing="xs">
-      <DatabaseCopyButton />
-      {/* <DatabaseExportButton /> */}
+      <DatabaseCopyMemberEmailsButton />
+      <DatabaseExportMembersButton />
       {isOwner && <DatabasePromoteButton />}
-      <DatabaseDeleteButton />
+      <DatabaseDeleteMembersButton />
     </Row>
   );
 };

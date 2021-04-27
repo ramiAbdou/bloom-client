@@ -1,70 +1,7 @@
 import { QuestionCategory, QuestionType } from '@util/constants';
 import { cx } from '@util/util';
-import { TableModel, TablePaginationValue, TableRow } from './Table.types';
+import { TablePaginationValue, TableRow } from './Table.types';
 import { TableFilterFunction } from './TableFilterPanel/TableFilterPanel.types';
-
-/**
- * Returns the title of the TableBannerButton based on the current state of
- * selectedRowIds.
- *
- * @param state Entire table state.
- */
-export const getBannerButtonTitle = (state: unknown): string => '';
-// const { filteredRows, rows } = state;
-// const numMembers: number = rows.length;
-// const numFilteredMembers: number = filteredRows.length;
-
-// // NEED TO FIX
-// const selectedRowIds = [];
-
-// const isAllSelected: boolean =
-//   !!selectedRowIds.length && selectedRowIds.length === filteredRows.length;
-
-// if (isAllSelected) return 'Clear Selection';
-// if (numMembers === numFilteredMembers) {
-//   return `Select All ${numMembers} Rows in Database`;
-// }
-
-// return `Select All ${numFilteredMembers} Filtered Rows`;
-
-interface GetBannerMessageArgs {
-  ceiling: number;
-  filteredRows: TableRow[];
-  floor: number;
-  rows: TableRow[];
-  selectedRowIds: string[];
-}
-
-/**
- * Returns the appropriate Table banner message based on the current state of
- * selectedRowIds.
- *
- * @param state Entire table state.
- */
-export const getBannerMessage = (args: GetBannerMessageArgs): string => {
-  const { ceiling, filteredRows, floor, rows, selectedRowIds } = args;
-  const numTotalRows = rows.length;
-  const numFilteredRows = filteredRows.length;
-  const numSelectedRows = selectedRowIds.length;
-
-  if (numSelectedRows === numTotalRows) {
-    return `All ${numTotalRows} rows are selected.`;
-  }
-
-  if (numSelectedRows === numFilteredRows) {
-    return `All ${numFilteredRows} filtered rows are selected.`;
-  }
-
-  if (
-    filteredRows
-      .slice(floor, ceiling)
-      .every(({ id }) => selectedRowIds.includes(id))
-  ) {
-    return `All 25 rows on this page are selected.`;
-  }
-
-  return null;
-};
 
 /**
  * RETURNS an array of pagination values inserting ellipses at the correct
