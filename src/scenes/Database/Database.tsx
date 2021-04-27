@@ -110,6 +110,8 @@ const Database: React.FC = () => {
     GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED
   );
 
+  console.log(data, loading);
+
   useEffect(
     () => () => {
       clearDatabaseReactiveFields();

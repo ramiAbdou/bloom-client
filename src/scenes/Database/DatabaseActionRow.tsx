@@ -13,7 +13,7 @@ import DatabasePromoteButton from './DatabasePromoteButton';
 import MemberDatabaseQuickFilters from './MemberDatabaseQuickFilters';
 import MemberDatabaseSearchBar from './MemberDatabaseSearchBar';
 
-const MemberDatabaseButtons: React.FC = () => {
+const DatabaseActionRowButtonRow: React.FC = () => {
   const { selectedRowIds }: TableState = useTableState();
   const isAnythingSelected: boolean = !!selectedRowIds.length;
 
@@ -29,13 +29,13 @@ const MemberDatabaseButtons: React.FC = () => {
   );
 };
 
-const MemberDatabaseActionRow: React.FC = () => (
+const DatabaseActionRow: React.FC = () => (
   <Row noMarginBottom wrap className="mb-sm--nlc" gap="sm" justify="sb">
     <MemberDatabaseSearchBar />
     <MemberDatabaseQuickFilters />
     <TableFilterButton className="ml-auto" />
-    <MemberDatabaseButtons />
+    <DatabaseActionRowButtonRow />
   </Row>
 );
 
-export default MemberDatabaseActionRow;
+export default DatabaseActionRow;

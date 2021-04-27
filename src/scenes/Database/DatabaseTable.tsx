@@ -14,7 +14,7 @@ import { AggregateCount, ModalType, QuestionCategory } from '@util/constants';
 import { IMember, IQuestion } from '@util/constants.entities';
 import { databaseOffsetVar, databaseSortArgsVar } from './Database.reactive';
 import { useMemberDatabaseRows } from './Database.util';
-import DatabaseActionRow from './MemberDatabaseActionRow';
+import DatabaseActionRow from './DatabaseActionRow';
 
 interface DatabaseTableProps {
   members: IMember[];
