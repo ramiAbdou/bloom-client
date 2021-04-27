@@ -13,8 +13,7 @@ import {
 import useCommunityPrimaryColor from '@core/hooks/useCommunityPrimaryColor';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { take } from '@util/util';
-import { useChartState } from './Chart.state';
-import { ChartState } from './Chart.types';
+import { useChart } from './Chart.state';
 import { ChartTooltipProps } from './ChartTooltip';
 import useXAxisOptions from './useXAxisOptions';
 import useYAxisOptions from './useYAxisOptions';
@@ -22,7 +21,7 @@ import useYAxisOptions from './useYAxisOptions';
 const LineChartTooltip: React.FC<Pick<ChartTooltipProps, 'label'>> = ({
   label
 }) => {
-  const { data, options }: ChartState = useChartState();
+  const [{ data, options }] = useChart();
 
   if (!label) return null;
 
@@ -47,7 +46,7 @@ const LineChartTooltip: React.FC<Pick<ChartTooltipProps, 'label'>> = ({
 };
 
 const TimeSeriesChart: React.FC = () => {
-  const { data }: ChartState = useChartState();
+  const [{ data }] = useChart();
 
   const primaryColor: string = useCommunityPrimaryColor();
   const isMonitor = useBreakpoint() === 4;

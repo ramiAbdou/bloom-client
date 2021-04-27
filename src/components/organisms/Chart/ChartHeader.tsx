@@ -1,17 +1,15 @@
 import React from 'react';
 
 import HeaderTag from '@components/atoms/Tag/HeaderTag';
-import { getChartTotalCount, useChartState } from './Chart.state';
-import { ChartState } from './Chart.types';
+import { useChart, useChartTotalCount } from './Chart.state';
 
 const ChartHeaderTitle: React.FC = () => {
-  const { title }: ChartState = useChartState();
+  const [{ title }] = useChart();
   return <h4>{title}</h4>;
 };
 
 const ChartHeaderResponsesCount: React.FC = () => {
-  const chartState: ChartState = useChartState();
-  const totalCount: number = getChartTotalCount(chartState);
+  const totalCount: number = useChartTotalCount();
   return <HeaderTag>{totalCount} Responses</HeaderTag>;
 };
 

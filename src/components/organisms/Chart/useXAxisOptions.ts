@@ -1,16 +1,11 @@
 import day from 'dayjs';
 import { XAxisProps } from 'recharts';
 
-import { useChartState } from './Chart.state';
-import {
-  ChartFormat,
-  ChartState,
-  ChartType,
-  ChartXAxisOptions
-} from './Chart.types';
+import { useChart } from './Chart.state';
+import { ChartFormat, ChartType, ChartXAxisOptions } from './Chart.types';
 
 const useXAxisOptions = (): Partial<XAxisProps> => {
-  const { options, type }: ChartState = useChartState();
+  const [{ options, type }] = useChart();
 
   const format: ChartFormat = options?.format;
   const xAxis: ChartXAxisOptions = options?.xAxis;

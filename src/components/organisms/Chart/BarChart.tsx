@@ -10,14 +10,13 @@ import {
 } from 'recharts';
 
 import useCommunityPrimaryColor from '@core/hooks/useCommunityPrimaryColor';
-import { useChartState } from './Chart.state';
-import { ChartState } from './Chart.types';
+import { useChart } from './Chart.state';
 import ChartTooltip, { ChartTooltipProps } from './ChartTooltip';
 import useXAxisOptions from './useXAxisOptions';
 import useYAxisOptions from './useYAxisOptions';
 
 const BarChart: React.FC = () => {
-  const { data }: ChartState = useChartState();
+  const [{ data }] = useChart();
   const primaryColor: string = useCommunityPrimaryColor();
   const xAxisOptions = useXAxisOptions();
   const yAxisOptions = useYAxisOptions();

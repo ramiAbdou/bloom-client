@@ -1,10 +1,10 @@
 import { YAxisProps } from 'recharts';
 
-import { useChartState } from './Chart.state';
-import { ChartFormat, ChartState, ChartYAxisOptions } from './Chart.types';
+import { useChart } from './Chart.state';
+import { ChartFormat, ChartYAxisOptions } from './Chart.types';
 
 const useYAxisOptions = (): Partial<YAxisProps> => {
-  const { options }: ChartState = useChartState();
+  const [{ options }] = useChart();
 
   const format: ChartFormat = options?.format;
   const yAxisOptions: ChartYAxisOptions = options?.yAxis;

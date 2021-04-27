@@ -1,8 +1,7 @@
 import React from 'react';
 import { TooltipPayload } from 'recharts';
 
-import { getChartTotalCount, useChartState } from './Chart.state';
-import { ChartState } from './Chart.types';
+import { useChart, useChartTotalCount } from './Chart.state';
 
 export type ChartTooltipProps = {
   active?: boolean;
@@ -17,7 +16,8 @@ const ChartTooltip: React.FC<ChartTooltipProps> = ({
   label,
   payload
 }) => {
-  const { data }: ChartState = useChartState();
+  const [{ data }] = useChart();
+  const totalCount: number = useChartTotalCount();
 
   // Only show the tooltip if it active.
   if (!active || (!label && !payload?.length)) return null;
@@ -25,8 +25,6 @@ const ChartTooltip: React.FC<ChartTooltipProps> = ({
   label = label ?? payload[0]?.name;
 
   const { value } = data.find(({ name }) => name === label);
-
-  const totalCount: number = getChartTotalCount({ data });
 
   const percentageOfTotal: string = (
     ((value as number) / totalCount) *

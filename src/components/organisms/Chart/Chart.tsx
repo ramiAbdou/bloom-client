@@ -3,14 +3,14 @@ import React, { useEffect } from 'react';
 import { BaseProps } from '@util/constants';
 import { cx } from '@util/util';
 import BarChart from './BarChart';
-import { ChartProvider, useChartDispatch } from './Chart.state';
-import { ChartDispatch, ChartInitialState, ChartType } from './Chart.types';
+import { ChartProvider, useChart } from './Chart.state';
+import { ChartInitialState, ChartType } from './Chart.types';
 import ChartHeader from './ChartHeader';
 import PieChart from './PieChart';
 import TimeSeriesChart from './TimeSeriesChart';
 
 const ChartContent: React.FC<ChartInitialState> = ({ data, title, type }) => {
-  const chartDispatch: ChartDispatch = useChartDispatch();
+  const [_, chartDispatch] = useChart();
 
   useEffect(() => {
     chartDispatch({ data, type: 'SET_DATA' });

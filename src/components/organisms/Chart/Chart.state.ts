@@ -9,15 +9,6 @@ import {
   ChartType
 } from './Chart.types';
 
-export const getChartTotalCount = (state: Pick<ChartState, 'data'>): number => {
-  if (!state.data) return 0;
-
-  return state.data.reduce(
-    (totalCount: number, value: ChartData) => totalCount + Number(value.value),
-    0
-  );
-};
-
 /**
  * Sets the data of the Chart.
  */
@@ -68,7 +59,17 @@ const useChartValue = ({ data, options, type }: ChartInitialState) => {
 
 export const {
   Provider: ChartProvider,
-  useTracked: useChart,
-  useTrackedState: useChartState,
-  useUpdate: useChartDispatch
+  useSelector: useChartSelector,
+  useTracked: useChart
 } = createContainer(useChartValue);
+
+export const useChartTotalCount = (): number =>
+  useChartSelector((state: ChartState) => {
+    if (!state.data) return 0;
+
+    return state.data.reduce(
+      (totalCount: number, value: ChartData) =>
+        totalCount + Number(value.value),
+      0
+    );
+  });
