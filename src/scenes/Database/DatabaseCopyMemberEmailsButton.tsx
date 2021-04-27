@@ -1,48 +1,99 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { IoCopy } from 'react-icons/io5';
 import { toastQueueVar, useToast } from 'src/App.reactive';
 
-import {
-  getColumn,
-  useTableState
-} from '@components/organisms/Table/Table.state';
-import {
-  TableColumn,
-  TableRow,
-  TableState
-} from '@components/organisms/Table/Table.types';
-import { QuestionCategory } from '@util/constants';
+import { DocumentNode, gql, useLazyQuery } from '@apollo/client';
+import { useTableState } from '@components/organisms/Table/Table.state';
+import { TableState } from '@components/organisms/Table/Table.types';
+import { IMember } from '@util/constants.entities';
 import DatabaseAction from './DatabaseAction';
+
+interface GetMemberEmailsByCommunityIdArgs {
+  idExp: Record<string, unknown>;
+}
+
+interface GetMemberEmailsByCommunityIdResult {
+  members: IMember[];
+}
+
+const GET_MEMBER_EMAILS_BY_COMMUNITY_ID: DocumentNode = gql`
+  query GetMemberEmailsByCommunityId(
+    $communityId: String!
+    $idExp: String_comparison_exp!
+    $roleExp: String_comparison_exp! = {}
+    $searchString: String!
+    $searchStringWord: String!
+  ) {
+    communityId @client @export(as: "communityId")
+    databaseRoleExp @client @export(as: "roleExp")
+    databaseSearchString @client @export(as: "searchString")
+    databaseSearchStringWord @client @export(as: "searchStringWord")
+
+    members(
+      where: {
+        _and: [
+          { communityId: { _eq: $communityId } }
+          { deletedAt: { _is_null: true } }
+          { id: $idExp }
+          { role: $roleExp }
+          { status: { _eq: "Accepted" } }
+          {
+            _or: [
+              { email: { _ilike: $searchStringWord } }
+              { firstName: { _ilike: $searchString } }
+              { lastName: { _ilike: $searchString } }
+            ]
+          }
+        ]
+      }
+    ) {
+      email
+      id
+    }
+  }
+`;
 
 /**
  * Copies all of the selected members' emails to clipboard, in a
  * comma-separated list.
  */
 const DatabaseCopyMemberEmailsButton: React.FC = () => {
-  const tableState: TableState = useTableState();
-  const { selectedRowIds, rows }: TableState = tableState;
+  const [getMemberEmails, { data, loading }] = useLazyQuery<
+    GetMemberEmailsByCommunityIdResult,
+    GetMemberEmailsByCommunityIdArgs
+  >(GET_MEMBER_EMAILS_BY_COMMUNITY_ID);
 
+  const { isAllRowsSelected, selectedRowIds }: TableState = useTableState();
   const { showToast } = useToast(toastQueueVar);
 
-  // Get the column that has EMAIL as the category.
-  const emailColumn: TableColumn = getColumn(tableState, {
-    category: QuestionCategory.EMAIL
-  });
+  const members: IMember[] = data?.members;
 
-  const emails: string[] = selectedRowIds.map((rowId: string) => {
-    const selectedRow: TableRow =
-      rows.find((row: TableRow) => row.id === rowId) || {};
+  useEffect(() => {
+    if (!members) return;
 
-    return selectedRow[emailColumn.id];
-  });
+    const joinedEmails: string = members
+      .map((member: IMember) => member.email)
+      .join(',');
 
-  const onClick = () => {
-    navigator.clipboard.writeText(emails.join(','));
+    navigator.clipboard.writeText(joinedEmails);
     showToast({ message: 'Email(s) copied to clipboard.' });
+  }, [members]);
+
+  const onClick = (): void => {
+    const idExp: Record<string, unknown> = isAllRowsSelected
+      ? {}
+      : { _in: selectedRowIds };
+
+    getMemberEmails({ variables: { idExp } });
   };
 
   return (
-    <DatabaseAction Icon={IoCopy} tooltip="Copy Email" onClick={onClick} />
+    <DatabaseAction
+      Icon={IoCopy}
+      loading={loading}
+      tooltip="Copy Email"
+      onClick={onClick}
+    />
   );
 };
 

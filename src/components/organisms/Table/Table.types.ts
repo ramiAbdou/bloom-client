@@ -90,6 +90,7 @@ export interface TableInitialState {
 export interface TableState {
   columns: TableColumn[];
   filteredRows: TableRow[];
+  isAllRowsSelected: boolean;
   options: TableOptions;
   page: number;
   rows: TableRow[];

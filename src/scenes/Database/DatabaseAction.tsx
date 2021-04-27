@@ -13,6 +13,7 @@ const DatabaseAction: React.FC<DatabaseActionProps> = ({
   Icon,
   tooltip,
   className,
+  loading,
   ...props
 }) => {
   const { disabled } = props;
@@ -25,8 +26,14 @@ const DatabaseAction: React.FC<DatabaseActionProps> = ({
   );
 
   return (
-    <Button ref={ref} className={css} disabled={disabled} {...props}>
-      <Icon />
+    <Button
+      ref={ref}
+      className={css}
+      disabled={disabled}
+      loading={loading}
+      {...props}
+    >
+      {!loading && <Icon />}
     </Button>
   );
 };

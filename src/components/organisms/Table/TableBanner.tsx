@@ -26,6 +26,7 @@ import { TableDispatch, TableRow, TableState } from './Table.types';
 const TableBannerButton: React.FC = () => {
   const {
     filteredRows,
+    isAllRowsSelected,
     rowsPerPage,
     selectedRowIds,
     totalCount
@@ -40,7 +41,7 @@ const TableBannerButton: React.FC = () => {
   };
 
   const title: string = take([
-    [selectedRowIds.length === totalCount, 'Clear Selection'],
+    [isAllRowsSelected, 'Clear Selection'],
     [
       selectedRowIds.length === rowsPerPage,
       `Select All ${totalCount} Rows in Database`
@@ -56,16 +57,14 @@ const TableBannerButton: React.FC = () => {
 
 const TableBannerMessage: React.FC = () => {
   const {
+    isAllRowsSelected,
     rowsPerPage,
     selectedRowIds,
     totalCount
   }: TableState = useTableState();
 
   const message: string = take([
-    [
-      selectedRowIds.length === totalCount,
-      `All ${totalCount} rows are selected.`
-    ],
+    [isAllRowsSelected, `All ${totalCount} rows are selected.`],
     [
       selectedRowIds.length === rowsPerPage,
       `All ${rowsPerPage} rows on this page are selected.`
@@ -82,12 +81,13 @@ const TableBannerMessage: React.FC = () => {
 const TableBanner: React.FC = () => {
   const tableState: TableState = useTableState();
 
-  const { rowsPerPage, selectedRowIds, totalCount }: TableState = tableState;
+  const {
+    isAllRowsSelected,
+    rowsPerPage,
+    selectedRowIds
+  }: TableState = tableState;
 
-  if (
-    selectedRowIds.length !== totalCount &&
-    selectedRowIds.length !== rowsPerPage
-  ) {
+  if (!isAllRowsSelected && selectedRowIds.length !== rowsPerPage) {
     return null;
   }
 

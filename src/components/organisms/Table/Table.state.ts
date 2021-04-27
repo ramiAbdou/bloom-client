@@ -198,6 +198,7 @@ const useTableValue = ({
   useReducer(tableReducer, {
     columns,
     filteredRows: rows,
+    isAllRowsSelected: false,
     options: { ...defaultTableOptions, ...options },
     page: 0,
     rows,

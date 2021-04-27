@@ -27,7 +27,7 @@ const ButtonLoadingContainer: React.FC<
 > = React.memo(({ loading, loadingText, secondary }) => (
   <Show show={!!loading}>
     <div className="c-btn-loading-ctr">
-      <p>{loadingText}</p>
+      {loadingText && <p>{loadingText}</p>}
       <Spinner show dark={secondary} />
     </div>
   </Show>
