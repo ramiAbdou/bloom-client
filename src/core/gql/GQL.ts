@@ -20,7 +20,6 @@ import {
   UpdateArgs
 } from './GQL.types';
 import { getCreateMutation, parseCreateMutationResult } from './repo/create';
-import { getFindQuery, parseFindQueryResult } from './repo/find';
 import { getFindOneQuery, parseFindOneQueryResult } from './repo/findOne';
 import {
   getUpdateMutation,
@@ -123,20 +122,6 @@ class GQL {
       result
     );
 
-    return parsedResult.data;
-  }
-
-  async find<T>(
-    entity: new () => T,
-    { fields, where }: FindOneArgs<T>
-  ): Promise<T[]> {
-    const query: DocumentNode = getFindQuery(entity, { fields, where });
-
-    const result: ApolloQueryResult<unknown> = await this.client.query({
-      query
-    });
-
-    const parsedResult: QueryResult<T[]> = parseFindQueryResult(entity, result);
     return parsedResult.data;
   }
 

@@ -113,7 +113,10 @@ const GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED: DocumentNode = gql`
 
     questions(
       where: {
-        category: { _neq: "DUES_STATUS" }
+        _or: [
+          { category: { _neq: "DUES_STATUS" } }
+          { category: { _is_null: true } }
+        ]
         communityId: { _eq: $communityId }
       }
       order_by: { rank: asc }
