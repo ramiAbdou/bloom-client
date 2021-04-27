@@ -14,6 +14,12 @@ const TableHeaderCheckbox: React.FC = () => {
     selectedRowIds
   }: TableState = tableState;
 
+  const isSomeRowsSelectedOnPage: boolean =
+    !!selectedRowIds.length &&
+    filteredRows.some((filteredRow: TableRow) =>
+      selectedRowIds.includes(filteredRow.id)
+    );
+
   const onChange = (): void => {
     tableDispatch({
       rowIds: filteredRows.map((row: TableRow) => row.id),
@@ -23,7 +29,7 @@ const TableHeaderCheckbox: React.FC = () => {
 
   return (
     <Checkbox
-      checked={isAllRowsSelected || !!selectedRowIds.length}
+      checked={isAllRowsSelected || isSomeRowsSelectedOnPage}
       className="o-table-select"
       onChange={onChange}
     />

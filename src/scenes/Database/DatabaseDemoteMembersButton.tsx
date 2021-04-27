@@ -1,5 +1,5 @@
 import React from 'react';
-import { IoTrash } from 'react-icons/io5';
+import { IoArrowDownCircle } from 'react-icons/io5';
 import { memberIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
@@ -19,39 +19,47 @@ import { MemberRole } from '@util/constants.entities';
 import { take } from '@util/util';
 import DatabaseAction from './DatabaseAction';
 
-const DatabaseDeleteMembersButton: React.FC = () => {
+const DatabaseDemoteMembersButton: React.FC = () => {
   const memberId: string = useReactiveVar(memberIdVar);
   const tableDispatch: TableDispatch = useTableDispatch();
   const tableState: TableState = useTableState();
-  const { selectedRowIds }: TableState = useTableState();
+
+  const {
+    isAllRowsSelected,
+    selectedRowIds,
+    totalCount
+  }: TableState = tableState;
 
   const isOwner: boolean = useMemberRole() === MemberRole.OWNER;
+  const isSelfSelected: boolean = selectedRowIds.includes(memberId);
+
+  const tooManySelected: boolean =
+    (totalCount > 15 && isAllRowsSelected) || selectedRowIds.length > 15;
 
   const onClick = (): void => {
     modalVar({
-      id: ModalType.DELETE_MEMBERS,
+      id: ModalType.DEMOTE_MEMBERS,
       metadata: { tableDispatch, tableState } as TableStateAndDispatch,
       options: { confirmation: true }
     });
   };
 
-  const isSelfSelected: boolean = selectedRowIds.includes(memberId);
-
   const tooltip: string = take([
     [!isOwner, 'Only owners can demote other admins.'],
-    [isSelfSelected, `Can't delete yourself.`],
-    [true, 'Delete Member(s)']
+    [isSelfSelected, `Can't demote yourself.`],
+    [tooManySelected, 'Can only demote 15 members admins at a time.'],
+    [true, 'Demote to Member(s)']
   ]);
 
   return (
     <DatabaseAction
-      Icon={IoTrash}
-      className="o-table-action--delete"
-      disabled={!isOwner || isSelfSelected}
+      Icon={IoArrowDownCircle}
+      className="o-table-action--demote"
+      disabled={!isOwner || tooManySelected || isSelfSelected}
       tooltip={tooltip}
       onClick={onClick}
     />
   );
 };
 
-export default DatabaseDeleteMembersButton;
+export default DatabaseDemoteMembersButton;

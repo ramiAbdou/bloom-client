@@ -16,6 +16,8 @@ import ProfilePersonalModalForm from '@scenes/Profile/ProfilePersonalModalForm';
 import ProfileSocialModalForm from '@scenes/Profile/ProfileSocialModalForm';
 import { ModalType } from '@util/constants';
 import { cx } from '@util/util';
+import DatabaseDemoteMembersModalForm from '../../../scenes/Database/DatabaseDemoteMembersModalForm';
+import DatabasePromoteMembersModalForm from '../../../scenes/Database/DatabasePromoteMembersModalForm';
 import DeleteEventConfirmationForm from '../../modals/EventForm/DeleteEventConfirmationForm';
 import ModalContainer from './ModalContainer';
 
@@ -44,6 +46,9 @@ const ModalCustomContent: React.FC = () => {
     case ModalType.DELETE_MEMBERS:
       return <DatabaseDeleteMembersModalForm />;
 
+    case ModalType.DEMOTE_MEMBERS:
+      return <DatabaseDemoteMembersModalForm />;
+
     case ModalType.EDIT_MEMBERSHIP_INFORMATION:
       return <ProfileMembershipForm />;
 
@@ -58,6 +63,9 @@ const ModalCustomContent: React.FC = () => {
 
     case ModalType.PROFILE:
       return <ProfileModal />;
+
+    case ModalType.PROMOTE_MEMBERS:
+      return <DatabasePromoteMembersModalForm />;
 
     case ModalType.VIEW_APPLICANT:
       return <ApplicantsViewModal />;

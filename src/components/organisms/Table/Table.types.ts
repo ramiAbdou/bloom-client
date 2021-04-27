@@ -116,3 +116,8 @@ export type TableAction =
   | { type: 'TOGGLE_ROW_IDS'; rowIds: string[] };
 
 export type TableDispatch = React.Dispatch<TableAction>;
+
+export type TableStateAndDispatch = {
+  tableDispatch: TableDispatch;
+  tableState: TableState;
+};

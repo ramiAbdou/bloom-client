@@ -27,7 +27,6 @@ const TableBannerButton: React.FC = () => {
   const {
     filteredRows,
     isAllRowsSelected,
-    rowsPerPage,
     selectedRowIds,
     totalCount
   }: TableState = useTableState();
@@ -37,7 +36,7 @@ const TableBannerButton: React.FC = () => {
   const allRowIds: string[] = filteredRows.map((row: TableRow) => row.id);
 
   const onClick = (): void => {
-    if (selectedRowIds.length === rowsPerPage) {
+    if (isAllRowsSelected) {
       tableDispatch({ type: 'TOGGLE_ALL_ROW_IDS' });
       return;
     }
@@ -48,7 +47,9 @@ const TableBannerButton: React.FC = () => {
   const title: string = take([
     [isAllRowsSelected, 'Clear Selection'],
     [
-      selectedRowIds.length === rowsPerPage,
+      filteredRows.every((filteredRow: TableRow) =>
+        selectedRowIds.includes(filteredRow.id)
+      ),
       `Select All ${totalCount} Rows in Database`
     ]
   ]);
@@ -63,6 +64,7 @@ const TableBannerButton: React.FC = () => {
 const TableBannerMessage: React.FC = () => {
   const {
     isAllRowsSelected,
+    filteredRows,
     rowsPerPage,
     selectedRowIds,
     totalCount
@@ -71,14 +73,12 @@ const TableBannerMessage: React.FC = () => {
   const message: string = take([
     [isAllRowsSelected, `All ${totalCount} rows are selected.`],
     [
-      selectedRowIds.length === rowsPerPage,
+      filteredRows.every((filteredRow: TableRow) =>
+        selectedRowIds.includes(filteredRow.id)
+      ),
       `All ${rowsPerPage} rows on this page are selected.`
     ]
   ]);
-
-  // const message: string = TableStore.useStoreState((state) =>
-  //   getBannerMessage({ ...state, ceiling, floor, selectedRowIds })
-  // );
 
   return <p>{message}</p>;
 };
@@ -88,11 +88,16 @@ const TableBanner: React.FC = () => {
 
   const {
     isAllRowsSelected,
-    rowsPerPage,
+    filteredRows,
     selectedRowIds
   }: TableState = tableState;
 
-  if (!isAllRowsSelected && selectedRowIds.length !== rowsPerPage) {
+  if (
+    !isAllRowsSelected &&
+    !filteredRows.every((filteredRow: TableRow) =>
+      selectedRowIds.includes(filteredRow.id)
+    )
+  ) {
     return null;
   }
 

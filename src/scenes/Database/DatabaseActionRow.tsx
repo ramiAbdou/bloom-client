@@ -8,10 +8,11 @@ import useMemberRole from '@core/hooks/useMemberRole';
 import { MemberRole } from '@util/constants.entities';
 import DatabaseCopyMemberEmailsButton from './DatabaseCopyMemberEmailsButton';
 import DatabaseDeleteMembersButton from './DatabaseDeleteMembersButton';
+import DatabaseDemoteMembersButton from './DatabaseDemoteMembersButton';
 import DatabaseExportMembersButton from './DatabaseExportMembersButton';
-import DatabasePromoteButton from './DatabasePromoteButton';
-import MemberDatabaseQuickFilters from './MemberDatabaseQuickFilters';
-import MemberDatabaseSearchBar from './MemberDatabaseSearchBar';
+import DatabasePromoteMembersButton from './DatabasePromoteMembersButton';
+import DatabaseQuickFilterList from './DatabaseQuickFilterList';
+import DatabaseSearchBar from './DatabaseSearchBar';
 
 const DatabaseActionRowButtonRow: React.FC = () => {
   const { selectedRowIds }: TableState = useTableState();
@@ -23,7 +24,8 @@ const DatabaseActionRowButtonRow: React.FC = () => {
     <Row className="ml-auto" show={!!isAnythingSelected} spacing="xs">
       <DatabaseCopyMemberEmailsButton />
       <DatabaseExportMembersButton />
-      {isOwner && <DatabasePromoteButton />}
+      {isOwner && <DatabasePromoteMembersButton />}
+      {isOwner && <DatabaseDemoteMembersButton />}
       <DatabaseDeleteMembersButton />
     </Row>
   );
@@ -31,8 +33,8 @@ const DatabaseActionRowButtonRow: React.FC = () => {
 
 const DatabaseActionRow: React.FC = () => (
   <Row noMarginBottom wrap className="mb-sm--nlc" gap="sm" justify="sb">
-    <MemberDatabaseSearchBar />
-    <MemberDatabaseQuickFilters />
+    <DatabaseSearchBar />
+    <DatabaseQuickFilterList />
     <TableFilterButton className="ml-auto" />
     <DatabaseActionRowButtonRow />
   </Row>
