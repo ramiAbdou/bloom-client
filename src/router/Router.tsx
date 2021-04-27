@@ -8,7 +8,6 @@ import Application from '@scenes/Application/Application';
 import Database from '@scenes/Database/Database';
 import Directory from '@scenes/Directory/Directory';
 import Events from '@scenes/Events/Events';
-import Integrations from '@scenes/Integrations/Integrations';
 import Login from '@scenes/Login/Login';
 import Profile from '@scenes/Profile/Profile';
 import useUpdateUserId from './hooks/useUpdateUserId';
@@ -47,13 +46,6 @@ const Router: React.FC = () => {
 
         <MemberRoute exact component={Directory} path="/:urlName/directory" />
         <Route component={Events} path="/:urlName/events" />
-
-        <MemberRoute
-          admin
-          component={Integrations}
-          path="/:urlName/integrations"
-        />
-
         <MemberRoute exact component={Profile} path="/:urlName/profile" />
         <Redirect path="/:urlName" to="/:urlName/directory" />
         <CatchAllRoute exact path="/" />
