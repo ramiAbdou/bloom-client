@@ -125,6 +125,10 @@ const sortTable = (state: TableState, args: SortTableArgs): TableState => {
   };
 };
 
+const toggleAllRowIds = (state: TableState) => {
+  return { ...state, isAllRowsSelected: !state.isAllRowsSelected };
+};
+
 const toggleRowId = (
   state: TableState,
   { rowId, wasToggled }: ToggleRowIdArgs
@@ -152,8 +156,6 @@ const toggleRowIds = (state: TableState, rowIds: string[]): TableState => {
     return isAlreadySelected;
   });
 
-  console.log('ROW IDS', rowIds);
-
   return {
     ...state,
     selectedRowIds:
@@ -177,6 +179,9 @@ const tableReducer = (state: TableState, action: TableAction): TableState => {
 
     case 'SORT_TABLE':
       return sortTable(state, { ...action });
+
+    case 'TOGGLE_ALL_ROW_IDS':
+      return toggleAllRowIds(state);
 
     case 'TOGGLE_ROW_ID':
       return toggleRowId(state, { ...action });

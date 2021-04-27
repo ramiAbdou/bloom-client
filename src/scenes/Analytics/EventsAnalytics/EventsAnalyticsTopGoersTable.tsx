@@ -7,7 +7,6 @@ import {
   TableOptions,
   TableRow
 } from '@components/organisms/Table/Table.types';
-import TableContent from '@components/organisms/Table/TableContent';
 import { modalVar } from '@core/state/Modal.reactive';
 import {
   ComponentWithFragments,
@@ -70,9 +69,13 @@ const EventsAnalyticsTopGoersTable: ComponentWithFragments<IEvent[]> = ({
   };
 
   return (
-    <Table columns={columns} options={options} rows={rows} totalCount={0}>
-      <TableContent emptyMessage="Looks like nobody has attended an event yet." />
-    </Table>
+    <Table
+      columns={columns}
+      emptyMessage="Looks like nobody has attended an event yet."
+      options={options}
+      rows={rows}
+      totalCount={0}
+    />
   );
 };
 

@@ -106,11 +106,7 @@ const GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED: DocumentNode = gql`
 `;
 
 const Database: React.FC = () => {
-  const {
-    data,
-    error,
-    loading
-  } = useQuery<GetMembersByCommunityIdExpandedResult>(
+  const { data, loading } = useQuery<GetMembersByCommunityIdExpandedResult>(
     GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED
   );
 
@@ -120,8 +116,6 @@ const Database: React.FC = () => {
     },
     []
   );
-
-  console.log(data?.members, error);
 
   return (
     <Scene>

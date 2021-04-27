@@ -111,6 +111,7 @@ export type TableAction =
       sortColumnId: string;
       sortDirection: TableSortDirection;
     }
+  | { type: 'TOGGLE_ALL_ROW_IDS' }
   | { type: 'TOGGLE_ROW_ID'; rowId: string; wasToggled: boolean }
   | { type: 'TOGGLE_ROW_IDS'; rowIds: string[] };
 

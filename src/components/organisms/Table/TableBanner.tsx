@@ -37,6 +37,11 @@ const TableBannerButton: React.FC = () => {
   const allRowIds: string[] = filteredRows.map((row: TableRow) => row.id);
 
   const onClick = (): void => {
+    if (selectedRowIds.length === rowsPerPage) {
+      tableDispatch({ type: 'TOGGLE_ALL_ROW_IDS' });
+      return;
+    }
+
     tableDispatch({ rowIds: allRowIds, type: 'TOGGLE_ROW_IDS' });
   };
 

@@ -10,7 +10,6 @@ import {
   TableOptions,
   TableRow
 } from '@components/organisms/Table/Table.types';
-import TableContent from '@components/organisms/Table/TableContent';
 import { modalVar } from '@core/state/Modal.reactive';
 import useFindOne from '@gql/hooks/useFindOne';
 import { ModalType } from '@util/constants';
@@ -36,14 +35,8 @@ const IndividualEventTableContent: React.FC = () => {
 
   return (
     <Section className="s-events-individual-table-ctr">
-      <Table
-        TableActions={IndividualEventTableActions}
-        columns={columns}
-        options={options}
-        rows={rows}
-        totalCount={0}
-      >
-        <TableContent />
+      <Table columns={columns} options={options} rows={rows} totalCount={0}>
+        <IndividualEventTableActions />
       </Table>
     </Section>
   );

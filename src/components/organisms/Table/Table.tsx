@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+import TableContent from '@components/organisms/Table/TableContent';
 import PanelLocal from '../Panel/PanelLocal';
 import {
   getColumn,
@@ -19,13 +20,15 @@ import TableFilterStore from './TableFilterPanel/TableFilterPanel.store';
 import TablePagination from './TablePagination';
 
 interface TableProps extends TableInitialState {
+  emptyMessage?: string;
   onOffsetChange?: (offset: number) => void;
   onSortColumn?: (args: SortTableArgs) => void;
   TableActions?: React.FC;
 }
 
-const TableContent: React.FC<Partial<TableProps>> = ({
+const TableLayout: React.FC<Partial<TableProps>> = ({
   children,
+  emptyMessage,
   onOffsetChange,
   onSortColumn,
   rows,
@@ -57,8 +60,9 @@ const TableContent: React.FC<Partial<TableProps>> = ({
   return (
     <>
       {TableActions && <TableActions />}
-      <TableBanner />
       {children}
+      <TableBanner />
+      <TableContent emptyMessage={emptyMessage} />
       <TablePagination />
       <PanelLocal />
     </>
@@ -68,6 +72,7 @@ const TableContent: React.FC<Partial<TableProps>> = ({
 const Table: React.FC<TableProps> = ({
   children,
   columns,
+  emptyMessage,
   options,
   onOffsetChange,
   onSortColumn,
@@ -83,15 +88,16 @@ const Table: React.FC<TableProps> = ({
   >
     <TableStore.Provider>
       <TableFilterStore.Provider>
-        <TableContent
+        <TableLayout
           TableActions={TableActions}
+          emptyMessage={emptyMessage}
           rows={rows}
           totalCount={totalCount}
           onOffsetChange={onOffsetChange}
           onSortColumn={onSortColumn}
         >
           {children}
-        </TableContent>
+        </TableLayout>
       </TableFilterStore.Provider>
     </TableStore.Provider>
   </TableProvider>

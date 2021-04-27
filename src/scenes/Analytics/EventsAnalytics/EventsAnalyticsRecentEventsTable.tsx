@@ -9,7 +9,6 @@ import {
   TableOptions,
   TableRow
 } from '@components/organisms/Table/Table.types';
-import TableContent from '@components/organisms/Table/TableContent';
 import useCommunityUrlName from '@core/hooks/useCommunityUrlName';
 import { ComponentWithFragments, QuestionType } from '@util/constants';
 import { IEvent } from '@util/constants.entities';
@@ -55,10 +54,13 @@ const EventsAnalyticsRecentEventsTable: ComponentWithFragments<IEvent[]> = ({
   };
 
   return (
-    <Table columns={columns} options={options} rows={rows} totalCount={0}>
-      {/* <SearchBar className="mb-sm--nlc" /> */}
-      <TableContent emptyMessage="Looks like nobody has attended an event yet." />
-    </Table>
+    <Table
+      columns={columns}
+      emptyMessage="Looks like nobody has attended an event yet."
+      options={options}
+      rows={rows}
+      totalCount={0}
+    />
   );
 };
 

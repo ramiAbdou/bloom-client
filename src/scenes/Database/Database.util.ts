@@ -1,6 +1,10 @@
-import { TableRow } from '@components/organisms/Table/Table.types';
+import {
+  TableRow,
+  TableSortDirection
+} from '@components/organisms/Table/Table.types';
 import { QuestionCategory } from '@util/constants';
 import { IMember, IMemberValue, IQuestion } from '@util/constants.entities';
+import { sortObjects } from '@util/util';
 
 interface GetMemberValueArgs {
   member: IMember;
@@ -51,12 +55,20 @@ const getMemberValue = ({ member, question }: GetMemberValueArgs) => {
 interface UseMemberDatabaseRowsArgs {
   members: IMember[];
   questions: IQuestion[];
+  sortColumnId: string;
+  sortColumnCategory: QuestionCategory;
+  sortDirection: TableSortDirection;
 }
 
 export const useMemberDatabaseRows = ({
   members,
-  questions
+  questions,
+  sortColumnId,
+  sortColumnCategory,
+  sortDirection
 }: UseMemberDatabaseRowsArgs): TableRow[] => {
+  if (!members || !questions) return [];
+
   const rows: TableRow[] = members?.map((member: IMember) =>
     questions.reduce(
       (row, question: IQuestion) => {
@@ -69,5 +81,9 @@ export const useMemberDatabaseRows = ({
     )
   );
 
-  return rows;
+  return sortColumnId && !sortColumnCategory
+    ? rows.sort((a: TableRow, b: TableRow) =>
+        sortObjects(a, b, sortColumnId, sortDirection)
+      )
+    : rows;
 };

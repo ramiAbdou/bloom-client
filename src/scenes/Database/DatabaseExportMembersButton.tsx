@@ -1,54 +1,173 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CSVLink } from 'react-csv';
 import { IoExit } from 'react-icons/io5';
-import { communityIdVar, toastQueueVar, useToast } from 'src/App.reactive';
+import { toastQueueVar, useToast } from 'src/App.reactive';
 
-import { useReactiveVar } from '@apollo/client';
+import {
+  DocumentNode,
+  gql,
+  useLazyQuery,
+  useReactiveVar
+} from '@apollo/client';
 import { useTableState } from '@components/organisms/Table/Table.state';
-import { TableState } from '@components/organisms/Table/Table.types';
-import useFindOne from '@gql/hooks/useFindOne';
-import { ICommunity } from '@util/constants.entities';
+import {
+  SortTableArgs,
+  TableRow,
+  TableState
+} from '@components/organisms/Table/Table.types';
+import useCommunityUrlName from '@core/hooks/useCommunityUrlName';
+import { IMember, IQuestion } from '@util/constants.entities';
+import { databaseSortArgsVar } from './Database.reactive';
+import { useMemberDatabaseRows } from './Database.util';
 import DatabaseAction from './DatabaseAction';
 
+interface GetMembersFullDataArgs {
+  idExp: Record<string, unknown>;
+}
+
+interface GetMembersFullDataResult {
+  members: IMember[];
+  questions: IQuestion[];
+}
+
+const GET_MEMBERS_FULL_DATA: DocumentNode = gql`
+  query GetMembersFullData(
+    $communityId: String!
+    $idExp: String_comparison_exp!
+    $orderByExp: [members_order_by!]
+    $roleExp: String_comparison_exp! = {}
+    $searchString: String!
+    $searchStringWord: String!
+  ) {
+    communityId @client @export(as: "communityId")
+    databaseOrderByExp @client @export(as: "orderByExp")
+    databaseRoleExp @client @export(as: "roleExp")
+    databaseSearchString @client @export(as: "searchString")
+    databaseSearchStringWord @client @export(as: "searchStringWord")
+
+    members(
+      where: {
+        _and: [
+          { communityId: { _eq: $communityId } }
+          { deletedAt: { _is_null: true } }
+          { id: $idExp }
+          { role: $roleExp }
+          { status: { _eq: "Accepted" } }
+          {
+            _or: [
+              { email: { _ilike: $searchStringWord } }
+              { firstName: { _ilike: $searchString } }
+              { lastName: { _ilike: $searchString } }
+            ]
+          }
+        ]
+      }
+      order_by: $orderByExp
+    ) {
+      bio
+      email
+      firstName
+      id
+      lastName
+      joinedAt
+      role
+      status
+
+      memberSocials {
+        facebookUrl
+        instagramUrl
+        linkedInUrl
+      }
+
+      memberType {
+        name
+      }
+
+      memberValues {
+        id
+        questionId
+        value
+      }
+    }
+
+    questions(
+      where: {
+        category: { _neq: "DUES_STATUS" }
+        communityId: { _eq: $communityId }
+      }
+      order_by: { rank: asc }
+    ) {
+      category
+      id
+      title
+      type
+    }
+  }
+`;
+
 const DatabaseExportMembersButton: React.FC = () => {
-  const communityId: string = useReactiveVar(communityIdVar);
-  const { columns, filteredRows, selectedRowIds }: TableState = useTableState();
+  const [getMembersFullData, { loading, data }] = useLazyQuery<
+    GetMembersFullDataResult,
+    GetMembersFullDataArgs
+  >(GET_MEMBERS_FULL_DATA);
+
+  const {
+    columns,
+    isAllRowsSelected,
+    selectedRowIds
+  }: TableState = useTableState();
+
+  const sortArgs: SortTableArgs = useReactiveVar(databaseSortArgsVar);
   const { showToast } = useToast(toastQueueVar);
 
-  const { data: community, loading } = useFindOne(ICommunity, {
-    fields: ['urlName'],
-    where: { id: communityId }
+  const urlName: string = useCommunityUrlName();
+  const members: IMember[] = data?.members;
+  const questions: IQuestion[] = data?.questions;
+
+  const rows: TableRow[] = useMemberDatabaseRows({
+    members,
+    questions,
+    sortColumnCategory: sortArgs?.column?.category,
+    sortColumnId: sortArgs?.sortColumnId,
+    sortDirection: sortArgs?.sortDirection
   });
+
+  useEffect(() => {
+    if (!rows.length) return;
+
+    showToast({ message: 'Member(s) data exported.' });
+  }, [rows]);
 
   // Formatted in a way that CSV Link can properly read it.
   const headers = columns.map(({ id, title }) => {
     return { key: id, label: title };
   });
 
-  const data = selectedRowIds.map((rowId: string) => {
-    // We return every piece of data in the selected row except for the
-    // ID of the row, which is just the member ID in this case.
-    const { id: _, ...rest } = filteredRows.find(({ id }) => id === rowId);
-    return rest;
-  });
-
-  if (loading) return null;
+  const csvData = rows.map(({ id: _, ...row }) => row);
 
   const onClick = (): void => {
-    showToast({ message: 'Member(s) data exported.' });
+    const idExp: Record<string, unknown> = isAllRowsSelected
+      ? {}
+      : { _in: selectedRowIds };
+
+    getMembersFullData({ variables: { idExp } });
   };
 
-  const fileName: string = `${community.urlName}.csv`;
+  const fileName: string = `${urlName}.csv`;
 
   return (
     <CSVLink
-      data={data}
+      data={csvData}
       enclosingCharacter="`"
       filename={fileName}
       headers={headers}
       onClick={onClick}
     >
-      <DatabaseAction Icon={IoExit} tooltip="Export Member Data" />
+      <DatabaseAction
+        Icon={IoExit}
+        loading={loading}
+        tooltip="Export Member Data"
+      />
     </CSVLink>
   );
 };

@@ -7,14 +7,12 @@ import { TableDispatch, TableRow, TableState } from './Table.types';
 const TableHeaderCheckbox: React.FC = () => {
   const tableState: TableState = useTableState();
   const tableDispatch: TableDispatch = useTableDispatch();
-  const { filteredRows, selectedRowIds }: TableState = tableState;
 
-  const allRowsOnPageSelected: boolean = filteredRows.every((row: TableRow) =>
-    selectedRowIds.includes(row.id)
-  );
-
-  const isAllPageSelected: boolean =
-    !!selectedRowIds.length && allRowsOnPageSelected;
+  const {
+    isAllRowsSelected,
+    filteredRows,
+    selectedRowIds
+  }: TableState = tableState;
 
   const onChange = (): void => {
     tableDispatch({
@@ -25,7 +23,7 @@ const TableHeaderCheckbox: React.FC = () => {
 
   return (
     <Checkbox
-      checked={isAllPageSelected}
+      checked={isAllRowsSelected || !!selectedRowIds.length}
       className="o-table-select"
       onChange={onChange}
     />

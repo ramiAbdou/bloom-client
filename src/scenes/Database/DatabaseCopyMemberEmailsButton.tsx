@@ -71,10 +71,13 @@ const DatabaseCopyMemberEmailsButton: React.FC = () => {
   useEffect(() => {
     if (!members) return;
 
+    // Converts the array of emails into a comma-separated string with all
+    // the emails joined together.
     const joinedEmails: string = members
       .map((member: IMember) => member.email)
       .join(',');
 
+    // Copy it to the clipboard.
     navigator.clipboard.writeText(joinedEmails);
     showToast({ message: 'Email(s) copied to clipboard.' });
   }, [members]);
