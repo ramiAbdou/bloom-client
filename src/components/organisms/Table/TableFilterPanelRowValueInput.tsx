@@ -4,16 +4,15 @@ import Input from '@components/atoms/Input/Input';
 import Dropdown from '@components/molecules/Dropdown/Dropdown';
 import IdStore from '@core/store/Id.store';
 import { QuestionType } from '@util/constants';
-import { useTable, useTableColumn } from './Table.state';
+import { useTable, useTableColumn, useTableFilter } from './Table.state';
 import { TableColumn } from './Table.types';
 import { TableFilter } from './TableFilterPanel.types';
 
 const TableFilterPanelRowValueInput: React.FC = () => {
-  const [{ filters }, tableDispatch] = useTable();
+  const [_, tableDispatch] = useTable();
 
   const filterId: string = IdStore.useStoreState((state) => state.id);
-  const filter: TableFilter = filters[filterId];
-
+  const filter: TableFilter = useTableFilter(filterId);
   const column: TableColumn = useTableColumn({ columnId: filter.columnId });
 
   const onInputChange = (value: string): void => {

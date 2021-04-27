@@ -1,16 +1,13 @@
 import React from 'react';
 
-import { getRange, useTableState } from './Table.state';
-import { TableState } from './Table.types';
+import { useTable, useTableRange } from './Table.state';
 
 const TablePaginationMessage: React.FC = () => {
-  const tableState: TableState = useTableState();
-  const { options, totalCount }: TableState = tableState;
+  const [{ options, totalCount }] = useTable();
+  const [floor, ceiling]: [number, number] = useTableRange();
 
   // If showCount is disabled, don't show the count!
   if (!options?.showCount) return null;
-
-  const [floor, ceiling]: [number, number] = getRange(tableState);
 
   const message: string = totalCount
     ? `Displaying ${floor + 1}-${ceiling + 1} of ${totalCount} results.`

@@ -2,21 +2,12 @@ import React, { useEffect } from 'react';
 
 import TableContent from '@components/organisms/Table/TableContent';
 import PanelLocal from '../Panel/PanelLocal';
-import {
-  TableProvider,
-  useTableColumn,
-  useTableDispatch,
-  useTableState
-} from './Table.state';
+import { TableProvider, useTable, useTableColumn } from './Table.state';
 import {
   OnApplyFiltersArgs,
   SortTableArgs,
   TableColumn,
-  TableDispatch,
-  TableFilter,
-  TableFilterExpanded,
-  TableInitialState,
-  TableState
+  TableInitialState
 } from './Table.types';
 import TableBanner from './TableBanner';
 import TablePagination from './TablePagination';
@@ -32,52 +23,24 @@ interface TableProps extends TableInitialState {
 const TableLayout: React.FC<Partial<TableProps>> = ({
   children,
   emptyMessage,
-  onApplyFilters,
   onOffsetChange,
   onSortColumn,
   rows,
   TableActions,
   totalCount
 }) => {
-  const {
-    appliedFilterIds,
-    columns,
-    filters,
-    filterJoinOperator,
-    page,
-    rowsPerPage,
-    sortColumnId,
-    sortDirection
-  }: TableState = useTableState();
-
-  const tableDispatch: TableDispatch = useTableDispatch();
+  const [
+    { page, rowsPerPage, sortColumnId, sortDirection },
+    tableDispatch
+  ] = useTable();
 
   useEffect(() => {
     tableDispatch({ rows, type: 'SET_ROWS' });
-    tableDispatch({ totalCount, type: 'SET_TOTAL_COUNT' });
   }, [rows]);
 
   useEffect(() => {
-    if (!appliedFilterIds.length || !onApplyFilters) return;
-
-    const expandedFilters: TableFilterExpanded[] = appliedFilterIds.map(
-      (filterId: string) => {
-        const filter: TableFilter = filters[filterId];
-
-        return {
-          ...filter,
-          column: columns.find(
-            (column: TableColumn) => column.id === filter.columnId
-          )
-        };
-      }
-    );
-
-    onApplyFilters({
-      filters: expandedFilters,
-      joinOperator: filterJoinOperator
-    });
-  }, [appliedFilterIds, filterJoinOperator]);
+    tableDispatch({ totalCount, type: 'SET_TOTAL_COUNT' });
+  }, [totalCount]);
 
   useEffect(() => {
     if (onOffsetChange) onOffsetChange(page * rowsPerPage);
@@ -120,6 +83,7 @@ const Table: React.FC<TableProps> = ({
     options={options}
     rows={rows}
     totalCount={totalCount}
+    onApplyFilters={onApplyFilters}
   >
     <TableLayout
       TableActions={TableActions}

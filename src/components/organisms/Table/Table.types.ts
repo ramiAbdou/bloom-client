@@ -96,6 +96,7 @@ export const defaultTableOptions: TableOptions = {
 
 export interface TableInitialState {
   columns: TableColumn[];
+  onApplyFilters?: (args: OnApplyFiltersArgs) => void;
   options?: TableOptions;
   rows: TableRow[];
   totalCount: number;
@@ -109,6 +110,7 @@ export interface TableState {
   filteredRows: TableRow[];
   filters: Record<string, TableFilter>;
   isAllRowsSelected: boolean;
+  onApplyFilters?: (args: OnApplyFiltersArgs) => void;
   options: TableOptions;
   page: number;
   rows: TableRow[];

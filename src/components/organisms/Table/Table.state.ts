@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+
 import { nanoid } from 'nanoid';
 import { useReducer } from 'react';
 import { createContainer } from 'react-tracked';
@@ -9,6 +11,7 @@ import {
   TableAction,
   TableColumn,
   TableFilter,
+  TableFilterExpanded,
   TableFilterJoinOperatorType,
   TableFilterOperatorType,
   TableInitialState,
@@ -18,29 +21,30 @@ import {
   ToggleRowIdArgs
 } from '@components/organisms/Table/Table.types';
 
-/**
- * Returns the [floor, ceiling] of the page.
- *
- * @example
- * // Returns [0, 24].
- * getRange({ page: 0, rowsPerPage: 25 })
- *
- * @example
- * // Returns [25, 49].
- * getRange({ page: 1, rowsPerPage: 25 })
- */
-export const getRange = (
-  state: Pick<TableState, 'filteredRows' | 'page' | 'rowsPerPage'>
-): [number, number] => {
-  const floor: number = state.page * state.rowsPerPage;
-  const filteredRowsCount: number = state.filteredRows.length;
+const handleOnApplyFilters = ({
+  appliedFilterIds,
+  columns,
+  filterJoinOperator,
+  filters,
+  onApplyFilters
+}: TableState) => {
+  const expandedFilters: TableFilterExpanded[] = appliedFilterIds.map(
+    (filterId: string) => {
+      const filter: TableFilter = filters[filterId];
 
-  const ceiling: number =
-    filteredRowsCount - floor >= state.rowsPerPage
-      ? floor + state.rowsPerPage - 1
-      : floor + filteredRowsCount - 1;
+      return {
+        ...filter,
+        column: columns.find(
+          (column: TableColumn) => column.id === filter.columnId
+        )
+      };
+    }
+  );
 
-  return [floor, ceiling];
+  onApplyFilters({
+    filters: expandedFilters,
+    joinOperator: filterJoinOperator
+  });
 };
 
 const addFilter = (state: TableState): TableState => {
@@ -61,16 +65,19 @@ const addFilter = (state: TableState): TableState => {
 };
 
 const applyFilters = (state: TableState): TableState => {
-  return {
+  const updatedTableState: TableState = {
     ...state,
     appliedFilterIds: [...state.allFilterIds]
   };
+
+  handleOnApplyFilters(updatedTableState);
+  return updatedTableState;
 };
 
 const clearFilters = (state: TableState): TableState => {
   const initialFilterId: string = nanoid();
 
-  return {
+  const updatedTableState: TableState = {
     ...state,
     allFilterIds: [initialFilterId],
     appliedFilterIds: [],
@@ -82,6 +89,9 @@ const clearFilters = (state: TableState): TableState => {
       }
     }
   };
+
+  handleOnApplyFilters(updatedTableState);
+  return updatedTableState;
 };
 
 const removeFilter = (state: TableState, filterId: string): TableState => {
@@ -265,6 +275,7 @@ const tableReducer = (state: TableState, action: TableAction): TableState => {
 
 const useTableValue = ({
   columns,
+  onApplyFilters,
   options,
   rows,
   totalCount
@@ -285,6 +296,7 @@ const useTableValue = ({
       }
     },
     isAllRowsSelected: false,
+    onApplyFilters,
     options: { ...defaultTableOptions, ...options },
     page: 0,
     rows,
@@ -303,6 +315,12 @@ export const {
   useUpdate: useTableDispatch,
   useSelector: useTableSelector
 } = createContainer(useTableValue);
+
+/**
+ * Returns true if the Table has filtered data. Returns false, otherwise.
+ */
+export const useIsTablePopulated = (): boolean =>
+  useTableSelector((state: TableState) => !!state.filteredRows.length);
 
 /**
  * Returns true if the TableRow is selected (if the rowId is in the
@@ -352,3 +370,31 @@ export const useTableColumnIndex = ({
  */
 export const useTableFilter = (filterId: string): TableFilter =>
   useTableSelector((state: TableState) => state.filters[filterId]);
+
+/**
+ * Returns the [floor, ceiling] of the page.
+ *
+ * @example
+ * // Returns [0, 24].
+ * useTableRange({ page: 0, rowsPerPage: 25 })
+ *
+ * @example
+ * // Returns [25, 49].
+ * useTableRange({ page: 1, rowsPerPage: 25 })
+ */
+export const useTableRange = (): [number, number] =>
+  useTableSelector(
+    (
+      state: Pick<TableState, 'filteredRows' | 'page' | 'rowsPerPage'>
+    ): [number, number] => {
+      const floor: number = state.page * state.rowsPerPage;
+      const filteredRowsCount: number = state.filteredRows.length;
+
+      const ceiling: number =
+        filteredRowsCount - floor >= state.rowsPerPage
+          ? floor + state.rowsPerPage - 1
+          : floor + filteredRowsCount - 1;
+
+      return [floor, ceiling];
+    }
+  );

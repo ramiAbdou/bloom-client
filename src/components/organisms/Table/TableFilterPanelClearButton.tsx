@@ -1,11 +1,10 @@
 import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
-import { useTableDispatch } from './Table.state';
-import { TableDispatch } from './Table.types';
+import { useTable } from './Table.state';
 
 const TableFilterPanelClearButton: React.FC = () => {
-  const tableDispatch: TableDispatch = useTableDispatch();
+  const [_, tableDispatch] = useTable();
 
   const onClick = (): void => {
     tableDispatch({ type: 'CLEAR_FILTERS' });

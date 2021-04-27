@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useTableState } from './Table.state';
+import { useIsTablePopulated, useTable } from './Table.state';
 import TableBody from './TableBody';
 import TableHeaderRow from './TableHeaderRow';
 
@@ -8,16 +8,13 @@ interface TableContentProps {
   emptyMessage?: string;
 }
 
-const TableContent: React.FC<TableContentProps> = ({
-  emptyMessage: eMessage
-}) => {
-  const { filteredRows, options } = useTableState();
+const TableContent: React.FC<TableContentProps> = ({ emptyMessage }) => {
+  const [{ options }] = useTable();
+  const isTablePopulated: boolean = useIsTablePopulated();
 
-  if (!filteredRows?.length && options.hideIfEmpty) {
+  if (!isTablePopulated && options.hideIfEmpty) {
     return null;
   }
-
-  const emptyMessage: string = !filteredRows?.length ? eMessage : null;
 
   return (
     <>
@@ -28,7 +25,7 @@ const TableContent: React.FC<TableContentProps> = ({
         </table>
       </div>
 
-      {emptyMessage && <p className="mt-sm">{emptyMessage}</p>}
+      {!isTablePopulated && <p className="mt-sm">{emptyMessage}</p>}
     </>
   );
 };

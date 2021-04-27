@@ -22,15 +22,11 @@ const TableFilterPanelCloseButton: React.FC = () => {
   );
 };
 
-const TableFilterPanelActions: React.FC = () => {
-  
-
-  return (
-    <Row spacing="xs">
-      <TableFilterPanelApplyButton />
-      <TableFilterPanelCloseButton />
-    </Row>
-  );
-};
+const TableFilterPanelActions: React.FC = () => (
+  <Row spacing="xs">
+    <TableFilterPanelApplyButton />
+    <TableFilterPanelCloseButton />
+  </Row>
+);
 
 export default TableFilterPanelActions;

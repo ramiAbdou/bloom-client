@@ -2,33 +2,28 @@ import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
 import { useStoreActions } from '@core/store/Store';
-import { useTableDispatch, useTableState } from './Table.state';
-import { TableDispatch, TableState } from './Table.types';
-
-// const processFilter = (args: ProcessFilterArgs) => {
-//   const { columnId, operator, row, value } = args;
-//   const rowValue: any = row[columnId]?.toString()?.toLowerCase();
-//   const processedValue: string = value?.toString()?.toLowerCase();
-
-//   if (operator === 'includes') return rowValue?.includes(processedValue);
-//   if (operator === 'is') return rowValue === processedValue;
-//   if (operator === 'is not') return rowValue !== processedValue;
-//   return false;
-// };
+import { useTable, useTableSelector } from './Table.state';
+import { TableState } from './Table.types';
 
 const TableFilterPanelApplyButton: React.FC = () => {
-  const tableDispatch: TableDispatch = useTableDispatch();
-  const { filters }: TableState = useTableState();
+  const [_, tableDispatch] = useTable();
+
   const closePanel = useStoreActions(({ panel }) => panel.closePanel);
+
+  const filterCount: number = useTableSelector(
+    (state: TableState) => Object.keys(state.filters)?.length ?? 0
+  );
 
   const onClick = () => {
     tableDispatch({ type: 'APPLY_FILTERS' });
     closePanel();
+
+    // if (onApplyFilters)
   };
 
   return (
     <Button primary onClick={onClick}>
-      Apply {filters?.length} Filters
+      Apply {filterCount} Filters
     </Button>
   );
 };

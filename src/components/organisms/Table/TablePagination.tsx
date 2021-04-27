@@ -1,15 +1,13 @@
 import React from 'react';
 
 import Row from '@components/containers/Row/Row';
-import { useTableState } from './Table.state';
-import { TableState } from './Table.types';
+import { useIsTablePopulated } from './Table.state';
 import TablePaginationButtonList from './TablePaginationButtonList';
 import TablePaginationMessage from './TablePaginationMessage';
 
 const TablePagination: React.FC = () => {
-  const { filteredRows }: TableState = useTableState();
-
-  if (!filteredRows?.length) return null;
+  const isTablePopulated: boolean = useIsTablePopulated();
+  if (!isTablePopulated) return null;
 
   return (
     <Row wrap className="mt-sm" gap="sm" justify="sb">

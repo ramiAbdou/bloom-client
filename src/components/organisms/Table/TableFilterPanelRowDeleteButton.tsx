@@ -3,15 +3,19 @@ import { IoTrash } from 'react-icons/io5';
 
 import Button from '@components/atoms/Button/Button';
 import IdStore from '@core/store/Id.store';
-import { useTableDispatch, useTableState } from './Table.state';
-import { TableDispatch, TableState } from './Table.types';
+import { useTable, useTableSelector } from './Table.state';
+import { TableState } from './Table.types';
 
 const TableFilterPanelRowDeleteButton: React.FC = () => {
-  const tableDispatch: TableDispatch = useTableDispatch();
-  const { allFilterIds }: TableState = useTableState();
+  const [_, tableDispatch] = useTable();
+
   const filterId: string = IdStore.useStoreState((state) => state.id);
 
-  if (allFilterIds.length < 2) return null;
+  const filterCount: number = useTableSelector(
+    (state: TableState) => state.allFilterIds.length
+  );
+
+  if (filterCount < 2) return null;
 
   const onClick = (): void => {
     tableDispatch({ filterId, type: 'REMOVE_FILTER' });

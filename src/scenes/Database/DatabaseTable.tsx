@@ -12,7 +12,7 @@ import {
 } from '@components/organisms/Table/Table.types';
 import { modalVar } from '@core/state/Modal.reactive';
 import { AggregateCount, ModalType, QuestionCategory } from '@util/constants';
-import { IMember, IQuestion } from '@util/constants.entities';
+import { IMember, IMemberType, IQuestion } from '@util/constants.entities';
 import {
   databaseFiltersVar,
   databaseOffsetVar,
@@ -23,12 +23,14 @@ import DatabaseActionRow from './DatabaseActionRow';
 
 interface DatabaseTableProps {
   members: IMember[];
+  memberTypes: IMemberType[];
   questions: IQuestion[];
   totalMembersCount: AggregateCount;
 }
 
 const DatabaseTable: React.FC<DatabaseTableProps> = ({
   members,
+  memberTypes,
   questions,
   totalMembersCount
 }) => {
@@ -36,8 +38,6 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
 
   members = members ?? [];
   questions = questions ?? [];
-
-  // const gql: GQL = useGQL();
 
   // Massage the member data into valid row data by mapping the question ID
   // to the value for each member.
@@ -54,6 +54,13 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
       return {
         ...question,
         format: (value: string) => day(value).format('MMMM, D, YYYY')
+      };
+    }
+
+    if (question.category === QuestionCategory.MEMBER_TYPE) {
+      return {
+        ...question,
+        options: memberTypes.map((memberType: IMemberType) => memberType.name)
       };
     }
 

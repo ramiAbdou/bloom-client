@@ -40,4 +40,4 @@ const TableRow: React.FC<TableRowProps> = (row) => {
   );
 };
 
-export default React.memo(TableRow);
+export default TableRow;

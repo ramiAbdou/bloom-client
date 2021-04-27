@@ -2,18 +2,17 @@ import React from 'react';
 
 import Dropdown from '@components/molecules/Dropdown/Dropdown';
 import IdStore from '@core/store/Id.store';
-import { useTableDispatch, useTableState } from './Table.state';
-import { TableDispatch, TableState } from './Table.types';
+import { useTable, useTableSelector } from './Table.state';
+import { TableState } from './Table.types';
 import { TableFilterJoinOperatorType } from './TableFilterPanel.types';
 
 const TableFilterPanelRowJoinOperator: React.FC = () => {
-  const { allFilterIds, filterJoinOperator }: TableState = useTableState();
-  const tableDispatch: TableDispatch = useTableDispatch();
+  const [{ filterJoinOperator }, tableDispatch] = useTable();
 
   const filterId: string = IdStore.useStoreState((state) => state.id);
 
-  const rowIndex: number = allFilterIds.findIndex(
-    (value: string) => value === filterId
+  const rowIndex: number = useTableSelector(({ allFilterIds }: TableState) =>
+    allFilterIds.findIndex((value: string) => value === filterId)
   );
 
   const onSelect = (updatedFilterJoinOperator: TableFilterJoinOperatorType) => {

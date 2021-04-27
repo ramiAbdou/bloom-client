@@ -3,13 +3,14 @@ import React, { useEffect } from 'react';
 import { DocumentNode, gql, useQuery } from '@apollo/client';
 import Scene from '@components/containers/Scene';
 import { AggregateCount } from '@util/constants';
-import { IMember, IQuestion } from '@util/constants.entities';
+import { IMember, IMemberType, IQuestion } from '@util/constants.entities';
 import { clearDatabaseReactiveFields } from './Database.reactive';
 import DatabaseHeader from './DatabaseHeader';
 import DatabaseTable from './DatabaseTable';
 
 interface GetMembersByCommunityIdExpandedResult {
   members: IMember[];
+  memberTypes: IMemberType[];
   questions: IQuestion[];
   totalMembersCount: AggregateCount;
 }
@@ -100,6 +101,14 @@ const GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED: DocumentNode = gql`
         questionId
         value
       }
+    }
+
+    memberTypes(
+      order_by: { name: asc }
+      where: { communityId: { _eq: $communityId } }
+    ) {
+      id
+      name
     }
 
     questions(
