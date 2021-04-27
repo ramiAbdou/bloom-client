@@ -1,4 +1,4 @@
-import { Action, ActionCreator } from 'easy-peasy';
+import { ActionCreator } from 'easy-peasy';
 
 import { IdProps, QuestionCategory, QuestionType } from '@util/constants';
 
@@ -15,13 +15,6 @@ export interface TableColumn {
   type?: QuestionType;
 }
 
-// ## TABLE FILTER
-
-export type TableQuickFilterArgs = {
-  filterId: string;
-  filter: (rows: TableRow) => boolean;
-};
-
 // ## TABLE RENAME COLUMN
 
 export type OnRenameColumnArgs = {
@@ -34,14 +27,6 @@ export type RenameColumnFunction = (args: OnRenameColumnArgs) => Promise<void>;
 // ## TABLE ROW
 
 export interface TableRow extends Pick<IdProps, 'id'>, Record<string, any> {}
-
-// ## TABLE MODEL
-
-export type TableModel = {
-  filters: Record<string, any>;
-  removeFilter: Action<TableModel, string>;
-  setFilter: Action<TableModel, TableQuickFilterArgs>;
-};
 
 // ## TABLE STATE
 

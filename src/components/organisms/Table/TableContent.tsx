@@ -1,26 +1,12 @@
-import hash from 'object-hash';
 import React from 'react';
 
 import { useTableState } from './Table.state';
-import { TableRow as TableRowProps } from './Table.types';
+import TableBody from './TableBody';
 import TableHeaderRow from './TableHeaderRow';
-import TableRow from './TableRow';
 
 interface TableContentProps {
   emptyMessage?: string;
 }
-
-const TableBody: React.FC = () => {
-  const { filteredRows } = useTableState();
-
-  return (
-    <tbody>
-      {filteredRows.map((row: TableRowProps) => (
-        <TableRow key={hash(row)} {...row} />
-      ))}
-    </tbody>
-  );
-};
 
 const TableContent: React.FC<TableContentProps> = ({
   emptyMessage: eMessage

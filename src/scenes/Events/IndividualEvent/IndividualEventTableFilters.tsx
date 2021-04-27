@@ -4,7 +4,7 @@ import { eventIdVar } from 'src/App.reactive';
 import { useReactiveVar } from '@apollo/client';
 import Row from '@components/containers/Row/Row';
 import { TableFilterFunction } from '@components/organisms/Table/TableFilterPanel.types';
-import TableQuickFilter from '@components/organisms/Table/TableQuickFilter';
+// import TableQuickFilter from '@components/organisms/Table/TableQuickFilter';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { IEvent } from '@util/constants.entities';
@@ -24,20 +24,22 @@ const IndividualEventViewedFilter: React.FC = () => {
     row: IndividualEventTableRowProps
   ): boolean => !!row.watched;
 
-  return (
-    <TableQuickFilter
-      filter={filter}
-      show={!!event.recordingUrl}
-      title="Viewed Recording"
-    />
-  );
+  return null;
+  // return (
+  //   <TableQuickFilter
+  //     filter={filter}
+  //     show={!!event.recordingUrl}
+  //     title="Viewed Recording"
+  //   />
+  // );
 };
 
 const IndividualEventRsvpFilter: React.FC = () => {
   const filter: TableFilterFunction = (row: IndividualEventTableRowProps) =>
     !!row.rsvpdAt;
 
-  return <TableQuickFilter filter={filter} title="RSVP'd" />;
+  return null;
+  // return <TableQuickFilter filter={filter} title="RSVP'd" />;
 };
 
 const IndividualEventJoinedFilter: React.FC = () => {
@@ -56,7 +58,8 @@ const IndividualEventJoinedFilter: React.FC = () => {
     row: IndividualEventTableRowProps
   ): boolean => !!row.joinedAt;
 
-  return <TableQuickFilter filter={filter} show={!isUpcoming} title="Joined" />;
+  return null;
+  // return <TableQuickFilter filter={filter} show={!isUpcoming} title="Joined" />;
 };
 
 const IndividualEventNoShowFilter: React.FC = () => {
@@ -75,13 +78,14 @@ const IndividualEventNoShowFilter: React.FC = () => {
     row: IndividualEventTableRowProps
   ): boolean => !!row.rsvpdAt && !row.joinedAt;
 
-  return (
-    <TableQuickFilter
-      filter={filter}
-      show={isPast}
-      title="RSVP'd + Didn't Join"
-    />
-  );
+  return null;
+  // return (
+  //   <TableQuickFilter
+  //     filter={filter}
+  //     show={isPast}
+  //     title="RSVP'd + Didn't Join"
+  //   />
+  // );
 };
 
 const IndividualEventTableFilters: React.FC = () => (

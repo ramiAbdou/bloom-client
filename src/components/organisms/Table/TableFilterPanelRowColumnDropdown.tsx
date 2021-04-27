@@ -3,22 +3,18 @@ import React from 'react';
 import Dropdown from '@components/molecules/Dropdown/Dropdown';
 import {
   TableColumn,
-  TableDispatch,
-  TableState
+  TableFilter
 } from '@components/organisms/Table/Table.types';
 import { IdProps } from '@util/constants';
-import { getColumn, useTableDispatch, useTableState } from './Table.state';
+import { useTable, useTableColumn, useTableFilter } from './Table.state';
 
 const TableFilterPanelRowColumnDropdown: React.FC<IdProps> = ({
   id: filterId
 }) => {
-  const { columns, filters }: TableState = useTableState();
-  const tableDispatch: TableDispatch = useTableDispatch();
+  const [{ columns }, tableDispatch] = useTable();
 
-  const column: TableColumn = getColumn(
-    { columns },
-    { columnId: filters[filterId].columnId }
-  );
+  const filter: TableFilter = useTableFilter(filterId);
+  const column: TableColumn = useTableColumn({ columnId: filter.columnId });
 
   const onSelect = (updatedTitle: string) => {
     const updatedColumnId: string = columns.find(

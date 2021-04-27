@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { cx } from '@util/util';
-import { useTableState } from './Table.state';
+import { useIsTableRowSelected, useTableState } from './Table.state';
 import {
   TableColumn,
   TableRow as TableRowProps,
@@ -10,9 +10,8 @@ import {
 import TableRowCell from './TableCell';
 
 const TableRow: React.FC<TableRowProps> = (row) => {
-  const { columns, options, selectedRowIds }: TableState = useTableState();
-
-  const isRowSelected: boolean = selectedRowIds.includes(row?.id);
+  const { columns, options }: TableState = useTableState();
+  const isRowSelected: boolean = useIsTableRowSelected(row.id);
 
   const css: string = cx('', {
     'o-table-tr--active': isRowSelected,
@@ -41,4 +40,4 @@ const TableRow: React.FC<TableRowProps> = (row) => {
   );
 };
 
-export default TableRow;
+export default React.memo(TableRow);

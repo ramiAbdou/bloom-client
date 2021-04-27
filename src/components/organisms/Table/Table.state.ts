@@ -19,34 +19,6 @@ import {
 } from '@components/organisms/Table/Table.types';
 
 /**
- * Returns the TableColumn.
- *
- * @param columnId - ID of the TableColumn to return.
- */
-export const getColumn = (
-  state: Pick<TableState, 'columns'>,
-  { columnId, category }: GetColumnArgs
-): TableColumn =>
-  state.columns.find((column: TableColumn) => {
-    if (category) return column.category === category;
-    return column.id === columnId;
-  });
-
-/**
- * Returns the index of the TableColumn.
- *
- * @param columnId - ID of the TableColumn to return.
- */
-export const getColumnIndex = (
-  state: TableState,
-  { columnId, category }: GetColumnArgs
-): number =>
-  state.columns.findIndex((column: TableColumn) => {
-    if (category) return column.category === category;
-    return column.id === columnId;
-  });
-
-/**
  * Returns the [floor, ceiling] of the page.
  *
  * @example
@@ -328,5 +300,55 @@ export const {
   Provider: TableProvider,
   useTracked: useTable,
   useTrackedState: useTableState,
-  useUpdate: useTableDispatch
+  useUpdate: useTableDispatch,
+  useSelector: useTableSelector
 } = createContainer(useTableValue);
+
+/**
+ * Returns true if the TableRow is selected (if the rowId is in the
+ * selectedRowIds array). Returns false, otherwise.
+ *
+ * @param rowId - ID of the TableRow to check.
+ */
+export const useIsTableRowSelected = (rowId: string): boolean =>
+  useTableSelector((state: TableState) => state.selectedRowIds.includes(rowId));
+
+/**
+ * Returns the TableColumn.
+ *
+ * @param columnId - ID of the TableColumn to return.
+ */
+export const useTableColumn = ({
+  columnId,
+  category
+}: GetColumnArgs): TableColumn =>
+  useTableSelector((state: TableState) =>
+    state.columns.find((column: TableColumn) => {
+      if (category) return column.category === category;
+      return column.id === columnId;
+    })
+  );
+
+/**
+ * Returns the index of the TableColumn.
+ *
+ * @param columnId - ID of the TableColumn to return.
+ */
+export const useTableColumnIndex = ({
+  columnId,
+  category
+}: GetColumnArgs): number =>
+  useTableSelector((state: TableState) =>
+    state.columns.findIndex((column: TableColumn) => {
+      if (category) return column.category === category;
+      return column.id === columnId;
+    })
+  );
+
+/**
+ * Returns the TableFilter.
+ *
+ * @param columnId - ID of the TableFilter to return.
+ */
+export const useTableFilter = (filterId: string): TableFilter =>
+  useTableSelector((state: TableState) => state.filters[filterId]);

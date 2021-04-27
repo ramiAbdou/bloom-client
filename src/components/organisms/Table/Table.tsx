@@ -3,12 +3,11 @@ import React, { useEffect } from 'react';
 import TableContent from '@components/organisms/Table/TableContent';
 import PanelLocal from '../Panel/PanelLocal';
 import {
-  getColumn,
   TableProvider,
+  useTableColumn,
   useTableDispatch,
   useTableState
 } from './Table.state';
-import TableStore from './Table.store';
 import {
   OnApplyFiltersArgs,
   SortTableArgs,
@@ -84,15 +83,13 @@ const TableLayout: React.FC<Partial<TableProps>> = ({
     if (onOffsetChange) onOffsetChange(page * rowsPerPage);
   }, [page]);
 
+  const column: TableColumn = useTableColumn({ columnId: sortColumnId });
+
   useEffect(() => {
     if (onSortColumn) {
-      onSortColumn({
-        column: getColumn({ columns }, { columnId: sortColumnId }),
-        sortColumnId,
-        sortDirection
-      });
+      onSortColumn({ column, sortColumnId, sortDirection });
     }
-  }, [sortColumnId, sortDirection]);
+  }, [column, sortColumnId, sortDirection]);
 
   return (
     <>
@@ -124,19 +121,17 @@ const Table: React.FC<TableProps> = ({
     rows={rows}
     totalCount={totalCount}
   >
-    <TableStore.Provider>
-      <TableLayout
-        TableActions={TableActions}
-        emptyMessage={emptyMessage}
-        rows={rows}
-        totalCount={totalCount}
-        onApplyFilters={onApplyFilters}
-        onOffsetChange={onOffsetChange}
-        onSortColumn={onSortColumn}
-      >
-        {children}
-      </TableLayout>
-    </TableStore.Provider>
+    <TableLayout
+      TableActions={TableActions}
+      emptyMessage={emptyMessage}
+      rows={rows}
+      totalCount={totalCount}
+      onApplyFilters={onApplyFilters}
+      onOffsetChange={onOffsetChange}
+      onSortColumn={onSortColumn}
+    >
+      {children}
+    </TableLayout>
   </TableProvider>
 );
 

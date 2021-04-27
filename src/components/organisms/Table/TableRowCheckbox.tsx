@@ -2,10 +2,10 @@ import React from 'react';
 
 import Checkbox from '@components/atoms/Checkbox/Checkbox';
 import {
-  TableDispatch,
-  TableState
-} from '@components/organisms/Table/Table.types';
-import { getColumnIndex, useTableDispatch, useTableState } from './Table.state';
+  useIsTableRowSelected,
+  useTable,
+  useTableColumnIndex
+} from './Table.state';
 
 interface TableRowCheckboxProps {
   columnId: string;
@@ -16,20 +16,18 @@ const TableRowCheckbox: React.FC<TableRowCheckboxProps> = ({
   columnId,
   rowId
 }) => {
-  const state: TableState = useTableState();
-  const { options }: TableState = state;
-  const tableDispatch: TableDispatch = useTableDispatch();
+  const [{ options }, tableDispatch] = useTable();
 
-  const columnIndex: number = getColumnIndex(state, { columnId });
-  const isSelected: boolean = state.selectedRowIds.includes(rowId);
+  const columnIndex: number = useTableColumnIndex({ columnId });
+  const isRowSelected: boolean = useIsTableRowSelected(rowId);
 
   const onChange = (): void => {
-    tableDispatch({ rowId, type: 'TOGGLE_ROW_ID', wasToggled: isSelected });
+    tableDispatch({ rowId, type: 'TOGGLE_ROW_ID', wasToggled: isRowSelected });
   };
 
   return (
     <Checkbox
-      checked={isSelected}
+      checked={isRowSelected}
       className="o-table-select"
       show={columnIndex === 0 && options.hasCheckbox}
       onChange={onChange}
