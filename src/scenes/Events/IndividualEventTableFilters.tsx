@@ -20,9 +20,9 @@ const IndividualEventViewedFilter: React.FC = () => {
 
   if (loading) return null;
 
-  const filter: TableFilterFunction = (
-    row: IndividualEventTableRowProps
-  ): boolean => !!row.watched;
+  // const filter: TableFilterFunction = (
+  //   row: IndividualEventTableRowProps
+  // ): boolean => !!row.watched;
 
   return null;
   // return (
@@ -34,14 +34,13 @@ const IndividualEventViewedFilter: React.FC = () => {
   // );
 };
 
-const IndividualEventRsvpFilter: React.FC = () => {
-  const filter: TableFilterFunction = (row: IndividualEventTableRowProps) =>
-    !!row.rsvpdAt;
+const IndividualEventRsvpFilter: React.FC = () =>
+  // const filter: TableFilterFunction = (row: IndividualEventTableRowProps) =>
+  //   !!row.rsvpdAt;
 
-  return null;
-  // return <TableQuickFilter filter={filter} title="RSVP'd" />;
-};
+  null;
 
+// return <TableQuickFilter filter={filter} title="RSVP'd" />;
 const IndividualEventJoinedFilter: React.FC = () => {
   const eventId: string = useReactiveVar(eventIdVar);
 
@@ -54,9 +53,9 @@ const IndividualEventJoinedFilter: React.FC = () => {
 
   const isUpcoming: boolean = getEventTiming(event) === EventTiming.UPCOMING;
 
-  const filter: TableFilterFunction = (
-    row: IndividualEventTableRowProps
-  ): boolean => !!row.joinedAt;
+  // const filter: TableFilterFunction = (
+  //   row: IndividualEventTableRowProps
+  // ): boolean => !!row.joinedAt;
 
   return null;
   // return <TableQuickFilter filter={filter} show={!isUpcoming} title="Joined" />;
@@ -74,9 +73,9 @@ const IndividualEventNoShowFilter: React.FC = () => {
 
   const isPast: boolean = getEventTiming(event) === EventTiming.PAST;
 
-  const filter: TableFilterFunction = (
-    row: IndividualEventTableRowProps
-  ): boolean => !!row.rsvpdAt && !row.joinedAt;
+  // const filter: TableFilterFunction = (
+  //   row: IndividualEventTableRowProps
+  // ): boolean => !!row.rsvpdAt && !row.joinedAt;
 
   return null;
   // return (

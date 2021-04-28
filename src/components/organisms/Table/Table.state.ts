@@ -342,7 +342,7 @@ const useTableValue = ({
     options: { ...defaultTableOptions, ...options },
     page: 0,
     rows: [],
-    rowsPerPage: 50,
+    rowsPerPage: 25,
     selectedRowIds: [],
     sortColumnId: null,
     sortDirection: null,

@@ -28,9 +28,11 @@ const TablePaginationNumberButtonList: React.FC = () => {
 };
 
 const TablePaginationButtonList: React.FC = () => {
-  const { filteredRows, totalCount }: TableState = useTableState();
+  const { filteredRows, rowsPerPage, totalCount }: TableState = useTableState();
 
-  if (totalCount <= filteredRows.length) return null;
+  console.log('totalCount', totalCount, filteredRows.length);
+
+  if (totalCount < rowsPerPage) return null;
 
   return (
     <Row>

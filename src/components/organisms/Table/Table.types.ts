@@ -1,32 +1,6 @@
 import { ActionCreator } from 'easy-peasy';
 
-import { IdProps, QuestionCategory, QuestionType } from '@util/constants';
-
-// ## TABLE COLUMN
-
-export interface TableColumn {
-  category?: QuestionCategory;
-  format?: (value: boolean | string) => string;
-  hideTitle?: boolean;
-  id: string;
-  options?: string[];
-  render?: (value: string) => JSX.Element;
-  title?: string;
-  type?: QuestionType;
-}
-
-// ## TABLE RENAME COLUMN
-
-export type OnRenameColumnArgs = {
-  column: Partial<TableColumn>;
-  updateColumn: ActionCreator<Partial<TableColumn>>;
-};
-
-export type RenameColumnFunction = (args: OnRenameColumnArgs) => Promise<void>;
-
-// ## TABLE ROW
-
-export interface TableRow extends Pick<IdProps, 'id'>, Record<string, any> {}
+import { QuestionCategory, QuestionType } from '@util/constants';
 
 // ## TABLE STATE
 
@@ -37,10 +11,26 @@ export interface OnApplyFiltersArgs {
   joinOperator: TableFilterJoinOperatorType;
 }
 
+export type OnRenameColumnArgs = {
+  column: Partial<TableColumn>;
+  updateColumn: ActionCreator<Partial<TableColumn>>;
+};
+
 export interface SortTableArgs {
   column?: TableColumn;
   sortColumnId: string;
   sortDirection: TableSortDirection;
+}
+
+export interface TableColumn {
+  category?: QuestionCategory;
+  format?: (value: boolean | string) => string;
+  hideTitle?: boolean;
+  id: string;
+  options?: string[];
+  render?: (value: string) => JSX.Element;
+  title?: string;
+  type?: QuestionType;
 }
 
 export interface TableFilter {
@@ -73,6 +63,10 @@ export enum TableSortDirection {
   DESC = 'DESC'
 }
 
+export interface TableRow extends Record<string, any> {
+  id: string;
+}
+
 export interface ToggleRowIdArgs {
   rowId: string;
   wasToggled: boolean;
@@ -95,7 +89,7 @@ export const defaultTableOptions: TableOptions = {
 export interface TableInitialState {
   columns: TableColumn[];
   onApplyFilters?: (args: OnApplyFiltersArgs) => void;
-  onRenameColumn?: RenameColumnFunction;
+  onRenameColumn?: (args: OnRenameColumnArgs) => void | Promise<void>;
   onRowClick?: (row: TableRow) => void;
   onSortColumn?: (args: SortTableArgs) => void;
   options?: TableOptions;
@@ -111,7 +105,7 @@ export interface TableState {
   filters: Record<string, TableFilter>;
   isAllRowsSelected: boolean;
   onApplyFilters?: (args: OnApplyFiltersArgs) => void;
-  onRenameColumn?: RenameColumnFunction;
+  onRenameColumn?: (args: OnRenameColumnArgs) => void | Promise<void>;
   onRowClick?: (row: TableRow) => void;
   onSortColumn?: (args: SortTableArgs) => void;
   options: TableOptions;

@@ -73,7 +73,7 @@ const GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED: DocumentNode = gql`
           $filtersExp
         ]
       }
-      limit: 50
+      limit: 25
       offset: $offset
       order_by: $orderByExp
     ) {
