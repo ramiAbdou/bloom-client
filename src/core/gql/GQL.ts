@@ -1,25 +1,18 @@
-import pluralize from 'pluralize';
-
 import {
   ApolloClient,
   ApolloQueryResult,
   DocumentNode,
   FetchResult,
-  gql,
-  Reference
+  gql
 } from '@apollo/client';
 import buildFieldsString from './buildFieldsString';
-import buildOperationString from './buildOperationString';
 import {
-  CreateArgs,
   CustomMutationArgs,
   FindOneArgs,
-  GQLOperation,
   MutationResult,
   QueryResult,
   UpdateArgs
 } from './GQL.types';
-import { getCreateMutation, parseCreateMutationResult } from './repo/create';
 import { getFindOneQuery, parseFindOneQueryResult } from './repo/findOne';
 import {
   getUpdateMutation,
@@ -32,79 +25,6 @@ class GQL {
 
   constructor(client: ApolloClient<unknown>) {
     this.client = client;
-  }
-
-  async create<T>(
-    entity: new () => T,
-    { data, fields, modifications }: CreateArgs<T>
-  ): Promise<MutationResult<T>> {
-    const mutation: DocumentNode = getCreateMutation(entity, { data, fields });
-
-    const result: FetchResult<unknown> = await this.client.mutate({
-      mutation,
-      update: (cache, createResult) => {
-        const nameWithoutI: string = entity.name.substring(1);
-        const entityName: string = pluralize(nameWithoutI);
-
-        const createOperationString: string = buildOperationString(
-          entity,
-          GQLOperation.CREATE
-        );
-
-        const fieldsString: string = buildFieldsString([
-          ...(fields ?? []),
-          'id'
-        ] as string[]);
-
-        const resultData = createResult.data[createOperationString];
-
-        cache.modify({
-          fields: {
-            [entityName]: (existingEntityRefs = []) => {
-              const newEntityRef: Reference = cache.writeFragment({
-                data: resultData,
-                fragment: gql`
-                  fragment New${nameWithoutI} on ${entityName} {
-                    ${fieldsString}
-                  }
-                `
-              });
-
-              return [...existingEntityRefs, newEntityRef];
-            }
-          }
-        });
-
-        if (modifications) {
-          modifications.forEach((modification) => {
-            cache.modify({
-              fields: {
-                [modification.field as string]: (existingRefs = []) => {
-                  const newEntityRef = cache.writeFragment({
-                    data: resultData,
-                    fragment: gql`
-                    fragment New${nameWithoutI} on ${entityName} {
-                      ${fieldsString}
-                    }
-                  `
-                  });
-
-                  return [...existingRefs, newEntityRef];
-                }
-              },
-              id: `${entityName}:${modification.id}`
-            });
-          });
-        }
-      }
-    });
-
-    const parsedResult: MutationResult<T> = parseCreateMutationResult(
-      entity,
-      result
-    );
-
-    return parsedResult;
   }
 
   async findOne<T>(

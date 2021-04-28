@@ -11,7 +11,7 @@ import ApplicantsViewModal from '@scenes/Applicants/ApplicantsViewModal';
 import DatabaseDeleteMembersModalForm from '@scenes/Database/DatabaseDeleteMembersModalForm';
 import DatabaseDemoteMembersModalForm from '@scenes/Database/DatabaseDemoteMembersModalForm';
 import DatabasePromoteMembersModalForm from '@scenes/Database/DatabasePromoteMembersModalForm';
-import EventsConfirmRsvpModal from '@scenes/Events/EventsConfirmRsvpModal';
+import EventsConfirmRsvpModalForm from '@scenes/Events/EventsConfirmRsvpModalForm';
 import IndividualEventErrorModal from '@scenes/Events/IndividualEventErrorModal';
 import ProfileMembershipForm from '@scenes/Profile/ProfileMembershipForm';
 import ProfilePersonalModalForm from '@scenes/Profile/ProfilePersonalModalForm';
@@ -39,7 +39,7 @@ const ModalCustomContent: React.FC = () => {
       return <DeleteEventConfirmationForm />;
 
     case ModalType.CONFIRM_RSVP:
-      return <EventsConfirmRsvpModal />;
+      return <EventsConfirmRsvpModalForm />;
 
     case ModalType.CREATE_EVENT:
       return <EventModalCreateForm />;
