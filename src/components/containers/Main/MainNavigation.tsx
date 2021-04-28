@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import Show from '@components/containers/Show';
 import { BaseProps } from '@util/constants';
@@ -13,8 +13,7 @@ export interface MainNavigationProps extends BaseProps {
 
 const MainNavigation: React.FC<MainNavigationProps> = (props) => {
   const { options, show } = props;
-  const { location } = useHistory();
-  const { pathname } = location;
+  const { pathname } = useLocation();
 
   // Only show if options are present.
   if (!options?.length) return null;

@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 /**
  * Returns the path (without a backslash) at the very end of the pathname.
@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
  * @example /me => me
  */
 const useFinalPath = (): string => {
-  const { pathname } = useHistory().location;
+  const { pathname } = useLocation();
   return pathname.substring(pathname.lastIndexOf('/') + 1);
 };
 
