@@ -54,7 +54,7 @@ IndividualEventInteractionsTable.fragment = gql`
     recordingUrl
     startTime
 
-    eventAttendees {
+    eventAttendees(order_by: { createdAt: desc }) {
       createdAt
       id
 
