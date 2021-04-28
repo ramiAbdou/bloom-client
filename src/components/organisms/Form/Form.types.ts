@@ -8,7 +8,6 @@ import {
   ShowProps,
   ValueProps
 } from '@util/constants';
-import { IPaymentMethod } from '@util/constants.entities';
 
 export type FormQuestion = {
   category?: QuestionCategory;
@@ -36,7 +35,7 @@ export interface FormItemData
   error?: string;
   metadata?: any;
   questionId?: string;
-  value?: string | string[] | boolean | number | IPaymentMethod;
+  value?: string | string[] | boolean | number;
   validate?: FormValidate;
 }
 
