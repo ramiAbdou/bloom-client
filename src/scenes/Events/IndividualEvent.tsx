@@ -6,6 +6,7 @@ import { DocumentNode, gql, useQuery, useReactiveVar } from '@apollo/client';
 import useIsMember from '@hooks/useIsMember';
 import { IEvent } from '@util/constants.entities';
 import { cx } from '@util/util';
+import IndividualEventMain from './IndividualEventMain';
 import IndividualEventStatisticCardList from './IndividualEventStatisticCardList';
 import useShowCheckInEventModal from './useShowCheckInEventModal';
 
@@ -22,6 +23,7 @@ const GET_EVENT_BY_ID: DocumentNode = gql`
     event(id: $eventId) {
       id
       privacy
+      ...IndividualEventMainFragment
       ...IndividualEventStatisticCardListFragment
 
       community {
@@ -29,18 +31,21 @@ const GET_EVENT_BY_ID: DocumentNode = gql`
       }
     }
   }
+  ${IndividualEventMain.fragment}
   ${IndividualEventStatisticCardList.fragment}
 `;
 
 const IndividualEvent: React.FC = () => {
   const { eventId } = useParams() as { eventId: string };
 
-  const { data, loading } = useQuery<GetEventByIdResult, GetEventByIdArgs>(
-    GET_EVENT_BY_ID,
-    { skip: !eventId, variables: { eventId } }
-  );
+  const { data, error, loading } = useQuery<
+    GetEventByIdResult,
+    GetEventByIdArgs
+  >(GET_EVENT_BY_ID, { skip: !eventId, variables: { eventId } });
 
   const event: IEvent = data?.event;
+
+  console.log(error);
 
   useEffect(() => {
     if (event?.id) {
@@ -62,7 +67,8 @@ const IndividualEvent: React.FC = () => {
   return (
     <div className={css}>
       <IndividualEventStatisticCardList data={event} />
-      {/* <IndividualEventHeader />
+      <IndividualEventMain data={event} />
+      {/* 
       <IndividualEventTable />
 
       <div className="cg-md d-grid p-md s-events-individual-grid">
