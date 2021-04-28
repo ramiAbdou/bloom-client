@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { RouteType } from '@util/constants';
 
@@ -11,7 +11,7 @@ import { RouteType } from '@util/constants';
  * @example /colorstack/analytics/dues => analytics
  */
 const useTopLevelRoute = (urlName: string): RouteType => {
-  const { pathname } = useHistory().location;
+  const { pathname } = useLocation();
 
   const route = pathname.slice(urlName?.length + 2);
 
