@@ -47,11 +47,10 @@ const EventsAnalyticsRecentEventsTable: ComponentWithFragments<IEvent[]> = ({
     }
   ];
 
-  const options: TableOptions = {
-    isSortable: false,
-    onRowClick: ({ id }: TableRow) => push(`/${urlName}/events/${id}`),
-    showCount: false
-  };
+  const onRowClick = ({ id }: TableRow): void =>
+    push(`/${urlName}/events/${id}`);
+
+  const options: TableOptions = { isSortable: false, showCount: false };
 
   return (
     <Table
@@ -60,6 +59,7 @@ const EventsAnalyticsRecentEventsTable: ComponentWithFragments<IEvent[]> = ({
       options={options}
       rows={rows}
       totalCount={0}
+      onRowClick={onRowClick}
     />
   );
 };

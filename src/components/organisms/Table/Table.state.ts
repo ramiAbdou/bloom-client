@@ -21,6 +21,10 @@ import {
   ToggleRowIdArgs
 } from '@components/organisms/Table/Table.types';
 
+/**
+ * EVENT HANLDERS
+ */
+
 const handleOnApplyFilters = ({
   appliedFilterIds,
   columns,
@@ -46,6 +50,27 @@ const handleOnApplyFilters = ({
     joinOperator: filterJoinOperator
   });
 };
+
+const handleOnSortColumn = ({
+  columns,
+  onSortColumn,
+  sortColumnId,
+  sortDirection
+}: TableState): void => {
+  if (!onSortColumn) return;
+
+  const column: TableColumn = columns.find(
+    (value: TableColumn) => value.id === sortColumnId
+  );
+
+  if (onSortColumn) {
+    onSortColumn({ column, sortColumnId, sortDirection });
+  }
+};
+
+/**
+ * DISPATCH FUNCTIONS
+ */
 
 const addFilter = (state: TableState): TableState => {
   const newFilterId: string = nanoid();
@@ -179,11 +204,15 @@ const sortTable = (state: TableState, args: SortTableArgs): TableState => {
     ? null
     : args.sortDirection;
 
-  return {
+  const updatedState: TableState = {
     ...state,
     sortColumnId,
     sortDirection
   };
+
+  handleOnSortColumn(updatedState);
+
+  return updatedState;
 };
 
 const toggleAllRowIds = (state: TableState) => {
@@ -223,6 +252,10 @@ const toggleRowIds = (state: TableState, rowIds: string[]): TableState => {
       allAlreadySelected && state.selectedRowIds.length ? [] : rowIds
   };
 };
+
+/**
+ * REDUCER
+ */
 
 const tableReducer = (state: TableState, action: TableAction): TableState => {
   switch (action.type) {
@@ -273,11 +306,17 @@ const tableReducer = (state: TableState, action: TableAction): TableState => {
   }
 };
 
+/**
+ * HOOKS
+ */
+
 const useTableValue = ({
   columns,
   onApplyFilters,
+  onRenameColumn,
+  onRowClick,
+  onSortColumn,
   options,
-  rows,
   totalCount
 }: TableInitialState) => {
   const initialFilterId: string = nanoid();
@@ -287,7 +326,7 @@ const useTableValue = ({
     appliedFilterIds: [],
     columns,
     filterJoinOperator: TableFilterJoinOperatorType.AND,
-    filteredRows: rows,
+    filteredRows: [],
     filters: {
       [initialFilterId]: {
         columnId: null,
@@ -297,9 +336,12 @@ const useTableValue = ({
     },
     isAllRowsSelected: false,
     onApplyFilters,
+    onRenameColumn,
+    onRowClick,
+    onSortColumn,
     options: { ...defaultTableOptions, ...options },
     page: 0,
-    rows,
+    rows: [],
     rowsPerPage: 50,
     selectedRowIds: [],
     sortColumnId: null,
@@ -315,6 +357,10 @@ export const {
   useUpdate: useTableDispatch,
   useSelector: useTableSelector
 } = createContainer(useTableValue);
+
+/**
+ * SELECTORS
+ */
 
 /**
  * Returns true if the Table has filtered data. Returns false, otherwise.

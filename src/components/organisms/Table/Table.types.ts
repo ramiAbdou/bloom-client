@@ -82,8 +82,6 @@ export type TableOptions = {
   hasCheckbox?: boolean;
   hideIfEmpty?: boolean;
   isSortable?: boolean;
-  onRenameColumn?: RenameColumnFunction;
-  onRowClick?: (row: TableRow) => void;
   showCount?: boolean;
   small?: boolean;
 };
@@ -97,8 +95,10 @@ export const defaultTableOptions: TableOptions = {
 export interface TableInitialState {
   columns: TableColumn[];
   onApplyFilters?: (args: OnApplyFiltersArgs) => void;
+  onRenameColumn?: RenameColumnFunction;
+  onRowClick?: (row: TableRow) => void;
+  onSortColumn?: (args: SortTableArgs) => void;
   options?: TableOptions;
-  rows: TableRow[];
   totalCount: number;
 }
 
@@ -111,6 +111,9 @@ export interface TableState {
   filters: Record<string, TableFilter>;
   isAllRowsSelected: boolean;
   onApplyFilters?: (args: OnApplyFiltersArgs) => void;
+  onRenameColumn?: RenameColumnFunction;
+  onRowClick?: (row: TableRow) => void;
+  onSortColumn?: (args: SortTableArgs) => void;
   options: TableOptions;
   page: number;
   rows: TableRow[];

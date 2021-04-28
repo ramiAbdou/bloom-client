@@ -8,14 +8,16 @@ import { IEvent } from '@util/constants.entities';
 const IndividualEventGuestsCard: ComponentWithFragments<IEvent> = ({
   data: event
 }) => {
-  const guestsCount: number = event.eventGuests?.length;
+  const guestsCount: number = event.eventGuestsAggregate.aggregate.count;
   return <GrayCard label="# of RSVPs" value={guestsCount} />;
 };
 
 IndividualEventGuestsCard.fragment = gql`
   fragment IndividualEventGuestsCardFragment on events {
-    eventGuests {
-      id
+    eventGuestsAggregate: eventGuests_aggregate {
+      aggregate {
+        count
+      }
     }
   }
 `;

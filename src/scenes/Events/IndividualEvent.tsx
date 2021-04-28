@@ -6,6 +6,7 @@ import { DocumentNode, gql, useQuery, useReactiveVar } from '@apollo/client';
 import useIsMember from '@hooks/useIsMember';
 import { IEvent } from '@util/constants.entities';
 import { cx } from '@util/util';
+import IndividualEventInteractionsSection from './IndividualEventInteractionsSection';
 import IndividualEventMain from './IndividualEventMain';
 import IndividualEventStatisticCardList from './IndividualEventStatisticCardList';
 import useShowCheckInEventModal from './useShowCheckInEventModal';
@@ -25,6 +26,7 @@ const GET_EVENT_BY_ID: DocumentNode = gql`
       privacy
       ...IndividualEventMainFragment
       ...IndividualEventStatisticCardListFragment
+      ...IndividualEventInteractionsSectionFragment
 
       community {
         id
@@ -33,6 +35,7 @@ const GET_EVENT_BY_ID: DocumentNode = gql`
   }
   ${IndividualEventMain.fragment}
   ${IndividualEventStatisticCardList.fragment}
+  ${IndividualEventInteractionsSection.fragment}
 `;
 
 const IndividualEvent: React.FC = () => {
@@ -56,6 +59,10 @@ const IndividualEvent: React.FC = () => {
 
   const isEventActive: boolean = useReactiveVar(eventIdVar) === eventId;
   const isMember: boolean = useIsMember();
+
+  // Once the event is loaded, depending on the status of the Member (whether
+  // or not they are logged in and apart of the community), we may need to
+  // show the CHECK_IN modal.
   useShowCheckInEventModal(event);
 
   if (loading || !isEventActive) return null;
@@ -68,8 +75,9 @@ const IndividualEvent: React.FC = () => {
     <div className={css}>
       <IndividualEventStatisticCardList data={event} />
       <IndividualEventMain data={event} />
+      <IndividualEventInteractionsSection data={event} />
       {/* 
-      <IndividualEventTable />
+      
 
       <div className="cg-md d-grid p-md s-events-individual-grid">
         <IndividualEventAbout />

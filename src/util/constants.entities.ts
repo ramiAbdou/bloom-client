@@ -1,7 +1,11 @@
 /* eslint-disable max-lines */
 /* eslint-disable max-classes-per-file */
 
-import { QuestionCategory, QuestionType } from '@util/constants';
+import {
+  AggregateCount,
+  QuestionCategory,
+  QuestionType
+} from '@util/constants';
 
 export type Identifier = string;
 
@@ -123,9 +127,15 @@ export class IEvent extends BaseEntity {
 
   eventAttendees: IEventAttendee[];
 
+  eventAttendeesAggregate?: AggregateCount;
+
   eventGuests: IEventGuest[];
 
+  eventGuestsAggregate?: AggregateCount;
+
   eventWatches: IEventWatch[];
+
+  eventWatchesAggregate?: AggregateCount;
 }
 
 // ## EVENT ATTENDEE

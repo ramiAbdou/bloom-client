@@ -9,7 +9,7 @@ import { IEvent } from '@util/constants.entities';
 const IndividualEventAttendeesCard: ComponentWithFragments<IEvent> = ({
   data: event
 }) => {
-  const attendeesCount: number = event.eventAttendees?.length;
+  const attendeesCount: number = event.eventAttendeesAggregate.aggregate.count;
 
   const isUpcoming: boolean =
     getEventTiming({ endTime: event.endTime, startTime: event.startTime }) ===
@@ -25,8 +25,10 @@ IndividualEventAttendeesCard.fragment = gql`
     endTime
     startTime
 
-    eventAttendees {
-      id
+    eventAttendeesAggregate: eventAttendees_aggregate {
+      aggregate {
+        count
+      }
     }
   }
 `;

@@ -81,7 +81,7 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
   //   // if (!error) updateColumn({ id, title });
   // };
 
-  const onApplyFilters = (args: OnApplyFiltersArgs) => {
+  const onApplyFilters = (args: OnApplyFiltersArgs): void => {
     databaseFiltersVar(args);
   };
 
@@ -89,17 +89,15 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
     databaseOffsetVar(offset);
   };
 
+  const onRowClick = ({ id: memberId }: TableRow): void => {
+    modalVar({ id: ModalType.PROFILE, metadata: memberId });
+  };
+
   const onSortColumn = (args: SortTableArgs): void => {
     databaseSortArgsVar(args);
   };
 
-  const options: TableOptions = {
-    hasCheckbox: true,
-    // onRenameColumn,
-    onRowClick: ({ id: memberId }: TableRow) => {
-      modalVar({ id: ModalType.PROFILE, metadata: memberId });
-    }
-  };
+  const options: TableOptions = { hasCheckbox: true };
 
   return (
     <Table
@@ -109,6 +107,7 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
       totalCount={totalMembersCount.aggregate.count}
       onApplyFilters={onApplyFilters}
       onOffsetChange={onOffsetChange}
+      onRowClick={onRowClick}
       onSortColumn={onSortColumn}
     >
       <DatabaseActionRow />

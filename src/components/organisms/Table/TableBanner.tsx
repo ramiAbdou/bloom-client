@@ -13,91 +13,28 @@
 
 import React from 'react';
 
-import Button from '@components/atoms/Button/Button';
 import Card from '@components/containers/Card/Card';
 import Row from '@components/containers/Row/Row';
 import {
-  useTableDispatch,
-  useTableState
+  useTable,
+  useTableSelector
 } from '@components/organisms/Table/Table.state';
-import { take } from '@util/util';
-import { TableDispatch, TableRow, TableState } from './Table.types';
-
-const TableBannerButton: React.FC = () => {
-  const {
-    filteredRows,
-    isAllRowsSelected,
-    selectedRowIds,
-    totalCount
-  }: TableState = useTableState();
-
-  const tableDispatch: TableDispatch = useTableDispatch();
-
-  const allRowIds: string[] = filteredRows.map((row: TableRow) => row.id);
-
-  const onClick = (): void => {
-    if (isAllRowsSelected) {
-      tableDispatch({ type: 'TOGGLE_ALL_ROW_IDS' });
-      return;
-    }
-
-    tableDispatch({ rowIds: allRowIds, type: 'TOGGLE_ROW_IDS' });
-  };
-
-  const title: string = take([
-    [isAllRowsSelected, 'Clear Selection'],
-    [
-      filteredRows.every((filteredRow: TableRow) =>
-        selectedRowIds.includes(filteredRow.id)
-      ),
-      `Select All ${totalCount} Rows in Database`
-    ]
-  ]);
-
-  return (
-    <Button tertiary onClick={onClick}>
-      {title}
-    </Button>
-  );
-};
-
-const TableBannerMessage: React.FC = () => {
-  const {
-    isAllRowsSelected,
-    filteredRows,
-    rowsPerPage,
-    selectedRowIds,
-    totalCount
-  }: TableState = useTableState();
-
-  const message: string = take([
-    [isAllRowsSelected, `All ${totalCount} rows are selected.`],
-    [
-      filteredRows.every((filteredRow: TableRow) =>
-        selectedRowIds.includes(filteredRow.id)
-      ),
-      `All ${rowsPerPage} rows on this page are selected.`
-    ]
-  ]);
-
-  return <p>{message}</p>;
-};
+import { TableRow, TableState } from './Table.types';
+import TableBannerButton from './TableBannerButton';
+import TableBannerMessage from './TableBannerMessage';
 
 const TableBanner: React.FC = () => {
-  const tableState: TableState = useTableState();
+  const [{ isAllRowsSelected }] = useTable();
 
-  const {
-    isAllRowsSelected,
-    filteredRows,
-    selectedRowIds
-  }: TableState = tableState;
+  const isAllRowsOnPageSelected: boolean = useTableSelector(
+    ({ filteredRows, selectedRowIds }: TableState) =>
+      !!selectedRowIds.length &&
+      filteredRows.every((filteredRow: TableRow) =>
+        selectedRowIds.includes(filteredRow.id)
+      )
+  );
 
-  if (
-    !isAllRowsSelected &&
-    !filteredRows.every((filteredRow: TableRow) =>
-      selectedRowIds.includes(filteredRow.id)
-    )
-  ) {
+  if (!isAllRowsSelected && !isAllRowsOnPageSelected) {
     return null;
   }
 

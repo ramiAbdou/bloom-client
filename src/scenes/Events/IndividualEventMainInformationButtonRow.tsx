@@ -51,9 +51,23 @@ const IndividualEventMainInformationButtonRow: ComponentWithFragments<IEvent> = 
 
 IndividualEventMainInformationButtonRow.fragment = gql`
   fragment IndividualEventMainInformationButtonRowFragment on events {
+    eventGuests {
+      member {
+        id
+      }
+    }
+
+    ...EventsJoinButtonFragment
+    ...EventsRsvpButtonFragment
+    ...EventsShareButtonFragment
+    ...EventsViewRecordingButtonFragment
     ...IndividualEventAddRecordingButtonFragment
     ...IndividualEventEditEventButtonFragment
   }
+  ${EventsJoinButton.fragment}
+  ${EventsRsvpButton.fragment}
+  ${EventsShareButton.fragment}
+  ${EventsViewRecordingButton.fragment}
   ${IndividualEventAddRecordingButton.fragment}
   ${IndividualEventEditEventButton.fragment}
 `;

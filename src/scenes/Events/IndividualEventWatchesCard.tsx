@@ -8,7 +8,7 @@ import { IEvent } from '@util/constants.entities';
 const IndividualEventWatchesCard: ComponentWithFragments<IEvent> = ({
   data: event
 }) => {
-  const watchesCount: number = event.eventWatches?.length;
+  const watchesCount: number = event.eventWatchesAggregate.aggregate.count;
 
   if (!event.recordingUrl) {
     return null;
@@ -21,8 +21,10 @@ IndividualEventWatchesCard.fragment = gql`
   fragment IndividualEventWatchesCardFragment on events {
     recordingUrl
 
-    eventWatches {
-      id
+    eventWatchesAggregate: eventWatches_aggregate {
+      aggregate {
+        count
+      }
     }
   }
 `;

@@ -1,11 +1,8 @@
 import day from 'dayjs';
 import deepmerge from 'deepmerge';
 import React from 'react';
-import { eventIdVar } from 'src/App.reactive';
 
-import { useReactiveVar } from '@apollo/client';
 import { TableColumn, TableRow } from '@components/organisms/Table/Table.types';
-import useFindOne from '@core/gql/hooks/useFindOne';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { QuestionType } from '@util/constants';
 import {
@@ -22,37 +19,16 @@ import { IndividualEventTableRowProps } from './IndividualEvent.types';
  *
  * @param db Entire DB store.
  */
-const useIndividualEventTableAttendees = (): Record<
-  string,
-  IndividualEventTableRowProps
-> => {
-  const eventId: string = useReactiveVar(eventIdVar);
-
-  const { data: event, loading } = useFindOne(IEvent, {
-    fields: [
-      'eventAttendees.createdAt',
-      'eventAttendees.id',
-      'eventAttendees.member.email',
-      'eventAttendees.member.firstName',
-      'eventAttendees.member.id',
-      'eventAttendees.member.lastName',
-      'eventAttendees.supporter.email',
-      'eventAttendees.supporter.firstName',
-      'eventAttendees.supporter.id',
-      'eventAttendees.supporter.lastName'
-    ],
-    where: { id: eventId }
-  });
-
-  if (loading || !event.eventAttendees) return {};
+const buildIndividualEventTableAttendees = (
+  event: IEvent
+): Record<string, IndividualEventTableRowProps> => {
+  if (!event.eventAttendees.length) return {};
 
   return event.eventAttendees.reduce(
     (
       acc: Record<string, IndividualEventTableRowProps>,
-      eventAttendee: IEventAttendee
+      { createdAt, member, supporter }: IEventAttendee
     ) => {
-      const { member, supporter } = eventAttendee;
-
       const email: string = member?.email ?? supporter?.email;
       const firstName: string = member?.firstName ?? supporter?.firstName;
       const lastName: string = member?.lastName ?? supporter?.lastName;
@@ -64,7 +40,7 @@ const useIndividualEventTableAttendees = (): Record<
         email,
         fullName: `${firstName} ${lastName}`,
         id: member?.id ?? supporter?.id,
-        joinedAt: eventAttendee.createdAt,
+        joinedAt: createdAt,
         watched: false
       };
 
@@ -77,37 +53,16 @@ const useIndividualEventTableAttendees = (): Record<
 /**
  * Returns a record of data for everybody who RSVP'd to the event.
  */
-const useIndividualEventTableGuests = (): Record<
-  string,
-  IndividualEventTableRowProps
-> => {
-  const eventId: string = useReactiveVar(eventIdVar);
-
-  const { data: event, loading } = useFindOne(IEvent, {
-    fields: [
-      'eventGuests.createdAt',
-      'eventGuests.id',
-      'eventGuests.member.email',
-      'eventGuests.member.firstName',
-      'eventGuests.member.id',
-      'eventGuests.member.lastName',
-      'eventGuests.supporter.email',
-      'eventGuests.supporter.firstName',
-      'eventGuests.supporter.id',
-      'eventGuests.supporter.lastName'
-    ],
-    where: { id: eventId }
-  });
-
-  if (loading || !event.eventGuests) return {};
+const buildIndividualEventTableGuests = (
+  event: IEvent
+): Record<string, IndividualEventTableRowProps> => {
+  if (!event.eventGuests.length) return {};
 
   return event.eventGuests.reduce(
     (
       acc: Record<string, IndividualEventTableRowProps>,
-      eventGuest: IEventGuest
+      { createdAt, member, supporter }: IEventGuest
     ) => {
-      const { member, supporter } = eventGuest;
-
       const email: string = member?.email ?? supporter?.email;
       const firstName: string = member?.firstName ?? supporter?.firstName;
       const lastName: string = member?.lastName ?? supporter?.lastName;
@@ -118,7 +73,7 @@ const useIndividualEventTableGuests = (): Record<
         email,
         fullName: `${firstName} ${lastName}`,
         id: member?.id ?? supporter?.id,
-        rsvpdAt: eventGuest.createdAt,
+        rsvpdAt: createdAt,
         watched: false
       };
 
@@ -131,33 +86,16 @@ const useIndividualEventTableGuests = (): Record<
 /**
  * Returns a record of data for everybody who viewed the event recording.
  */
-const useIndividualEventTableWatchers = (): Record<
-  string,
-  IndividualEventTableRowProps
-> => {
-  const eventId: string = useReactiveVar(eventIdVar);
-
-  const { data: event, loading } = useFindOne(IEvent, {
-    fields: [
-      'eventWatches.createdAt',
-      'eventWatches.id',
-      'eventWatches.member.email',
-      'eventWatches.member.firstName',
-      'eventWatches.member.id',
-      'eventWatches.member.lastName'
-    ],
-    where: { id: eventId }
-  });
-
-  if (loading || !event.eventWatches) return {};
+const buildIndividualEventTableWatchers = (
+  event: IEvent
+): Record<string, IndividualEventTableRowProps> => {
+  if (!event.eventWatches.length) return {};
 
   return event.eventWatches.reduce(
     (
       acc: Record<string, IndividualEventTableRowProps>,
-      eventWatch: IEventWatch
+      { member }: IEventWatch
     ) => {
-      const { member } = eventWatch;
-
       const email: string = member?.email;
       const firstName: string = member?.firstName;
       const lastName: string = member?.lastName;
@@ -184,21 +122,21 @@ const useIndividualEventTableWatchers = (): Record<
  *  - Joined the event.
  *  - Viewed the event recording.
  */
-export const useIndividualEventTableRows = (): TableRow[] => {
+export const buildIndividualEventTableRows = (event: IEvent): TableRow[] => {
   const eventAttendeesRecord: Record<
     string,
     IndividualEventTableRowProps
-  > = useIndividualEventTableAttendees();
+  > = buildIndividualEventTableAttendees(event);
 
   const eventGuestsRecord: Record<
     string,
     IndividualEventTableRowProps
-  > = useIndividualEventTableGuests();
+  > = buildIndividualEventTableGuests(event);
 
   const eventWatchersRecord: Record<
     string,
     IndividualEventTableRowProps
-  > = useIndividualEventTableWatchers();
+  > = buildIndividualEventTableWatchers(event);
 
   const totalRecord: Record<string, IndividualEventTableRowProps> = deepmerge(
     deepmerge(eventAttendeesRecord, eventGuestsRecord),
@@ -219,16 +157,9 @@ export const useIndividualEventTableRows = (): TableRow[] => {
  * Depends upon the start time of the event whether or not to show joinedAt,
  * and viewedRecording columns.
  */
-export const useIndividualEventTableColumns = (): TableColumn[] => {
-  const eventId: string = useReactiveVar(eventIdVar);
-
-  const { data: event, loading } = useFindOne(IEvent, {
-    fields: ['endTime', 'recordingUrl', 'startTime'],
-    where: { id: eventId }
-  });
-
-  if (loading) return [];
-
+export const buildIndividualEventTableColumns = (
+  event: IEvent
+): TableColumn[] => {
   const isUpcoming: boolean = getEventTiming(event) === EventTiming.UPCOMING;
 
   const joinedAtColumn: TableColumn[] = isUpcoming

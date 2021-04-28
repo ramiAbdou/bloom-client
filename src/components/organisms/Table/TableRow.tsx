@@ -10,16 +10,16 @@ import {
 import TableRowCell from './TableCell';
 
 const TableRow: React.FC<TableRowProps> = (row) => {
-  const { columns, options }: TableState = useTableState();
+  const { columns, onRowClick }: TableState = useTableState();
   const isRowSelected: boolean = useIsTableRowSelected(row.id);
 
   const css: string = cx('', {
     'o-table-tr--active': isRowSelected,
-    'o-table-tr--clickable': !!options.onRowClick
+    'o-table-tr--clickable': !!onRowClick
   });
 
   const onClick = (): void => {
-    if (options.onRowClick) options.onRowClick(row);
+    if (onRowClick) onRowClick(row);
   };
 
   return (

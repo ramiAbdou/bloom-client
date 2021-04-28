@@ -60,11 +60,12 @@ const EventsAnalyticsTopGoersTable: ComponentWithFragments<IEvent[]> = ({
     }
   ];
 
+  const onRowClick = ({ memberId }: TableRow): void => {
+    modalVar({ id: ModalType.PROFILE, metadata: memberId });
+  };
+
   const options: TableOptions = {
     isSortable: false,
-    onRowClick: ({ memberId }: TableRow) => {
-      modalVar({ id: ModalType.PROFILE, metadata: memberId });
-    },
     showCount: false
   };
 
@@ -75,6 +76,7 @@ const EventsAnalyticsTopGoersTable: ComponentWithFragments<IEvent[]> = ({
       options={options}
       rows={rows}
       totalCount={0}
+      onRowClick={onRowClick}
     />
   );
 };
