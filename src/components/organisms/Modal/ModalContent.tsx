@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useReactiveVar } from '@apollo/client';
 import AddMemberModal from '@components/modals/AddMember/AddMember';
 import CheckInModal from '@components/modals/CheckIn/CheckIn';
-import EventForm from '@components/modals/EventModalForm/EventForm';
+import EventModalCreateForm from '@components/modals/EventModalForm/EventModalCreateForm';
 import ProfileModal from '@components/modals/ProfileModal/ProfileModal';
 import { modalVar } from '@core/state/Modal.reactive';
 import ApplicantsConfirmationForm from '@scenes/Applicants/ApplicantsConfirmationForm';
@@ -42,7 +42,7 @@ const ModalCustomContent: React.FC = () => {
       return <EventsConfirmRsvpModal />;
 
     case ModalType.CREATE_EVENT:
-      return <EventForm />;
+      return <EventModalCreateForm />;
 
     case ModalType.DELETE_MEMBERS:
       return <DatabaseDeleteMembersModalForm />;

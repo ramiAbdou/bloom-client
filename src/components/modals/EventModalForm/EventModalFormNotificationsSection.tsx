@@ -6,7 +6,7 @@ import FormSection from '@components/organisms/Form/FormSection';
 import FormSectionHeader from '@components/organisms/Form/FormSectionHeader';
 import { modalVar } from '@core/state/Modal.reactive';
 
-const EventFormNotificationsSection: React.FC = () => {
+const EventModalFormNotificationsSection: React.FC = () => {
   const eventId: string = useReactiveVar(modalVar)?.metadata as string;
   if (!eventId) return null;
 
@@ -28,4 +28,4 @@ const EventFormNotificationsSection: React.FC = () => {
   );
 };
 
-export default EventFormNotificationsSection;
+export default EventModalFormNotificationsSection;

@@ -29,7 +29,7 @@ const GET_EVENTS_UPCOMING_BY_COMMUNITY_ID: DocumentNode = gql`
       where: {
         communityId: { _eq: $communityId }
         deletedAt: { _is_null: true }
-        startTime: { _gt: $currentTimestamp }
+        endTime: { _gt: $currentTimestamp }
       }
       order_by: { startTime: asc }
     ) {

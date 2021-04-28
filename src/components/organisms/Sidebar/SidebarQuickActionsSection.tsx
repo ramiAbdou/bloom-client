@@ -14,7 +14,8 @@ const SidebarQuickActionsSection: ComponentWithFragments<IMember> = ({
   const quickLinks: SidebarLinkOptions[] = [
     {
       Icon: IoAdd,
-      onClick: () => modalVar({ id: ModalType.CREATE_EVENT }),
+      onClick: () =>
+        modalVar({ id: ModalType.CREATE_EVENT, options: { sheet: true } }),
       title: 'Create Event'
     },
     {

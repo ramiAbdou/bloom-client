@@ -40,7 +40,7 @@ const EventModalFormDetailsSection: ComponentWithFragments<IEvent> = ({
       id="VIDEO_URL"
       title="Event Link"
       validate="IS_URL"
-      value={event.videoUrl}
+      value={event?.videoUrl}
     />
 
     <EventModalFormTimeItems />

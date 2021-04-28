@@ -88,19 +88,6 @@ const EventsViewRecordingButton: ComponentWithFragments<
         updatedAt: now()
       }
     });
-
-    // await gql.create(IEventWatch, {
-    //   data: { eventId, memberId },
-    //   fields: [
-    //     'createdAt',
-    //     'event.id',
-    //     'id',
-    //     'member.firstName',
-    //     'member.id',
-    //     'member.lastName',
-    //     'member.pictureUrl'
-    //   ]
-    // });
   };
 
   return (

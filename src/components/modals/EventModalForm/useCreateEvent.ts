@@ -1,6 +1,8 @@
 import day from 'dayjs';
+import { nanoid } from 'nanoid';
 import { showToast } from 'src/App.reactive';
 
+import { ApolloCache, DocumentNode, gql, useMutation } from '@apollo/client';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -8,6 +10,71 @@ import {
 import { modalVar } from '@core/state/Modal.reactive';
 import { EventPrivacy, IEvent } from '@util/constants.entities';
 import { uploadImage } from '@util/imageUtil';
+import { now } from '@util/util';
+
+interface CreateEventArgs {
+  createdAt: string;
+  description: string;
+  endTime: string;
+  id: string;
+  imageUrl: string;
+  privacy: string;
+  summary: string;
+  startTime: string;
+  title: string;
+  videoUrl: string;
+  updatedAt: string;
+}
+
+interface CreateEventResult {
+  createEvent: IEvent;
+}
+
+const CREATE_EVENT: DocumentNode = gql`
+  mutation CreateEvent(
+    $communityId: String!
+    $createdAt: String!
+    $description: String!
+    $endTime: String!
+    $id: String!
+    $imageUrl: String
+    $privacy: String!
+    $startTime: String!
+    $summary: String
+    $title: String!
+    $videoUrl: String!
+    $updatedAt: String!
+  ) {
+    communityId @client @export(as: "communityId")
+
+    createEvent(
+      object: {
+        communityId: $communityId
+        createdAt: $createdAt
+        description: $description
+        endTime: $endTime
+        id: $id
+        imageUrl: $imageUrl
+        privacy: $privacy
+        summary: $summary
+        startTime: $startTime
+        title: $title
+        videoUrl: $videoUrl
+        updatedAt: $updatedAt
+      }
+    ) {
+      description
+      endTime
+      id
+      imageUrl
+      privacy
+      summary
+      startTime
+      title
+      videoUrl
+    }
+  }
+`;
 
 interface FormatEndTimeArgs {
   endDate: string;
@@ -42,7 +109,34 @@ const formatStartTime = ({ startDate, startTime }: FormatStartTimeArgs) => {
 };
 
 const useCreateEvent = (): OnFormSubmitFunction => {
-  const onSubmit = async ({ gql, items, setError }: OnFormSubmitArgs) => {
+  const [createEvent] = useMutation<CreateEventResult, CreateEventArgs>(
+    CREATE_EVENT,
+    {
+      update: (cache: ApolloCache<CreateEventResult>, { data }) => {
+        const event: IEvent = data?.createEvent;
+
+        cache.modify({
+          fields: {
+            events: (existingEventRefs = []) => {
+              const newEventRef = cache.writeFragment({
+                data: event,
+                fragment: gql`
+                  fragment NewEvent on events {
+                    id
+                    title
+                  }
+                `
+              });
+
+              return [...existingEventRefs, newEventRef];
+            }
+          }
+        });
+      }
+    }
+  );
+
+  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
     const description: string = items.EVENT_DESCRIPTION?.value as string;
     const privacy: EventPrivacy = items.PRIVACY?.value as EventPrivacy;
     const summary: string = items.EVENT_SUMMARY?.value as string;
@@ -72,60 +166,28 @@ const useCreateEvent = (): OnFormSubmitFunction => {
       }
     }
 
-    // const eventInvitees: string[] =
-    //   items.EVENT_NOTIFICATION?.value === `Don't Send Email`
-    //     ? []
-    //     : (await gql.members.find({
-    //         fields: ['id'],
-    //         where: { community: { id: communityId } }
-    //       })).data;
+    try {
+      await createEvent({
+        variables: {
+          createdAt: now(),
+          description,
+          endTime,
+          id: nanoid(),
+          imageUrl,
+          privacy,
+          startTime,
+          summary,
+          title,
+          updatedAt: now(),
+          videoUrl
+        }
+      });
 
-    // const args = {
-    //   description: items.EVENT_DESCRIPTION?.value as string,
-    //   endTime,
-    //   eventInvitees: [],
-    //   // eventInvitees,
-    //   imageUrl,
-    //   privacy: items.PRIVACY?.value as any,
-    //   startTime,
-    //   summary: items.EVENT_SUMMARY?.value as string,
-    //   title: items.EVENT_NAME?.value as string,
-    //   videoUrl: items.VIDEO_URL?.value as string
-    // };
-
-    const { error } = await gql.create(IEvent, {
-      data: {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore b/c
-        communityId: db.communityId,
-        description,
-        endTime,
-        imageUrl,
-        privacy,
-        startTime,
-        summary,
-        title,
-        videoUrl
-      },
-      fields: [
-        'description',
-        'endTime',
-        'imageUrl',
-        'privacy',
-        'startTime',
-        'summary',
-        'title',
-        'videoUrl'
-      ]
-    });
-
-    if (error) {
+      modalVar(null);
+      showToast({ message: 'Event created.' });
+    } catch {
       setError('Failed to create event. Please try again later.');
-      return;
     }
-
-    modalVar(null);
-    showToast({ message: 'Event created.' });
   };
 
   return onSubmit;

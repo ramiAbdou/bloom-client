@@ -11,7 +11,7 @@ const EventModalFormPrivacySection: ComponentWithFragments<IEvent> = ({
   data: event
 }) => {
   const value: string =
-    event.privacy === EventPrivacy.MEMBERS_ONLY
+    event?.privacy === EventPrivacy.MEMBERS_ONLY
       ? 'Members Only'
       : 'Open to All';
 

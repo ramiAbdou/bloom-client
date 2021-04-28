@@ -17,27 +17,27 @@ const EventModalFormMainSection: ComponentWithFragments<IEvent> = ({
       id="COVER_IMAGE"
       required={false}
       title="Change Cover Photo"
-      value={event.imageUrl}
+      value={event?.imageUrl}
     />
 
     <FormLargeTitle
       id="EVENT_NAME"
       placeholder="New Event"
       title="Event Name"
-      value={event.title}
+      value={event?.title}
     />
 
     <FormLongText
       id="EVENT_DESCRIPTION"
       title="Event Description"
-      value={event.description}
+      value={event?.description}
     />
 
     <FormShortText
       id="EVENT_SUMMARY"
       required={false}
       title="1-Sentence Summary"
-      value={event.summary}
+      value={event?.summary}
     />
   </FormSection>
 );
