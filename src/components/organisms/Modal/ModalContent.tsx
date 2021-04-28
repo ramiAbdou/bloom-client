@@ -9,15 +9,15 @@ import { modalVar } from '@core/state/Modal.reactive';
 import ApplicantsConfirmationForm from '@scenes/Applicants/ApplicantsConfirmationForm';
 import ApplicantsViewModal from '@scenes/Applicants/ApplicantsViewModal';
 import DatabaseDeleteMembersModalForm from '@scenes/Database/DatabaseDeleteMembersModalForm';
+import DatabaseDemoteMembersModalForm from '@scenes/Database/DatabaseDemoteMembersModalForm';
+import DatabasePromoteMembersModalForm from '@scenes/Database/DatabasePromoteMembersModalForm';
 import EventsConfirmRsvpModal from '@scenes/Events/EventsConfirmRsvpModal';
-import IndividualEventErrorModal from '@scenes/Events/IndividualEvent/IndividualEventErrorModal';
+import IndividualEventErrorModal from '@scenes/Events/IndividualEventErrorModal';
 import ProfileMembershipForm from '@scenes/Profile/ProfileMembershipForm';
 import ProfilePersonalModalForm from '@scenes/Profile/ProfilePersonalModalForm';
 import ProfileSocialModalForm from '@scenes/Profile/ProfileSocialModalForm';
 import { ModalType } from '@util/constants';
 import { cx } from '@util/util';
-import DatabaseDemoteMembersModalForm from '../../../scenes/Database/DatabaseDemoteMembersModalForm';
-import DatabasePromoteMembersModalForm from '../../../scenes/Database/DatabasePromoteMembersModalForm';
 import DeleteEventConfirmationForm from '../../modals/EventForm/DeleteEventConfirmationForm';
 import ModalContainer from './ModalContainer';
 

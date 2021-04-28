@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { DocumentNode, gql, useQuery } from '@apollo/client';
+import Scene from '@components/containers/Scene';
 import Section from '@components/containers/Section';
 import { IEvent } from '@util/constants.entities';
 import { now } from '@util/util';
@@ -76,7 +77,7 @@ const EventsPast: React.FC = () => {
   const yourEvents: IEvent[] = data?.yourEvents;
 
   return (
-    <>
+    <Scene>
       <EventsHeader loading={loading} />
 
       {!!yourEvents?.length && (
@@ -91,7 +92,7 @@ const EventsPast: React.FC = () => {
         <EventsPastSearchBar />
         {otherEvents && <EventsPastList {...data} />}
       </Section>
-    </>
+    </Scene>
   );
 };
 

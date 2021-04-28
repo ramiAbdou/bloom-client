@@ -9,11 +9,11 @@ import { modalVar } from '@core/state/Modal.reactive';
 import { useStoreActions } from '@core/store/Store';
 import { ModalType, PanelType } from '@util/constants';
 import { IEvent, IEventGuest, IMember } from '@util/constants.entities';
-import { EventTiming, getEventTiming } from '../Events.util';
-import EventsJoinButton from '../EventsJoinButton';
-import EventsRsvpButton from '../EventsRsvpButton';
-import EventsShareButton from '../EventsShareButton';
-import EventsViewRecordingButton from '../EventsViewRecordingButton';
+import { EventTiming, getEventTiming } from './Events.util';
+import EventsJoinButton from './EventsJoinButton';
+import EventsRsvpButton from './EventsRsvpButton';
+import EventsShareButton from './EventsShareButton';
+import EventsViewRecordingButton from './EventsViewRecordingButton';
 
 const EventsAddRecordingButton: React.FC<Partial<ButtonProps>> = (props) => {
   const eventId: string = useReactiveVar(eventIdVar);

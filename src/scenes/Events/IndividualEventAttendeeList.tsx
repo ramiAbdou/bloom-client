@@ -9,14 +9,14 @@ import useFindOne from '@core/gql/hooks/useFindOne';
 import { modalVar } from '@core/state/Modal.reactive';
 import useIsMember from '@hooks/useIsMember';
 import { IdProps, ModalType } from '@util/constants';
-import { IEvent, IEventGuest } from '@util/constants.entities';
+import { IEvent, IEventAttendee } from '@util/constants.entities';
 import { cx, sortObjects } from '@util/util';
-import { EventTiming, getEventTiming } from '../Events.util';
+import { EventTiming, getEventTiming } from './Events.util';
 
-const IndividualEventGuest: React.FC<IdProps> = ({ id: guestId }) => {
+const IndividualEventAttendee: React.FC<IdProps> = ({ id: attendeeId }) => {
   const isMember: boolean = useIsMember();
 
-  const { data: eventGuest, loading } = useFindOne(IEventGuest, {
+  const { data: eventAttendee, loading } = useFindOne(IEventAttendee, {
     fields: [
       'member.firstName',
       'member.id',
@@ -25,22 +25,22 @@ const IndividualEventGuest: React.FC<IdProps> = ({ id: guestId }) => {
       'supporter.id',
       'supporter.lastName'
     ],
-    where: { id: guestId }
+    where: { id: attendeeId }
   });
 
   if (loading) return null;
 
   const firstName: string =
-    eventGuest.member?.firstName ?? eventGuest.supporter?.firstName;
+    eventAttendee.member?.firstName ?? eventAttendee.supporter?.firstName;
 
   const lastName: string =
-    eventGuest.member?.lastName ?? eventGuest.supporter?.lastName;
+    eventAttendee.member?.lastName ?? eventAttendee.supporter?.lastName;
 
   const fullName: string = `${firstName} ${lastName}`;
 
   const onClick = (): void => {
-    if (isMember && eventGuest.member?.id) {
-      modalVar({ id: ModalType.PROFILE, metadata: eventGuest.member?.id });
+    if (isMember && eventAttendee.member?.id) {
+      modalVar({ id: ModalType.PROFILE, metadata: eventAttendee.member?.id });
     }
   };
 
@@ -52,9 +52,9 @@ const IndividualEventGuest: React.FC<IdProps> = ({ id: guestId }) => {
     <Button className={css} onClick={onClick}>
       <ProfilePicture
         fontSize={16}
-        // memberId={eventGuest.member?.id}
+        // memberId={eventAttendee.member?.id}
         size={36}
-        // supporterId={eventGuest.supporter?.id}
+        // supporterId={eventAttendee.supporter?.id}
       />
 
       <p className="body--bold">{fullName}</p>
@@ -62,30 +62,32 @@ const IndividualEventGuest: React.FC<IdProps> = ({ id: guestId }) => {
   );
 };
 
-const IndividualEventGuestListContent: React.FC = () => {
+const IndividualEventAttendeeListContent: React.FC = () => {
   const eventId: string = useReactiveVar(eventIdVar);
 
   const { data: event, loading } = useFindOne(IEvent, {
-    fields: ['eventGuests.createdAt', 'eventGuests.id'],
+    fields: ['eventAttendees.createdAt', 'eventAttendees.id'],
     where: { id: eventId }
   });
 
   if (loading) return null;
 
-  const sortedEventGuests: IdProps[] = event.eventGuests
-    ?.sort((a: IEventGuest, b: IEventGuest) => sortObjects(a, b, 'createdAt'))
-    ?.map((eventGuest: IEventGuest) => {
-      return { id: eventGuest.id };
+  const sortedEventAttendees: IdProps[] = event.eventAttendees
+    ?.sort((a: IEventAttendee, b: IEventAttendee) =>
+      sortObjects(a, b, 'createdAt')
+    )
+    ?.map((eventAttendee: IEventAttendee) => {
+      return { id: eventAttendee.id };
     });
 
   return (
     <>
-      {!sortedEventGuests?.length && <p>No guests have RSVP'd yet.</p>}
+      {!sortedEventAttendees?.length && <p>No guests attended.</p>}
 
       {/* <List
         className="s-events-card-ctr"
-        items={sortedEventGuests}
-        render={IndividualEventGuest}
+        items={sortedEventAttendees}
+        render={IndividualEventAttendee}
       /> */}
     </>
   );
@@ -95,23 +97,23 @@ const IndividualEventGuestList: React.FC = () => {
   const eventId: string = useReactiveVar(eventIdVar);
 
   const { data: event, loading } = useFindOne(IEvent, {
-    fields: ['endTime', 'eventGuests.id', 'startTime'],
+    fields: ['endTime', 'eventAttendees.id', 'startTime'],
     where: { id: eventId }
   });
 
   if (loading) return null;
 
-  const guestsCount: number = event.eventGuests?.length;
+  const attendeesCount: number = event.eventAttendees?.length;
   const hasEventFinished: boolean = getEventTiming(event) === EventTiming.PAST;
 
   return (
     <Card
       className="s-events-individual-card"
-      headerTag={guestsCount ? `${guestsCount} Going` : null}
-      show={!hasEventFinished}
-      title="Guest List"
+      headerTag={attendeesCount ? `${attendeesCount} Attended` : null}
+      show={hasEventFinished}
+      title="Attendees"
     >
-      <IndividualEventGuestListContent />
+      <IndividualEventAttendeeListContent />
     </Card>
   );
 };

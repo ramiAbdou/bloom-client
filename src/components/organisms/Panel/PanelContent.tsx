@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useStoreState } from '@core/store/Store';
-import IndividualEventRecordingForm from '@scenes/Events/IndividualEvent/IndividualEventRecordingForm';
+import IndividualEventRecordingForm from '@scenes/Events/IndividualEventRecordingForm';
 import { PanelType } from '@util/constants';
 import SidebarPanel from '../Sidebar/SidebarPanel';
 
