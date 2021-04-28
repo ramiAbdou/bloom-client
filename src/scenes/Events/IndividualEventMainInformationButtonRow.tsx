@@ -51,7 +51,7 @@ const IndividualEventMainInformationButtonRow: ComponentWithFragments<IEvent> = 
 
 IndividualEventMainInformationButtonRow.fragment = gql`
   fragment IndividualEventMainInformationButtonRowFragment on events {
-    eventGuests {
+    eventGuests(order_by: { createdAt: desc }) {
       member {
         id
       }

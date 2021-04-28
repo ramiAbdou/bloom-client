@@ -6,6 +6,9 @@ import { DocumentNode, gql, useQuery, useReactiveVar } from '@apollo/client';
 import useIsMember from '@hooks/useIsMember';
 import { IEvent } from '@util/constants.entities';
 import { cx } from '@util/util';
+import IndividualEventAboutCard from './IndividualEventAboutCard';
+import IndividualEventAttendeeListCard from './IndividualEventAttendeeListCard';
+import IndividualEventGuestListCard from './IndividualEventGuestListCard';
 import IndividualEventInteractionsSection from './IndividualEventInteractionsSection';
 import IndividualEventMain from './IndividualEventMain';
 import IndividualEventStatisticCardList from './IndividualEventStatisticCardList';
@@ -24,6 +27,9 @@ const GET_EVENT_BY_ID: DocumentNode = gql`
     event(id: $eventId) {
       id
       privacy
+      ...IndividualEventAboutCardFragment
+      ...IndividualEventAttendeeListCardFragment
+      ...IndividualEventGuestListCardFragment
       ...IndividualEventMainFragment
       ...IndividualEventStatisticCardListFragment
       ...IndividualEventInteractionsSectionFragment
@@ -33,6 +39,9 @@ const GET_EVENT_BY_ID: DocumentNode = gql`
       }
     }
   }
+  ${IndividualEventAboutCard.fragment}
+  ${IndividualEventAttendeeListCard.fragment}
+  ${IndividualEventGuestListCard.fragment}
   ${IndividualEventMain.fragment}
   ${IndividualEventStatisticCardList.fragment}
   ${IndividualEventInteractionsSection.fragment}
@@ -76,14 +85,12 @@ const IndividualEvent: React.FC = () => {
       <IndividualEventStatisticCardList data={event} />
       <IndividualEventMain data={event} />
       <IndividualEventInteractionsSection data={event} />
-      {/* 
-      
 
       <div className="cg-md d-grid p-md s-events-individual-grid">
-        <IndividualEventAbout />
-        <IndividualEventAttendeeList />
-        <IndividualEventGuestList />
-      </div> */}
+        <IndividualEventAboutCard data={event} />
+        <IndividualEventGuestListCard data={event} />
+        <IndividualEventAttendeeListCard data={event} />
+      </div>
     </div>
   );
 };

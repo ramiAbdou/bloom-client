@@ -8,9 +8,9 @@ import SidebarHamburgerButton from '@components/organisms/Sidebar/SidebarHamburg
 import useMemberRole from '@core/hooks/useMemberRole';
 import { ComponentWithFragments } from '@util/constants';
 import { IEvent, MemberRole } from '@util/constants.entities';
-import IndividualEventAttendeesCard from './IndividualEventAttendeesCard';
-import IndividualEventGuestsCard from './IndividualEventGuestsCard';
-import IndividualEventWatchesCard from './IndividualEventWatchesCard';
+import IndividualEventAttendeeCountCard from './IndividualEventAttendeeCountCard';
+import IndividualEventGuestCountCard from './IndividualEventGuestCountCard';
+import IndividualEventWatchCountCard from './IndividualEventWatchCountCard';
 
 const IndividualEventStatisticCardList: ComponentWithFragments<IEvent> = ({
   data: event
@@ -24,9 +24,9 @@ const IndividualEventStatisticCardList: ComponentWithFragments<IEvent> = ({
       <SidebarHamburgerButton />
 
       <Row spacing="sm">
-        <IndividualEventAttendeesCard data={event} />
-        <IndividualEventGuestsCard data={event} />
-        <IndividualEventWatchesCard data={event} />
+        <IndividualEventAttendeeCountCard data={event} />
+        <IndividualEventGuestCountCard data={event} />
+        <IndividualEventWatchCountCard data={event} />
       </Row>
 
       <Separator marginBottom={0} marginTop={24} />
@@ -36,13 +36,13 @@ const IndividualEventStatisticCardList: ComponentWithFragments<IEvent> = ({
 
 IndividualEventStatisticCardList.fragment = gql`
   fragment IndividualEventStatisticCardListFragment on events {
-    ...IndividualEventAttendeesCardFragment
-    ...IndividualEventGuestsCardFragment
-    ...IndividualEventWatchesCardFragment
+    ...IndividualEventAttendeeCountCardFragment
+    ...IndividualEventGuestCountCardFragment
+    ...IndividualEventWatchCountCardFragment
   }
-  ${IndividualEventAttendeesCard.fragment}
-  ${IndividualEventGuestsCard.fragment}
-  ${IndividualEventWatchesCard.fragment}
+  ${IndividualEventAttendeeCountCard.fragment}
+  ${IndividualEventGuestCountCard.fragment}
+  ${IndividualEventWatchCountCard.fragment}
 `;
 
 export default IndividualEventStatisticCardList;

@@ -5,7 +5,7 @@ import GrayCard from '@components/containers/Card/GrayCard';
 import { ComponentWithFragments } from '@util/constants';
 import { IEvent } from '@util/constants.entities';
 
-const IndividualEventWatchesCard: ComponentWithFragments<IEvent> = ({
+const IndividualEventWatchCountCard: ComponentWithFragments<IEvent> = ({
   data: event
 }) => {
   const watchesCount: number = event.eventWatchesAggregate.aggregate.count;
@@ -17,8 +17,8 @@ const IndividualEventWatchesCard: ComponentWithFragments<IEvent> = ({
   return <GrayCard label="# of Recording Viewers" value={watchesCount} />;
 };
 
-IndividualEventWatchesCard.fragment = gql`
-  fragment IndividualEventWatchesCardFragment on events {
+IndividualEventWatchCountCard.fragment = gql`
+  fragment IndividualEventWatchCountCardFragment on events {
     recordingUrl
 
     eventWatchesAggregate: eventWatches_aggregate {
@@ -29,4 +29,4 @@ IndividualEventWatchesCard.fragment = gql`
   }
 `;
 
-export default IndividualEventWatchesCard;
+export default IndividualEventWatchCountCard;

@@ -6,7 +6,7 @@ import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { ComponentWithFragments } from '@util/constants';
 import { IEvent } from '@util/constants.entities';
 
-const IndividualEventAttendeesCard: ComponentWithFragments<IEvent> = ({
+const IndividualEventAttendeeCountCard: ComponentWithFragments<IEvent> = ({
   data: event
 }) => {
   const attendeesCount: number = event.eventAttendeesAggregate.aggregate.count;
@@ -20,8 +20,8 @@ const IndividualEventAttendeesCard: ComponentWithFragments<IEvent> = ({
   return <GrayCard label="# of Attendees" value={attendeesCount} />;
 };
 
-IndividualEventAttendeesCard.fragment = gql`
-  fragment IndividualEventAttendeesCardFragment on events {
+IndividualEventAttendeeCountCard.fragment = gql`
+  fragment IndividualEventAttendeeCountCardFragment on events {
     endTime
     startTime
 
@@ -33,4 +33,4 @@ IndividualEventAttendeesCard.fragment = gql`
   }
 `;
 
-export default IndividualEventAttendeesCard;
+export default IndividualEventAttendeeCountCard;

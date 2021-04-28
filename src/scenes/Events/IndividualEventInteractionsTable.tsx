@@ -73,7 +73,7 @@ IndividualEventInteractionsTable.fragment = gql`
       }
     }
 
-    eventGuests {
+    eventGuests(order_by: { createdAt: desc }) {
       createdAt
       id
 
