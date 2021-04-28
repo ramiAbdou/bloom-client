@@ -2,7 +2,13 @@ import day from 'dayjs';
 import { nanoid } from 'nanoid';
 import { showToast } from 'src/App.reactive';
 
-import { ApolloCache, DocumentNode, gql, useMutation } from '@apollo/client';
+import {
+  ApolloCache,
+  DocumentNode,
+  gql,
+  Reference,
+  useMutation
+} from '@apollo/client';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -117,8 +123,8 @@ const useCreateEvent = (): OnFormSubmitFunction => {
 
         cache.modify({
           fields: {
-            events: (existingEventRefs = []) => {
-              const newEventRef = cache.writeFragment({
+            events: (existingEventRefs: Reference[] = []) => {
+              const newEventRef: Reference = cache.writeFragment({
                 data: event,
                 fragment: gql`
                   fragment NewEvent on events {

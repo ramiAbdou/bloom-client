@@ -58,8 +58,7 @@ const IndividualEventAddRecordingPanelForm: React.FC = () => {
       await updateEventRecordingUrl({ variables: { recordingUrl } });
       closePanel();
       showToast({ message: 'Event recording link updated.' });
-    } catch (e) {
-      console.log(e);
+    } catch {
       setError('Failed to link event recording.');
     }
   };
