@@ -3,7 +3,7 @@ import React from 'react';
 import { gql } from '@apollo/client';
 import Row from '@components/containers/Row/Row';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IMember } from '@util/constants.entities';

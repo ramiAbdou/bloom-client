@@ -10,7 +10,7 @@ import {
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
 import { TableStateAndDispatch } from '@components/organisms/Table/Table.types';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 
 interface DemoteMembersArgs {
   memberIds: string[];

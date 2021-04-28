@@ -4,7 +4,7 @@ import { IoClose } from 'react-icons/io5';
 
 import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 import useBreakpoint from '@hooks/useBreakpoint';
 import useLockBodyScroll from '@hooks/useLockBodyScroll';
 import { cx } from '@util/util';

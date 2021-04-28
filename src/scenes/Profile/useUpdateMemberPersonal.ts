@@ -6,7 +6,7 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 import { IMember } from '@util/constants.entities';
 import { uploadImage } from '@util/imageUtil';
 

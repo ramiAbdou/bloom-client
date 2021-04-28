@@ -10,7 +10,7 @@ import {
 } from '@components/organisms/Form/Form.types';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 import { ICommunity, IEvent } from '@util/constants.entities';
 import { now } from '@util/util';
 

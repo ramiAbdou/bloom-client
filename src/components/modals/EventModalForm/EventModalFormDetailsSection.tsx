@@ -7,7 +7,7 @@ import FormSection from '@components/organisms/Form/FormSection';
 import FormSectionHeader from '@components/organisms/Form/FormSectionHeader';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormTime from '@components/organisms/Form/FormTime';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 import { ComponentWithFragments } from '@util/constants';
 import { IEvent } from '@util/constants.entities';
 

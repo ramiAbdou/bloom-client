@@ -17,7 +17,7 @@ import {
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
 import useEventTitle from '@core/hooks/useEventTitle';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 import { IEventGuest } from '@util/constants.entities';
 import { now } from '@util/util';
 

@@ -5,7 +5,7 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 import { IMemberSocials } from '@util/constants.entities';
 
 interface UpdateMemberSocialsArgs {

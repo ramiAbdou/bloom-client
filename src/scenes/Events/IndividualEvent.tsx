@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { communityIdVar, eventIdVar } from 'src/App.reactive';
 
-import { DocumentNode, gql, useQuery, useReactiveVar } from '@apollo/client';
+import { DocumentNode, gql, useQuery } from '@apollo/client';
 import useIsMember from '@hooks/useIsMember';
 import { IEvent } from '@util/constants.entities';
 import { cx } from '@util/util';
@@ -24,8 +24,6 @@ interface GetEventByIdResult {
 
 const GET_EVENT_BY_ID: DocumentNode = gql`
   query GetEventById($eventId: String!) {
-    eventId @client @export(as: "eventId")
-
     event(id: $eventId) {
       id
       privacy
@@ -50,22 +48,20 @@ const GET_EVENT_BY_ID: DocumentNode = gql`
 `;
 
 const IndividualEvent: React.FC = () => {
-  const { eventId: eventIdInParam } = useParams() as { eventId: string };
-  const eventId: string = useReactiveVar(eventIdVar);
-
-  useEffect(() => {
-    eventIdVar(eventIdInParam);
-  }, [eventIdInParam]);
+  const { eventId } = useParams() as { eventId: string };
 
   const { data, loading } = useQuery<GetEventByIdResult, GetEventByIdArgs>(
     GET_EVENT_BY_ID,
-    { skip: !eventId }
+    { skip: !eventId, variables: { eventId } }
   );
 
   const event: IEvent = data?.event;
 
   useEffect(() => {
-    if (event?.id) communityIdVar(event.community.id);
+    if (event?.id) {
+      communityIdVar(event.community.id);
+      eventIdVar(event.id);
+    }
   }, [event]);
 
   const isMember: boolean = useIsMember();

@@ -5,7 +5,7 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { QuestionCategory } from '@util/constants';
 import { MutationEvent } from '@util/constants.events';

@@ -6,7 +6,7 @@ import Form from '@components/organisms/Form/Form';
 import FormErrorMessage from '@components/organisms/Form/FormErrorMessage';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 import IdStore from '@core/store/Id.store';
 import AddMemberStore from './AddMember.store';
 import AddMemberInput from './AddMemberInput';

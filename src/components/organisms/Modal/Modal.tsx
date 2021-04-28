@@ -3,7 +3,7 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 
 import { useReactiveVar } from '@apollo/client';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 import { ModalType } from '@util/constants';
 import ModalContent from './ModalContent';
 

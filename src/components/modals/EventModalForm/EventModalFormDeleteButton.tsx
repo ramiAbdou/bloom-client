@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 import { ModalType } from '@util/constants';
 
 const EventModalFormDeleteButton: React.FC = () => {

@@ -3,7 +3,7 @@ import React from 'react';
 
 import { DocumentNode, gql, useQuery, useReactiveVar } from '@apollo/client';
 import ModalCloseButton from '@components/organisms/Modal/ModalCloseButton';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 import { IEvent } from '@util/constants.entities';
 import { ErrorType } from '@util/constants.errors';
 

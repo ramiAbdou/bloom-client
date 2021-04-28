@@ -5,7 +5,7 @@ import AddMemberModal from '@components/modals/AddMember/AddMember';
 import CheckInModal from '@components/modals/CheckIn/CheckIn';
 import EventModalCreateForm from '@components/modals/EventModalForm/EventModalCreateForm';
 import ProfileModal from '@components/modals/ProfileModal/ProfileModal';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 import ApplicantsConfirmationForm from '@scenes/Applicants/ApplicantsConfirmationForm';
 import ApplicantsViewModal from '@scenes/Applicants/ApplicantsViewModal';
 import DatabaseDeleteMembersModalForm from '@scenes/Database/DatabaseDeleteMembersModalForm';

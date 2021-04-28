@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { DocumentNode, gql, useQuery, useReactiveVar } from '@apollo/client';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 import { IMember } from '@util/constants.entities';
 import ApplicantsViewModalButtonList from './ApplicantsViewModalButtonList';
 import ApplicantsViewModalFullName from './ApplicantsViewModalFullName';

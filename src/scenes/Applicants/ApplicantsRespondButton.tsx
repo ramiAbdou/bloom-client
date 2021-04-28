@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 import { ModalType } from '@util/constants';
 import { MemberStatus } from '@util/constants.entities';
 import { take } from '@util/util';

@@ -3,7 +3,7 @@ import { memberIdVar } from 'src/App.reactive';
 
 import { gql, useReactiveVar } from '@apollo/client';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 import useIsMember from '@hooks/useIsMember';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IEvent, IEventGuest } from '@util/constants.entities';

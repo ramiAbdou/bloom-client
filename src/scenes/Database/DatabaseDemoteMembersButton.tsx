@@ -13,7 +13,7 @@ import {
   TableStateAndDispatch
 } from '@components/organisms/Table/Table.types';
 import useMemberRole from '@core/hooks/useMemberRole';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 import { ModalType } from '@util/constants';
 import { MemberRole } from '@util/constants.entities';
 import { take } from '@util/util';

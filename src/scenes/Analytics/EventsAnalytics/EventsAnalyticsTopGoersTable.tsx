@@ -7,7 +7,7 @@ import {
   TableOptions,
   TableRow
 } from '@components/organisms/Table/Table.types';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 import {
   ComponentWithFragments,
   ModalType,

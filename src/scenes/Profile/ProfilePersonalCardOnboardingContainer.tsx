@@ -3,7 +3,7 @@ import React from 'react';
 import { gql } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import Row from '@components/containers/Row/Row';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 

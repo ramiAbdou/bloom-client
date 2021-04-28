@@ -3,7 +3,7 @@ import React from 'react';
 import { gql } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import useMemberRole from '@core/hooks/useMemberRole';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IEvent, MemberRole } from '@util/constants.entities';
 import { EventTiming, getEventTiming } from './Events.util';

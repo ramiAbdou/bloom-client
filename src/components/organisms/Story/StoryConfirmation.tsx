@@ -3,7 +3,7 @@ import React from 'react';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 
 import Button from '@components/atoms/Button/Button';
-import { modalVar } from '@core/state/Modal.reactive';
+import { modalVar } from '@core/state/Modal.state';
 import { ShowProps } from '@util/constants';
 
 interface StoryConfirmationProps {
