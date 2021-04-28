@@ -2,16 +2,18 @@ import React from 'react';
 
 import { gql } from '@apollo/client';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
+import useMemberRole from '@core/hooks/useMemberRole';
 import useIsMember from '@hooks/useIsMember';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { ComponentWithFragments } from '@util/constants';
-import { IEvent } from '@util/constants.entities';
+import { IEvent, MemberRole } from '@util/constants.entities';
 
 const EventsViewRecordingButton: ComponentWithFragments<
   IEvent,
   Partial<Pick<ButtonProps, 'large'>>
 > = ({ data: event, large }) => {
   const isMember: boolean = useIsMember();
+  const role: MemberRole = useMemberRole();
 
   const eventTiming: EventTiming = getEventTiming({
     endTime: event.endTime,
@@ -20,7 +22,7 @@ const EventsViewRecordingButton: ComponentWithFragments<
 
   const isPast: boolean = eventTiming === EventTiming.PAST;
 
-  if (!isPast || !isMember) return null;
+  if (!isPast || !isMember || (role && large)) return null;
 
   const onClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>

@@ -24,6 +24,8 @@ interface GetEventByIdResult {
 
 const GET_EVENT_BY_ID: DocumentNode = gql`
   query GetEventById($eventId: String!) {
+    eventId @client @export(as: "eventId")
+
     event(id: $eventId) {
       id
       privacy
@@ -48,25 +50,24 @@ const GET_EVENT_BY_ID: DocumentNode = gql`
 `;
 
 const IndividualEvent: React.FC = () => {
-  const { eventId } = useParams() as { eventId: string };
+  const { eventId: eventIdInParam } = useParams() as { eventId: string };
+  const eventId: string = useReactiveVar(eventIdVar);
 
-  const { data, error, loading } = useQuery<
-    GetEventByIdResult,
-    GetEventByIdArgs
-  >(GET_EVENT_BY_ID, { skip: !eventId, variables: { eventId } });
+  useEffect(() => {
+    eventIdVar(eventIdInParam);
+  }, [eventIdInParam]);
+
+  const { data, loading } = useQuery<GetEventByIdResult, GetEventByIdArgs>(
+    GET_EVENT_BY_ID,
+    { skip: !eventId }
+  );
 
   const event: IEvent = data?.event;
 
-  console.log(error);
-
   useEffect(() => {
-    if (event?.id) {
-      communityIdVar(event.community.id);
-      eventIdVar(event.id);
-    }
+    if (event?.id) communityIdVar(event.community.id);
   }, [event]);
 
-  const isEventActive: boolean = useReactiveVar(eventIdVar) === eventId;
   const isMember: boolean = useIsMember();
 
   // Once the event is loaded, depending on the status of the Member (whether
@@ -74,7 +75,7 @@ const IndividualEvent: React.FC = () => {
   // show the CHECK_IN modal.
   useShowCheckInEventModal(event);
 
-  if (loading || !isEventActive) return null;
+  if (loading || !event) return null;
 
   const css: string = cx('home-content', {
     's-events-individual--public': !isMember
