@@ -12,7 +12,7 @@ import DirectoryCardRole from './DirectoryCardRole';
 
 const DirectoryCard: ComponentWithFragments<IMember> = ({ data: member }) => {
   const onClick = (): void => {
-    modalVar({ id: ModalType.PROFILE, metadata: member.id });
+    modalVar({ id: ModalType.VIEW_PROFILE, metadata: member.id });
   };
 
   return (

@@ -13,7 +13,7 @@ const ProfilePersonalCardOnboardingContainer: ComponentWithFragments<IMember> = 
   if (member.bio && member.pictureUrl) return null;
 
   const onClick = (): void => {
-    modalVar({ id: ModalType.EDIT_PERSONAL_INFORMATION });
+    modalVar({ id: ModalType.UPDATE_PERSONAL_INFORMATION });
   };
 
   return (

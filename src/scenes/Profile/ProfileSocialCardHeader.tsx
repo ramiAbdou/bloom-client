@@ -16,7 +16,7 @@ const ProfileSocialCardHeader: ComponentWithFragments<IMemberSocials> = ({
     !!memberSocials.twitterUrl;
 
   const onClick = (): void => {
-    modalVar({ id: ModalType.EDIT_SOCIAL_MEDIA });
+    modalVar({ id: ModalType.UPDATE_SOCIAL_INFORMATION });
   };
 
   return (

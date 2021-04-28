@@ -22,7 +22,7 @@ const ApplicantsRespondButton: React.FC<ApplicantsRespondButtonProps> = ({
 
   const onClick = (): void => {
     modalVar({
-      id: ModalType.APPLICANT_CONFIRMATION,
+      id: ModalType.CONFIRM_APPLICANT,
       metadata: { applicantIds, response }
     });
   };

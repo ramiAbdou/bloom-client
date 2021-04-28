@@ -49,7 +49,7 @@ const useVerifyToken = (): boolean => {
         error === ErrorType.EVENT_FINISHED ||
         error === ErrorType.EVENT_HASNT_STARTED
       ) {
-        modalVar({ id: ModalType.EVENT_ERROR, metadata: error });
+        modalVar({ id: ModalType.VIEW_EVENT_ERROR, metadata: error });
       }
 
       // If there is no data, then there is nothing left to query/do.

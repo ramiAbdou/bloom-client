@@ -26,7 +26,7 @@ const IndividualEventInteractionsTable: ComponentWithFragments<IEvent> = ({
   );
 
   const onRowClick = (row: TableRow): void => {
-    modalVar({ id: ModalType.PROFILE, metadata: row?.id });
+    modalVar({ id: ModalType.VIEW_PROFILE, metadata: row?.id });
   };
 
   const options: TableOptions = {

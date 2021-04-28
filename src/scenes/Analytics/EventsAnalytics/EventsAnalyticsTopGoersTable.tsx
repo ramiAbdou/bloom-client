@@ -61,7 +61,7 @@ const EventsAnalyticsTopGoersTable: ComponentWithFragments<IEvent[]> = ({
   ];
 
   const onRowClick = ({ memberId }: TableRow): void => {
-    modalVar({ id: ModalType.PROFILE, metadata: memberId });
+    modalVar({ id: ModalType.VIEW_PROFILE, metadata: memberId });
   };
 
   const options: TableOptions = {

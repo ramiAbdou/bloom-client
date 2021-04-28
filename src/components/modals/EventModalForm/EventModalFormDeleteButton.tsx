@@ -5,7 +5,7 @@ import Button from '@components/atoms/Button/Button';
 import { modalVar } from '@core/state/Modal.reactive';
 import { ModalType } from '@util/constants';
 
-const DeleteEventButton: React.FC = () => {
+const EventModalFormDeleteButton: React.FC = () => {
   const eventId: string = useReactiveVar(modalVar)?.metadata as string;
 
   const onClick = (): void => {
@@ -17,18 +17,10 @@ const DeleteEventButton: React.FC = () => {
   };
 
   return (
-    <Button
-      fill
-      large
-      red
-      secondary
-      className="mt-xs"
-      show={!!eventId}
-      onClick={onClick}
-    >
+    <Button fill large red secondary className="mt-xs" onClick={onClick}>
       Delete Event
     </Button>
   );
 };
 
-export default DeleteEventButton;
+export default EventModalFormDeleteButton;

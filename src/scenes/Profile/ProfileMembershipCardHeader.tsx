@@ -10,7 +10,7 @@ const ProfileMembershipCardHeader: ComponentWithFragments<IMember> = ({
   data: member
 }) => {
   const onClick = (): void => {
-    modalVar({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });
+    modalVar({ id: ModalType.UPDATE_MEMBERSHIP_INFORMATION });
   };
 
   return (

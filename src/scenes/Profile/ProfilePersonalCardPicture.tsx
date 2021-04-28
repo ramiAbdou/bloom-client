@@ -15,7 +15,7 @@ const ProfilePersonalCardPicture: ComponentWithFragments<IMember> = ({
   const isMobile: boolean = useBreakpoint() === 1;
 
   const onClick = (): void => {
-    modalVar({ id: ModalType.EDIT_PERSONAL_INFORMATION });
+    modalVar({ id: ModalType.UPDATE_PERSONAL_INFORMATION });
   };
 
   return (

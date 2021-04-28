@@ -11,7 +11,7 @@ const ProfileMembershipCardOnboardingButton: ComponentWithData<IMember> = ({
   if (member?.memberValues?.length) return null;
 
   const onClick = (): void => {
-    modalVar({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });
+    modalVar({ id: ModalType.UPDATE_MEMBERSHIP_INFORMATION });
   };
 
   return (

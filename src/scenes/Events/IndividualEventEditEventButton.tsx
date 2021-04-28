@@ -23,7 +23,7 @@ const IndividualEventEditEventButton: ComponentWithFragments<IEvent> = ({
   if (!role || isPast) return null;
 
   const onClick = (): void => {
-    modalVar({ id: ModalType.CREATE_EVENT, metadata: event.id });
+    modalVar({ id: ModalType.UPDATE_EVENT, metadata: event.id });
   };
 
   return (

@@ -18,7 +18,7 @@ const ProfileSocialCardOnboardingContainer: ComponentWithFragments<IMember> = ({
   if (isSocialLinked) return null;
 
   const onClick = (): void => {
-    modalVar({ id: ModalType.EDIT_SOCIAL_MEDIA });
+    modalVar({ id: ModalType.UPDATE_SOCIAL_INFORMATION });
   };
 
   return (

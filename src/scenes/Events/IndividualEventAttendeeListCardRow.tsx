@@ -22,7 +22,7 @@ const IndividualEventAttendeeListCardRow: ComponentWithFragments<IEventAttendee>
 
   const onClick = (): void => {
     if (isMember && member?.id) {
-      modalVar({ id: ModalType.PROFILE, metadata: member?.id });
+      modalVar({ id: ModalType.VIEW_PROFILE, metadata: member?.id });
     }
   };
 

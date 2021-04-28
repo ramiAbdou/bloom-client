@@ -4,11 +4,11 @@ import { useReactiveVar } from '@apollo/client';
 import Form from '@components/organisms/Form/Form';
 import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
 import { modalVar } from '@core/state/Modal.reactive';
-import EventFormActions from './EventFormActions';
-import EventFormDetailsSection from './EventFormDetailsSection';
-import EventFormMainSection from './EventFormMainSection';
-import EventFormNotificationsSection from './EventFormNotificationsSection';
-import EventFormPrivacySection from './EventFormPrivacySection';
+// import EventFormActions from './EventFormActions';
+// import EventFormNotificationsSection from './EventFormNotificationsSection';
+// import EventFormDetailsSection from './EventModalFormDetailsSection';
+// import EventFormMainSection from './EventModalFormMainSection';
+// import EventFormPrivacySection from './EventModalFormPrivacySection';
 import useCreateEvent from './useCreateEvent';
 import useUpdateEvent from './useUpdateEvent';
 
@@ -21,11 +21,11 @@ const EventForm: React.FC = () => {
 
   return (
     <Form className="mx-auto w-10 w-100--mt" spacing="lg" onSubmit={onSubmit}>
-      <EventFormMainSection />
+      {/* <EventFormMainSection />
       <EventFormDetailsSection />
       <EventFormNotificationsSection />
       <EventFormPrivacySection />
-      <EventFormActions />
+      <EventFormActions /> */}
     </Form>
   );
 };

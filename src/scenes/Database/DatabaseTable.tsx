@@ -90,7 +90,7 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
   };
 
   const onRowClick = ({ id: memberId }: TableRow): void => {
-    modalVar({ id: ModalType.PROFILE, metadata: memberId });
+    modalVar({ id: ModalType.VIEW_PROFILE, metadata: memberId });
   };
 
   const onSortColumn = (args: SortTableArgs): void => {

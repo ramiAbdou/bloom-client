@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useReactiveVar } from '@apollo/client';
 import AddMemberModal from '@components/modals/AddMember/AddMember';
 import CheckInModal from '@components/modals/CheckIn/CheckIn';
-import EventForm from '@components/modals/EventForm/EventForm';
+import EventForm from '@components/modals/EventModalForm/EventForm';
 import ProfileModal from '@components/modals/ProfileModal/ProfileModal';
 import { modalVar } from '@core/state/Modal.reactive';
 import ApplicantsConfirmationForm from '@scenes/Applicants/ApplicantsConfirmationForm';
@@ -18,7 +18,8 @@ import ProfilePersonalModalForm from '@scenes/Profile/ProfilePersonalModalForm';
 import ProfileSocialModalForm from '@scenes/Profile/ProfileSocialModalForm';
 import { ModalType } from '@util/constants';
 import { cx } from '@util/util';
-import DeleteEventConfirmationForm from '../../modals/EventForm/DeleteEventConfirmationForm';
+import DeleteEventConfirmationForm from '../../modals/EventModalForm/DeleteEventConfirmationForm';
+import EventModalUpdateForm from '../../modals/EventModalForm/EventModalUpdateForm';
 import ModalContainer from './ModalContainer';
 
 const ModalCustomContent: React.FC = () => {
@@ -28,11 +29,11 @@ const ModalCustomContent: React.FC = () => {
     case ModalType.ADD_MEMBERS:
       return <AddMemberModal />;
 
-    case ModalType.APPLICANT_CONFIRMATION:
-      return <ApplicantsConfirmationForm />;
-
     case ModalType.CHECK_IN:
       return <CheckInModal />;
+
+    case ModalType.CONFIRM_APPLICANT:
+      return <ApplicantsConfirmationForm />;
 
     case ModalType.CONFIRM_DELETE_EVENT:
       return <DeleteEventConfirmationForm />;
@@ -49,26 +50,29 @@ const ModalCustomContent: React.FC = () => {
     case ModalType.DEMOTE_MEMBERS:
       return <DatabaseDemoteMembersModalForm />;
 
-    case ModalType.EDIT_MEMBERSHIP_INFORMATION:
-      return <ProfileMembershipForm />;
-
-    case ModalType.EDIT_PERSONAL_INFORMATION:
-      return <ProfilePersonalModalForm />;
-
-    case ModalType.EDIT_SOCIAL_MEDIA:
-      return <ProfileSocialModalForm />;
-
-    case ModalType.EVENT_ERROR:
-      return <IndividualEventErrorModal />;
-
-    case ModalType.PROFILE:
-      return <ProfileModal />;
-
     case ModalType.PROMOTE_MEMBERS:
       return <DatabasePromoteMembersModalForm />;
 
+    case ModalType.UPDATE_EVENT:
+      return <EventModalUpdateForm />;
+
+    case ModalType.UPDATE_MEMBERSHIP_INFORMATION:
+      return <ProfileMembershipForm />;
+
+    case ModalType.UPDATE_PERSONAL_INFORMATION:
+      return <ProfilePersonalModalForm />;
+
+    case ModalType.UPDATE_SOCIAL_INFORMATION:
+      return <ProfileSocialModalForm />;
+
     case ModalType.VIEW_APPLICANT:
       return <ApplicantsViewModal />;
+
+    case ModalType.VIEW_EVENT_ERROR:
+      return <IndividualEventErrorModal />;
+
+    case ModalType.VIEW_PROFILE:
+      return <ProfileModal />;
 
     default:
       return null;
