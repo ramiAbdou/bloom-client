@@ -18,12 +18,8 @@ interface GetMemberValueArgs {
 const getMemberValue = ({ member, question }: GetMemberValueArgs) => {
   const { bio, email, firstName, joinedAt, lastName, pictureUrl } = member;
 
-  const {
-    facebookUrl,
-    instagramUrl,
-    linkedInUrl,
-    twitterUrl
-  } = member.memberSocials;
+  const { facebookUrl, instagramUrl, linkedInUrl, twitterUrl } =
+    member.memberSocials ?? {};
 
   const { category } = question;
 

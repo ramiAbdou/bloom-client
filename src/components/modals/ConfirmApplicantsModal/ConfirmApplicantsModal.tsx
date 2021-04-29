@@ -17,10 +17,13 @@ import Modal from '@components/organisms/Modal/Modal';
 import { closeModal, modalVar } from '@components/organisms/Modal/Modal.state';
 import ModalConfirmationActionRow from '@components/organisms/Modal/ModalConfirmationActionRow';
 import { IMember, MemberStatus } from '@util/constants.entities';
+import { now } from '@util/util';
 
 interface UpdateApplicantStatusesArgs {
+  joinedAt: string;
   memberIds: string[];
   status: MemberStatus;
+  updatedAt: string;
 }
 
 interface UpdateApplicantStatusesResult {
@@ -28,10 +31,15 @@ interface UpdateApplicantStatusesResult {
 }
 
 const UPDATE_APPLICANT_STATUSES: DocumentNode = gql`
-  mutation UpdateApplicantStatuses($memberIds: [String!]!, $status: String!) {
+  mutation UpdateApplicantStatuses(
+    $joinedAt: String!
+    $memberIds: [String!]!
+    $status: String!
+    $updatedAt: String!
+  ) {
     updateMembers(
       where: { id: { _in: $memberIds } }
-      _set: { status: $status }
+      _set: { joinedAt: $joinedAt, status: $status, updatedAt: $updatedAt }
     ) {
       returning {
         id
@@ -110,7 +118,12 @@ const ApplicantsConfirmApplicantsModal: React.FC = () => {
   }: OnFormSubmitArgs) => {
     try {
       await updateMemberStatuses({
-        variables: { memberIds: applicantIds, status: response }
+        variables: {
+          joinedAt: now(),
+          memberIds: applicantIds,
+          status: response,
+          updatedAt: now()
+        }
       });
 
       closeModal();
