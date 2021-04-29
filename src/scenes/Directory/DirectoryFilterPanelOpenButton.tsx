@@ -3,8 +3,8 @@ import { IoFilter } from 'react-icons/io5';
 
 import Button from '@components/atoms/Button/Button';
 import { showPanel } from '@components/organisms/Panel/Panel.state';
+import { PanelType } from '@components/organisms/Panel/Panel.types';
 import useTooltip from '@hooks/useTooltip';
-import { PanelType } from '@util/constants';
 
 const DirectoryFilterPanelOpenButton: React.FC = () => {
   const ref: React.MutableRefObject<HTMLElement> = useTooltip('Filter');

@@ -2,12 +2,12 @@ import React from 'react';
 
 import { useReactiveVar } from '@apollo/client';
 import { panelVar } from '@components/organisms/Panel/Panel.state';
+import DirectoryFilterPanel from '@scenes/Directory/DirectoryFilterPanel';
 import IndividualEventAddRecordingPanelForm from '@scenes/Events/IndividualEventAddRecordingPanelForm';
-import { PanelType } from '@util/constants';
-import DirectoryFilterPanel from '../../../scenes/Directory/DirectoryFilterPanel';
 import SidebarPanel from '../Sidebar/SidebarPanel';
 import TableColumnPanel from '../Table/TableColumnPanel';
 import TableFilterPanel from '../Table/TableFilterPanel';
+import { PanelType } from './Panel.types';
 
 const PanelContent: React.FC = () => {
   const panelId: string = useReactiveVar(panelVar)?.id;

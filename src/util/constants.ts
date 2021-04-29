@@ -45,14 +45,6 @@ export type AggregateCount = {
  * SYSTEM TYPES - Includes modal, panel and more.
  */
 
-export enum PanelType {
-  ADD_RECORDING_LINK = 'ADD_RECORDING_LINK',
-  FILTER_DIRECTORY = 'FILTER_DIRECTORY',
-  FILTER_TABLE = 'FILTER_TABLE',
-  PROFILE = 'PROFILE',
-  TABLE_COLUMN = 'TABLE_COLUMN'
-}
-
 export type RouteType =
   | '/'
   | 'analytics'

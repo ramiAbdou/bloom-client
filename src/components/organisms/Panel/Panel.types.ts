@@ -1,7 +1,3 @@
-import { PanelType } from '@util/constants';
-
-// ## PANEL OPTIONS/DATA
-
 export type PanelAction = {
   Icon?: React.FC;
   onClick: VoidFunction; // Should perform some action.
@@ -13,6 +9,14 @@ export type PanelAlign =
   | 'BOTTOM_LEFT'
   | 'BOTTOM_RIGHT'
   | 'TOP_LEFT';
+
+export enum PanelType {
+  ADD_RECORDING_LINK = 'ADD_RECORDING_LINK',
+  FILTER_DIRECTORY = 'FILTER_DIRECTORY',
+  FILTER_TABLE = 'FILTER_TABLE',
+  PROFILE = 'PROFILE',
+  TABLE_COLUMN = 'TABLE_COLUMN'
+}
 
 export interface PanelState {
   align?: PanelAlign;

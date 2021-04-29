@@ -3,9 +3,10 @@ import React from 'react';
 import { showPanel } from '@components/organisms/Panel/Panel.state';
 import useTopLevelRoute from '@core/hooks/useTopLevelRoute';
 import useBreakpoint from '@hooks/useBreakpoint';
-import { ComponentWithData, PanelType, RouteType } from '@util/constants';
+import { ComponentWithData, RouteType } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 import { cx } from '@util/util';
+import { PanelType } from '../Panel/Panel.types';
 
 const SidebarProfileContainer: ComponentWithData<IMember> = ({
   children,

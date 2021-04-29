@@ -6,8 +6,8 @@ import { showPanel } from '@components/organisms/Panel/Panel.state';
 import { useTableState } from '@components/organisms/Table/Table.state';
 import { TableState } from '@components/organisms/Table/Table.types';
 import useTooltip from '@hooks/useTooltip';
-import { PanelType } from '@util/constants';
 import { cx } from '@util/util';
+import { PanelType } from '../Panel/Panel.types';
 
 const TableFilterButtonNumActiveTag: React.FC = () => {
   const { appliedFilterIds }: TableState = useTableState();
