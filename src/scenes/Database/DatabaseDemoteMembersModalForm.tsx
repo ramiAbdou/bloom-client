@@ -9,7 +9,7 @@ import Form, {
 import FormHeader from '@components/organisms/Form/FormHeader';
 import Modal from '@components/organisms/Modal/Modal';
 import { closeModal, modalVar } from '@components/organisms/Modal/Modal.state';
-import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
+import ModalConfirmationActionRow from '@components/organisms/Modal/ModalConfirmationActionRow';
 import { TableStateAndDispatch } from '@components/organisms/Table/Table.types';
 
 interface DemoteMembersArgs {
@@ -71,7 +71,7 @@ const DatabaseDemoteMembersModalForm: React.FC = () => {
       <Form options={{ disableValidation: true }} onSubmit={onSubmit}>
         <DatabaseDemoteMembersModalFormHeader />
 
-        <ModalConfirmationActions
+        <ModalConfirmationActionRow
           primaryLoadingText="Demoting..."
           primaryText="Demote"
         />

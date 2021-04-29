@@ -15,7 +15,7 @@ import Form, {
 import FormHeader from '@components/organisms/Form/FormHeader';
 import Modal from '@components/organisms/Modal/Modal';
 import { closeModal, modalVar } from '@components/organisms/Modal/Modal.state';
-import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
+import ModalConfirmationActionRow from '@components/organisms/Modal/ModalConfirmationActionRow';
 import { IMember, MemberStatus } from '@util/constants.entities';
 
 interface UpdateApplicantStatusesArgs {
@@ -127,7 +127,7 @@ const ApplicantsConfirmationForm: React.FC = () => {
     <Modal>
       <Form options={{ disableValidation: true }} onSubmit={onSubmit}>
         <ApplicantsConfirmationFormHeader />
-        <ModalConfirmationActions />
+        <ModalConfirmationActionRow />
       </Form>
     </Modal>
   );

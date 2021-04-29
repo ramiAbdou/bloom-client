@@ -4,12 +4,12 @@ import Row from '@components/containers/Row/Row';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import ModalCloseButton from '@components/organisms/Modal/ModalCloseButton';
 
-interface ModalConfirmationActionsProps {
+interface ModalConfirmationActionRowProps {
   primaryLoadingText?: string;
   primaryText?: string;
 }
 
-const ModalConfirmationActions: React.FC<ModalConfirmationActionsProps> = ({
+const ModalConfirmationActionRow: React.FC<ModalConfirmationActionRowProps> = ({
   primaryLoadingText,
   primaryText
 }) => (
@@ -22,4 +22,4 @@ const ModalConfirmationActions: React.FC<ModalConfirmationActionsProps> = ({
   </Row>
 );
 
-export default ModalConfirmationActions;
+export default ModalConfirmationActionRow;

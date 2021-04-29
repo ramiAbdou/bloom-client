@@ -16,7 +16,7 @@ import Form, {
 import FormHeader from '@components/organisms/Form/FormHeader';
 import Modal from '@components/organisms/Modal/Modal';
 import { closeModal, modalVar } from '@components/organisms/Modal/Modal.state';
-import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
+import ModalConfirmationActionRow from '@components/organisms/Modal/ModalConfirmationActionRow';
 import useEventTitle from '@core/hooks/useEventTitle';
 import { IEventGuest } from '@util/constants.entities';
 import { now } from '@util/util';
@@ -137,7 +137,7 @@ const EventsConfirmRsvpModalForm: React.FC = () => {
     <Modal>
       <Form options={{ disableValidation: true }} onSubmit={onSubmit}>
         <EventsConfirmRsvpModalHeader />
-        <ModalConfirmationActions
+        <ModalConfirmationActionRow
           primaryLoadingText="Confirming..."
           primaryText="Confirm"
         />

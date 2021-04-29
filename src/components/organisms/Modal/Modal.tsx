@@ -1,44 +1,13 @@
 import { AnimationProps, motion, MotionProps } from 'framer-motion';
 import React from 'react';
-import { IoClose } from 'react-icons/io5';
 
 import { useReactiveVar } from '@apollo/client';
-import Button from '@components/atoms/Button/Button';
 import useBreakpoint from '@hooks/useBreakpoint';
 import useLockBodyScroll from '@hooks/useLockBodyScroll';
 import { cx } from '@util/util';
-import { closeModal, modalVar } from './Modal.state';
-
-/**
- * The darkish overlay that lays underneath the actual modal. Has a high
- * z-index so any clicks that hit outside of the modal content will hit this
- * background.
- */
-const ModalBackground: React.FC = () => {
-  const lock: boolean = useReactiveVar(modalVar)?.options?.lock;
-
-  const onClick = (): void => {
-    if (!lock) closeModal();
-  };
-
-  const css: string = cx('c-modal-bg', { 'c-modal-bg--lock': lock });
-
-  return <div key="c-modal-bg" className={css} onClick={onClick} />;
-};
-
-const ModalExitButton: React.FC = () => {
-  const lock: boolean = useReactiveVar(modalVar)?.options?.lock;
-
-  const onClick = (): void => {
-    closeModal();
-  };
-
-  return (
-    <Button className="c-modal-cancel" show={!lock} onClick={onClick}>
-      <IoClose />
-    </Button>
-  );
-};
+import { modalVar } from './Modal.state';
+import ModalExitButton from './ModalExitButton';
+import ModalOverlay from './ModalOverlay';
 
 const Modal: React.FC = ({ children }) => {
   const className: string = useReactiveVar(modalVar)?.options?.className;
@@ -76,7 +45,7 @@ const Modal: React.FC = ({ children }) => {
 
   return (
     <>
-      <ModalBackground />
+      <ModalOverlay />
 
       <motion.div
         animate={animate}

@@ -2,9 +2,12 @@ import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
 import { closeModal } from '@components/organisms/Modal/Modal.state';
-import { TitleProps } from '@util/constants';
 
-const ModalCloseButton: React.FC<TitleProps> = ({ title }) => {
+interface ModalCloseButtonProps {
+  title?: string;
+}
+
+const ModalCloseButton: React.FC<ModalCloseButtonProps> = ({ title }) => {
   const onClick = (): void => {
     closeModal();
   };

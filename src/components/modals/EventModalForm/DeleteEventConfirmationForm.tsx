@@ -9,7 +9,7 @@ import Form, {
 import FormHeader from '@components/organisms/Form/FormHeader';
 import Modal from '@components/organisms/Modal/Modal';
 import { closeModal, modalVar } from '@components/organisms/Modal/Modal.state';
-import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
+import ModalConfirmationActionRow from '@components/organisms/Modal/ModalConfirmationActionRow';
 import { IEvent } from '@util/constants.entities';
 import { now } from '@util/util';
 
@@ -54,7 +54,7 @@ const DeleteEventConfirmationForm: React.FC = () => {
           title="Delete event?"
         />
 
-        <ModalConfirmationActions
+        <ModalConfirmationActionRow
           primaryLoadingText="Deleting..."
           primaryText="Delete"
         />
