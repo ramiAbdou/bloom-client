@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
 import Row from '@components/containers/Row/Row';
-import { closePanel } from '@core/state/Panel.state';
+import { closePanel } from '@components/organisms/Panel/Panel.state';
 import TableFilterPanelApplyButton from './TableFilterPanelApplyButton';
 
 const TableFilterPanelCloseButton: React.FC = () => {

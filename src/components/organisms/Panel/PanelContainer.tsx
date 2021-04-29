@@ -3,7 +3,7 @@ import React, { CSSProperties, MutableRefObject, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
 import { useReactiveVar } from '@apollo/client';
-import { closePanel, panelVar } from '@core/state/Panel.state';
+import { closePanel, panelVar } from '@components/organisms/Panel/Panel.state';
 import { cx } from '@util/util';
 import usePanelPosition from './usePanelPosition';
 
@@ -12,14 +12,13 @@ const PanelContainer: React.FC = ({ children }) => {
     align: initialAlign,
     className,
     id,
-    metadata,
     scrollId,
     style,
     size,
-    useMetadataInId
+    uniqueIdentifier
   } = useReactiveVar(panelVar) ?? {};
 
-  const elementId = useMetadataInId ? `${id}-${metadata}` : id;
+  const elementId = uniqueIdentifier ?? id;
   const ref: MutableRefObject<HTMLDivElement> = useRef(null);
   const element: HTMLElement = document.getElementById(elementId);
   const { height, width } = element?.getBoundingClientRect() ?? {};

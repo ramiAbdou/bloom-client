@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { showPanel } from '@components/organisms/Panel/Panel.state';
 import useTopLevelRoute from '@core/hooks/useTopLevelRoute';
-import { showPanel } from '@core/state/Panel.state';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { ComponentWithData, PanelType, RouteType } from '@util/constants';
 import { IMember } from '@util/constants.entities';

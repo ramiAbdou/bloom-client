@@ -1,24 +1,22 @@
 import React from 'react';
 import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
 
-import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
-import {
-  useTableDispatch,
-  useTableState
-} from '@components/organisms/Table/Table.state';
-import { closePanel, panelVar } from '@core/state/Panel.state';
+import { closePanel, panelVar } from '@components/organisms/Panel/Panel.state';
 import { cx } from '@util/util';
-import { TableDispatch, TableSortDirection } from './Table.types';
+import { TableSortDirection } from './Table.types';
 
 interface TableSortButtonProps {
   direction: TableSortDirection;
 }
 
 const TableSortButton: React.FC<TableSortButtonProps> = ({ direction }) => {
-  const columnId: string = useReactiveVar(panelVar)?.metadata as string;
-  const { sortColumnId, sortDirection } = useTableState();
-  const tableDispatch: TableDispatch = useTableDispatch();
+  // @ts-ignore
+  const { columnId, tableDispatch, tableState } = panelVar()?.metadata as {
+    columnId: string;
+  };
+
+  const { sortColumnId, sortDirection } = tableState;
 
   const isSorted: boolean =
     columnId === sortColumnId && direction === sortDirection;

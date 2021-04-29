@@ -2,7 +2,7 @@ import React from 'react';
 import { IoFilter } from 'react-icons/io5';
 
 import Button from '@components/atoms/Button/Button';
-import { showPanel } from '@core/state/Panel.state';
+import { showPanel } from '@components/organisms/Panel/Panel.state';
 import useTooltip from '@hooks/useTooltip';
 import { PanelType } from '@util/constants';
 

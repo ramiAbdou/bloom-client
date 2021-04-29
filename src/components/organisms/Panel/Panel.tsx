@@ -3,7 +3,7 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 
 import { useReactiveVar } from '@apollo/client';
-import { panelVar } from '@core/state/Panel.state';
+import { panelVar } from '@components/organisms/Panel/Panel.state';
 import PanelContainer from './PanelContainer';
 import PanelContent from './PanelContent';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { closePanel } from '@core/state/Panel.state';
+import { closePanel } from '@components/organisms/Panel/Panel.state';
 import { PanelAction } from './Panel.types';
 
 /**

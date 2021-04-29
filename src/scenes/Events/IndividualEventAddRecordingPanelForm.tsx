@@ -5,7 +5,7 @@ import { DocumentNode, gql, useMutation, useQuery } from '@apollo/client';
 import Form, { OnFormSubmitArgs } from '@components/organisms/Form/Form';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
-import { closePanel } from '@core/state/Panel.state';
+import { closePanel } from '@components/organisms/Panel/Panel.state';
 import { IEvent } from '@util/constants.entities';
 
 interface GetEventRecordingUrlByIdResult {

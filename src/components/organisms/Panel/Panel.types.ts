@@ -1,4 +1,4 @@
-import { BaseProps, PanelType } from '@util/constants';
+import { PanelType } from '@util/constants';
 
 // ## PANEL OPTIONS/DATA
 
@@ -14,25 +14,13 @@ export type PanelAlign =
   | 'BOTTOM_RIGHT'
   | 'TOP_LEFT';
 
-export interface PanelData extends BaseProps {
+export interface PanelState {
   align?: PanelAlign;
+  className?: string;
   id: PanelType;
-  metadata?: any;
+  metadata?: unknown;
   scrollId?: string;
   size?: 'md' | 'lg';
-  useMetadataInId?: boolean;
+  style?: React.CSSProperties;
+  uniqueIdentifier?: string;
 }
-
-// ## PANEL MODEL
-
-export type PanelModel = PanelData;
-
-export const initialPanelModel: Partial<PanelModel> = {
-  align: null,
-  className: null,
-  id: null,
-  metadata: null,
-  scrollId: null,
-  style: null,
-  useMetadataInId: false
-};

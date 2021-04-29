@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
-import { closePanel } from '@core/state/Panel.state';
+import { closePanel } from '@components/organisms/Panel/Panel.state';
 import { useTable, useTableSelector } from './Table.state';
 import { TableState } from './Table.types';
 

@@ -2,8 +2,8 @@ import React from 'react';
 
 import { gql } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
+import { showPanel } from '@components/organisms/Panel/Panel.state';
 import useMemberRole from '@core/hooks/useMemberRole';
-import { showPanel } from '@core/state/Panel.state';
 import { ComponentWithFragments, PanelType } from '@util/constants';
 import { IEvent, MemberRole } from '@util/constants.entities';
 import { EventTiming, getEventTiming } from './Events.util';

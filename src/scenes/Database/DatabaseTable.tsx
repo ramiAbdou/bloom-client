@@ -20,6 +20,7 @@ import {
 } from './Database.reactive';
 import { useMemberDatabaseRows } from './Database.util';
 import DatabaseActionRow from './DatabaseActionRow';
+import useUpdateQuestionTitle from './useUpdateQuestionTitle';
 
 interface DatabaseTableProps {
   members: IMember[];
@@ -34,6 +35,7 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
   questions,
   totalMembersCount
 }) => {
+  const updateQuestionTitle = useUpdateQuestionTitle();
   const sortArgs: SortTableArgs = useReactiveVar(databaseSortArgsVar);
 
   members = members ?? [];
@@ -107,6 +109,7 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
       totalCount={totalMembersCount.aggregate.count}
       onApplyFilters={onApplyFilters}
       onOffsetChange={onOffsetChange}
+      onRenameColumn={updateQuestionTitle}
       onRowClick={onRowClick}
       onSortColumn={onSortColumn}
     >

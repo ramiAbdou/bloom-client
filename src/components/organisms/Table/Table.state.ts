@@ -135,6 +135,10 @@ const resetSelectedRowIds = (state: TableState): TableState => {
   return { ...state, selectedRowIds: [] };
 };
 
+const setColumns = (state: TableState, columns: TableColumn[]): TableState => {
+  return { ...state, columns };
+};
+
 interface SetFilterArgs {
   filterId: string;
   updatedFilter: Partial<TableFilter>;
@@ -273,6 +277,9 @@ const tableReducer = (state: TableState, action: TableAction): TableState => {
 
     case 'RESET_SELECTED_ROW_IDS':
       return resetSelectedRowIds(state);
+
+    case 'SET_COLUMNS':
+      return setColumns(state, action.columns);
 
     case 'SET_FILTER':
       return setFilter(state, { ...action });

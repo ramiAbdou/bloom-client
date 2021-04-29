@@ -9,10 +9,6 @@ export interface OnApplyFiltersArgs {
   joinOperator: TableFilterJoinOperatorType;
 }
 
-export type OnRenameColumnArgs = {
-  column: Partial<TableColumn>;
-};
-
 export interface SortTableArgs {
   column?: TableColumn;
   sortColumnId: string;
@@ -86,7 +82,7 @@ export const defaultTableOptions: TableOptions = {
 export interface TableInitialState {
   columns: TableColumn[];
   onApplyFilters?: (args: OnApplyFiltersArgs) => void;
-  onRenameColumn?: (args: OnRenameColumnArgs) => void | Promise<void>;
+  onRenameColumn?: (column: TableColumn) => void | Promise<void>;
   onRowClick?: (row: TableRow) => void;
   onSortColumn?: (args: SortTableArgs) => void;
   options?: TableOptions;
@@ -102,7 +98,7 @@ export interface TableState {
   filters: Record<string, TableFilter>;
   isAllRowsSelected: boolean;
   onApplyFilters?: (args: OnApplyFiltersArgs) => void;
-  onRenameColumn?: (args: OnRenameColumnArgs) => void | Promise<void>;
+  onRenameColumn?: (column: TableColumn) => void | Promise<void>;
   onRowClick?: (row: TableRow) => void;
   onSortColumn?: (args: SortTableArgs) => void;
   options: TableOptions;
@@ -121,6 +117,7 @@ export type TableAction =
   | { type: 'CLEAR_FILTERS' }
   | { type: 'REMOVE_FILTER'; filterId: string }
   | { type: 'RESET_SELECTED_ROW_IDS' }
+  | { type: 'SET_COLUMNS'; columns: TableColumn[] }
   | {
       type: 'SET_FILTER';
       filterId: string;

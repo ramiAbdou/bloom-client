@@ -1,25 +1,23 @@
 import React from 'react';
 
-import { useReactiveVar } from '@apollo/client';
 import Form, { OnFormSubmitFunction } from '@components/organisms/Form/Form';
+import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
-import { panelVar } from '@core/state/Panel.state';
-import { useTableState } from './Table.state';
-import { TableState } from './Table.types';
+import { closePanel, panelVar } from '@components/organisms/Panel/Panel.state';
+import { TableColumn, TableStateAndDispatch } from './Table.types';
 
 const TableColumnPanelRenameForm: React.FC = () => {
-  const { onRenameColumn }: TableState = useTableState();
-  const columnId: string = useReactiveVar(panelVar)?.metadata as string;
-  // const updateColumn = useTableUpdateColumn();
+  // @ts-ignore
+  const { columnId, tableDispatch, tableState } = panelVar()
+    ?.metadata as TableStateAndDispatch;
 
-  // const title: string = TableStore.useStoreState(({ columns }) => {
-  //   const result: TableColumn = columns.find(
-  //     (column: TableColumn) => column.id === columnId
-  //   );
+  const { onRenameColumn } = tableState;
 
-  //   return result?.title;
-  // });
+  const title: string = tableState.columns.find(
+    (column: TableColumn) => column.id === columnId
+  )?.title;
 
+  if (!onRenameColumn) return null;
   // const updateColumn: ActionCreator<
   //   Partial<TableColumn>
   // > = TableStore.useStoreActions((state) => state.updateColumn);
@@ -29,19 +27,18 @@ const TableColumnPanelRenameForm: React.FC = () => {
     const updatedTitle: string = items.TABLE_COLUMN?.value as string;
 
     // If the column name didn't change, don't send to backend.
-    // if (updatedTitle === title) return;
+    if (updatedTitle === title) return;
 
-    // await onRenameColumn({
-    //   column: { id: columnId, title: updatedTitle },
-    //   updateColumn
-    // });
+    await onRenameColumn({ id: columnId, title: updatedTitle });
 
-    // closePanel();
+    // updateColumn()
+
+    closePanel();
   };
 
   return (
-    <Form show={!!onRenameColumn} onSubmit={onSubmit}>
-      {/* <FormShortText id="TABLE_COLUMN" value={title} /> */}
+    <Form onSubmit={onSubmit}>
+      <FormShortText id="TABLE_COLUMN" value={title} />
       <FormSubmitButton invisible />
     </Form>
   );

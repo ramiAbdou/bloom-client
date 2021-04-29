@@ -15,6 +15,7 @@ interface TableProps extends TableInitialState {
 }
 
 const TableLayout: React.FC<Partial<TableProps>> = ({
+  columns,
   children,
   emptyMessage,
   onOffsetChange,
@@ -23,6 +24,10 @@ const TableLayout: React.FC<Partial<TableProps>> = ({
   totalCount
 }) => {
   const [{ page, rowsPerPage }, tableDispatch] = useTable();
+
+  useEffect(() => {
+    tableDispatch({ columns, type: 'SET_COLUMNS' });
+  }, [columns]);
 
   useEffect(() => {
     tableDispatch({ rows, type: 'SET_ROWS' });
@@ -72,6 +77,7 @@ const Table: React.FC<TableProps> = ({
   >
     <TableLayout
       TableActions={TableActions}
+      columns={columns}
       emptyMessage={emptyMessage}
       rows={rows}
       totalCount={totalCount}

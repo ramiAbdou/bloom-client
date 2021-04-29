@@ -2,11 +2,11 @@ import React from 'react';
 import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
 
 import { useReactiveVar } from '@apollo/client';
-import { useTableState } from '@components/organisms/Table/Table.state';
-import { panelVar, showPanel } from '@core/state/Panel.state';
+import { panelVar, showPanel } from '@components/organisms/Panel/Panel.state';
+import { useTable } from '@components/organisms/Table/Table.state';
 import { PanelType } from '@util/constants';
 import { cx } from '@util/util';
-import { TableColumn, TableSortDirection, TableState } from './Table.types';
+import { TableColumn, TableSortDirection } from './Table.types';
 import { getTableCellClass } from './Table.util';
 import TableHeaderCheckbox from './TableHeaderCheckbox';
 
@@ -22,7 +22,8 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
   id,
   title
 }) => {
-  const { options, sortColumnId, sortDirection }: TableState = useTableState();
+  const [tableState, tableDispatch] = useTable();
+  const { options, sortColumnId, sortDirection } = tableState;
 
   const isPanelShowing: boolean = useReactiveVar(panelVar)?.id === id;
 
@@ -32,9 +33,9 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
         align: 'BOTTOM_LEFT',
         className: 'o-table-col-panel',
         id: PanelType.TABLE_COLUMN,
-        metadata: id,
+        metadata: { columnId: id, tableDispatch, tableState },
         scrollId: 'o-table-ctr',
-        useMetadataInId: true
+        uniqueIdentifier: `${PanelType.TABLE_COLUMN}-${id}`
       });
     }
   };
