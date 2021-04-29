@@ -7,7 +7,7 @@ import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
 import { modalVar } from '@components/organisms/Modal/Modal.state';
 import { ComponentWithFragments } from '@util/constants';
 import { IMember } from '@util/constants.entities';
-import ProfileModalHistoryEventList from './ProfileModalHistoryEventList';
+import ProfileModalHistoryEventList from './ViewProfileModalHistoryEventList';
 
 const ProfileModalHistory: ComponentWithFragments<IMember> = ({
   data: member

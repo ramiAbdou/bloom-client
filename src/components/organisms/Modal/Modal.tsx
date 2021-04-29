@@ -24,11 +24,6 @@ const Modal: React.FC = ({ children }) => {
       ? { opacity: 1, top: 'initial' }
       : { opacity: 1, scale: 1 };
 
-  const exit: AnimationProps['exit'] =
-    sheet ?? isMobile
-      ? { opacity: 0, top: '100%' }
-      : { opacity: 0, scale: 0.5 };
-
   const initial: MotionProps['initial'] =
     sheet ?? isMobile ? { opacity: 0.25 } : { opacity: 0.25, scale: 0.5 };
 
@@ -50,7 +45,6 @@ const Modal: React.FC = ({ children }) => {
       <motion.div
         animate={animate}
         className={containerCss}
-        exit={exit}
         initial={initial}
         style={{ width }}
         transition={{ duration: 0.2 }}

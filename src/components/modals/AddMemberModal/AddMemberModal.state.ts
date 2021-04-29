@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 import { useReducer } from 'react';
 import { createContainer } from 'react-tracked';
 
-import { AddMemberAction, AddMemberState } from './AddMember.types';
+import { AddMemberAction, AddMemberState } from './AddMemberModal.types';
 
 const addRow = (state: AddMemberState): AddMemberState => {
   return { ...state, rows: [...state.rows, nanoid()] };

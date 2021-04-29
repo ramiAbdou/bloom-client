@@ -4,9 +4,9 @@ import { DocumentNode, gql, useQuery, useReactiveVar } from '@apollo/client';
 import Modal from '@components/organisms/Modal/Modal';
 import { modalVar } from '@components/organisms/Modal/Modal.state';
 import { IMember } from '@util/constants.entities';
-import ProfileModalHistory from './ProfileModalHistory';
-import ProfileModalMembershipData from './ProfileModalMembershipData';
-import ProfileModalPersonal from './ProfileModalPersonal';
+import ProfileModalHistory from './ViewProfileModalHistory';
+import ProfileModalMembershipData from './ViewProfileModalMembershipData';
+import ProfileModalPersonal from './ViewProfileModalPersonal';
 
 interface GetMemberProfileArgs {
   memberId: string;

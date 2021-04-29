@@ -9,9 +9,9 @@ import {
   IMember
 } from '@util/constants.entities';
 import { sortObjects } from '@util/util';
-import ProfileModalHistoryEvent, {
+import ViewProfileModalHistoryEvent, {
   ProfileModalHistoryEventData
-} from './ProfileModalHistoryEvent';
+} from './ViewProfileModalHistoryEvent';
 
 const ProfileModalHistoryEventList: ComponentWithFragments<IMember> = ({
   data: member
@@ -66,7 +66,10 @@ const ProfileModalHistoryEventList: ComponentWithFragments<IMember> = ({
   return (
     <ul>
       {historyEventList.map((historyEvent: ProfileModalHistoryEventData) => (
-        <ProfileModalHistoryEvent key={historyEvent?.date} {...historyEvent} />
+        <ViewProfileModalHistoryEvent
+          key={historyEvent?.date}
+          {...historyEvent}
+        />
       ))}
     </ul>
   );

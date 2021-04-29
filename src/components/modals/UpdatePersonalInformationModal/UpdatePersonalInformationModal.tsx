@@ -6,7 +6,7 @@ import FormHeader from '@components/organisms/Form/FormHeader';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import Modal from '@components/organisms/Modal/Modal';
 import { IMember } from '@util/constants.entities';
-import ProfilePersonalModalFormQuestionList from './ProfilePersonalModalFormQuestionList';
+import UpdatePersonalInformationModalQuestionList from './UpdatePersonalInformationModalQuestionList';
 import useUpdateMemberPersonal from './useUpdateMemberPersonal';
 
 interface GetMemberByIdResult {
@@ -18,10 +18,10 @@ const GET_MEMBER_BY_ID: DocumentNode = gql`
     memberId @client @export(as: "memberId")
 
     member(id: $memberId) {
-      ...ProfilePersonalModalFormQuestionListFragment
+      ...UpdatePersonalInformationModalQuestionListFragment
     }
   }
-  ${ProfilePersonalModalFormQuestionList.fragment}
+  ${UpdatePersonalInformationModalQuestionList.fragment}
 `;
 
 const UpdatePersonalInformationModalFormHeader: React.FC = () => (
@@ -44,7 +44,7 @@ const UpdatePersonalInformationModal: React.FC = () => {
     <Modal>
       <Form onSubmit={updateMemberPersonal}>
         <UpdatePersonalInformationModalFormHeader />
-        <ProfilePersonalModalFormQuestionList data={member} />
+        <UpdatePersonalInformationModalQuestionList data={member} />
         <UpdatePersonalInformationModalFormSubmitButton />
       </Form>
     </Modal>
