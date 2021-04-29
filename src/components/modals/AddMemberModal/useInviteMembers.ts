@@ -10,7 +10,7 @@ import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { QuestionCategory } from '@util/constants';
 import { MutationEvent } from '@util/constants.events';
 import { take } from '@util/util';
-import { AddMemberInput } from './AddMember.types';
+import { AddMemberInput } from './AddMemberModal.types';
 
 interface AddMembersArgs {
   members: AddMemberInput[];

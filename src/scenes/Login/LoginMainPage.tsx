@@ -2,7 +2,7 @@ import React from 'react';
 
 import BloomLogo from '@components/images/bloom.svg';
 import NetworkIcon from '@components/images/network.svg';
-import LoginCardContent from '@components/modals/CheckIn/CheckInLoginContent';
+import LoginCardContent from '@components/modals/CheckInModal/CheckInLoginContent';
 import StoryPage from '@components/organisms/Story/StoryPage';
 
 const LoginCardHeader: React.FC = () => (

@@ -10,7 +10,7 @@ import EventModalFormNotificationsSection from './EventModalFormNotificationsSec
 import EventModalFormPrivacySection from './EventModalFormPrivacySection';
 import useCreateEvent from './useCreateEvent';
 
-const EventModalCreateForm: React.FC = () => {
+const CreateEventModal: React.FC = () => {
   const createEvent: OnFormSubmitFunction = useCreateEvent();
 
   return (
@@ -33,4 +33,4 @@ const EventModalCreateForm: React.FC = () => {
   );
 };
 
-export default EventModalCreateForm;
+export default CreateEventModal;

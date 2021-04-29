@@ -46,7 +46,7 @@ export type AggregateCount = {
  */
 
 export enum ModalType {
-  ADD_MEMBERS = 'ADD_MEMBERS',
+  ADD_MEMBER = 'ADD_MEMBER',
   CHECK_IN = 'CHECK_IN',
   CONFIRM_APPLICANT = 'CONFIRM_APPLICANT',
   CONFIRM_DELETE_EVENT = 'CONFIRM_DELETE_EVENT',

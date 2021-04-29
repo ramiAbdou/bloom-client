@@ -31,7 +31,7 @@ const GET_EVENT_TO_UPDATE_BY_ID: DocumentNode = gql`
   ${EventModalFormPrivacySection.fragment}
 `;
 
-const EventModalUpdateForm: React.FC = () => {
+const UpdateEventModal: React.FC = () => {
   const { data, loading } = useQuery<GetEventToUpdateByIdResult>(
     GET_EVENT_TO_UPDATE_BY_ID
   );
@@ -60,4 +60,4 @@ const EventModalUpdateForm: React.FC = () => {
   );
 };
 
-export default EventModalUpdateForm;
+export default UpdateEventModal;

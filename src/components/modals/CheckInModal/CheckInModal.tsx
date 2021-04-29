@@ -7,9 +7,9 @@ import Story from '@components/organisms/Story/Story';
 import useFindOne from '@gql/hooks/useFindOne';
 import useIsMember from '@hooks/useIsMember';
 import { EventPrivacy, IEvent } from '@util/constants.entities';
-import CheckInChoosePage from './CheckInChoosePage';
-import CheckInConfirmation from './CheckInConfirmation';
-import CheckInMainPage from './CheckInMainPage';
+import CheckInChoosePage from './CheckInModalChoosePage';
+import CheckInConfirmation from './CheckInModalConfirmation';
+import CheckInMainPage from './CheckInModalMainPage';
 
 const CheckInModal: React.FC = () => {
   const eventId: string = useReactiveVar(eventIdVar);

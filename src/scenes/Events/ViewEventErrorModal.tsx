@@ -24,7 +24,7 @@ const GET_EVENT_ERROR_BY_ID: DocumentNode = gql`
   }
 `;
 
-const IndividualEventErrorModal: React.FC = () => {
+const ViewEventErrorModal: React.FC = () => {
   const { data, loading } = useQuery<GetEventErrorByIdResult>(
     GET_EVENT_ERROR_BY_ID
   );
@@ -62,4 +62,4 @@ const IndividualEventErrorModal: React.FC = () => {
   );
 };
 
-export default IndividualEventErrorModal;
+export default ViewEventErrorModal;

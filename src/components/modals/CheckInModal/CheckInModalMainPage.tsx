@@ -7,8 +7,8 @@ import {
 } from '@components/organisms/Story/Story.state';
 import StoryPage from '@components/organisms/Story/StoryPage';
 import { ErrorContext } from '@util/constants.errors';
-import CheckInGuestForm from './CheckInGuestForm';
-import CheckInLoginContent from './CheckInLoginContent';
+import CheckInGuestForm from './CheckInModalGuestForm';
+import CheckInLoginContent from './CheckInModalLoginContent';
 
 interface CheckInMainPageProps {
   lock?: boolean;

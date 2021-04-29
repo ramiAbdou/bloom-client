@@ -27,7 +27,7 @@ const DELETE_EVENT: DocumentNode = gql`
   }
 `;
 
-const DeleteEventConfirmationForm: React.FC = () => {
+const ConfirmDeleteEventModal: React.FC = () => {
   const [deleteEvent] = useMutation<IEvent, DeleteEventArgs>(DELETE_EVENT);
   const eventId: string = useReactiveVar(modalVar)?.metadata as string;
 
@@ -63,4 +63,4 @@ const DeleteEventConfirmationForm: React.FC = () => {
   );
 };
 
-export default DeleteEventConfirmationForm;
+export default ConfirmDeleteEventModal;

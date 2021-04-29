@@ -46,7 +46,7 @@ interface ApplicantsConfirmationModalMetadata {
   response: MemberStatus.ACCEPTED | MemberStatus.REJECTED;
 }
 
-const ApplicantsConfirmationFormHeader: React.FC = () => {
+const ApplicantsConfirmApplicantsModalFormHeader: React.FC = () => {
   const applicantIds: string[] = (modalVar()
     ?.metadata as ApplicantsConfirmationModalMetadata)?.applicantIds;
 
@@ -69,7 +69,7 @@ const ApplicantsConfirmationFormHeader: React.FC = () => {
   );
 };
 
-const ApplicantsConfirmationForm: React.FC = () => {
+const ApplicantsConfirmApplicantsModal: React.FC = () => {
   const [updateMemberStatuses] = useMutation<
     UpdateApplicantStatusesResult,
     UpdateApplicantStatusesArgs
@@ -126,11 +126,11 @@ const ApplicantsConfirmationForm: React.FC = () => {
   return (
     <Modal>
       <Form options={{ disableValidation: true }} onSubmit={onSubmit}>
-        <ApplicantsConfirmationFormHeader />
+        <ApplicantsConfirmApplicantsModalFormHeader />
         <ModalConfirmationActionRow />
       </Form>
     </Modal>
   );
 };
 
-export default ApplicantsConfirmationForm;
+export default ApplicantsConfirmApplicantsModal;

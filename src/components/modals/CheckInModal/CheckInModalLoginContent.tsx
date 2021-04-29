@@ -17,7 +17,7 @@ import { APP, QuestionCategory, ShowProps } from '@util/constants';
 import { IMember, MemberRole } from '@util/constants.entities';
 import { ErrorContext, ErrorType } from '@util/constants.errors';
 import { buildUrl } from '@util/util';
-import { getCheckInErrorMessage } from './CheckIn.util';
+import { getCheckInErrorMessage } from './CheckInModal.util';
 import useSendLoginLink from './useSendLoginLink';
 
 const CheckInGoogleButton: React.FC = () => {

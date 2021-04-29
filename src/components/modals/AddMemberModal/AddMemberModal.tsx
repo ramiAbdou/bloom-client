@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Modal from '@components/organisms/Modal/Modal';
-import { AddMemberProvider } from './AddMember.state';
-import AddMemberForm from './AddMemberForm';
+import { AddMemberProvider } from './AddMemberModal.state';
+import AddMemberForm from './AddMemberModalForm';
 
 const AddMemberModal: React.FC = () => (
   <Modal>

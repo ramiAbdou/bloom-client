@@ -24,15 +24,15 @@ const GET_MEMBER_BY_ID: DocumentNode = gql`
   ${ProfilePersonalModalFormQuestionList.fragment}
 `;
 
-const ProfilePersonalModalFormHeader: React.FC = () => (
+const UpdatePersonalInformationModalFormHeader: React.FC = () => (
   <FormHeader title="Edit Personal Information" />
 );
 
-const ProfilePersonalModalFormSubmitButton: React.FC = () => (
+const UpdatePersonalInformationModalFormSubmitButton: React.FC = () => (
   <FormSubmitButton loadingText="Saving...">Save</FormSubmitButton>
 );
 
-const ProfilePersonalModalForm: React.FC = () => {
+const UpdatePersonalInformationModal: React.FC = () => {
   const { data, loading } = useQuery<GetMemberByIdResult>(GET_MEMBER_BY_ID);
   const updateMemberPersonal: OnFormSubmitFunction = useUpdateMemberPersonal();
 
@@ -43,12 +43,12 @@ const ProfilePersonalModalForm: React.FC = () => {
   return (
     <Modal>
       <Form onSubmit={updateMemberPersonal}>
-        <ProfilePersonalModalFormHeader />
+        <UpdatePersonalInformationModalFormHeader />
         <ProfilePersonalModalFormQuestionList data={member} />
-        <ProfilePersonalModalFormSubmitButton />
+        <UpdatePersonalInformationModalFormSubmitButton />
       </Form>
     </Modal>
   );
 };
 
-export default ProfilePersonalModalForm;
+export default UpdatePersonalInformationModal;

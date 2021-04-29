@@ -69,7 +69,7 @@ const CREATE_EVENT_GUEST_WITH_MEMBER: DocumentNode = gql`
   }
 `;
 
-const EventsConfirmRsvpModalHeader: React.FC = () => {
+const EventsConfirmRsvpModalFormHeader: React.FC = () => {
   const eventId: string = modalVar()?.metadata as string;
   const eventTitle: string = useEventTitle(eventId);
   const title: string = `Confirm RSVP to ${eventTitle}`;
@@ -80,7 +80,7 @@ const EventsConfirmRsvpModalHeader: React.FC = () => {
   return <FormHeader description={description} title={title} />;
 };
 
-const EventsConfirmRsvpModalForm: React.FC = () => {
+const EventsConfirmRsvpModal: React.FC = () => {
   const eventId: string = modalVar()?.metadata as string;
 
   const [createEventGuestWithMember] = useMutation<
@@ -136,7 +136,7 @@ const EventsConfirmRsvpModalForm: React.FC = () => {
   return (
     <Modal>
       <Form options={{ disableValidation: true }} onSubmit={onSubmit}>
-        <EventsConfirmRsvpModalHeader />
+        <EventsConfirmRsvpModalFormHeader />
         <ModalConfirmationActionRow
           primaryLoadingText="Confirming..."
           primaryText="Confirm"
@@ -146,4 +146,4 @@ const EventsConfirmRsvpModalForm: React.FC = () => {
   );
 };
 
-export default EventsConfirmRsvpModalForm;
+export default EventsConfirmRsvpModal;

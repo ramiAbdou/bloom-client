@@ -14,7 +14,7 @@ import { QuestionType } from '@util/constants';
 import { IMember, IMemberValue } from '@util/constants.entities';
 import useUpdateMemberValues from './useUpdateMemberValues';
 
-const ProfileMembershipForm: React.FC = () => {
+const UpdateMembershipInformationModal: React.FC = () => {
   const memberId: string = useReactiveVar(memberIdVar);
   const updateMemberValues = useUpdateMemberValues();
 
@@ -75,4 +75,4 @@ const ProfileMembershipForm: React.FC = () => {
   );
 };
 
-export default ProfileMembershipForm;
+export default UpdateMembershipInformationModal;

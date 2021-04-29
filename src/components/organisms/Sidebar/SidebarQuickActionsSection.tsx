@@ -20,7 +20,7 @@ const SidebarQuickActionsSection: ComponentWithFragments<IMember> = ({
     },
     {
       Icon: IoPersonAdd,
-      onClick: () => showModal({ id: ModalType.ADD_MEMBERS, width: 750 }),
+      onClick: () => showModal({ id: ModalType.ADD_MEMBER, width: 750 }),
       title: 'Add Member'
     }
   ];

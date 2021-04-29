@@ -30,7 +30,7 @@ const GET_APPLICANT_BY_ID: DocumentNode = gql`
   ${ApplicantsViewModalQuestionList.fragment}
 `;
 
-const ApplicantsModal: React.FC = () => {
+const ViewApplicantModal: React.FC = () => {
   const memberId: string = useReactiveVar(modalVar)?.metadata as string;
 
   const { data, loading } = useQuery<
@@ -51,4 +51,4 @@ const ApplicantsModal: React.FC = () => {
   );
 };
 
-export default ApplicantsModal;
+export default ViewApplicantModal;

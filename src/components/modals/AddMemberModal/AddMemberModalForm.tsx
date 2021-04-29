@@ -8,8 +8,8 @@ import FormHeader from '@components/organisms/Form/FormHeader';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { closeModal } from '@components/organisms/Modal/Modal.state';
 import { IdProvider } from '@core/state/Id.state';
-import { useAddMember } from './AddMember.state';
-import AddMemberInput from './AddMemberInput';
+import { useAddMember } from './AddMemberModal.state';
+import AddMemberInput from './AddMemberModalInput';
 import useInviteMembers from './useInviteMembers';
 
 const AddMemberFormActions: React.FC = () => {

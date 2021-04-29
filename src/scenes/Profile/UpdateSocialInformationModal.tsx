@@ -24,15 +24,15 @@ const GET_MEMBER_SOCIALS_BY_MEMBER_ID: DocumentNode = gql`
   ${ProfileSocialModalFormQuestionList.fragment}
 `;
 
-const ProfileSocialModalFormHeader: React.FC = () => (
+const UpdateSocialInformationModalFormHeader: React.FC = () => (
   <FormHeader title="Edit Social Media" />
 );
 
-const ProfileSocialModalFormSubmitButton: React.FC = () => (
+const UpdateSocialInformationModalFormSubmitButton: React.FC = () => (
   <FormSubmitButton loadingText="Saving...">Save</FormSubmitButton>
 );
 
-const ProfileSocialModalForm: React.FC = () => {
+const UpdateSocialInformationModal: React.FC = () => {
   const { data, loading } = useQuery<GetMemberSocialsByMemberIdResult>(
     GET_MEMBER_SOCIALS_BY_MEMBER_ID
   );
@@ -48,12 +48,12 @@ const ProfileSocialModalForm: React.FC = () => {
   return (
     <Modal>
       <Form onSubmit={updateMemberSocials}>
-        <ProfileSocialModalFormHeader />
+        <UpdateSocialInformationModalFormHeader />
         <ProfileSocialModalFormQuestionList data={memberSocials} />
-        <ProfileSocialModalFormSubmitButton />
+        <UpdateSocialInformationModalFormSubmitButton />
       </Form>
     </Modal>
   );
 };
 
-export default ProfileSocialModalForm;
+export default UpdateSocialInformationModal;

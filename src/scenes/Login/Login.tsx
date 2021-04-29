@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Card from '@components/containers/Card/Card';
-import CheckInConfirmation from '@components/modals/CheckIn/CheckInConfirmation';
+import CheckInConfirmation from '@components/modals/CheckInModal/CheckInConfirmation';
 import Story from '@components/organisms/Story/Story';
 import LoginMainPage from './LoginMainPage';
 

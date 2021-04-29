@@ -6,7 +6,7 @@ import { ModalType } from '@util/constants';
 
 const DatabaseHeaderAddMemberButton: React.FC = () => {
   const onClick = (): void => {
-    showModal({ id: ModalType.ADD_MEMBERS, width: 750 });
+    showModal({ id: ModalType.ADD_MEMBER, width: 750 });
   };
 
   return (

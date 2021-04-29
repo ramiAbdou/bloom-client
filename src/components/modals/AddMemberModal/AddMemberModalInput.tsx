@@ -9,7 +9,7 @@ import useMemberRole from '@core/hooks/useMemberRole';
 import { useId } from '@core/state/Id.state';
 import { QuestionCategory } from '@util/constants';
 import { MemberRole } from '@util/constants.entities';
-import { useAddMember, useAddMemberSelector } from './AddMember.state';
+import { useAddMember, useAddMemberSelector } from './AddMemberModal.state';
 
 const AddMemberInputTrashButton: React.FC = () => {
   const [, addMemberDispatch] = useAddMember();
