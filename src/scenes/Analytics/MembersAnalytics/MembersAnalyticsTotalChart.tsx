@@ -1,22 +1,35 @@
 import React from 'react';
 
+import { DocumentNode, gql, useQuery } from '@apollo/client';
 import Chart from '@components/organisms/Chart/Chart';
-import { ChartType } from '@components/organisms/Chart/Chart.types';
-import useCustomQuery from '@gql/hooks/useCustomQuery';
-import { TimeSeriesData } from '@util/constants';
+import { ChartData, ChartType } from '@components/organisms/Chart/Chart.types';
+
+interface GetMembersSeriesResult {
+  getMembersSeries: { name: string; value: number }[];
+}
+
+const GET_MEMBERS_SERIES: DocumentNode = gql`
+  query GetMembersSeries {
+    getMembersSeries {
+      name
+      value
+    }
+  }
+`;
 
 const MembersAnalyticsTotalChart: React.FC = () => {
-  const { data, loading } = useCustomQuery<TimeSeriesData[]>({
-    fields: ['name', 'value'],
-    queryName: 'getMembersSeries'
-  });
+  const { data, loading } = useQuery<GetMembersSeriesResult>(
+    GET_MEMBERS_SERIES
+  );
+
+  const chartData: ChartData[] = data?.getMembersSeries;
 
   if (loading) return null;
 
   return (
     <Chart
       className="f-1 w-100--mt"
-      data={data}
+      data={chartData}
       title="Total Members"
       type={ChartType.TIME_SERIES}
     />
