@@ -5,10 +5,10 @@ import Form, { OnFormSubmitFunction } from '@components/organisms/Form/Form';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import Modal from '@components/organisms/Modal/Modal';
 import { IEvent } from '@util/constants.entities';
-import EventModalFormDeleteButton from './EventModalFormDeleteButton';
-import EventModalFormDetailsSection from './EventModalFormDetailsSection';
-import EventModalFormMainSection from './EventModalFormMainSection';
-import EventModalFormPrivacySection from './EventModalFormPrivacySection';
+import EventModalFormDeleteButton from '../CreateEventModal/EventModalFormDeleteButton';
+import EventModalFormDetailsSection from '../CreateEventModal/EventModalFormDetailsSection';
+import EventModalFormMainSection from '../CreateEventModal/EventModalFormMainSection';
+import EventModalFormPrivacySection from '../CreateEventModal/EventModalFormPrivacySection';
 import useUpdateEvent from './useUpdateEvent';
 
 interface GetEventToUpdateByIdResult {

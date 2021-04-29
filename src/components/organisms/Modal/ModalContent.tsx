@@ -3,21 +3,21 @@ import React, { useEffect } from 'react';
 import { useReactiveVar } from '@apollo/client';
 import AddMemberModal from '@components/modals/AddMemberModal/AddMemberModal';
 import CheckInModal from '@components/modals/CheckInModal/CheckInModal';
-import ConfirmDeleteEventModal from '@components/modals/CreateEventModal/ConfirmDeleteEventModal';
+import ConfirmApplicantsModal from '@components/modals/ConfirmApplicantsModal/ConfirmApplicantsModal';
+import ConfirmDeleteEventModal from '@components/modals/ConfirmDeleteEventModal/ConfirmDeleteEventModal';
+import ConfirmRsvpModal from '@components/modals/ConfirmRsvpModal/ConfirmRsvpModal';
 import CreateEventModal from '@components/modals/CreateEventModal/CreateEventModal';
-import UpdateEventModal from '@components/modals/CreateEventModal/UpdateEventModal';
-import ViewProfileModal from '@components/modals/ProfileModal/ProfileModal';
+import DeleteMembersModal from '@components/modals/DeleteMembersModal/DeleteMembersModal';
+import DemoteMembersModal from '@components/modals/DemoteMembersModal/DemoteMembersModal';
+import PromoteMembersModal from '@components/modals/PromoteMembersModal/PromoteMembersModal';
+import UpdateEventModal from '@components/modals/UpdateEventModal/UpdateEventModal';
+import UpdateMembershipInformationModal from '@components/modals/UpdateMembershipInformationModal/UpdateMembershipInformationModal';
+import UpdatePersonalInformationModal from '@components/modals/UpdatePersonalInformationModal/UpdatePersonalInformationModal';
+import UpdateSocialInformationModal from '@components/modals/UpdateSocialInformationModal/UpdateSocialInformationModal';
+import ViewApplicantModal from '@components/modals/ViewApplicantModal/ViewApplicantModal';
+import ViewEventErrorModal from '@components/modals/ViewEventErrorModal/ViewEventErrorModal';
+import ViewProfileModal from '@components/modals/ViewProfileModal/ViewProfileModal';
 import { closeModal, modalVar } from '@components/organisms/Modal/Modal.state';
-import ApplicantsConfirmApplicantsModal from '@scenes/Applicants/ApplicantsConfirmApplicantsModal';
-import ViewApplicantModal from '@scenes/Applicants/ViewApplicantModal';
-import DatabaseDeleteMembersModal from '@scenes/Database/DatabaseDeleteMembersModal';
-import DatabaseDemoteMembersModal from '@scenes/Database/DatabaseDemoteMembersModal';
-import DatabasePromoteMembersModal from '@scenes/Database/DatabasePromoteMembersModal';
-import EventsConfirmRsvpModal from '@scenes/Events/EventsConfirmRsvpModal';
-import ViewEventErrorModal from '@scenes/Events/ViewEventErrorModal';
-import UpdateMembershipInformationModal from '@scenes/Profile/UpdateMembershipInformationModal';
-import UpdatePersonalInformationModal from '@scenes/Profile/UpdatePersonalInformationModal';
-import UpdateSocialInformationModal from '@scenes/Profile/UpdateSocialInformationModal';
 import { ModalType } from '@util/constants';
 
 const ModalContent: React.FC = () => {
@@ -37,26 +37,26 @@ const ModalContent: React.FC = () => {
     case ModalType.CHECK_IN:
       return <CheckInModal />;
 
-    case ModalType.CONFIRM_APPLICANT:
-      return <ApplicantsConfirmApplicantsModal />;
+    case ModalType.CONFIRM_APPLICANTS:
+      return <ConfirmApplicantsModal />;
 
     case ModalType.CONFIRM_DELETE_EVENT:
       return <ConfirmDeleteEventModal />;
 
     case ModalType.CONFIRM_RSVP:
-      return <EventsConfirmRsvpModal />;
+      return <ConfirmRsvpModal />;
 
     case ModalType.CREATE_EVENT:
       return <CreateEventModal />;
 
     case ModalType.DELETE_MEMBERS:
-      return <DatabaseDeleteMembersModal />;
+      return <DeleteMembersModal />;
 
     case ModalType.DEMOTE_MEMBERS:
-      return <DatabaseDemoteMembersModal />;
+      return <DemoteMembersModal />;
 
     case ModalType.PROMOTE_MEMBERS:
-      return <DatabasePromoteMembersModal />;
+      return <PromoteMembersModal />;
 
     case ModalType.UPDATE_EVENT:
       return <UpdateEventModal />;

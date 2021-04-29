@@ -22,7 +22,7 @@ const ApplicantsRespondButton: React.FC<ApplicantsRespondButtonProps> = ({
 
   const onClick = (): void => {
     showModal({
-      id: ModalType.CONFIRM_APPLICANT,
+      id: ModalType.CONFIRM_APPLICANTS,
       metadata: { applicantIds, response }
     });
   };

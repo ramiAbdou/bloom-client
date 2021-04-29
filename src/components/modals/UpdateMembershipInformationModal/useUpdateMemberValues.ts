@@ -9,7 +9,15 @@ import { closeModal } from '@components/organisms/Modal/Modal.state';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { IMemberValue } from '@util/constants.entities';
 import { MutationEvent } from '@util/constants.events';
-import { MemberValueInput, UpdateMemberValueArgs } from './Profile.types';
+
+export interface MemberValueInput {
+  questionId: string;
+  value: string[];
+}
+
+export interface UpdateMemberValueArgs {
+  items: MemberValueInput[];
+}
 
 const useUpdateMemberValues = (): OnFormSubmitFunction => {
   const [updateMemberValues] = useBloomMutation<

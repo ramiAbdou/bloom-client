@@ -6,7 +6,7 @@ import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/Question
 import { ComponentWithFragments, QuestionCategory } from '@util/constants';
 import { IMember, IMemberValue } from '@util/constants.entities';
 
-const ApplicantsViewModalQuestionList: ComponentWithFragments<IMember> = ({
+const ViewApplicantModalQuestionList: ComponentWithFragments<IMember> = ({
   data: member
 }) => {
   const items: QuestionBoxItemProps[] = member.memberValues?.map(
@@ -29,8 +29,8 @@ const ApplicantsViewModalQuestionList: ComponentWithFragments<IMember> = ({
   );
 };
 
-ApplicantsViewModalQuestionList.fragment = gql`
-  fragment ApplicantsViewModalQuestionListFragment on members {
+ViewApplicantModalQuestionList.fragment = gql`
+  fragment ViewApplicantModalQuestionListFragment on members {
     email
 
     memberValues(
@@ -56,4 +56,4 @@ ApplicantsViewModalQuestionList.fragment = gql`
   }
 `;
 
-export default ApplicantsViewModalQuestionList;
+export default ViewApplicantModalQuestionList;

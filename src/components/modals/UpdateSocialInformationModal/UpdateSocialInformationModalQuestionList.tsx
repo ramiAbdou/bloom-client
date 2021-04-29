@@ -7,7 +7,7 @@ import FormShortText from '@components/organisms/Form/FormShortText';
 import { ComponentWithFragments, QuestionCategory } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 
-const ProfilePersonalModalFormQuestionList: ComponentWithFragments<IMember> = ({
+const UpdateSocialInformationModalQuestionList: ComponentWithFragments<IMember> = ({
   data: member
 }) => (
   <ul>
@@ -33,8 +33,8 @@ const ProfilePersonalModalFormQuestionList: ComponentWithFragments<IMember> = ({
   </ul>
 );
 
-ProfilePersonalModalFormQuestionList.fragment = gql`
-  fragment ProfilePersonalModalFormQuestionListFragment on members {
+UpdateSocialInformationModalQuestionList.fragment = gql`
+  fragment UpdateSocialInformationModalQuestionListFragment on members {
     bio
     firstName
     lastName
@@ -42,4 +42,4 @@ ProfilePersonalModalFormQuestionList.fragment = gql`
   }
 `;
 
-export default ProfilePersonalModalFormQuestionList;
+export default UpdateSocialInformationModalQuestionList;

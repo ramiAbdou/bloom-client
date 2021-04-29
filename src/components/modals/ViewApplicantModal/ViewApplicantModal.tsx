@@ -4,9 +4,9 @@ import { DocumentNode, gql, useQuery, useReactiveVar } from '@apollo/client';
 import Modal from '@components/organisms/Modal/Modal';
 import { modalVar } from '@components/organisms/Modal/Modal.state';
 import { IMember } from '@util/constants.entities';
-import ApplicantsViewModalButtonList from './ApplicantsViewModalButtonList';
-import ApplicantsViewModalFullName from './ApplicantsViewModalFullName';
-import ApplicantsViewModalQuestionList from './ApplicantsViewModalQuestionList';
+import ViewApplicantModalButtonList from './ViewApplicantModalButtonList';
+import ViewApplicantModalFullName from './ViewApplicantModalFullName';
+import ViewApplicantModalQuestionList from './ViewApplicantModalQuestionList';
 
 interface GetApplicantByIdArgs {
   memberId: string;
@@ -20,14 +20,14 @@ const GET_APPLICANT_BY_ID: DocumentNode = gql`
   query GetApplicantById($memberId: String!) {
     member(id: $memberId) {
       id
-      ...ApplicantsViewModalButtonListFragment
-      ...ApplicantsViewModalFullNameFragment
-      ...ApplicantsViewModalQuestionListFragment
+      ...ViewApplicantModalButtonListFragment
+      ...ViewApplicantModalFullNameFragment
+      ...ViewApplicantModalQuestionListFragment
     }
   }
-  ${ApplicantsViewModalButtonList.fragment}
-  ${ApplicantsViewModalFullName.fragment}
-  ${ApplicantsViewModalQuestionList.fragment}
+  ${ViewApplicantModalButtonList.fragment}
+  ${ViewApplicantModalFullName.fragment}
+  ${ViewApplicantModalQuestionList.fragment}
 `;
 
 const ViewApplicantModal: React.FC = () => {
@@ -44,9 +44,9 @@ const ViewApplicantModal: React.FC = () => {
 
   return (
     <Modal>
-      {member && <ApplicantsViewModalFullName data={member} />}
-      {member && <ApplicantsViewModalQuestionList data={member} />}
-      {member && <ApplicantsViewModalButtonList data={member} />}
+      {member && <ViewApplicantModalFullName data={member} />}
+      {member && <ViewApplicantModalQuestionList data={member} />}
+      {member && <ViewApplicantModalButtonList data={member} />}
     </Modal>
   );
 };

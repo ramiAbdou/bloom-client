@@ -6,7 +6,7 @@ import FormHeader from '@components/organisms/Form/FormHeader';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import Modal from '@components/organisms/Modal/Modal';
 import { IMemberSocials } from '@util/constants.entities';
-import ProfileSocialModalFormQuestionList from './ProfileSocialModalFormQuestionList';
+import UpdateSocialInformationModalQuestionList from './UpdateSocialInformationModalQuestionList';
 import useUpdateMemberSocials from './useUpdateMemberSocials';
 
 interface GetMemberSocialsByMemberIdResult {
@@ -18,10 +18,10 @@ const GET_MEMBER_SOCIALS_BY_MEMBER_ID: DocumentNode = gql`
     memberId @client @export(as: "memberId")
 
     memberSocials(where: { memberId: { _eq: $memberId } }) {
-      ...ProfileSocialModalFormQuestionListFragment
+      ...UpdateSocialInformationModalQuestionListFragment
     }
   }
-  ${ProfileSocialModalFormQuestionList.fragment}
+  ${UpdateSocialInformationModalQuestionList.fragment}
 `;
 
 const UpdateSocialInformationModalFormHeader: React.FC = () => (
@@ -49,7 +49,7 @@ const UpdateSocialInformationModal: React.FC = () => {
     <Modal>
       <Form onSubmit={updateMemberSocials}>
         <UpdateSocialInformationModalFormHeader />
-        <ProfileSocialModalFormQuestionList data={memberSocials} />
+        <UpdateSocialInformationModalQuestionList data={memberSocials} />
         <UpdateSocialInformationModalFormSubmitButton />
       </Form>
     </Modal>
