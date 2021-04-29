@@ -31,7 +31,7 @@ const useSendLoginLink = (): OnFormSubmitFunction => {
     }
   });
 
-  const onSubmit = async ({ gql, items, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ formDispatch, gql, items }: OnFormSubmitArgs) => {
     const email: string = items.EMAIL?.value as string;
 
     const { error } = await gql.mutation({
@@ -51,7 +51,10 @@ const useSendLoginLink = (): OnFormSubmitFunction => {
     });
 
     if (error) {
-      setError(getCheckInErrorMessage({ error: error as ErrorType, owner }));
+      formDispatch({
+        error: getCheckInErrorMessage({ error: error as ErrorType, owner }),
+        type: 'SET_ERROR'
+      });
 
       return;
     }

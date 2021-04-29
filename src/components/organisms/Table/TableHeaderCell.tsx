@@ -1,8 +1,9 @@
 import React from 'react';
 import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
 
+import { useReactiveVar } from '@apollo/client';
 import { useTableState } from '@components/organisms/Table/Table.state';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { panelVar, showPanel } from '@core/state/Panel.state';
 import { PanelType } from '@util/constants';
 import { cx } from '@util/util';
 import { TableColumn, TableSortDirection, TableState } from './Table.types';
@@ -23,12 +24,18 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
 }) => {
   const { options, sortColumnId, sortDirection }: TableState = useTableState();
 
-  const isPanelShowing = useStoreState(({ panel }) => panel.id === id);
-  const showPanel = useStoreActions(({ panel }) => panel.showPanel);
+  const isPanelShowing: boolean = useReactiveVar(panelVar)?.id === id;
 
   const onClick = (): void => {
     if (options.isSortable) {
-      showPanel({ id: PanelType.TABLE_COLUMN, metadata: id });
+      showPanel({
+        align: 'BOTTOM_LEFT',
+        className: 'o-table-col-panel',
+        id: PanelType.TABLE_COLUMN,
+        metadata: id,
+        scrollId: 'o-table-ctr',
+        useMetadataInId: true
+      });
     }
   };
 

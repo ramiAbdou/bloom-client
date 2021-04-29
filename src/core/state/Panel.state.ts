@@ -9,11 +9,12 @@ export type PanelAlign =
 
 export interface PanelState {
   align?: PanelAlign;
-  className: string;
+  className?: string;
   id: PanelType;
   metadata?: unknown;
   scrollId?: string;
   size?: 'md' | 'lg';
+  style?: React.CSSProperties;
   useMetadataInId?: boolean;
 }
 
@@ -22,9 +23,13 @@ export const panelVar: ReactiveVar<PanelState> = makeVar<PanelState>(null);
 /**
  * Closes the panel by setting the panelVar to null.
  */
-export const closePanel = (): void => {};
+export const closePanel = (): void => {
+  panelVar(null);
+};
 
 /**
- * Shows the panel with the given PanelData.
+ * Shows the panel with the given PanelState.
  */
-export const showPanel = (): void => {};
+export const showPanel = (updatedState: PanelState): void => {
+  panelVar(updatedState);
+};

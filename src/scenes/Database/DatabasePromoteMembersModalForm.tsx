@@ -42,7 +42,7 @@ const DatabasePromoteMembersModalForm: React.FC = () => {
   );
 
   const onSubmit: OnFormSubmitFunction = async ({
-    setError
+    formDispatch
   }: OnFormSubmitArgs) => {
     const { tableDispatch, tableState }: TableStateAndDispatch = modalVar()
       ?.metadata as TableStateAndDispatch;
@@ -59,7 +59,10 @@ const DatabasePromoteMembersModalForm: React.FC = () => {
 
       tableDispatch({ type: 'RESET_SELECTED_ROW_IDS' });
     } catch {
-      setError('Failed to promote members. Please try again later.');
+      formDispatch({
+        error: 'Failed to promote members. Please try again later.',
+        type: 'SET_ERROR'
+      });
     }
   };
 

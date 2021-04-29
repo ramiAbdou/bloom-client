@@ -4,7 +4,7 @@ import { IoFilter } from 'react-icons/io5';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import { useTableState } from '@components/organisms/Table/Table.state';
 import { TableState } from '@components/organisms/Table/Table.types';
-import { useStoreActions } from '@core/store/Store';
+import { showPanel } from '@core/state/Panel.state';
 import useTooltip from '@hooks/useTooltip';
 import { PanelType } from '@util/constants';
 import { cx } from '@util/util';
@@ -17,11 +17,13 @@ const TableFilterButtonNumActiveTag: React.FC = () => {
 
 const TableFilterButton: React.FC<Partial<ButtonProps>> = ({ className }) => {
   const { selectedRowIds }: TableState = useTableState();
-  const showPanel = useStoreActions(({ panel }) => panel.showPanel);
 
   const isAnythingSelected: boolean = !!selectedRowIds.length;
 
-  const onClick = () => showPanel({ id: PanelType.FILTER_TABLE });
+  const onClick = (): void => {
+    showPanel({ align: 'BOTTOM_RIGHT', id: PanelType.FILTER_TABLE });
+  };
+
   const ref: React.MutableRefObject<HTMLElement> = useTooltip('Filter');
 
   const css: string = cx(

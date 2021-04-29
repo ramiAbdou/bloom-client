@@ -22,7 +22,7 @@ const DeleteEventConfirmationForm: React.FC = () => {
 
   const onSubmit: OnFormSubmitFunction = async ({
     gql,
-    setError
+    formDispatch
   }: OnFormSubmitArgs) => {
     // Fetch the URL name of the community so we can push to correct URL.
     const { urlName } = await gql.findOne(ICommunity, {
@@ -37,7 +37,11 @@ const DeleteEventConfirmationForm: React.FC = () => {
     });
 
     if (error) {
-      setError('Failed to delete the Event. Please try again later.');
+      formDispatch({
+        error: 'Failed to delete the Event. Please try again later.',
+        type: 'SET_ERROR'
+      });
+
       return;
     }
 

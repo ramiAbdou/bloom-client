@@ -5,14 +5,14 @@ import Aspect from '@components/containers/Aspect/Aspect';
 import Network from '@components/images/network.svg';
 import { getFormItemKey } from '@components/organisms/Form/Form.util';
 import { convertImageToBase64 } from '@util/imageUtil';
-import FormStore from './Form.store';
+import { useForm, useFormItem } from './Form.state';
 import { FormItemData } from './Form.types';
 import useInitFormItem from './useInitFormItem';
 
 const FormCoverImageContent: React.FC<FormItemData> = (args) => {
-  const { title } = args;
+  const [, formDispatch] = useForm();
+
   const key: string = getFormItemKey(args);
-  const setValue = FormStore.useStoreActions((state) => state.setValue);
   const ref: React.MutableRefObject<HTMLInputElement> = useRef(null);
   // Opens the file uploader by "clicking" the invisible file input tag.
   const openFileUploader = () => ref.current.click();
@@ -25,7 +25,7 @@ const FormCoverImageContent: React.FC<FormItemData> = (args) => {
       dims: [600, 300]
     });
 
-    setValue({ key, value: base64String });
+    formDispatch({ key, type: 'SET_VALUE', value: base64String });
   };
 
   return (
@@ -38,7 +38,7 @@ const FormCoverImageContent: React.FC<FormItemData> = (args) => {
       />
 
       <Button secondary onClick={openFileUploader}>
-        {title}
+        {args.title}
       </Button>
     </>
   );
@@ -52,11 +52,8 @@ const FormCoverImageMessage: React.FC = () => (
 );
 
 const FormCoverImage: React.FC<FormItemData> = (args) => {
-  const key = getFormItemKey(args);
-
-  const selectedImage = FormStore.useStoreState(
-    ({ items }) => items[key]?.value
-  );
+  const key: string = getFormItemKey(args);
+  const selectedImage: string = useFormItem(key)?.value as string;
 
   useInitFormItem(args);
 

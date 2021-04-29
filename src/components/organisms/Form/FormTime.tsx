@@ -2,9 +2,9 @@ import day from 'dayjs';
 import React from 'react';
 import DatePicker from 'react-datepicker';
 
-import { FormItemData } from '@components/organisms/Form/Form.types';
+import { FormItemData, FormState } from '@components/organisms/Form/Form.types';
 import { cx } from '@util/util';
-import FormStore from './Form.store';
+import { useForm, useFormItem, useFormSelector } from './Form.state';
 import { getFormItemKey } from './Form.util';
 import FormItemContainer from './FormItemContainer';
 import useInitFormItem from './useInitFormItem';
@@ -16,13 +16,8 @@ import useInitFormItem from './useInitFormItem';
  * midnight.
  */
 const useMinTime = (key: string) => {
-  const startDate = FormStore.useStoreState(
-    ({ items }) => items.START_DATE?.value
-  );
-
-  const startTime = FormStore.useStoreState(
-    ({ items }) => items.START_TIME?.value
-  );
+  const startDate: string = useFormItem('START_DATE')?.value as string;
+  const startTime: string = useFormItem('START_TIME')?.value as string;
 
   const startOfToday = day().startOf('day');
 
@@ -41,11 +36,12 @@ const useMinTime = (key: string) => {
 };
 
 const FormTime: React.FC<FormItemData> = ({ className, ...args }) => {
-  const key = getFormItemKey(args);
-  const value = FormStore.useStoreState(({ items }) => items[key]?.value);
-  const setValue = FormStore.useStoreActions((state) => state.setValue);
+  const [, formDispatch] = useForm();
 
-  const disabled: boolean = FormStore.useStoreState(({ items }) => {
+  const key: string = getFormItemKey(args);
+  const value: string = useFormItem(key)?.value as string;
+
+  const disabled: boolean = useFormSelector(({ items }: FormState) => {
     if (key === 'END_TIME') return !items.START_TIME?.value;
     return !items.START_DATE?.value;
   });
@@ -55,14 +51,14 @@ const FormTime: React.FC<FormItemData> = ({ className, ...args }) => {
 
   const updateDate = (date: Date | [Date, Date]) => {
     if (key === 'START_TIME') {
-      setValue({ key: 'START_TIME', value: date });
+      formDispatch({ key: 'START_TIME', type: 'SET_VALUE', value: date });
 
       const endTime = day(date as Date)
         .add(1, 'hour')
         .toDate();
 
-      setValue({ key: 'END_TIME', value: endTime });
-    } else setValue({ key: 'END_TIME', value: date });
+      formDispatch({ key: 'END_TIME', type: 'SET_VALUE', value: endTime });
+    } else formDispatch({ key: 'END_TIME', type: 'SET_VALUE', value: date });
   };
 
   const placeholderText = day()

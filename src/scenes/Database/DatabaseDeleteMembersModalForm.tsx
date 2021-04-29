@@ -51,7 +51,7 @@ const DatabaseDeleteMemberModalForm: React.FC = () => {
   );
 
   const onSubmit: OnFormSubmitFunction = async ({
-    setError
+    formDispatch
   }: OnFormSubmitArgs) => {
     const { tableDispatch, tableState }: TableStateAndDispatch = modalVar()
       ?.metadata as TableStateAndDispatch;
@@ -64,7 +64,10 @@ const DatabaseDeleteMemberModalForm: React.FC = () => {
       showToast({ message: `${memberIds.length} member(s) removed.` });
       tableDispatch({ type: 'RESET_SELECTED_ROW_IDS' });
     } catch {
-      setError('Failed to remove member(s). Please try again later.');
+      formDispatch({
+        error: 'Failed to remove member(s). Please try again later.',
+        type: 'SET_ERROR'
+      });
     }
   };
 

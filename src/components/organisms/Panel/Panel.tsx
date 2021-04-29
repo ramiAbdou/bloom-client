@@ -2,18 +2,17 @@ import { AnimatePresence } from 'framer-motion';
 import React from 'react';
 import { createPortal } from 'react-dom';
 
-import { useStoreState } from '@core/store/Store';
-import { globalPanels } from './Panel.types';
+import { useReactiveVar } from '@apollo/client';
+import { panelVar } from '@core/state/Panel.state';
 import PanelContainer from './PanelContainer';
 import PanelContent from './PanelContent';
 
 const Panel: React.FC = () => {
-  const isShowing = useStoreState(({ panel }) => panel.isShowing);
-  const panelId = useStoreState(({ panel }) => panel.id);
+  const panelId: string = useReactiveVar(panelVar)?.id;
 
   return createPortal(
     <AnimatePresence>
-      {isShowing && globalPanels.includes(panelId) && (
+      {panelId && (
         <PanelContainer>
           <PanelContent />
         </PanelContainer>

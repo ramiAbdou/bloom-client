@@ -1,13 +1,13 @@
-import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
 
+import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import {
   useTableDispatch,
   useTableState
 } from '@components/organisms/Table/Table.state';
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { closePanel, panelVar } from '@core/state/Panel.state';
 import { cx } from '@util/util';
 import { TableDispatch, TableSortDirection } from './Table.types';
 
@@ -16,13 +16,9 @@ interface TableSortButtonProps {
 }
 
 const TableSortButton: React.FC<TableSortButtonProps> = ({ direction }) => {
-  const columnId: string = useStoreState(({ panel }) => panel.metadata);
+  const columnId: string = useReactiveVar(panelVar)?.metadata as string;
   const { sortColumnId, sortDirection } = useTableState();
   const tableDispatch: TableDispatch = useTableDispatch();
-
-  const closePanel: ActionCreator<void> = useStoreActions(
-    ({ panel }) => panel.closePanel
-  );
 
   const isSorted: boolean =
     columnId === sortColumnId && direction === sortDirection;

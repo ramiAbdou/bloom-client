@@ -32,7 +32,11 @@ const useCreateEventGuestWithSupporter = (): OnFormSubmitFunction => {
     }
   });
 
-  const onSubmit = async ({ goForward, items, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async ({
+    goForward,
+    items,
+    formDispatch
+  }: OnFormSubmitArgs) => {
     const firstName: string = items.FIRST_NAME?.value as string;
     const lastName: string = items.LAST_NAME?.value as string;
     const email: string = items.EMAIL?.value as string;
@@ -44,7 +48,7 @@ const useCreateEventGuestWithSupporter = (): OnFormSubmitFunction => {
       lastName
     });
 
-    if (error) setError(error);
+    if (error) formDispatch({ error, type: 'SET_ERROR' });
     else goForward();
   };
 

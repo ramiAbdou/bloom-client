@@ -142,7 +142,7 @@ const useCreateEvent = (): OnFormSubmitFunction => {
     }
   );
 
-  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, formDispatch }: OnFormSubmitArgs) => {
     const description: string = items.EVENT_DESCRIPTION?.value as string;
     const privacy: EventPrivacy = items.PRIVACY?.value as EventPrivacy;
     const summary: string = items.EVENT_SUMMARY?.value as string;
@@ -167,7 +167,11 @@ const useCreateEvent = (): OnFormSubmitFunction => {
       try {
         imageUrl = await uploadImage({ base64String, key: 'EVENT' });
       } catch {
-        setError('Failed to upload event cover photo.');
+        formDispatch({
+          error: 'Failed to upload event cover photo.',
+          type: 'SET_ERROR'
+        });
+
         return;
       }
     }
@@ -192,7 +196,10 @@ const useCreateEvent = (): OnFormSubmitFunction => {
       modalVar(null);
       showToast({ message: 'Event created.' });
     } catch {
-      setError('Failed to create event. Please try again later.');
+      formDispatch({
+        error: 'Failed to create event. Please try again later.',
+        type: 'SET_ERROR'
+      });
     }
   };
 

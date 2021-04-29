@@ -105,7 +105,7 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
   const onSubmit = async ({
     // gql,
     goForward,
-    setError,
+    formDispatch,
     storyItems
   }: OnFormSubmitArgs) => {
     const storyValues: FormItemData[] = Object.values(storyItems);
@@ -178,9 +178,10 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
           UniqueConstraint.MEMBERS_COMMUNITY_ID_EMAIL_UNIQUE
         )
       ) {
-        setError(
-          `This email (${email}) is already a member in this community.`
-        );
+        formDispatch({
+          error: `This email (${email}) is already a member in this community.`,
+          type: 'SET_ERROR'
+        });
       }
     }
   };

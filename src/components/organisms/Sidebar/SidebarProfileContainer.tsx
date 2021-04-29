@@ -1,7 +1,7 @@
 import React from 'react';
 
 import useTopLevelRoute from '@core/hooks/useTopLevelRoute';
-import { useStoreActions } from '@core/store/Store';
+import { showPanel } from '@core/state/Panel.state';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { ComponentWithData, PanelType, RouteType } from '@util/constants';
 import { IMember } from '@util/constants.entities';
@@ -11,7 +11,6 @@ const SidebarProfileContainer: ComponentWithData<IMember> = ({
   children,
   data: member
 }) => {
-  const showPanel = useStoreActions(({ panel }) => panel.showPanel);
   const isTablet: boolean = useBreakpoint() <= 2;
   const activeRoute: RouteType = useTopLevelRoute(member?.community?.urlName);
 
@@ -21,7 +20,11 @@ const SidebarProfileContainer: ComponentWithData<IMember> = ({
     activeRoute === 'membership' || activeRoute === 'profile';
 
   const onClick = (): void => {
-    showPanel({ id: PanelType.PROFILE });
+    showPanel({
+      align: 'RIGHT_BOTTOM',
+      id: PanelType.PROFILE,
+      style: { marginLeft: 24, minWidth: 270, padding: 8 }
+    });
   };
 
   const css: string = cx('o-nav-profile', {

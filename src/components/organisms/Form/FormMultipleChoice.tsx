@@ -2,7 +2,7 @@ import React from 'react';
 
 import Radio from '@components/molecules/Radio/Radio';
 import { RadioOptionProps } from '@components/molecules/Radio/Radio.types';
-import FormStore from './Form.store';
+import { useForm, useFormItem } from './Form.state';
 import { FormItemData } from './Form.types';
 import { getFormItemKey } from './Form.util';
 import FormItemContainer from './FormItemContainer';
@@ -19,10 +19,11 @@ const FormMultipleChoice: React.FC<FormMultipleChoiceProps> = ({
   cardOptions,
   ...args
 }) => {
+  const [, formDispatch] = useForm();
+
   const { options, title } = args;
-  const key = getFormItemKey(args);
-  const value = FormStore.useStoreState(({ items }) => items[key]?.value);
-  const setValue = FormStore.useStoreActions((state) => state.setValue);
+  const key: string = getFormItemKey(args);
+  const value: string = useFormItem(key)?.value as string;
 
   useInitFormItem(args);
 
@@ -38,7 +39,7 @@ const FormMultipleChoice: React.FC<FormMultipleChoiceProps> = ({
           })
         }
         value={value}
-        onSelect={(v) => setValue({ key, value: v })}
+        onSelect={(v) => formDispatch({ key, type: 'SET_VALUE', value: v })}
       />
     </FormItemContainer>
   );

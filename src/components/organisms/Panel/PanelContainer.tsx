@@ -2,21 +2,22 @@ import { motion } from 'framer-motion';
 import React, { CSSProperties, MutableRefObject, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
-import { useStoreActions, useStoreState } from '@core/store/Store';
+import { useReactiveVar } from '@apollo/client';
+import { closePanel, panelVar } from '@core/state/Panel.state';
 import { cx } from '@util/util';
 import usePanelPosition from './usePanelPosition';
 
 const PanelContainer: React.FC = ({ children }) => {
-  const initialAlign = useStoreState(({ panel }) => panel.align);
-  const className = useStoreState(({ panel }) => panel.className);
-  const id = useStoreState(({ panel }) => panel.id);
-  const metadata = useStoreState(({ panel }) => panel.metadata);
-  const scrollId = useStoreState(({ panel }) => panel.scrollId);
-  const size = useStoreState(({ panel }) => panel.size);
-  const style = useStoreState(({ panel }) => panel.style);
-  const useMetadataInId = useStoreState(({ panel }) => panel.useMetadataInId);
-
-  const closePanel = useStoreActions(({ panel }) => panel.closePanel);
+  const {
+    align: initialAlign,
+    className,
+    id,
+    metadata,
+    scrollId,
+    style,
+    size,
+    useMetadataInId
+  } = useReactiveVar(panelVar) ?? {};
 
   const elementId = useMetadataInId ? `${id}-${metadata}` : id;
   const ref: MutableRefObject<HTMLDivElement> = useRef(null);

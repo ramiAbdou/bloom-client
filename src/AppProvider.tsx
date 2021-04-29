@@ -7,14 +7,12 @@ import day from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
-import { StoreProvider } from 'easy-peasy';
 import { ClientContext, GraphQLClient } from 'graphql-hooks';
 import React from 'react';
 import { IconContext } from 'react-icons';
 import { BrowserRouter } from 'react-router-dom';
 
 import { ApolloClient, ApolloProvider, HttpLink } from '@apollo/client';
-import { store } from '@core/store/Store';
 import { APP } from '@util/constants';
 import cache from './App.cache';
 
@@ -44,11 +42,9 @@ const apolloClient = new ApolloClient({
 const AppProvider: React.FC = ({ children }) => (
   <ClientContext.Provider value={client}>
     <ApolloProvider client={apolloClient}>
-      <StoreProvider store={store}>
-        <IconContext.Provider value={{ className: 'react-icon' }}>
-          <BrowserRouter>{children}</BrowserRouter>
-        </IconContext.Provider>
-      </StoreProvider>
+      <IconContext.Provider value={{ className: 'react-icon' }}>
+        <BrowserRouter>{children}</BrowserRouter>
+      </IconContext.Provider>
     </ApolloProvider>
   </ClientContext.Provider>
 );

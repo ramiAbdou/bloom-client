@@ -34,10 +34,10 @@ const useCreateEventAttendeeWithSupporter = (): OnFormSubmitFunction => {
   });
 
   const onSubmit = async ({
+    formDispatch,
     gql,
     goForward,
-    items,
-    setError
+    items
   }: OnFormSubmitArgs) => {
     const firstName: string = items.FIRST_NAME?.value as string;
     const lastName: string = items.LAST_NAME?.value as string;
@@ -50,7 +50,7 @@ const useCreateEventAttendeeWithSupporter = (): OnFormSubmitFunction => {
       lastName
     });
 
-    if (error) setError(error);
+    if (error) formDispatch({ error, type: 'SET_ERROR' });
     else {
       const { videoUrl } = await gql.findOne(IEvent, {
         fields: ['videoUrl'],

@@ -3,26 +3,24 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 
 import { cx } from '@util/util';
-import FormStore from './Form.store';
+import { useForm, useFormItem } from './Form.state';
 import { FormItemData } from './Form.types';
 import { getFormItemKey } from './Form.util';
 import FormItemContainer from './FormItemContainer';
 import useInitFormItem from './useInitFormItem';
 
 const FormDate: React.FC<FormItemData> = ({ className, ...args }) => {
-  const key = getFormItemKey(args);
-  const value = FormStore.useStoreState(({ items }) => items[key]?.value);
-  const setValue = FormStore.useStoreActions((state) => state.setValue);
+  const [, formDispatch] = useForm();
 
-  const startDate = FormStore.useStoreState(
-    ({ items }) => items.START_DATE?.value
-  );
+  const key: string = getFormItemKey(args);
+  const value: string = useFormItem(key)?.value as string;
+  const startDate: string = useFormItem('START_DATE')?.value as string;
 
   useInitFormItem(args);
 
   const updateDate = (date: Date | [Date, Date]) => {
-    setValue({ key: 'START_DATE', value: date });
-    setValue({ key: 'END_DATE', value: date });
+    formDispatch({ key: 'START_DATE', type: 'SET_VALUE', value: date });
+    formDispatch({ key: 'END_DATE', type: 'SET_VALUE', value: date });
   };
 
   const minDate =

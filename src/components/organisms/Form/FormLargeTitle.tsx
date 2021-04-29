@@ -3,7 +3,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 
 import Separator from '@components/atoms/Separator';
 import { cx } from '@util/util';
-import FormStore from './Form.store';
+import { useForm, useFormItem } from './Form.state';
 import { FormItemData } from './Form.types';
 import { getFormItemKey } from './Form.util';
 import FormItemContainer from './FormItemContainer';
@@ -17,15 +17,17 @@ const FormLargeTitle: React.FC<FormLargeTitleProps> = ({
   placeholder,
   ...args
 }) => {
-  const key = getFormItemKey(args);
-  const error = FormStore.useStoreState(({ items }) => items[key]?.error);
-  const value = FormStore.useStoreState(({ items }) => items[key]?.value);
-  const setValue = FormStore.useStoreActions((state) => state.setValue);
+  const [, formDispatch] = useForm();
+
+  const key: string = getFormItemKey(args);
+  const { error, value } = useFormItem(key) ?? {};
 
   useInitFormItem(args);
 
-  const updateText = ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue({ key, value: target.value });
+  const updateText = ({
+    target
+  }: React.ChangeEvent<HTMLTextAreaElement>): void => {
+    formDispatch({ key, type: 'SET_VALUE', value: target.value });
   };
 
   const css: string = cx('o-form-item--large-title', {

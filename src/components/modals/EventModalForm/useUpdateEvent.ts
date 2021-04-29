@@ -57,7 +57,7 @@ const useUpdateEvent = (): OnFormSubmitFunction => {
   const [updateEvent] = useMutation<IEvent, UpdateEventArgs>(UPDATE_EVENT);
   const eventId: string = useReactiveVar(modalVar)?.metadata as string;
 
-  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, formDispatch }: OnFormSubmitArgs) => {
     const base64String: string = items.COVER_IMAGE?.value as string;
     const description: string = items.EVENT_DESCRIPTION?.value as string;
     const privacy: EventPrivacy = items.PRIVACY?.value as EventPrivacy;
@@ -71,7 +71,7 @@ const useUpdateEvent = (): OnFormSubmitFunction => {
       try {
         imageUrl = await uploadImage({ base64String, key: 'EVENT' });
       } catch {
-        setError('Failed to upload image.');
+        formDispatch({ error: 'Failed to upload image.', type: 'SET_ERROR' });
         return;
       }
     }
@@ -92,7 +92,7 @@ const useUpdateEvent = (): OnFormSubmitFunction => {
       modalVar(null);
       showToast({ message: 'Event updated.' });
     } catch {
-      setError('Failed to update event.');
+      formDispatch({ error: 'Failed to update event.', type: 'SET_ERROR' });
     }
   };
 

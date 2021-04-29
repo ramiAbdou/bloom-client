@@ -21,7 +21,7 @@ const useUpdateMemberValues = (): OnFormSubmitFunction => {
     types: { items: { required: true, type: '[MemberValueArgs!]' } }
   });
 
-  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ formDispatch, items }: OnFormSubmitArgs) => {
     const data: MemberValueInput[] = Object.values(items).map(
       (item: FormItemData) => {
         const { questionId, value } = item;
@@ -32,7 +32,11 @@ const useUpdateMemberValues = (): OnFormSubmitFunction => {
     const { error } = await updateMemberValues({ items: data });
 
     if (error) {
-      setError('Failed to update membership information.');
+      formDispatch({
+        error: 'Failed to update membership information.',
+        type: 'SET_ERROR'
+      });
+
       return;
     }
 

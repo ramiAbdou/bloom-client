@@ -46,7 +46,7 @@ const DatabaseDemoteMembersModalForm: React.FC = () => {
   );
 
   const onSubmit: OnFormSubmitFunction = async ({
-    setError
+    formDispatch
   }: OnFormSubmitArgs) => {
     const { tableDispatch, tableState }: TableStateAndDispatch = modalVar()
       ?.metadata as TableStateAndDispatch;
@@ -59,7 +59,10 @@ const DatabaseDemoteMembersModalForm: React.FC = () => {
       showToast({ message: `${memberIds.length} admin(s) demoted to member.` });
       tableDispatch({ type: 'RESET_SELECTED_ROW_IDS' });
     } catch {
-      setError('Failed to demote admin(s). Please try again later.');
+      formDispatch({
+        error: 'Failed to demote admin(s). Please try again later.',
+        type: 'SET_ERROR'
+      });
     }
   };
 

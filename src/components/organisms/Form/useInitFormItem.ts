@@ -3,17 +3,15 @@ import { useEffect } from 'react';
 import { getFormItemKey } from '@components/organisms/Form/Form.util';
 import StoryStore from '@components/organisms/Story/Story.store';
 import { QuestionType } from '@util/constants';
-import FormStore from './Form.store';
+import { useForm, useFormItem } from './Form.state';
 import { FormItemData } from './Form.types';
 
 const useInitFormItem = (props: FormItemData): void => {
-  const key = getFormItemKey(props);
+  const [, tableDispatch] = useForm();
 
-  const storedValue: any = FormStore.useStoreState(
-    ({ items }) => items[key]?.value
-  );
+  const key: string = getFormItemKey(props);
+  const storedValue: unknown = useFormItem(key)?.value;
 
-  const setItem = FormStore.useStoreActions((state) => state.setItem);
   const storyStore = StoryStore.useStore();
   const storyItems = storyStore?.getState()?.items;
   const setStoryItem = storyStore?.getActions()?.setItem;
@@ -26,10 +24,13 @@ const useInitFormItem = (props: FormItemData): void => {
       (type === QuestionType.TOGGLE && false) ||
       '';
 
-    setItem({
-      ...props,
-      required: required ?? true,
-      value: value ?? emptyValue
+    tableDispatch({
+      item: {
+        ...props,
+        required: required ?? true,
+        value: value ?? emptyValue
+      },
+      type: 'SET_ITEM'
     });
 
     if (storyStore?.getState()?.items) setStoryItem(props);

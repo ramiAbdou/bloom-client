@@ -3,7 +3,7 @@ import React from 'react';
 import { gql } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import useMemberRole from '@core/hooks/useMemberRole';
-import { useStoreActions } from '@core/store/Store';
+import { showPanel } from '@core/state/Panel.state';
 import { ComponentWithFragments, PanelType } from '@util/constants';
 import { IEvent, MemberRole } from '@util/constants.entities';
 import { EventTiming, getEventTiming } from './Events.util';
@@ -11,7 +11,6 @@ import { EventTiming, getEventTiming } from './Events.util';
 const IndividualEventAddRecordingButton: ComponentWithFragments<IEvent> = ({
   data: event
 }) => {
-  const showPanel = useStoreActions(({ panel }) => panel.showPanel);
   const role: MemberRole = useMemberRole();
 
   const eventTiming: EventTiming = getEventTiming({
@@ -24,7 +23,12 @@ const IndividualEventAddRecordingButton: ComponentWithFragments<IEvent> = ({
   if (!role || !isPast) return null;
 
   const onClick = (): void => {
-    showPanel({ id: PanelType.ADD_RECORDING_LINK, metadata: event.id });
+    showPanel({
+      align: 'BOTTOM_LEFT',
+      id: PanelType.ADD_RECORDING_LINK,
+      metadata: event.id,
+      size: 'lg'
+    });
   };
 
   return (

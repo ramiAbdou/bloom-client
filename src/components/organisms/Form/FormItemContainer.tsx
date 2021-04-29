@@ -2,7 +2,7 @@ import React from 'react';
 
 import ErrorMessage from '@components/atoms/ErrorMessage';
 import { cx } from '@util/util';
-import FormStore from './Form.store';
+import { useFormItem } from './Form.state';
 import { FormItemData } from './Form.types';
 import { getFormItemKey } from './Form.util';
 import FormDescription from './FormDescription';
@@ -15,9 +15,8 @@ const FormItemContainer: React.FC<FormItemData> = ({
   title,
   ...args
 }) => {
-  const key = getFormItemKey(args);
-  const error = FormStore.useStoreState(({ items }) => items[key]?.error);
-  const required = FormStore.useStoreState(({ items }) => items[key]?.required);
+  const key: string = getFormItemKey(args);
+  const { error, required } = useFormItem(key) ?? {};
   const css: string = cx('o-form-item', {}, className);
 
   return (

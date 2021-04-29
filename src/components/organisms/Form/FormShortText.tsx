@@ -2,7 +2,7 @@ import React from 'react';
 
 import Input from '@components/atoms/Input/Input';
 import { FormItemData } from '@components/organisms/Form/Form.types';
-import FormStore from './Form.store';
+import { useForm, useFormItem } from './Form.state';
 import { getFormItemKey } from './Form.util';
 import FormItemContainer from './FormItemContainer';
 import useInitFormItem from './useInitFormItem';
@@ -15,10 +15,10 @@ const FormShortText: React.FC<FormShortTextProps> = ({
   placeholder,
   ...args
 }) => {
-  const key = getFormItemKey(args);
-  const error = FormStore.useStoreState(({ items }) => items[key]?.error);
-  const value = FormStore.useStoreState(({ items }) => items[key]?.value);
-  const setValue = FormStore.useStoreActions((state) => state.setValue);
+  const [, formDispatch] = useForm();
+
+  const key: string = getFormItemKey(args);
+  const { error, value } = useFormItem(key) ?? {};
 
   useInitFormItem({
     ...args,
@@ -26,7 +26,9 @@ const FormShortText: React.FC<FormShortTextProps> = ({
       placeholder === 'Email' || args?.title === 'Email' ? 'IS_EMAIL' : null
   });
 
-  const updateText = (text: string) => setValue({ key, value: text });
+  const updateText = (text: string): void => {
+    formDispatch({ key, type: 'SET_VALUE', value: text });
+  };
 
   return (
     <FormItemContainer {...args}>

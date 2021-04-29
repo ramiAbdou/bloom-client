@@ -22,7 +22,7 @@ const useInviteMembers = (): OnFormSubmitFunction => {
     types: { members: { required: true, type: '[InviteMemberInput!]' } }
   });
 
-  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, formDispatch }: OnFormSubmitArgs) => {
     // In the first pass, format all the values by looking at the item's
     // category and id.
     const memberData: Record<string, AddMemberInput> = Object.values(
@@ -44,7 +44,7 @@ const useInviteMembers = (): OnFormSubmitFunction => {
     const { error } = await inviteMembers({ members: Object.values(members) });
 
     if (error) {
-      setError(error);
+      formDispatch({ error, type: 'SET_ERROR' });
       return;
     }
 

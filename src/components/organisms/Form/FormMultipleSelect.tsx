@@ -2,7 +2,7 @@ import React from 'react';
 
 import Checkbox from '@components/atoms/Checkbox/Checkbox';
 import Show from '@components/containers/Show';
-import FormStore from './Form.store';
+import { useForm, useFormItem } from './Form.state';
 import { FormItemData } from './Form.types';
 import { getFormItemKey } from './Form.util';
 import FormItemContainer from './FormItemContainer';
@@ -19,13 +19,10 @@ const FormMultipleSelect: React.FC<FormMultipleChoiceProps> = ({
   show,
   ...args
 }) => {
-  const key = getFormItemKey(args);
+  const [, formDispatch] = useForm();
 
-  const value: string[] = FormStore.useStoreState(
-    ({ items }) => items[key]?.value as string[]
-  );
-
-  const setValue = FormStore.useStoreActions((state) => state.setValue);
+  const key: string = getFormItemKey(args);
+  const value: string[] = useFormItem(key)?.value as string[];
 
   useInitFormItem(args);
 
@@ -39,7 +36,7 @@ const FormMultipleSelect: React.FC<FormMultipleChoiceProps> = ({
                 ? value.filter((element) => element !== option)
                 : [...value, option];
 
-              setValue({ key, value: updatedValue });
+              formDispatch({ key, type: 'SET_VALUE', value: updatedValue });
             };
 
             return (

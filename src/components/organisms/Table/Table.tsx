@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 
 import TableContent from '@components/organisms/Table/TableContent';
-import PanelLocal from '../Panel/PanelLocal';
 import { TableProvider, useTable } from './Table.state';
 import { OnApplyFiltersArgs, TableInitialState, TableRow } from './Table.types';
 import TableBanner from './TableBanner';
@@ -44,7 +43,6 @@ const TableLayout: React.FC<Partial<TableProps>> = ({
       <TableBanner />
       <TableContent emptyMessage={emptyMessage} />
       <TablePagination />
-      <PanelLocal />
     </>
   );
 };

@@ -3,16 +3,17 @@ import { IoCamera } from 'react-icons/io5';
 
 import Button from '@components/atoms/Button/Button';
 import { convertImageToBase64 } from '@util/imageUtil';
-import FormStore from './Form.store';
+import { useForm, useFormItem } from './Form.state';
 import { FormItemData } from './Form.types';
 import { getFormItemKey } from './Form.util';
 import FormItemContainer from './FormItemContainer';
 import useInitFormItem from './useInitFormItem';
 
 const FormImage: React.FC<FormItemData> = (args) => {
-  const key = getFormItemKey(args);
-  const value = FormStore.useStoreState(({ items }) => items[key]?.value);
-  const setValue = FormStore.useStoreActions((state) => state.setValue);
+  const [, formDispatch] = useForm();
+
+  const key: string = getFormItemKey(args);
+  const value: string = useFormItem(key)?.value as string;
 
   useInitFormItem(args);
   const ref: React.MutableRefObject<HTMLInputElement> = useRef(null);
@@ -25,7 +26,7 @@ const FormImage: React.FC<FormItemData> = (args) => {
       dims: [400, 400]
     });
 
-    setValue({ key, value: base64String });
+    formDispatch({ key, type: 'SET_VALUE', value: base64String });
   };
 
   // The background blend creates the overlay effect. Makes the background

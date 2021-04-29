@@ -50,7 +50,7 @@ const useUpdateMemberPersonal = (): OnFormSubmitFunction => {
     UPDATE_MEMBER_PERSONAL
   );
 
-  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, formDispatch }: OnFormSubmitArgs) => {
     const bio: string = items.BIO?.value as string;
     const firstName: string = items.FIRST_NAME?.value as string;
     const lastName: string = items.LAST_NAME?.value as string;
@@ -62,7 +62,7 @@ const useUpdateMemberPersonal = (): OnFormSubmitFunction => {
       try {
         pictureUrl = await uploadImage({ base64String, key: 'PROFILE' });
       } catch (e) {
-        setError('Failed to upload image.');
+        formDispatch({ error: 'Failed to upload image.', type: 'SET_ERROR' });
         return;
       }
     }
@@ -72,7 +72,11 @@ const useUpdateMemberPersonal = (): OnFormSubmitFunction => {
     });
 
     if (errors) {
-      setError('Failed to update personal information.');
+      formDispatch({
+        error: 'Failed to update personal information.',
+        type: 'SET_ERROR'
+      });
+
       return;
     }
 

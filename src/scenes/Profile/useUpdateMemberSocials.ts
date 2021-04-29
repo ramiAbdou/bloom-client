@@ -49,7 +49,7 @@ const useUpdateMemberSocials = (): OnFormSubmitFunction => {
     UpdateMemberSocialsArgs
   >(UPDATE_MEMBER_SOCIALS);
 
-  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, formDispatch }: OnFormSubmitArgs) => {
     const facebookUrl: string = items.FACEBOOK_URL?.value as string;
     const instagramUrl: string = items.INSTAGRAM_URL?.value as string;
     const linkedInUrl: string = items.LINKED_IN_URL?.value as string;
@@ -60,7 +60,11 @@ const useUpdateMemberSocials = (): OnFormSubmitFunction => {
     });
 
     if (errors?.length) {
-      setError('Failed to update social media.');
+      formDispatch({
+        error: 'Failed to update social media.',
+        type: 'SET_ERROR'
+      });
+
       return;
     }
 

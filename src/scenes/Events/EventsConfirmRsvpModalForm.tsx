@@ -114,7 +114,7 @@ const EventsConfirmRsvpModalForm: React.FC = () => {
   });
 
   const onSubmit: OnFormSubmitFunction = async ({
-    setError
+    formDispatch
   }: OnFormSubmitArgs) => {
     try {
       await createEventGuestWithMember({
@@ -129,7 +129,7 @@ const EventsConfirmRsvpModalForm: React.FC = () => {
       modalVar(null);
       showToast({ message: 'RSVP was registered.' });
     } catch {
-      setError('Failed to register RSVP.');
+      formDispatch({ error: 'Failed to register RSVP.', type: 'SET_ERROR' });
     }
   };
 

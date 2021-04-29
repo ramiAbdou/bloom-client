@@ -35,7 +35,7 @@ export interface FormItemData
   error?: string;
   metadata?: any;
   questionId?: string;
-  value?: string | string[] | boolean | number;
+  value?: unknown;
   validate?: FormValidate;
 }
 
@@ -59,13 +59,32 @@ export interface FormProps extends ClassNameProps, ShowProps {
 }
 
 export interface OnFormSubmitArgs {
-  closePanel?: ActionCreator;
+  formDispatch: React.Dispatch<FormAction>;
   goForward?: ActionCreator;
   gql: GQL;
   items: Record<string, FormItemData>;
-  setError: ActionCreator<string>;
   setStoryValue: ActionCreator<SetValueArgs>;
   storyItems?: Record<string, FormItemData>;
 }
 
 export type OnFormSubmitFunction = (args: OnFormSubmitArgs) => Promise<void>;
+
+// Rewrite here...
+
+export interface FormInitialState {
+  options: FormOptions;
+}
+
+export interface FormState {
+  error: string;
+  loading: boolean;
+  items: Record<string, FormItemData>;
+  options: FormOptions;
+}
+
+export type FormAction =
+  | { type: 'SET_ERROR'; error: string }
+  | { type: 'SET_ITEM'; item: Partial<FormItemData> }
+  | { type: 'SET_ITEMS'; items: Record<string, FormItemData> }
+  | { type: 'SET_LOADING'; loading: boolean }
+  | { type: 'SET_VALUE'; key: string; value: unknown };

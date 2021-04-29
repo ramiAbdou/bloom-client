@@ -2,17 +2,19 @@ import React from 'react';
 import { IoFilter } from 'react-icons/io5';
 
 import Button from '@components/atoms/Button/Button';
-import { useStoreActions } from '@core/store/Store';
+import { showPanel } from '@core/state/Panel.state';
 import useTooltip from '@hooks/useTooltip';
 import { PanelType } from '@util/constants';
 
 const DirectoryFilterPanelOpenButton: React.FC = () => {
-  const showPanel = useStoreActions(({ panel }) => panel.showPanel);
-
   const ref: React.MutableRefObject<HTMLElement> = useTooltip('Filter');
 
   const onClick = (): void => {
-    showPanel({ id: PanelType.FILTER_DIRECTORY });
+    showPanel({
+      align: 'BOTTOM_RIGHT',
+      id: PanelType.FILTER_DIRECTORY,
+      style: { padding: 0 }
+    });
   };
 
   return (

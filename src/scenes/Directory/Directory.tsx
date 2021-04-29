@@ -2,7 +2,6 @@ import React from 'react';
 
 import { DocumentNode, gql, useQuery } from '@apollo/client';
 import Scene from '@components/containers/Scene';
-import PanelLocal from '@components/organisms/Panel/PanelLocal';
 import { IMember } from '@util/constants.entities';
 import DirectoryActionRow from './DirectoryActionRow';
 import DirectoryCard from './DirectoryCard';
@@ -74,7 +73,6 @@ const DirectoryContent: React.FC = () => {
 const Directory: React.FC = () => (
   <Scene>
     <DirectoryContent />
-    <PanelLocal />
   </Scene>
 );
 

@@ -6,6 +6,7 @@ import Form from '@components/organisms/Form/Form';
 import { OnFormSubmitArgs } from '@components/organisms/Form/Form.types';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
+import { closePanel } from '@core/state/Panel.state';
 import { IEvent } from '@util/constants.entities';
 
 interface GetEventRecordingUrlByIdResult {
@@ -48,18 +49,17 @@ const IndividualEventAddRecordingPanelForm: React.FC = () => {
 
   if (loading) return null;
 
-  const onSubmit = async ({
-    closePanel,
-    items,
-    setError
-  }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, formDispatch }: OnFormSubmitArgs) => {
     try {
       const recordingUrl: string = items.RECORDING_URL?.value as string;
       await updateEventRecordingUrl({ variables: { recordingUrl } });
       closePanel();
       showToast({ message: 'Event recording link updated.' });
     } catch {
-      setError('Failed to link event recording.');
+      formDispatch({
+        error: 'Failed to link event recording.',
+        type: 'SET_ERROR'
+      });
     }
   };
 

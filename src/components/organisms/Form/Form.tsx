@@ -1,13 +1,10 @@
-import deepequal from 'fast-deep-equal';
 import React, { useCallback } from 'react';
 
-import Show from '@components/containers/Show';
 import StoryStore from '@components/organisms/Story/Story.store';
-import { useStore } from '@core/store/Store';
 import GQL from '@gql/GQL';
 import useGQL from '@gql/hooks/useGQL';
 import { cx } from '@util/util';
-import FormStore, { formModel } from './Form.store';
+import { FormProvider, useForm } from './Form.state';
 import { FormItemData, FormProps } from './Form.types';
 import { getError, getFormItemKey } from './Form.util';
 
@@ -18,21 +15,10 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   onSubmitDeps,
   spacing
 }) => {
+  const [{ items }, formDispatch] = useForm();
   const gql: GQL = useGQL();
-  const globalStore = useStore();
 
-  const items: Record<string, FormItemData> = FormStore.useStoreState(
-    (state) => state.items,
-    deepequal
-  );
-
-  const setError = FormStore.useStoreActions((state) => state.setError);
-  const setIsLoading = FormStore.useStoreActions((state) => state.setIsLoading);
   const storyStore = StoryStore.useStore();
-
-  const setItemErrors = FormStore.useStoreActions(
-    (state) => state.setItemErrors
-  );
 
   const onFormSubmit = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
@@ -47,32 +33,29 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
       }, {});
 
       if (Object.values(validatedItems).some(({ error }) => !!error)) {
-        setItemErrors(validatedItems);
+        formDispatch({ items: validatedItems, type: 'SET_ITEMS' });
         return;
       }
 
-      setError(null);
-      setIsLoading(true);
-
-      const { panel } = globalStore?.getActions() ?? {};
+      formDispatch({ error: null, type: 'SET_ERROR' });
+      formDispatch({ loading: true, type: 'SET_LOADING' });
 
       const { goForward, setValue: setStoryValue } =
         storyStore?.getActions() ?? {};
 
       try {
         await onSubmit({
-          closePanel: panel?.closePanel,
+          formDispatch,
           goForward,
           gql,
           items: validatedItems,
-          setError,
           setStoryValue,
           storyItems: storyStore?.getState()?.items
         });
 
-        setIsLoading(false);
+        formDispatch({ loading: false, type: 'SET_LOADING' });
       } catch (e) {
-        setError(e);
+        formDispatch({ error: e, type: 'SET_ERROR' });
       }
     },
     [items, ...(onSubmitDeps || [])]
@@ -94,12 +77,10 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   );
 };
 
-const Form: React.FC<FormProps> = ({ options, show, ...props }: FormProps) => (
-  <Show show={show}>
-    <FormStore.Provider runtimeModel={{ ...formModel, options }}>
-      <FormContent {...props} />
-    </FormStore.Provider>
-  </Show>
+const Form: React.FC<FormProps> = ({ options, ...props }: FormProps) => (
+  <FormProvider options={options}>
+    <FormContent {...props} />
+  </FormProvider>
 );
 
 export default Form;
