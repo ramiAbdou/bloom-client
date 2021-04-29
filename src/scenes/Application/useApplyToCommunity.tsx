@@ -3,10 +3,10 @@ import { communityIdVar } from 'src/App.reactive';
 
 import { DocumentNode, gql, useMutation } from '@apollo/client';
 import {
-  FormItemData,
   OnFormSubmitArgs,
   OnFormSubmitFunction
-} from '@components/organisms/Form/Form.types';
+} from '@components/organisms/Form/Form';
+import { FormItemData } from '@components/organisms/Form/Form.types';
 // import { parseValue } from '@components/organisms/Form/Form.util';
 import { QuestionCategory } from '@util/constants';
 import { IUser, MemberStatus } from '@util/constants.entities';
@@ -104,11 +104,12 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
 
   const onSubmit = async ({
     // gql,
-    goForward,
     formDispatch,
-    storyItems
+    storyDispatch,
+    storyState
   }: OnFormSubmitArgs) => {
-    const storyValues: FormItemData[] = Object.values(storyItems);
+    const { items } = storyState;
+    const storyValues: FormItemData[] = Object.values(items);
     // const { memberTypes } = await gql.findOne(ICommunity, {
     //   fields: ['memberTypes.id', 'memberTypes.name'],
     //   where: { id: '' }
@@ -130,7 +131,7 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
       (value: FormItemData) => value.category === QuestionCategory.LAST_NAME
     )?.value as string;
 
-    const memberTypeName: string = storyItems.MEMBER_TYPE?.value as string;
+    const memberTypeName: string = items.MEMBER_TYPE?.value as string;
 
     // const memberTypeId = memberTypes.find(
     //   (memberType: IMemberType) => memberType.name === memberTypeName
@@ -171,7 +172,7 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
         }
       });
 
-      goForward();
+      storyDispatch({ type: 'GO_FORWARD' });
     } catch (e) {
       if (
         e.graphQLErrors[0].message.includes(

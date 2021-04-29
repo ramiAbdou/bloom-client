@@ -1,8 +1,7 @@
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
-} from '@components/organisms/Form/Form.types';
-import StoryStore from '@components/organisms/Story/Story.store';
+} from '@components/organisms/Form/Form';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { CreateEventGuestArgs } from '@scenes/Events/Events.types';
 import { IEvent, IEventGuest } from '@util/constants.entities';
@@ -10,10 +9,6 @@ import { MutationEvent } from '@util/constants.events';
 import { openHref } from '@util/util';
 
 const useCreateEventAttendeeWithSupporter = (): OnFormSubmitFunction => {
-  const setCurrentPage = StoryStore.useStoreActions(
-    (state) => state.setCurrentPage
-  );
-
   const [createEventAttendeeWithSupporter] = useBloomMutation<
     IEventGuest,
     CreateEventGuestArgs
@@ -36,7 +31,7 @@ const useCreateEventAttendeeWithSupporter = (): OnFormSubmitFunction => {
   const onSubmit = async ({
     formDispatch,
     gql,
-    goForward,
+    storyDispatch,
     items
   }: OnFormSubmitArgs) => {
     const firstName: string = items.FIRST_NAME?.value as string;
@@ -58,8 +53,14 @@ const useCreateEventAttendeeWithSupporter = (): OnFormSubmitFunction => {
       });
 
       openHref(videoUrl);
-      setCurrentPage({ branchId: 'ATTENDEE_CONFIRMATION', id: 'CONFIRMATION' });
-      goForward();
+
+      storyDispatch({
+        branchId: 'ATTENDEE_CONFIRMATION',
+        pageId: 'CONFIRMATION',
+        type: 'SET_CURRENT_PAGE'
+      });
+
+      storyDispatch({ type: 'GO_FORWARD' });
     }
   };
 

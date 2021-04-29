@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 
 import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
 import { cx, take } from '@util/util';
+import { useStory } from './Story.state';
 import StoryStore from './Story.store';
 import { StoryPageBranch, StoryPageProps } from './Story.types';
 import StoryConfirmation from './StoryConfirmation';
@@ -21,6 +22,8 @@ const StoryPage: React.FC<StoryPageProps> = ({
   show,
   title
 }) => {
+  const [, storyDispatch] = useStory();
+
   id = take([
     [confirmation, 'CONFIRMATION'],
     [id, id],
@@ -32,12 +35,16 @@ const StoryPage: React.FC<StoryPageProps> = ({
 
   const pageId = StoryStore.useStoreState((state) => state.pageId);
   const page = StoryStore.useStoreState(({ getPage }) => getPage(id));
-  const setPage = StoryStore.useStoreActions((state) => state.setPage);
 
   useUpdateDisabledPage(id);
 
   useEffect(() => {
-    if (show !== false) setPage({ branchId, branches, disabled: !!pageId, id });
+    if (show !== false) {
+      storyDispatch({
+        page: { branchId, branches, disabled: !!pageId, id },
+        type: 'SET_PAGE'
+      });
+    }
   }, [show]);
 
   if (page?.id !== pageId || show === false) return null;

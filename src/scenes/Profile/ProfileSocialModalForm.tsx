@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { DocumentNode, gql, useQuery } from '@apollo/client';
-import Form from '@components/organisms/Form/Form';
-import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
+import Form, { OnFormSubmitFunction } from '@components/organisms/Form/Form';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { IMemberSocials } from '@util/constants.entities';

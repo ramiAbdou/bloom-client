@@ -1,6 +1,3 @@
-import { ActionCreator } from 'easy-peasy';
-
-import GQL from '@gql/GQL';
 import {
   ClassNameProps,
   QuestionCategory,
@@ -49,25 +46,6 @@ export interface SetValueArgs extends ValueProps {
 export interface FormOptions {
   disableValidation?: boolean;
 }
-
-export interface FormProps extends ClassNameProps, ShowProps {
-  questions?: FormItemData[];
-  options?: FormOptions;
-  onSubmit?: OnFormSubmitFunction;
-  onSubmitDeps?: any[];
-  spacing?: 'md' | 'lg';
-}
-
-export interface OnFormSubmitArgs {
-  formDispatch: React.Dispatch<FormAction>;
-  goForward?: ActionCreator;
-  gql: GQL;
-  items: Record<string, FormItemData>;
-  setStoryValue: ActionCreator<SetValueArgs>;
-  storyItems?: Record<string, FormItemData>;
-}
-
-export type OnFormSubmitFunction = (args: OnFormSubmitArgs) => Promise<void>;
 
 // Rewrite here...
 

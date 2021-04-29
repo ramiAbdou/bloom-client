@@ -2,11 +2,10 @@ import React from 'react';
 import { showToast } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
-import Form from '@components/organisms/Form/Form';
-import {
+import Form, {
   OnFormSubmitArgs,
   OnFormSubmitFunction
-} from '@components/organisms/Form/Form.types';
+} from '@components/organisms/Form/Form';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
 import { modalVar } from '@core/state/Modal.state';

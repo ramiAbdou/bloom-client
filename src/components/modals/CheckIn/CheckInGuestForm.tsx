@@ -3,8 +3,7 @@ import { eventIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import Row from '@components/containers/Row/Row';
-import Form from '@components/organisms/Form/Form';
-import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
+import Form, { OnFormSubmitFunction } from '@components/organisms/Form/Form';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import useFindOne from '@gql/hooks/useFindOne';

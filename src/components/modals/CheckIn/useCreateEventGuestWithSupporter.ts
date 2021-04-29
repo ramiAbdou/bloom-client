@@ -4,7 +4,7 @@ import { useReactiveVar } from '@apollo/client';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
-} from '@components/organisms/Form/Form.types';
+} from '@components/organisms/Form/Form';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { CreateEventGuestArgs } from '@scenes/Events/Events.types';
 import { IEventGuest } from '@util/constants.entities';
@@ -33,9 +33,9 @@ const useCreateEventGuestWithSupporter = (): OnFormSubmitFunction => {
   });
 
   const onSubmit = async ({
-    goForward,
     items,
-    formDispatch
+    formDispatch,
+    storyDispatch
   }: OnFormSubmitArgs) => {
     const firstName: string = items.FIRST_NAME?.value as string;
     const lastName: string = items.LAST_NAME?.value as string;
@@ -49,7 +49,7 @@ const useCreateEventGuestWithSupporter = (): OnFormSubmitFunction => {
     });
 
     if (error) formDispatch({ error, type: 'SET_ERROR' });
-    else goForward();
+    else storyDispatch({ type: 'GO_FORWARD' });
   };
 
   return onSubmit;

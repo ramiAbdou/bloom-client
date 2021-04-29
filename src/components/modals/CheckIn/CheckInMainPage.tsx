@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 
+import { useStory } from '@components/organisms/Story/Story.state';
 import StoryStore from '@components/organisms/Story/Story.store';
 import StoryPage from '@components/organisms/Story/StoryPage';
 import { ErrorContext } from '@util/constants.errors';
@@ -12,21 +13,23 @@ interface CheckInMainPageProps {
 }
 
 const CheckInMainPage: React.FC<CheckInMainPageProps> = ({ lock }) => {
+  const [, storyDispatch] = useStory();
+
   const pageId = StoryStore.useStoreState((state) => state.pageId);
 
   const branchId = StoryStore.useStoreState(
     ({ getPage }) => getPage('FINISH')?.branchId
   );
 
-  const setCurrentPage = StoryStore.useStoreActions(
-    (state) => state.setCurrentPage
-  );
-
   const hasCookieError = !!Cookies.get(ErrorContext.LOGIN_ERROR);
 
   useEffect(() => {
     if (hasCookieError && !!branchId && pageId !== 'FINISH') {
-      setCurrentPage({ branchId: 'FINISH_MEMBER', id: 'FINISH' });
+      storyDispatch({
+        branchId: 'FINISH_MEMBER',
+        pageId: 'FINISH',
+        type: 'SET_CURRENT_PAGE'
+      });
     }
   }, [hasCookieError, pageId]);
 

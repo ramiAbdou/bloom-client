@@ -1,12 +1,32 @@
 import React, { useCallback } from 'react';
 
-import StoryStore from '@components/organisms/Story/Story.store';
+import { useStorySafe } from '@components/organisms/Story/Story.state';
 import GQL from '@gql/GQL';
 import useGQL from '@gql/hooks/useGQL';
+import { ClassNameProps, ShowProps } from '@util/constants';
 import { cx } from '@util/util';
+import { StoryAction, StoryState } from '../Story/Story.types';
 import { FormProvider, useForm } from './Form.state';
-import { FormItemData, FormProps } from './Form.types';
+import { FormAction, FormItemData, FormOptions } from './Form.types';
 import { getError, getFormItemKey } from './Form.util';
+
+export interface FormProps extends ClassNameProps, ShowProps {
+  questions?: FormItemData[];
+  options?: FormOptions;
+  onSubmit?: OnFormSubmitFunction;
+  onSubmitDeps?: any[];
+  spacing?: 'md' | 'lg';
+}
+
+export interface OnFormSubmitArgs {
+  formDispatch: React.Dispatch<FormAction>;
+  storyDispatch?: React.Dispatch<StoryAction>;
+  gql: GQL;
+  items: Record<string, FormItemData>;
+  storyState?: StoryState;
+}
+
+export type OnFormSubmitFunction = (args: OnFormSubmitArgs) => Promise<void>;
 
 const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   className,
@@ -16,9 +36,8 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   spacing
 }) => {
   const [{ items }, formDispatch] = useForm();
+  const [, storyDispatch] = useStorySafe();
   const gql: GQL = useGQL();
-
-  const storyStore = StoryStore.useStore();
 
   const onFormSubmit = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
@@ -40,17 +59,12 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
       formDispatch({ error: null, type: 'SET_ERROR' });
       formDispatch({ loading: true, type: 'SET_LOADING' });
 
-      const { goForward, setValue: setStoryValue } =
-        storyStore?.getActions() ?? {};
-
       try {
         await onSubmit({
           formDispatch,
-          goForward,
           gql,
           items: validatedItems,
-          setStoryValue,
-          storyItems: storyStore?.getState()?.items
+          storyDispatch
         });
 
         formDispatch({ loading: false, type: 'SET_LOADING' });

@@ -2,8 +2,7 @@ import React from 'react';
 import { showToast } from 'src/App.reactive';
 
 import { DocumentNode, gql, useMutation, useQuery } from '@apollo/client';
-import Form from '@components/organisms/Form/Form';
-import { OnFormSubmitArgs } from '@components/organisms/Form/Form.types';
+import Form, { OnFormSubmitArgs } from '@components/organisms/Form/Form';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { closePanel } from '@core/state/Panel.state';

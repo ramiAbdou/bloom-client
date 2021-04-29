@@ -12,7 +12,7 @@ import {
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
-} from '@components/organisms/Form/Form.types';
+} from '@components/organisms/Form/Form';
 import { modalVar } from '@core/state/Modal.state';
 import { EventPrivacy, IEvent } from '@util/constants.entities';
 import { uploadImage } from '@util/imageUtil';

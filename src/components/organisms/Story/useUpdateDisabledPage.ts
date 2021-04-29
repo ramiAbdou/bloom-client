@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import { useStory } from './Story.state';
 import StoryStore from './Story.store';
 import { StoryPageProps } from './Story.types';
 
@@ -9,14 +10,11 @@ import { StoryPageProps } from './Story.types';
  * is.
  */
 const useUpdateDisabledPage = (id: string): void => {
+  const [, storyDispatch] = useStory();
   const pageId: string = StoryStore.useStoreState((state) => state.pageId);
 
   const pages: StoryPageProps[] = StoryStore.useStoreState(
     (state) => state.pages
-  );
-
-  const setPageDisabled = StoryStore.useStoreActions(
-    (state) => state.setPageDisabled
   );
 
   const currentPageIndex: number = pages.findIndex(
@@ -28,7 +26,11 @@ const useUpdateDisabledPage = (id: string): void => {
 
   useEffect(() => {
     if (pageIndex >= 0) {
-      setPageDisabled({ disabled: pageIndex > currentPageIndex, id });
+      storyDispatch({
+        disabled: pageIndex > currentPageIndex,
+        pageId: id,
+        type: 'SET_PAGE_DISABLED'
+      });
     }
   }, [currentPageIndex, disabled, pageIndex]);
 };

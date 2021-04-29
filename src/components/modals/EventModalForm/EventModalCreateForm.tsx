@@ -1,7 +1,6 @@
 import React from 'react';
 
-import Form from '@components/organisms/Form/Form';
-import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
+import Form, { OnFormSubmitFunction } from '@components/organisms/Form/Form';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import EventModalFormDeleteButton from './EventModalFormDeleteButton';
 import EventModalFormDetailsSection from './EventModalFormDetailsSection';

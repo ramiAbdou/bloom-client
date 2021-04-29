@@ -5,8 +5,8 @@ import { useReactiveVar } from '@apollo/client';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
-} from '@components/organisms/Form/Form.types';
-import StoryStore from '@components/organisms/Story/Story.store';
+} from '@components/organisms/Form/Form';
+import { useStory } from '@components/organisms/Story/Story.state';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { IMember, MemberRole } from '@util/constants.entities';
 import { ErrorType } from '@util/constants.errors';
@@ -15,12 +15,10 @@ import { SendLoginLinkArgs } from './CheckIn.types';
 import { getCheckInErrorMessage } from './CheckIn.util';
 
 const useSendLoginLink = (): OnFormSubmitFunction => {
+  const [, storyDispatch] = useStory();
+
   const communityId: string = useReactiveVar(communityIdVar);
   const { pathname } = useLocation();
-
-  const setCurrentPage = StoryStore.useStoreActions(
-    (state) => state.setCurrentPage
-  );
 
   const [sendLoginLink] = useBloomMutation<boolean, SendLoginLinkArgs>({
     operation: MutationEvent.SEND_LOGIN_LINK,
@@ -59,7 +57,11 @@ const useSendLoginLink = (): OnFormSubmitFunction => {
       return;
     }
 
-    setCurrentPage({ branchId: 'LOGIN_LINK', id: 'CONFIRMATION' });
+    storyDispatch({
+      branchId: 'LOGIN_LINK',
+      pageId: 'CONFIRMATION',
+      type: 'SET_CURRENT_PAGE'
+    });
   };
 
   return onSubmit;

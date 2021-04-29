@@ -5,20 +5,25 @@ import Show from '@components/containers/Show';
 import useTooltip from '@hooks/useTooltip';
 import { ShowProps } from '@util/constants';
 import { cx } from '@util/util';
+import { useStory } from './Story.state';
 import StoryStore from './Story.store';
 import { StoryPageProps } from './Story.types';
 
 const StoryNavigationBar: React.FC<StoryPageProps> = ({ id }) => {
-  const page = StoryStore.useStoreState(({ getPage }) => getPage(id));
+  const [, storyDispatch] = useStory();
 
-  const setCurrentPage = StoryStore.useStoreActions(
-    (state) => state.setCurrentPage
-  );
+  const page = StoryStore.useStoreState(({ getPage }) => getPage(id));
 
   const { disabled, branches, branchId } = page;
   const title = branches[branchId]?.title;
   const ref: React.LegacyRef<any> = useTooltip(title);
-  const onClick = () => !disabled && setCurrentPage({ branchId, id });
+
+  const onClick = (): void => {
+    if (!disabled) {
+      storyDispatch({ branchId, pageId: id, type: 'SET_CURRENT_PAGE' });
+    }
+  };
+
   const css: string = cx('o-story-nav', { 'o-story-nav--disabled': disabled });
 
   return <div ref={ref} className={css} onClick={onClick} />;

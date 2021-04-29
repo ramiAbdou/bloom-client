@@ -1,10 +1,10 @@
 import { showToast } from 'src/App.reactive';
 
 import {
-  FormItemData,
   OnFormSubmitArgs,
   OnFormSubmitFunction
-} from '@components/organisms/Form/Form.types';
+} from '@components/organisms/Form/Form';
+import { FormItemData } from '@components/organisms/Form/Form.types';
 import { modalVar } from '@core/state/Modal.state';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { IMemberValue } from '@util/constants.entities';

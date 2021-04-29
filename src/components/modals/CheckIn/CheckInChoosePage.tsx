@@ -5,7 +5,7 @@ import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import Row from '@components/containers/Row/Row';
 import FormLabel from '@components/organisms/Form/FormLabel';
-import StoryStore from '@components/organisms/Story/Story.store';
+import { useStory } from '@components/organisms/Story/Story.state';
 import StoryPage from '@components/organisms/Story/StoryPage';
 import useFindOne from '@gql/hooks/useFindOne';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
@@ -13,11 +13,8 @@ import { ShowProps } from '@util/constants';
 import { ICommunity, IEvent } from '@util/constants.entities';
 
 const CheckInChoosePageActions: React.FC = () => {
+  const [, storyDispatch] = useStory();
   const eventId: string = useReactiveVar(eventIdVar);
-
-  const setCurrentPage = StoryStore.useStoreActions(
-    (state) => state.setCurrentPage
-  );
 
   const { data: event, loading } = useFindOne(IEvent, {
     fields: ['endTime', 'startTime'],
@@ -29,12 +26,29 @@ const CheckInChoosePageActions: React.FC = () => {
   const isUpcoming: boolean = getEventTiming(event) === EventTiming.UPCOMING;
 
   const onPrimaryClick = () => {
-    setCurrentPage({ branchId: 'FINISH_MEMBER', id: 'FINISH' });
+    storyDispatch({
+      branchId: 'FINISH_MEMBER',
+      pageId: 'FINISH',
+      type: 'SET_CURRENT_PAGE'
+    });
   };
 
   const onSecondaryClick = () => {
-    if (isUpcoming) setCurrentPage({ branchId: 'FINISH_GUEST', id: 'FINISH' });
-    else setCurrentPage({ branchId: 'FINISH_ATTENDEE', id: 'FINISH' });
+    if (isUpcoming) {
+      storyDispatch({
+        branchId: 'FINISH_GUEST',
+        pageId: 'FINISH',
+        type: 'SET_CURRENT_PAGE'
+      });
+
+      return;
+    }
+
+    storyDispatch({
+      branchId: 'FINISH_ATTENDEE',
+      pageId: 'FINISH',
+      type: 'SET_CURRENT_PAGE'
+    });
   };
 
   return (

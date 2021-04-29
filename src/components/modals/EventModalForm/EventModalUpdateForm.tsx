@@ -2,7 +2,7 @@ import React from 'react';
 
 import { DocumentNode, gql, useQuery } from '@apollo/client';
 import Form from '@components/organisms/Form/Form';
-import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
+import { OnFormSubmitFunction } from '@components/organisms/Form/Form';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { IEvent } from '@util/constants.entities';
 import EventModalFormDeleteButton from './EventModalFormDeleteButton';

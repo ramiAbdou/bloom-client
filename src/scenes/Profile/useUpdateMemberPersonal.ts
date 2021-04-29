@@ -5,7 +5,7 @@ import { DocumentNode, gql, useMutation } from '@apollo/client';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
-} from '@components/organisms/Form/Form.types';
+} from '@components/organisms/Form/Form';
 import { modalVar } from '@core/state/Modal.state';
 import { IMember } from '@util/constants.entities';
 import { uploadImage } from '@util/imageUtil';
