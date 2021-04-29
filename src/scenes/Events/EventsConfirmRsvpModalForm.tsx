@@ -14,6 +14,7 @@ import Form, {
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form';
 import FormHeader from '@components/organisms/Form/FormHeader';
+import Modal from '@components/organisms/Modal/Modal';
 import { closeModal, modalVar } from '@components/organisms/Modal/Modal.state';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
 import useEventTitle from '@core/hooks/useEventTitle';
@@ -133,13 +134,15 @@ const EventsConfirmRsvpModalForm: React.FC = () => {
   };
 
   return (
-    <Form options={{ disableValidation: true }} onSubmit={onSubmit}>
-      <EventsConfirmRsvpModalHeader />
-      <ModalConfirmationActions
-        primaryLoadingText="Confirming..."
-        primaryText="Confirm"
-      />
-    </Form>
+    <Modal>
+      <Form options={{ disableValidation: true }} onSubmit={onSubmit}>
+        <EventsConfirmRsvpModalHeader />
+        <ModalConfirmationActions
+          primaryLoadingText="Confirming..."
+          primaryText="Confirm"
+        />
+      </Form>
+    </Modal>
   );
 };
 

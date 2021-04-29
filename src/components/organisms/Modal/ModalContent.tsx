@@ -19,11 +19,16 @@ import ProfileMembershipForm from '@scenes/Profile/ProfileMembershipForm';
 import ProfilePersonalModalForm from '@scenes/Profile/ProfilePersonalModalForm';
 import ProfileSocialModalForm from '@scenes/Profile/ProfileSocialModalForm';
 import { ModalType } from '@util/constants';
-import { cx } from '@util/util';
-import ModalContainer from './ModalContainer';
 
-const ModalCustomContent: React.FC = () => {
+const ModalContent: React.FC = () => {
   const modalId: ModalType = useReactiveVar(modalVar)?.id;
+
+  useEffect(
+    () => () => {
+      closeModal();
+    },
+    []
+  );
 
   switch (modalId) {
     case ModalType.ADD_MEMBERS:
@@ -77,32 +82,6 @@ const ModalCustomContent: React.FC = () => {
     default:
       return null;
   }
-};
-
-const ModalContent: React.FC = () => {
-  const className: string = useReactiveVar(modalVar)?.options?.className;
-  const confirmation: boolean = useReactiveVar(modalVar)?.options?.confirmation;
-
-  useEffect(
-    () => () => {
-      closeModal();
-    },
-    []
-  );
-
-  const css: string = cx(
-    'c-modal',
-    { 'c-modal--confirmation': confirmation },
-    className
-  );
-
-  return (
-    <ModalContainer>
-      <div className={css}>
-        <ModalCustomContent />
-      </div>
-    </ModalContainer>
-  );
 };
 
 export default ModalContent;

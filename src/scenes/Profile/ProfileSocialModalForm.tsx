@@ -4,6 +4,7 @@ import { DocumentNode, gql, useQuery } from '@apollo/client';
 import Form, { OnFormSubmitFunction } from '@components/organisms/Form/Form';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
+import Modal from '@components/organisms/Modal/Modal';
 import { IMemberSocials } from '@util/constants.entities';
 import ProfileSocialModalFormQuestionList from './ProfileSocialModalFormQuestionList';
 import useUpdateMemberSocials from './useUpdateMemberSocials';
@@ -45,11 +46,13 @@ const ProfileSocialModalForm: React.FC = () => {
   if (loading || !memberSocials) return null;
 
   return (
-    <Form onSubmit={updateMemberSocials}>
-      <ProfileSocialModalFormHeader />
-      <ProfileSocialModalFormQuestionList data={memberSocials} />
-      <ProfileSocialModalFormSubmitButton />
-    </Form>
+    <Modal>
+      <Form onSubmit={updateMemberSocials}>
+        <ProfileSocialModalFormHeader />
+        <ProfileSocialModalFormQuestionList data={memberSocials} />
+        <ProfileSocialModalFormSubmitButton />
+      </Form>
+    </Modal>
   );
 };
 

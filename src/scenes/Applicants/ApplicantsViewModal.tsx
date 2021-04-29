@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { DocumentNode, gql, useQuery, useReactiveVar } from '@apollo/client';
+import Modal from '@components/organisms/Modal/Modal';
 import { modalVar } from '@components/organisms/Modal/Modal.state';
 import { IMember } from '@util/constants.entities';
 import ApplicantsViewModalButtonList from './ApplicantsViewModalButtonList';
@@ -42,11 +43,11 @@ const ApplicantsModal: React.FC = () => {
   const member: IMember = data?.member;
 
   return (
-    <>
+    <Modal>
       {member && <ApplicantsViewModalFullName data={member} />}
       {member && <ApplicantsViewModalQuestionList data={member} />}
       {member && <ApplicantsViewModalButtonList data={member} />}
-    </>
+    </Modal>
   );
 };
 

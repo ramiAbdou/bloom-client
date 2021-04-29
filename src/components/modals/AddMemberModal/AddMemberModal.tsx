@@ -1,12 +1,15 @@
 import React from 'react';
 
+import Modal from '@components/organisms/Modal/Modal';
 import { AddMemberProvider } from './AddMember.state';
 import AddMemberForm from './AddMemberForm';
 
 const AddMemberModal: React.FC = () => (
-  <AddMemberProvider>
-    <AddMemberForm />
-  </AddMemberProvider>
+  <Modal>
+    <AddMemberProvider>
+      <AddMemberForm />
+    </AddMemberProvider>
+  </Modal>
 );
 
 export default AddMemberModal;

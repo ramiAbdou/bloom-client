@@ -7,6 +7,7 @@ import Form, {
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form';
 import FormHeader from '@components/organisms/Form/FormHeader';
+import Modal from '@components/organisms/Modal/Modal';
 import { closeModal, modalVar } from '@components/organisms/Modal/Modal.state';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
 import { IEvent } from '@util/constants.entities';
@@ -46,17 +47,19 @@ const DeleteEventConfirmationForm: React.FC = () => {
   };
 
   return (
-    <Form options={{ disableValidation: true }} onSubmit={onSubmit}>
-      <FormHeader
-        description="Are you sure you want to delete this event? You will not be able to undo this action. If anybody has RSVP'd, we will send them an email about the cancellation."
-        title="Delete event?"
-      />
+    <Modal>
+      <Form options={{ disableValidation: true }} onSubmit={onSubmit}>
+        <FormHeader
+          description="Are you sure you want to delete this event? You will not be able to undo this action. If anybody has RSVP'd, we will send them an email about the cancellation."
+          title="Delete event?"
+        />
 
-      <ModalConfirmationActions
-        primaryLoadingText="Deleting..."
-        primaryText="Delete"
-      />
-    </Form>
+        <ModalConfirmationActions
+          primaryLoadingText="Deleting..."
+          primaryText="Delete"
+        />
+      </Form>
+    </Modal>
   );
 };
 

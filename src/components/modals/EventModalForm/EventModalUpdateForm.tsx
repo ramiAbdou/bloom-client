@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { DocumentNode, gql, useQuery } from '@apollo/client';
-import Form from '@components/organisms/Form/Form';
-import { OnFormSubmitFunction } from '@components/organisms/Form/Form';
+import Form, { OnFormSubmitFunction } from '@components/organisms/Form/Form';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
+import Modal from '@components/organisms/Modal/Modal';
 import { IEvent } from '@util/constants.entities';
 import EventModalFormDeleteButton from './EventModalFormDeleteButton';
 import EventModalFormDetailsSection from './EventModalFormDetailsSection';
@@ -42,19 +42,21 @@ const EventModalUpdateForm: React.FC = () => {
   if (loading) return null;
 
   return (
-    <Form
-      className="mx-auto w-10 w-100--mt"
-      spacing="lg"
-      onSubmit={updateEvent}
-    >
-      <EventModalFormMainSection data={event} />
-      <EventModalFormDetailsSection data={event} />
-      <EventModalFormPrivacySection data={event} />
-      <FormSubmitButton loadingText="Updating...">
-        Update Event
-      </FormSubmitButton>
-      <EventModalFormDeleteButton />
-    </Form>
+    <Modal>
+      <Form
+        className="mx-auto w-10 w-100--mt"
+        spacing="lg"
+        onSubmit={updateEvent}
+      >
+        <EventModalFormMainSection data={event} />
+        <EventModalFormDetailsSection data={event} />
+        <EventModalFormPrivacySection data={event} />
+        <FormSubmitButton loadingText="Updating...">
+          Update Event
+        </FormSubmitButton>
+        <EventModalFormDeleteButton />
+      </Form>
+    </Modal>
   );
 };
 

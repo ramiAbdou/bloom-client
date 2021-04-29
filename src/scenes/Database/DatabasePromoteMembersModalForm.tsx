@@ -7,6 +7,7 @@ import Form, {
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form';
 import FormHeader from '@components/organisms/Form/FormHeader';
+import Modal from '@components/organisms/Modal/Modal';
 import { closeModal, modalVar } from '@components/organisms/Modal/Modal.state';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
 import { TableStateAndDispatch } from '@components/organisms/Table/Table.types';
@@ -66,14 +67,16 @@ const DatabasePromoteMembersModalForm: React.FC = () => {
   };
 
   return (
-    <Form options={{ disableValidation: true }} onSubmit={onSubmit}>
-      <DatabasePromoteMembersModalFormHeader />
+    <Modal>
+      <Form options={{ disableValidation: true }} onSubmit={onSubmit}>
+        <DatabasePromoteMembersModalFormHeader />
 
-      <ModalConfirmationActions
-        primaryLoadingText="Promoting..."
-        primaryText="Promote"
-      />
-    </Form>
+        <ModalConfirmationActions
+          primaryLoadingText="Promoting..."
+          primaryText="Promote"
+        />
+      </Form>
+    </Modal>
   );
 };
 

@@ -11,7 +11,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Loader from '@components/organisms/Loader/Loader';
-import Modal from '@components/organisms/Modal/Modal';
+import ModalPortal from '@components/organisms/Modal/ModalPortal';
 import Panel from '@components/organisms/Panel/Panel';
 import ToastQueue from '@components/organisms/Toast/Toast';
 import * as Sentry from '@sentry/react';
@@ -38,7 +38,7 @@ Sentry.init({
 const App: React.FC = () => (
   <AppProvider>
     <Loader />
-    <Modal />
+    <ModalPortal />
     <Panel />
     <Router />
     <ToastQueue />

@@ -2,6 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 
 import { DocumentNode, gql, useQuery, useReactiveVar } from '@apollo/client';
+import Modal from '@components/organisms/Modal/Modal';
 import { modalVar } from '@components/organisms/Modal/Modal.state';
 import ModalCloseButton from '@components/organisms/Modal/ModalCloseButton';
 import { IEvent } from '@util/constants.entities';
@@ -53,11 +54,11 @@ const IndividualEventErrorModal: React.FC = () => {
       : `${event.title} happened on ${formattedStartTime}.`;
 
   return (
-    <>
+    <Modal>
       <h1 className="c-primary mb-sm--nlc">{title}</h1>
       <p>{description}</p>
       <ModalCloseButton title="Got It" />
-    </>
+    </Modal>
   );
 };
 

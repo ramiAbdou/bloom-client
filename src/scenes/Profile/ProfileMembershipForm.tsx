@@ -8,6 +8,7 @@ import { parseValue } from '@components/organisms/Form/Form.util';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import FormItem from '@components/organisms/Form/FormItem';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
+import Modal from '@components/organisms/Modal/Modal';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { QuestionType } from '@util/constants';
 import { IMember, IMemberValue } from '@util/constants.entities';
@@ -60,15 +61,17 @@ const ProfileMembershipForm: React.FC = () => {
     });
 
   return (
-    <Form onSubmit={updateMemberValues}>
-      <FormHeader title="Edit Membership Information" />
+    <Modal>
+      <Form onSubmit={updateMemberValues}>
+        <FormHeader title="Edit Membership Information" />
 
-      {items?.map(({ id, ...item }) => (
-        <FormItem key={id} questionId={id} {...item} />
-      ))}
+        {items?.map(({ id, ...item }) => (
+          <FormItem key={id} questionId={id} {...item} />
+        ))}
 
-      <FormSubmitButton loadingText="Saving...">Save</FormSubmitButton>
-    </Form>
+        <FormSubmitButton loadingText="Saving...">Save</FormSubmitButton>
+      </Form>
+    </Modal>
   );
 };
 

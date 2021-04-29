@@ -2,6 +2,7 @@ import React from 'react';
 import { eventIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
+import Modal from '@components/organisms/Modal/Modal';
 import Story from '@components/organisms/Story/Story';
 import useFindOne from '@gql/hooks/useFindOne';
 import useIsMember from '@hooks/useIsMember';
@@ -25,11 +26,13 @@ const CheckInModal: React.FC = () => {
     event.privacy === EventPrivacy.MEMBERS_ONLY && !isMember;
 
   return (
-    <Story>
-      <CheckInChoosePage show={!lock} />
-      <CheckInMainPage lock={lock} />
-      <CheckInConfirmation />
-    </Story>
+    <Modal>
+      <Story>
+        <CheckInChoosePage show={!lock} />
+        <CheckInMainPage lock={lock} />
+        <CheckInConfirmation />
+      </Story>
+    </Modal>
   );
 };
 
