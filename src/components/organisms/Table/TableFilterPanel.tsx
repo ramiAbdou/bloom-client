@@ -1,7 +1,10 @@
 import React from 'react';
 
+import { useReactiveVar } from '@apollo/client';
 import Row from '@components/containers/Row/Row';
 import Panel from '@components/organisms/Panel/Panel';
+import { panelVar } from '@components/organisms/Panel/Panel.state';
+import { PanelType } from '../Panel/Panel.types';
 import { useTableState } from './Table.state';
 import { TableState } from './Table.types';
 import TableFilterPanelActions from './TableFilterPanelActions';
@@ -28,13 +31,18 @@ const TableFilterPanelRowList: React.FC = () => {
   );
 };
 
-const TableFilterPanel: React.FC = () => (
-  <Panel align="BOTTOM_RIGHT">
-    <TableFilterPanelHeader />
-    <TableFilterPanelRowList />
-    <TableFilterPanelAddButton />
-    <TableFilterPanelActions />
-  </Panel>
-);
+const TableFilterPanel: React.FC = () => {
+  const show: boolean = useReactiveVar(panelVar)?.id === PanelType.FILTER_TABLE;
+  if (!show) return null;
+
+  return (
+    <Panel align="BOTTOM_RIGHT">
+      <TableFilterPanelHeader />
+      <TableFilterPanelRowList />
+      <TableFilterPanelAddButton />
+      <TableFilterPanelActions />
+    </Panel>
+  );
+};
 
 export default TableFilterPanel;

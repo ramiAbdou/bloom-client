@@ -4,6 +4,7 @@ import TableContent from '@components/organisms/Table/TableContent';
 import { TableProvider, useTable } from './Table.state';
 import { OnApplyFiltersArgs, TableInitialState, TableRow } from './Table.types';
 import TableBanner from './TableBanner';
+import TableFilterPanel from './TableFilterPanel';
 import TablePagination from './TablePagination';
 
 interface TableProps extends TableInitialState {
@@ -48,6 +49,7 @@ const TableLayout: React.FC<Partial<TableProps>> = ({
       <TableBanner />
       <TableContent emptyMessage={emptyMessage} />
       <TablePagination />
+      <TableFilterPanel />
     </>
   );
 };
