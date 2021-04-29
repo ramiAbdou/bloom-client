@@ -14,7 +14,7 @@ const CreateEventModal: React.FC = () => {
   const createEvent: OnFormSubmitFunction = useCreateEvent();
 
   return (
-    <Modal>
+    <Modal sheet>
       <Form
         className="mx-auto w-10 w-100--mt"
         spacing="lg"

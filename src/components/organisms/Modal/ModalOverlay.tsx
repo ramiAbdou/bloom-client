@@ -10,7 +10,7 @@ import { closeModal, modalVar } from './Modal.state';
  * background.
  */
 const ModalOverlay: React.FC = () => {
-  const lock: boolean = useReactiveVar(modalVar)?.options?.lock;
+  const lock: boolean = useReactiveVar(modalVar)?.lock;
 
   const onClick = (): void => {
     if (!lock) closeModal();

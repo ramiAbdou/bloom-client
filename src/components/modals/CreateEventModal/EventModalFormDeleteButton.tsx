@@ -11,8 +11,7 @@ const EventModalFormDeleteButton: React.FC = () => {
   const onClick = (): void => {
     showModal({
       id: ModalType.CONFIRM_DELETE_EVENT,
-      metadata: eventId,
-      options: { confirmation: true }
+      metadata: eventId
     });
   };
 

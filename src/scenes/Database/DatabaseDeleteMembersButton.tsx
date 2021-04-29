@@ -30,8 +30,7 @@ const DatabaseDeleteMembersButton: React.FC = () => {
   const onClick = (): void => {
     showModal({
       id: ModalType.DELETE_MEMBERS,
-      metadata: { tableDispatch, tableState } as TableStateAndDispatch,
-      options: { confirmation: true }
+      metadata: { tableDispatch, tableState } as TableStateAndDispatch
     });
   };
 

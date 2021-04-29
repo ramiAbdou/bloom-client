@@ -23,8 +23,8 @@ const useShowCheckInEventModal = (event: IEvent): void => {
     if (!isMember && !!communityId && (isMembersOnly || hasCookieError)) {
       showModal({
         id: ModalType.CHECK_IN,
-        metadata: event,
-        options: { lock: isMembersOnly }
+        lock: isMembersOnly,
+        metadata: event
       });
     }
   }, [communityId, event, hasCookieError, isMember, isMembersOnly]);

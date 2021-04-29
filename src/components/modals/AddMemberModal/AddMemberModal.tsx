@@ -5,7 +5,7 @@ import { AddMemberProvider } from './AddMemberModal.state';
 import AddMemberForm from './AddMemberModalForm';
 
 const AddMemberModal: React.FC = () => (
-  <Modal>
+  <Modal style={{ width: 750 }}>
     <AddMemberProvider>
       <AddMemberForm />
     </AddMemberProvider>

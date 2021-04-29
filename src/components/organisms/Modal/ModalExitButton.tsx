@@ -6,14 +6,16 @@ import Button from '@components/atoms/Button/Button';
 import { closeModal, modalVar } from './Modal.state';
 
 const ModalExitButton: React.FC = () => {
-  const lock: boolean = useReactiveVar(modalVar)?.options?.lock;
+  const lock: boolean = useReactiveVar(modalVar)?.lock;
+
+  if (lock) return null;
 
   const onClick = (): void => {
     closeModal();
   };
 
   return (
-    <Button className="c-modal-cancel" show={!lock} onClick={onClick}>
+    <Button className="c-modal-cancel" onClick={onClick}>
       <IoClose />
     </Button>
   );

@@ -42,7 +42,7 @@ const UpdateEventModal: React.FC = () => {
   if (loading) return null;
 
   return (
-    <Modal>
+    <Modal sheet>
       <Form
         className="mx-auto w-10 w-100--mt"
         spacing="lg"

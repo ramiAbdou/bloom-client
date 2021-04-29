@@ -39,8 +39,7 @@ const DatabaseDemoteMembersButton: React.FC = () => {
   const onClick = (): void => {
     showModal({
       id: ModalType.DEMOTE_MEMBERS,
-      metadata: { tableDispatch, tableState } as TableStateAndDispatch,
-      options: { confirmation: true }
+      metadata: { tableDispatch, tableState } as TableStateAndDispatch
     });
   };
 

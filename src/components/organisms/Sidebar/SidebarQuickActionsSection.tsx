@@ -12,18 +12,17 @@ import SidebarSection from './SidebarSection';
 const SidebarQuickActionsSection: ComponentWithFragments<IMember> = ({
   data: member
 }) => {
+  const onAddMemberClick = (): void => {
+    showModal({ id: ModalType.ADD_MEMBER });
+  };
+
+  const onCreateEventClick = (): void => {
+    showModal({ id: ModalType.CREATE_EVENT });
+  };
+
   const quickLinks: SidebarLinkOptions[] = [
-    {
-      Icon: IoAdd,
-      onClick: () =>
-        showModal({ id: ModalType.CREATE_EVENT, options: { sheet: true } }),
-      title: 'Create Event'
-    },
-    {
-      Icon: IoPersonAdd,
-      onClick: () => showModal({ id: ModalType.ADD_MEMBER, width: 750 }),
-      title: 'Add Member'
-    }
+    { Icon: IoAdd, onClick: onCreateEventClick, title: 'Create Event' },
+    { Icon: IoPersonAdd, onClick: onAddMemberClick, title: 'Add Member' }
   ];
 
   return (

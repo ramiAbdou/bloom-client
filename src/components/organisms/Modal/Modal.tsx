@@ -1,20 +1,19 @@
 import { AnimationProps, motion, MotionProps } from 'framer-motion';
 import React from 'react';
 
-import { useReactiveVar } from '@apollo/client';
 import useBreakpoint from '@hooks/useBreakpoint';
 import useLockBodyScroll from '@hooks/useLockBodyScroll';
 import { cx } from '@util/util';
-import { modalVar } from './Modal.state';
 import ModalExitButton from './ModalExitButton';
 import ModalOverlay from './ModalOverlay';
 
-const Modal: React.FC = ({ children }) => {
-  const className: string = useReactiveVar(modalVar)?.options?.className;
-  const confirmation: boolean = useReactiveVar(modalVar)?.options?.confirmation;
-  const sheet: boolean = useReactiveVar(modalVar)?.options?.sheet;
-  const width: number = useReactiveVar(modalVar)?.width;
+interface ModalProps {
+  className?: string;
+  sheet?: boolean;
+  style?: React.CSSProperties;
+}
 
+const Modal: React.FC<ModalProps> = ({ className, children, sheet, style }) => {
   useLockBodyScroll();
 
   const isMobile: boolean = useBreakpoint() === 1;
@@ -32,11 +31,7 @@ const Modal: React.FC = ({ children }) => {
     'c-modal-ctr--sheet': sheet ?? isMobile
   });
 
-  const css: string = cx(
-    'c-modal',
-    { 'c-modal--confirmation': confirmation },
-    className
-  );
+  const css: string = cx('c-modal', {}, className);
 
   return (
     <>
@@ -46,7 +41,7 @@ const Modal: React.FC = ({ children }) => {
         animate={animate}
         className={containerCss}
         initial={initial}
-        style={{ width }}
+        style={style}
         transition={{ duration: 0.2 }}
       >
         <div className={css}>{children}</div>

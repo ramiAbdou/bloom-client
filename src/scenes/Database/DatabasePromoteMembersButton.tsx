@@ -46,8 +46,7 @@ const DatabasePromoteMembersButton: React.FC = () => {
   const onClick = (): void => {
     showModal({
       id: ModalType.PROMOTE_MEMBERS,
-      metadata: { tableDispatch, tableState } as TableStateAndDispatch,
-      options: { confirmation: true }
+      metadata: { tableDispatch, tableState } as TableStateAndDispatch
     });
   };
 

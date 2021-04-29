@@ -16,7 +16,7 @@ const EventsHeaderCreateEventButton: React.FC = () => {
   if (!role) return null;
 
   const onClick = (): void => {
-    showModal({ id: ModalType.CREATE_EVENT, options: { sheet: true } });
+    showModal({ id: ModalType.CREATE_EVENT });
   };
 
   return (

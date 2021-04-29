@@ -18,16 +18,8 @@ export enum ModalType {
   VIEW_PROFILE = 'VIEW_PROFILE'
 }
 
-interface ModalOptions {
-  className?: string;
-  confirmation?: boolean;
-  lock?: boolean;
-  sheet?: boolean;
-}
-
 export interface ModalState {
   id: ModalType;
+  lock?: boolean;
   metadata?: unknown;
-  options?: ModalOptions;
-  width?: number;
 }
