@@ -72,7 +72,11 @@ const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
     where: { id: communityId }
   });
 
+  console.log('HERE', community);
+
   if (loading || show === false) return null;
+
+  const label: string = `Are you a member of ${community.name}?`;
 
   return (
     <StoryPage
@@ -84,9 +88,7 @@ const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
         }
       }}
     >
-      <FormLabel
-        marginBottom={16}
-      >{`Are you a member of ${community.name}?`}</FormLabel>
+      <FormLabel marginBottom={16}>{label}</FormLabel>
       <CheckInChoosePageActions />
     </StoryPage>
   );

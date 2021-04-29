@@ -29,7 +29,7 @@ const IndividualEventAttendeeListCard: ComponentWithFragments<IEvent> = ({
     >
       {!attendeesCount && <p>No guests attended.</p>}
       {!!attendeesCount && (
-        <ul>
+        <ul style={{ maxHeight: 300, overflow: 'scroll' }}>
           {event.eventAttendees.map((eventAttendee: IEventAttendee) => (
             <IndividualEventAttendeeListCardRow data={eventAttendee} />
           ))}

@@ -3,7 +3,6 @@ import {
   ClassNameProps,
   IdProps,
   LoadingProps,
-  ShowProps,
   TitleProps
 } from '@util/constants';
 
@@ -12,10 +11,7 @@ export interface StoryPageBranch extends IdProps, LoadingProps, TitleProps {
   iconUrl?: string;
 }
 
-export interface StoryPageProps
-  extends ClassNameProps,
-    ShowProps,
-    StoryPageBranch {
+export interface StoryPageProps extends ClassNameProps, StoryPageBranch {
   branchId?: string;
   branches?: Record<string, StoryPageBranch>;
   confirmation?: boolean;

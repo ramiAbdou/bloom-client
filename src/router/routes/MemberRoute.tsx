@@ -104,7 +104,7 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
 
   // Need to wait for the communityIdVar to update properly, since many of
   // the queries beyond this point depend on it.
-  if (!communityId) return null;
+  if (member?.community?.id && !communityId) return null;
 
   return <Route component={component} {...rest} />;
 };
