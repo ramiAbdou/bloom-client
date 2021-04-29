@@ -3,18 +3,18 @@ import React from 'react';
 import Button from '@components/atoms/Button/Button';
 import { useTable } from '@components/organisms/Table/Table.state';
 
-const TableFilterPanelAddButton: React.FC = () => {
+const FilterTablePanelClearButton: React.FC = () => {
   const [_, tableDispatch] = useTable();
 
   const onClick = (): void => {
-    tableDispatch({ type: 'ADD_FILTER' });
+    tableDispatch({ type: 'CLEAR_FILTERS' });
   };
 
   return (
-    <Button tertiary className="mb-sm--nlc" onClick={onClick}>
-      + Add Filter
+    <Button tertiary onClick={onClick}>
+      Clear All
     </Button>
   );
 };
 
-export default TableFilterPanelAddButton;
+export default FilterTablePanelClearButton;

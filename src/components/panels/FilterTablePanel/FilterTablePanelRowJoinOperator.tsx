@@ -7,9 +7,9 @@ import {
 } from '@components/organisms/Table/Table.state';
 import { useId } from '@core/state/Id.state';
 import { TableState } from '../../organisms/Table/Table.types';
-import { TableFilterJoinOperatorType } from './TableFilterPanel.types';
+import { TableFilterJoinOperatorType } from './FilterTablePanel.types';
 
-const TableFilterPanelRowJoinOperator: React.FC = () => {
+const FilterTablePanelRowJoinOperator: React.FC = () => {
   const [{ filterJoinOperator }, tableDispatch] = useTable();
 
   const filterId: string = useId();
@@ -38,4 +38,4 @@ const TableFilterPanelRowJoinOperator: React.FC = () => {
   );
 };
 
-export default TableFilterPanelRowJoinOperator;
+export default FilterTablePanelRowJoinOperator;

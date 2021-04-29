@@ -8,7 +8,7 @@ import {
 } from '@components/organisms/Table/Table.state';
 import { TableState } from '../../organisms/Table/Table.types';
 
-const TableFilterPanelApplyButton: React.FC = () => {
+const FilterTablePanelApplyButton: React.FC = () => {
   const [_, tableDispatch] = useTable();
 
   const filterCount: number = useTableSelector(
@@ -27,4 +27,4 @@ const TableFilterPanelApplyButton: React.FC = () => {
   );
 };
 
-export default TableFilterPanelApplyButton;
+export default FilterTablePanelApplyButton;

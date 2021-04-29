@@ -12,7 +12,7 @@ import {
 } from '@components/organisms/Table/Table.types';
 import { IdProps } from '@util/constants';
 
-const TableFilterPanelRowColumnDropdown: React.FC<IdProps> = ({
+const FilterTablePanelRowColumnDropdown: React.FC<IdProps> = ({
   id: filterId
 }) => {
   const [{ columns }, tableDispatch] = useTable();
@@ -42,4 +42,4 @@ const TableFilterPanelRowColumnDropdown: React.FC<IdProps> = ({
   );
 };
 
-export default TableFilterPanelRowColumnDropdown;
+export default FilterTablePanelRowColumnDropdown;

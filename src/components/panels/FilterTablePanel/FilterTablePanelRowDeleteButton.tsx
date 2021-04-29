@@ -9,7 +9,7 @@ import {
 import { useId } from '@core/state/Id.state';
 import { TableState } from '../../organisms/Table/Table.types';
 
-const TableFilterPanelRowDeleteButton: React.FC = () => {
+const FilterTablePanelRowDeleteButton: React.FC = () => {
   const [_, tableDispatch] = useTable();
 
   const filterId: string = useId();
@@ -31,4 +31,4 @@ const TableFilterPanelRowDeleteButton: React.FC = () => {
   );
 };
 
-export default TableFilterPanelRowDeleteButton;
+export default FilterTablePanelRowDeleteButton;

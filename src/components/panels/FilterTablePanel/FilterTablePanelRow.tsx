@@ -7,14 +7,14 @@ import {
 } from '@components/organisms/Table/Table.state';
 import { IdProvider } from '@core/state/Id.state';
 import { IdProps } from '@util/constants';
-import { TableFilter } from './TableFilterPanel.types';
-import TableFilterRowQuestionDropdown from './TableFilterPanelRowColumnDropdown';
-import TableFilterRowDeleteButton from './TableFilterPanelRowDeleteButton';
-import TableFilterRowJoinOperator from './TableFilterPanelRowJoinOperator';
-import TableFilterRowOperatorDropdown from './TableFilterPanelRowOperatorDropdown';
-import TableFilterRowValueInput from './TableFilterPanelRowValueInput';
+import { TableFilter } from './FilterTablePanel.types';
+import TableFilterRowQuestionDropdown from './FilterTablePanelRowColumnDropdown';
+import TableFilterRowDeleteButton from './FilterTablePanelRowDeleteButton';
+import TableFilterRowJoinOperator from './FilterTablePanelRowJoinOperator';
+import TableFilterRowOperatorDropdown from './FilterTablePanelRowOperatorDropdown';
+import TableFilterRowValueInput from './FilterTablePanelRowValueInput';
 
-const TableFilterPanelRow: React.FC<IdProps> = ({ id: filterId }) => {
+const FilterTablePanelRow: React.FC<IdProps> = ({ id: filterId }) => {
   const [{ columns }, tableDispatch] = useTable();
 
   const filter: TableFilter = useTableFilter(filterId);
@@ -48,4 +48,4 @@ const TableFilterPanelRow: React.FC<IdProps> = ({ id: filterId }) => {
   );
 };
 
-export default TableFilterPanelRow;
+export default FilterTablePanelRow;

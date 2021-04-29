@@ -3,9 +3,9 @@ import React from 'react';
 import Button from '@components/atoms/Button/Button';
 import Row from '@components/containers/Row/Row';
 import { closePanel } from '@components/organisms/Panel/Panel.state';
-import TableFilterPanelApplyButton from './TableFilterPanelApplyButton';
+import FilterTablePanelApplyButton from './FilterTablePanelApplyButton';
 
-const TableFilterPanelCloseButton: React.FC = () => {
+const FilterTablePanelCloseButton: React.FC = () => {
   const onClick = (): void => {
     closePanel();
   };
@@ -17,11 +17,11 @@ const TableFilterPanelCloseButton: React.FC = () => {
   );
 };
 
-const TableFilterPanelActions: React.FC = () => (
+const FilterTablePanelActions: React.FC = () => (
   <Row spacing="xs">
-    <TableFilterPanelApplyButton />
-    <TableFilterPanelCloseButton />
+    <FilterTablePanelApplyButton />
+    <FilterTablePanelCloseButton />
   </Row>
 );
 
-export default TableFilterPanelActions;
+export default FilterTablePanelActions;

@@ -10,9 +10,9 @@ import {
 import { TableColumn } from '@components/organisms/Table/Table.types';
 import { useId } from '@core/state/Id.state';
 import { QuestionType } from '@util/constants';
-import { TableFilter } from './TableFilterPanel.types';
+import { TableFilter } from './FilterTablePanel.types';
 
-const TableFilterPanelRowValueInput: React.FC = () => {
+const FilterTablePanelRowValueInput: React.FC = () => {
   const [_, tableDispatch] = useTable();
 
   const filterId: string = useId();
@@ -48,4 +48,4 @@ const TableFilterPanelRowValueInput: React.FC = () => {
   );
 };
 
-export default TableFilterPanelRowValueInput;
+export default FilterTablePanelRowValueInput;

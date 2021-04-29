@@ -6,9 +6,9 @@ import {
   useTableFilter
 } from '@components/organisms/Table/Table.state';
 import { useId } from '@core/state/Id.state';
-import { TableFilter, TableFilterOperatorType } from './TableFilterPanel.types';
+import { TableFilter, TableFilterOperatorType } from './FilterTablePanel.types';
 
-const TableFilterPanelRowOperatorDropdown: React.FC = () => {
+const FilterTablePanelRowOperatorDropdown: React.FC = () => {
   const [_, tableDispatch] = useTable();
 
   const filterId: string = useId();
@@ -36,4 +36,4 @@ const TableFilterPanelRowOperatorDropdown: React.FC = () => {
   );
 };
 
-export default TableFilterPanelRowOperatorDropdown;
+export default FilterTablePanelRowOperatorDropdown;

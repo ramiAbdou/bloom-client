@@ -3,10 +3,10 @@ import React from 'react';
 import Row from '@components/containers/Row/Row';
 import Panel from '@components/organisms/Panel/Panel';
 import { useTable } from '@components/organisms/Table/Table.state';
-import TableFilterPanelActions from './TableFilterPanelActions';
-import TableFilterPanelAddButton from './TableFilterPanelAddButton';
-import TableFilterPanelClearButton from './TableFilterPanelClearButton';
-import TableFilterPanelRow from './TableFilterPanelRow';
+import TableFilterPanelActions from './FilterTablePanelActions';
+import TableFilterPanelAddButton from './FilterTablePanelAddButton';
+import TableFilterPanelClearButton from './FilterTablePanelClearButton';
+import TableFilterPanelRow from './FilterTablePanelRow';
 
 const TableFilterPanelHeader: React.FC = () => (
   <Row className="mb-sm--nlc" justify="sb" spacing="xs">
