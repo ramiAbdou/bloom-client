@@ -23,7 +23,7 @@ const SidebarProfileContainer: ComponentWithData<IMember> = ({
   const onClick = (): void => {
     showPanel({
       align: 'RIGHT_BOTTOM',
-      id: PanelType.PROFILE,
+      id: PanelType.NAVIGATE_PROFILE,
       style: { marginLeft: 24, minWidth: 270, padding: 8 }
     });
   };
@@ -36,7 +36,7 @@ const SidebarProfileContainer: ComponentWithData<IMember> = ({
     <div className="o-nav-profile-ctr">
       <button
         className={css}
-        id={PanelType.PROFILE}
+        id={PanelType.NAVIGATE_PROFILE}
         type="button"
         onClick={onClick}
       >

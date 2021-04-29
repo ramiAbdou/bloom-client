@@ -2,6 +2,7 @@ import React from 'react';
 import { IoExit, IoPerson } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
+import Panel from '@components/organisms/Panel/Panel';
 import { PanelAction } from '@components/organisms/Panel/Panel.types';
 import PanelOption from '@components/organisms/Panel/PanelOption';
 import useCommunityUrlName from '@core/hooks/useCommunityUrlName';
@@ -24,11 +25,11 @@ const SidebarPanel: React.FC = () => {
   ];
 
   return (
-    <>
+    <Panel>
       {actions.map((action) => (
         <PanelOption key={action.text} {...action} />
       ))}
-    </>
+    </Panel>
   );
 };
 

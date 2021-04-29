@@ -5,9 +5,9 @@ import { gql } from '@apollo/client';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { ComponentWithFragments } from '@util/constants';
 import { IMember } from '@util/constants.entities';
+import useLogout from '../../panels/NavigateProfilePanel/useLogout';
 import { SidebarLinkOptions } from './Sidebar.types';
 import SidebarSection from './SidebarSection';
-import useLogout from './useLogout';
 
 const SidebarProfileSection: ComponentWithFragments<IMember> = ({
   data: member

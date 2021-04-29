@@ -3,10 +3,10 @@ import { IoAdd } from 'react-icons/io5';
 
 import { gql, useReactiveVar } from '@apollo/client';
 import Row from '@components/containers/Row/Row';
+import { directoryFilterOpenQuestionIdVar } from '@scenes/Directory/Directory.reactive';
 import { ComponentWithFragments } from '@util/constants';
 import { IQuestion } from '@util/constants.entities';
 import { cx } from '@util/util';
-import { directoryFilterOpenQuestionIdVar } from './Directory.reactive';
 
 const DirectoryFilterPanelQuestionHeader: ComponentWithFragments<IQuestion> = ({
   data: question

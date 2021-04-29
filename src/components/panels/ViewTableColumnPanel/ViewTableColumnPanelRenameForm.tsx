@@ -4,7 +4,10 @@ import Form, { OnFormSubmitFunction } from '@components/organisms/Form/Form';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { closePanel, panelVar } from '@components/organisms/Panel/Panel.state';
-import { TableColumn, TableStateAndDispatch } from './Table.types';
+import {
+  TableColumn,
+  TableStateAndDispatch
+} from '@components/organisms/Table/Table.types';
 
 const TableColumnPanelRenameForm: React.FC = () => {
   // @ts-ignore

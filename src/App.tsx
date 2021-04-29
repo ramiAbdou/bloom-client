@@ -12,7 +12,7 @@ import ReactDOM from 'react-dom';
 
 import Loader from '@components/organisms/Loader/Loader';
 import ModalPortal from '@components/organisms/Modal/ModalPortal';
-import Panel from '@components/organisms/Panel/Panel';
+import PanelPortal from '@components/organisms/Panel/PanelPortal';
 import ToastQueue from '@components/organisms/Toast/Toast';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
@@ -39,7 +39,7 @@ const App: React.FC = () => (
   <AppProvider>
     <Loader />
     <ModalPortal />
-    <Panel />
+    <PanelPortal />
     <Router />
     <ToastQueue />
   </AppProvider>

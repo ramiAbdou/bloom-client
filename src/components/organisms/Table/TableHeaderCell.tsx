@@ -32,10 +32,10 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
       showPanel({
         align: 'BOTTOM_LEFT',
         className: 'o-table-col-panel',
-        id: PanelType.TABLE_COLUMN,
+        id: PanelType.VIEW_TABLE_COLUMN,
         metadata: { columnId: id, tableDispatch, tableState },
         scrollId: 'o-table-ctr',
-        uniqueIdentifier: `${PanelType.TABLE_COLUMN}-${id}`
+        uniqueIdentifier: `${PanelType.VIEW_TABLE_COLUMN}-${id}`
       });
     }
   };
@@ -57,7 +57,7 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
   return (
     <th
       className={css}
-      id={`${PanelType.TABLE_COLUMN}-${id}`}
+      id={`${PanelType.VIEW_TABLE_COLUMN}-${id}`}
       onClick={onClick}
     >
       <div>

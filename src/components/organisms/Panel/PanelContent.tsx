@@ -2,35 +2,35 @@ import React from 'react';
 
 import { useReactiveVar } from '@apollo/client';
 import { panelVar } from '@components/organisms/Panel/Panel.state';
-import DirectoryFilterPanel from '@scenes/Directory/DirectoryFilterPanel';
-import IndividualEventAddRecordingPanelForm from '@scenes/Events/IndividualEventAddRecordingPanelForm';
-import SidebarPanel from '../Sidebar/SidebarPanel';
-import TableColumnPanel from '../Table/TableColumnPanel';
-import TableFilterPanel from '../Table/TableFilterPanel';
+import AddRecordingLinkPanel from '@components/panels/AddRecordingLinkPanel/AddRecordingLinkPanel';
+import FilterDirectoryPanel from '@components/panels/FilterDirectoryPanel/FilterDirectoryPanel';
+import FilterTablePanel from '@components/panels/FilterTablePanel/FilterTablePanel';
+import NavigateProfilePanel from '@components/panels/NavigateProfilePanel/NavigateProfilePanel';
+import ViewTableColumnPanel from '@components/panels/ViewTableColumnPanel/ViewTableColumnPanel';
 import { PanelType } from './Panel.types';
 
 const PanelContent: React.FC = () => {
   const panelId: string = useReactiveVar(panelVar)?.id;
 
-  if (panelId === PanelType.ADD_RECORDING_LINK) {
-    return <IndividualEventAddRecordingPanelForm />;
+  switch (panelId) {
+    case PanelType.ADD_RECORDING_LINK:
+      return <AddRecordingLinkPanel />;
+
+    case PanelType.FILTER_DIRECTORY:
+      return <FilterDirectoryPanel />;
+
+    case PanelType.FILTER_TABLE:
+      return <FilterTablePanel />;
+
+    case PanelType.NAVIGATE_PROFILE:
+      return <NavigateProfilePanel />;
+
+    case PanelType.VIEW_TABLE_COLUMN:
+      return <ViewTableColumnPanel />;
+
+    default:
+      return null;
   }
-
-  if (panelId === PanelType.FILTER_DIRECTORY) {
-    return <DirectoryFilterPanel />;
-  }
-
-  if (panelId === PanelType.FILTER_TABLE) {
-    return <TableFilterPanel />;
-  }
-
-  if (panelId === PanelType.TABLE_COLUMN) {
-    return <TableColumnPanel />;
-  }
-
-  if (panelId === PanelType.PROFILE) return <SidebarPanel />;
-
-  return null;
 };
 
 export default PanelContent;

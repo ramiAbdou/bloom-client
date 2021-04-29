@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
-import { directoryFilterSelectedValuesVar } from './Directory.reactive';
+import { directoryFilterSelectedValuesVar } from '@scenes/Directory/Directory.reactive';
 
 const DirectoryFilterPanelClearButton: React.FC = () => {
   const onClick = (): void => {

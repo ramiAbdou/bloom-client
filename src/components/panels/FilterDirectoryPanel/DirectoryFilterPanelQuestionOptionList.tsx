@@ -2,9 +2,9 @@ import React from 'react';
 
 import { gql, useReactiveVar } from '@apollo/client';
 import Show from '@components/containers/Show';
+import { directoryFilterOpenQuestionIdVar } from '@scenes/Directory/Directory.reactive';
 import { ComponentWithFragments } from '@util/constants';
 import { IQuestion } from '@util/constants.entities';
-import { directoryFilterOpenQuestionIdVar } from './Directory.reactive';
 import DirectoryFilterPanelQuestionOption from './DirectoryFilterPanelQuestionOption';
 
 const DirectoryFilterPanelQuestionOptionList: ComponentWithFragments<IQuestion> = ({

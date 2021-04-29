@@ -2,8 +2,7 @@ import React from 'react';
 
 import Row from '@components/containers/Row/Row';
 import Panel from '@components/organisms/Panel/Panel';
-import { useTableState } from './Table.state';
-import { TableState } from './Table.types';
+import { useTable } from '@components/organisms/Table/Table.state';
 import TableFilterPanelActions from './TableFilterPanelActions';
 import TableFilterPanelAddButton from './TableFilterPanelAddButton';
 import TableFilterPanelClearButton from './TableFilterPanelClearButton';
@@ -17,7 +16,7 @@ const TableFilterPanelHeader: React.FC = () => (
 );
 
 const TableFilterPanelRowList: React.FC = () => {
-  const { allFilterIds }: TableState = useTableState();
+  const [{ allFilterIds }] = useTable();
 
   return (
     <ul className="mb-sm--nlc">
