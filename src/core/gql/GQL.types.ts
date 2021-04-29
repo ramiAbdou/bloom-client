@@ -9,10 +9,8 @@ type RecursiveWherePartial<T> = {
 };
 
 export enum GQLOperation {
-  CREATE = 'Create',
   FIND = 'Find',
-  FIND_ONE = 'FindOne',
-  UPDATE = 'Update'
+  FIND_ONE = 'FindOne'
 }
 
 interface CreateArgsModification<T> {
@@ -56,9 +54,4 @@ export interface QueryResult<T = unknown> {
   data: T;
   error: string;
   loading: boolean;
-}
-
-export interface UpdateArgs<T> {
-  data: Omit<RecursivePartial<T>, 'createdAt' | 'id' | 'updatedAt'>;
-  where: RecursiveWherePartial<T>;
 }

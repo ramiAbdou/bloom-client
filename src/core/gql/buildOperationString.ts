@@ -12,17 +12,11 @@ function buildOperationString<T>(
   const entityName: string = pluralize(nameWithoutI).toLowerCase();
 
   switch (operation) {
-    case GQLOperation.CREATE:
-      return `create${nameWithoutI}`;
-
     case GQLOperation.FIND_ONE:
       return entityName;
 
     case GQLOperation.FIND:
       return entityName;
-
-    case GQLOperation.UPDATE:
-      return `update${nameWithoutI}`;
 
     default:
       return entityName;
