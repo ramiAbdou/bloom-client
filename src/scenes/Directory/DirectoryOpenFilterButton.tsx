@@ -6,7 +6,7 @@ import { showPanel } from '@components/organisms/Panel/Panel.state';
 import { PanelType } from '@components/organisms/Panel/Panel.types';
 import useTooltip from '@hooks/useTooltip';
 
-const DirectoryFilterPanelOpenButton: React.FC = () => {
+const DirectoryOpenFilterButton: React.FC = () => {
   const ref: React.MutableRefObject<HTMLElement> = useTooltip('Filter');
 
   const onClick = (): void => {
@@ -25,4 +25,4 @@ const DirectoryFilterPanelOpenButton: React.FC = () => {
   );
 };
 
-export default DirectoryFilterPanelOpenButton;
+export default DirectoryOpenFilterButton;

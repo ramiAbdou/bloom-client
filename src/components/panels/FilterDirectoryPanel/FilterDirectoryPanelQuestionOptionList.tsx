@@ -5,9 +5,9 @@ import Show from '@components/containers/Show';
 import { directoryFilterOpenQuestionIdVar } from '@scenes/Directory/Directory.reactive';
 import { ComponentWithFragments } from '@util/constants';
 import { IQuestion } from '@util/constants.entities';
-import DirectoryFilterPanelQuestionOption from './DirectoryFilterPanelQuestionOption';
+import FilterDirectoryPanelQuestionOption from './FilterDirectoryPanelQuestionOption';
 
-const DirectoryFilterPanelQuestionOptionList: ComponentWithFragments<IQuestion> = ({
+const FilterDirectoryPanelQuestionOptionList: ComponentWithFragments<IQuestion> = ({
   data: question
 }) => {
   const isOpen: boolean =
@@ -32,19 +32,19 @@ const DirectoryFilterPanelQuestionOptionList: ComponentWithFragments<IQuestion> 
     <Show show={!!isOpen}>
       <ul className="mt-sm s-directory-filter-question-option-list">
         {question.options.map((_: string, i: number) => (
-          <DirectoryFilterPanelQuestionOption data={question} i={i} />
+          <FilterDirectoryPanelQuestionOption data={question} i={i} />
         ))}
       </ul>
     </Show>
   );
 };
 
-DirectoryFilterPanelQuestionOptionList.fragment = gql`
-  fragment DirectoryFilterPanelQuestionOptionListFragment on questions {
+FilterDirectoryPanelQuestionOptionList.fragment = gql`
+  fragment FilterDirectoryPanelQuestionOptionListFragment on questions {
     options
-    ...DirectoryFilterPanelQuestionOptionFragment
+    ...FilterDirectoryPanelQuestionOptionFragment
   }
-  ${DirectoryFilterPanelQuestionOption.fragment}
+  ${FilterDirectoryPanelQuestionOption.fragment}
 `;
 
-export default DirectoryFilterPanelQuestionOptionList;
+export default FilterDirectoryPanelQuestionOptionList;

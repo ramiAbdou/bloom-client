@@ -3,7 +3,7 @@ import React from 'react';
 import Button from '@components/atoms/Button/Button';
 import { directoryFilterSelectedValuesVar } from '@scenes/Directory/Directory.reactive';
 
-const DirectoryFilterPanelClearButton: React.FC = () => {
+const FilterDirectoryPanelClearButton: React.FC = () => {
   const onClick = (): void => {
     directoryFilterSelectedValuesVar([]);
   };
@@ -15,4 +15,4 @@ const DirectoryFilterPanelClearButton: React.FC = () => {
   );
 };
 
-export default DirectoryFilterPanelClearButton;
+export default FilterDirectoryPanelClearButton;

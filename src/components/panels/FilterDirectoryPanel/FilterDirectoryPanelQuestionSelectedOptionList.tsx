@@ -11,7 +11,7 @@ import {
 import { ComponentWithFragments } from '@util/constants';
 import { IQuestion } from '@util/constants.entities';
 
-const DirectoryFilterPanelQuestionSelectedOptionList: ComponentWithFragments<IQuestion> = ({
+const FilterDirectoryPanelQuestionSelectedOptionList: ComponentWithFragments<IQuestion> = ({
   data: question
 }) => {
   const isOpen: boolean =
@@ -38,10 +38,10 @@ const DirectoryFilterPanelQuestionSelectedOptionList: ComponentWithFragments<IQu
   );
 };
 
-DirectoryFilterPanelQuestionSelectedOptionList.fragment = gql`
-  fragment DirectoryFilterPanelQuestionSelectedOptionListFragment on questions {
+FilterDirectoryPanelQuestionSelectedOptionList.fragment = gql`
+  fragment FilterDirectoryPanelQuestionSelectedOptionListFragment on questions {
     id
   }
 `;
 
-export default DirectoryFilterPanelQuestionSelectedOptionList;
+export default FilterDirectoryPanelQuestionSelectedOptionList;

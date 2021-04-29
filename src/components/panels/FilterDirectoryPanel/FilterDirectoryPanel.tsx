@@ -1,14 +1,14 @@
 import React from 'react';
 
 import Panel from '@components/organisms/Panel/Panel';
-import DirectoryFilterPanelHeader from './DirectoryFilterPanelHeader';
-import DirectoryFilterPanelQuestionList from './DirectoryFilterPanelQuestionList';
+import FilterDirectoryPanelHeader from './FilterDirectoryPanelHeader';
+import FilterDirectoryPanelQuestionList from './FilterDirectoryPanelQuestionList';
 
-const DirectoryFilterPanel: React.FC = () => (
+const FilterDirectoryPanel: React.FC = () => (
   <Panel align="BOTTOM_RIGHT" style={{ padding: 0 }}>
-    <DirectoryFilterPanelHeader />
-    <DirectoryFilterPanelQuestionList />
+    <FilterDirectoryPanelHeader />
+    <FilterDirectoryPanelQuestionList />
   </Panel>
 );
 
-export default DirectoryFilterPanel;
+export default FilterDirectoryPanel;

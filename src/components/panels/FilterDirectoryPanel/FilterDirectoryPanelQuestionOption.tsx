@@ -9,13 +9,13 @@ import {
 import { ComponentWithFragments } from '@util/constants';
 import { IMemberValue, IQuestion } from '@util/constants.entities';
 
-interface DirectoryFilterPanelQuestionOptionProps {
+interface FilterDirectoryPanelQuestionOptionProps {
   i: number;
 }
 
-const DirectoryFilterPanelQuestionOption: ComponentWithFragments<
+const FilterDirectoryPanelQuestionOption: ComponentWithFragments<
   IQuestion,
-  DirectoryFilterPanelQuestionOptionProps
+  FilterDirectoryPanelQuestionOptionProps
 > = ({ data: question, i }) => {
   const option: string = question.options[i];
 
@@ -61,8 +61,8 @@ const DirectoryFilterPanelQuestionOption: ComponentWithFragments<
   );
 };
 
-DirectoryFilterPanelQuestionOption.fragment = gql`
-  fragment DirectoryFilterPanelQuestionOptionFragment on questions {
+FilterDirectoryPanelQuestionOption.fragment = gql`
+  fragment FilterDirectoryPanelQuestionOptionFragment on questions {
     memberValues {
       id
       value
@@ -70,4 +70,4 @@ DirectoryFilterPanelQuestionOption.fragment = gql`
   }
 `;
 
-export default DirectoryFilterPanelQuestionOption;
+export default FilterDirectoryPanelQuestionOption;

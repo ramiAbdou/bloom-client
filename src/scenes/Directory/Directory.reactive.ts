@@ -10,7 +10,7 @@ export const directoryIsAdminsOnlyVar: ReactiveVar<boolean> = makeVar<boolean>(
 
 /**
  * Returns the ID of the IQuestion that is currently expanded in the
- * DirectoryFilterPanel. Returns null if no questions are expanded.
+ * FilterDirectoryPanel. Returns null if no questions are expanded.
  */
 export const directoryFilterOpenQuestionIdVar: ReactiveVar<string> = makeVar<string>(
   null
@@ -23,7 +23,7 @@ export interface DirectoryFilterSelectedValue {
 
 /**
  * Returns an array of DirectoryFilterSelectedValue(s) based on the values
- * that are selected in the DirectoryFilterPanel.
+ * that are selected in the FilterDirectoryPanel.
  *
  * @example
  * // Returns [{ questionId: "1", value: "Computer Science" }].

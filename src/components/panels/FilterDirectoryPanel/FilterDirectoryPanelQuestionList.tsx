@@ -2,7 +2,7 @@ import React from 'react';
 
 import { DocumentNode, gql, useQuery } from '@apollo/client';
 import { IQuestion } from '@util/constants.entities';
-import DirectoryFilterPanelQuestion from './DirectoryFilterPanelQuestion';
+import FilterDirectoryPanelQuestion from './FilterDirectoryPanelQuestion';
 
 interface GetQuestionsByCommunityIdResult {
   questions: IQuestion[];
@@ -20,13 +20,13 @@ const GET_QUESTIONS_BY_COMMUNITY_ID: DocumentNode = gql`
       }
       order_by: { rank: asc, createdAt: desc }
     ) {
-      ...DirectoryFilterPanelQuestionFragment
+      ...FilterDirectoryPanelQuestionFragment
     }
   }
-  ${DirectoryFilterPanelQuestion.fragment}
+  ${FilterDirectoryPanelQuestion.fragment}
 `;
 
-const DirectoryFilterPanelQuestionList: React.FC = () => {
+const FilterDirectoryPanelQuestionList: React.FC = () => {
   const { data, loading } = useQuery<GetQuestionsByCommunityIdResult>(
     GET_QUESTIONS_BY_COMMUNITY_ID
   );
@@ -38,10 +38,10 @@ const DirectoryFilterPanelQuestionList: React.FC = () => {
   return (
     <ul>
       {questions?.map((question: IQuestion) => (
-        <DirectoryFilterPanelQuestion key={question.id} data={question} />
+        <FilterDirectoryPanelQuestion key={question.id} data={question} />
       ))}
     </ul>
   );
 };
 
-export default DirectoryFilterPanelQuestionList;
+export default FilterDirectoryPanelQuestionList;

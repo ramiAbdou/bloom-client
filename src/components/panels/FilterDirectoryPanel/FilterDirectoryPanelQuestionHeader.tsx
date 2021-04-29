@@ -8,7 +8,7 @@ import { ComponentWithFragments } from '@util/constants';
 import { IQuestion } from '@util/constants.entities';
 import { cx } from '@util/util';
 
-const DirectoryFilterPanelQuestionHeader: ComponentWithFragments<IQuestion> = ({
+const FilterDirectoryPanelQuestionHeader: ComponentWithFragments<IQuestion> = ({
   data: question
 }) => {
   const isOpen: boolean =
@@ -29,11 +29,11 @@ const DirectoryFilterPanelQuestionHeader: ComponentWithFragments<IQuestion> = ({
   );
 };
 
-DirectoryFilterPanelQuestionHeader.fragment = gql`
-  fragment DirectoryFilterPanelQuestionHeaderFragment on questions {
+FilterDirectoryPanelQuestionHeader.fragment = gql`
+  fragment FilterDirectoryPanelQuestionHeaderFragment on questions {
     id
     title
   }
 `;
 
-export default DirectoryFilterPanelQuestionHeader;
+export default FilterDirectoryPanelQuestionHeader;
