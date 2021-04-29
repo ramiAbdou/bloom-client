@@ -12,7 +12,7 @@ const DatabaseFilterButton: React.FC = () => {
   const isAnythingSelected: boolean = !!selectedRowIds.length;
 
   const onClick: VoidFunction = (): void => {
-    showPanel({ align: 'BOTTOM_RIGHT', id: PanelType.FILTER_TABLE });
+    showPanel({ id: PanelType.FILTER_TABLE });
   };
 
   return (

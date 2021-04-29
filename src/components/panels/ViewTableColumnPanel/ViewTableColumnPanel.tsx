@@ -6,7 +6,7 @@ import TableSortButton from '../../organisms/Table/TableSortButton';
 import ViewTableColumnPanelRenameForm from './ViewTableColumnPanelRenameForm';
 
 const TableColumnPanel: React.FC = () => (
-  <Panel>
+  <Panel align="BOTTOM_LEFT" className="o-table-col-panel">
     <ViewTableColumnPanelRenameForm />
     <TableSortButton direction={TableSortDirection.ASC} />
     <TableSortButton direction={TableSortDirection.DESC} />

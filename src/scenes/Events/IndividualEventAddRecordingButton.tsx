@@ -25,7 +25,6 @@ const IndividualEventAddRecordingButton: ComponentWithFragments<IEvent> = ({
 
   const onClick = (): void => {
     showPanel({
-      align: 'BOTTOM_LEFT',
       id: PanelType.ADD_RECORDING_LINK,
       metadata: event.id,
       size: 'lg'

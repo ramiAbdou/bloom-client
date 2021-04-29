@@ -21,11 +21,7 @@ const SidebarProfileContainer: ComponentWithData<IMember> = ({
     activeRoute === 'membership' || activeRoute === 'profile';
 
   const onClick = (): void => {
-    showPanel({
-      align: 'RIGHT_BOTTOM',
-      id: PanelType.NAVIGATE_PROFILE,
-      style: { marginLeft: 24, minWidth: 270, padding: 8 }
-    });
+    showPanel({ id: PanelType.NAVIGATE_PROFILE });
   };
 
   const css: string = cx('o-nav-profile', {

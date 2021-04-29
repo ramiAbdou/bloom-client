@@ -5,18 +5,24 @@ import useOnClickOutside from 'use-onclickoutside';
 import { useReactiveVar } from '@apollo/client';
 import { closePanel, panelVar } from '@components/organisms/Panel/Panel.state';
 import { cx } from '@util/util';
+import { PanelAlign } from './Panel.types';
 import usePanelPosition from './usePanelPosition';
 
-const PanelContainer: React.FC = ({ children }) => {
-  const {
-    align: initialAlign,
-    className,
-    id,
-    scrollId,
-    style,
-    size,
-    uniqueIdentifier
-  } = useReactiveVar(panelVar) ?? {};
+interface PanelProps {
+  align: PanelAlign;
+  className?: string;
+  style?: React.CSSProperties;
+  size?: 'md' | 'lg';
+}
+
+const Panel: React.FC<PanelProps> = ({
+  align: initialAlign,
+  className,
+  children,
+  size,
+  style
+}) => {
+  const { id, scrollId, uniqueIdentifier } = useReactiveVar(panelVar) ?? {};
 
   const elementId = uniqueIdentifier ?? id;
   const ref: MutableRefObject<HTMLDivElement> = useRef(null);
@@ -112,4 +118,4 @@ const PanelContainer: React.FC = ({ children }) => {
   );
 };
 
-export default PanelContainer;
+export default Panel;

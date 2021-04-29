@@ -10,11 +10,7 @@ const DirectoryFilterPanelOpenButton: React.FC = () => {
   const ref: React.MutableRefObject<HTMLElement> = useTooltip('Filter');
 
   const onClick = (): void => {
-    showPanel({
-      align: 'BOTTOM_RIGHT',
-      id: PanelType.FILTER_DIRECTORY,
-      style: { padding: 0 }
-    });
+    showPanel({ id: PanelType.FILTER_DIRECTORY });
   };
 
   return (

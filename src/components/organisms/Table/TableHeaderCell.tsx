@@ -30,8 +30,6 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
   const onClick = (): void => {
     if (options.isSortable) {
       showPanel({
-        align: 'BOTTOM_LEFT',
-        className: 'o-table-col-panel',
         id: PanelType.VIEW_TABLE_COLUMN,
         metadata: { columnId: id, tableDispatch, tableState },
         scrollId: 'o-table-ctr',

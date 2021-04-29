@@ -19,8 +19,6 @@ export enum PanelType {
 }
 
 export interface PanelState {
-  align?: PanelAlign;
-  className?: string;
   id: PanelType;
   metadata?: unknown;
   scrollId?: string;

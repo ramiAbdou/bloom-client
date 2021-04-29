@@ -29,7 +29,7 @@ const TableFilterPanelRowList: React.FC = () => {
 };
 
 const TableFilterPanel: React.FC = () => (
-  <Panel>
+  <Panel align="BOTTOM_RIGHT">
     <TableFilterPanelHeader />
     <TableFilterPanelRowList />
     <TableFilterPanelAddButton />
