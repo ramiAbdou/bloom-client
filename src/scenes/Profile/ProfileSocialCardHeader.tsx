@@ -2,7 +2,8 @@ import React from 'react';
 
 import { gql } from '@apollo/client';
 import { showModal } from '@components/organisms/Modal/Modal.state';
-import { ComponentWithFragments, ModalType } from '@util/constants';
+import { ModalType } from '@components/organisms/Modal/Modal.types';
+import { ComponentWithFragments } from '@util/constants';
 import { IMemberSocials } from '@util/constants.entities';
 import ProfileCardHeader from './ProfileCardHeader';
 

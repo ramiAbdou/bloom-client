@@ -4,6 +4,7 @@ import { memberIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import { showModal } from '@components/organisms/Modal/Modal.state';
+import { ModalType } from '@components/organisms/Modal/Modal.types';
 import {
   useTableDispatch,
   useTableState
@@ -14,7 +15,6 @@ import {
   TableStateAndDispatch
 } from '@components/organisms/Table/Table.types';
 import useMemberRole from '@core/hooks/useMemberRole';
-import { ModalType } from '@util/constants';
 import { MemberRole } from '@util/constants.entities';
 import { take } from '@util/util';
 import DatabaseAction from './DatabaseAction';

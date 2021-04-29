@@ -18,7 +18,7 @@ import ViewApplicantModal from '@components/modals/ViewApplicantModal/ViewApplic
 import ViewEventErrorModal from '@components/modals/ViewEventErrorModal/ViewEventErrorModal';
 import ViewProfileModal from '@components/modals/ViewProfileModal/ViewProfileModal';
 import { closeModal, modalVar } from '@components/organisms/Modal/Modal.state';
-import { ModalType } from '@util/constants';
+import { ModalType } from '@components/organisms/Modal/Modal.types';
 
 const ModalContent: React.FC = () => {
   const modalId: ModalType = useReactiveVar(modalVar)?.id;

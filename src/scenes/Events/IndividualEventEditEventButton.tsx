@@ -3,8 +3,9 @@ import React from 'react';
 import { gql } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import { showModal } from '@components/organisms/Modal/Modal.state';
+import { ModalType } from '@components/organisms/Modal/Modal.types';
 import useMemberRole from '@core/hooks/useMemberRole';
-import { ComponentWithFragments, ModalType } from '@util/constants';
+import { ComponentWithFragments } from '@util/constants';
 import { IEvent, MemberRole } from '@util/constants.entities';
 import { EventTiming, getEventTiming } from './Events.util';
 

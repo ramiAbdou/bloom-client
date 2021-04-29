@@ -4,8 +4,8 @@ import { communityIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
 import { showModal } from '@components/organisms/Modal/Modal.state';
+import { ModalType } from '@components/organisms/Modal/Modal.types';
 import useIsMember from '@hooks/useIsMember';
-import { ModalType } from '@util/constants';
 import { EventPrivacy, IEvent } from '@util/constants.entities';
 import { ErrorContext } from '@util/constants.errors';
 

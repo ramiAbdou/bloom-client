@@ -2,17 +2,14 @@ import React from 'react';
 
 import { gql } from '@apollo/client';
 import { showModal } from '@components/organisms/Modal/Modal.state';
+import { ModalType } from '@components/organisms/Modal/Modal.types';
 import Table from '@components/organisms/Table/Table';
 import {
   TableColumn,
   TableOptions,
   TableRow
 } from '@components/organisms/Table/Table.types';
-import {
-  ComponentWithFragments,
-  ModalType,
-  QuestionType
-} from '@util/constants';
+import { ComponentWithFragments, QuestionType } from '@util/constants';
 import { IEvent, IEventAttendee } from '@util/constants.entities';
 import { sortObjects } from '@util/util';
 

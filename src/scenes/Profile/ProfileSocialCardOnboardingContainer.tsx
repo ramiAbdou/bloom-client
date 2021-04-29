@@ -3,7 +3,8 @@ import React from 'react';
 import { gql } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import { showModal } from '@components/organisms/Modal/Modal.state';
-import { ComponentWithFragments, ModalType } from '@util/constants';
+import { ModalType } from '@components/organisms/Modal/Modal.types';
+import { ComponentWithFragments } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 
 const ProfileSocialCardOnboardingContainer: ComponentWithFragments<IMember> = ({

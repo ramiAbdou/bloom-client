@@ -3,7 +3,8 @@ import { IoAdd, IoPersonAdd } from 'react-icons/io5';
 
 import { gql } from '@apollo/client';
 import { showModal } from '@components/organisms/Modal/Modal.state';
-import { ComponentWithFragments, ModalType } from '@util/constants';
+import { ModalType } from '@components/organisms/Modal/Modal.types';
+import { ComponentWithFragments } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 import { SidebarLinkOptions } from './Sidebar.types';
 import SidebarSection from './SidebarSection';

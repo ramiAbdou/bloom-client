@@ -4,8 +4,9 @@ import { memberIdVar } from 'src/App.reactive';
 import { gql, useReactiveVar } from '@apollo/client';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import { showModal } from '@components/organisms/Modal/Modal.state';
+import { ModalType } from '@components/organisms/Modal/Modal.types';
 import useIsMember from '@hooks/useIsMember';
-import { ComponentWithFragments, ModalType } from '@util/constants';
+import { ComponentWithFragments } from '@util/constants';
 import { IEvent, IEventGuest } from '@util/constants.entities';
 import { EventTiming, getEventTiming } from './Events.util';
 

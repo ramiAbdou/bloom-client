@@ -5,7 +5,8 @@ import Button from '@components/atoms/Button/Button';
 import MainHeader from '@components/containers/Main/MainHeader';
 import { MainNavigationOptionProps } from '@components/containers/Main/MainNavigationButton';
 import { showModal } from '@components/organisms/Modal/Modal.state';
-import { LoadingProps, ModalType } from '@util/constants';
+import { ModalType } from '@components/organisms/Modal/Modal.types';
+import { LoadingProps } from '@util/constants';
 import { MemberRole } from '@util/constants.entities';
 import useMemberRole from '../../core/hooks/useMemberRole';
 

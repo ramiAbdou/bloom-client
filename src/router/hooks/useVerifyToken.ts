@@ -2,10 +2,11 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { showModal } from '@components/organisms/Modal/Modal.state';
+import { ModalType } from '@components/organisms/Modal/Modal.types';
 import GQL from '@gql/GQL';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import useGQL from '@gql/hooks/useGQL';
-import { ModalType, VerifyEvent } from '@util/constants';
+import { VerifyEvent } from '@util/constants';
 import { IEvent } from '@util/constants.entities';
 import { ErrorType } from '@util/constants.errors';
 import { MutationEvent } from '@util/constants.events';

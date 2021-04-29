@@ -3,7 +3,7 @@ import React from 'react';
 import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import { modalVar, showModal } from '@components/organisms/Modal/Modal.state';
-import { ModalType } from '@util/constants';
+import { ModalType } from '@components/organisms/Modal/Modal.types';
 
 const EventModalFormDeleteButton: React.FC = () => {
   const eventId: string = useReactiveVar(modalVar)?.metadata as string;

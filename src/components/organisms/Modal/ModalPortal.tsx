@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 
 import { useReactiveVar } from '@apollo/client';
 import { modalVar } from '@components/organisms/Modal/Modal.state';
-import { ModalType } from '@util/constants';
+import { ModalType } from './Modal.types';
 import ModalContent from './ModalContent';
 
 const ModalPortal: React.FC = () => {

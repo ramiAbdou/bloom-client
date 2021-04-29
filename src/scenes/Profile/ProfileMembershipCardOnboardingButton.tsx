@@ -2,7 +2,8 @@ import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
 import { showModal } from '@components/organisms/Modal/Modal.state';
-import { ComponentWithData, ModalType } from '@util/constants';
+import { ModalType } from '@components/organisms/Modal/Modal.types';
+import { ComponentWithData } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 
 const ProfileMembershipCardOnboardingButton: ComponentWithData<IMember> = ({

@@ -3,6 +3,7 @@ import React from 'react';
 
 import { useReactiveVar } from '@apollo/client';
 import { showModal } from '@components/organisms/Modal/Modal.state';
+import { ModalType } from '@components/organisms/Modal/Modal.types';
 import Table from '@components/organisms/Table/Table';
 import {
   OnApplyFiltersArgs,
@@ -11,7 +12,7 @@ import {
   TableOptions,
   TableRow
 } from '@components/organisms/Table/Table.types';
-import { AggregateCount, ModalType, QuestionCategory } from '@util/constants';
+import { AggregateCount, QuestionCategory } from '@util/constants';
 import { IMember, IMemberType, IQuestion } from '@util/constants.entities';
 import {
   databaseFiltersVar,

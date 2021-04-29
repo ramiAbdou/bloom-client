@@ -4,8 +4,9 @@ import { gql } from '@apollo/client';
 import Row from '@components/containers/Row/Row';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
 import { showModal } from '@components/organisms/Modal/Modal.state';
+import { ModalType } from '@components/organisms/Modal/Modal.types';
 import useBreakpoint from '@hooks/useBreakpoint';
-import { ComponentWithFragments, ModalType } from '@util/constants';
+import { ComponentWithFragments } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 import { ProfileEditButton } from './ProfileCardHeader';
 

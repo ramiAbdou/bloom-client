@@ -3,7 +3,8 @@ import React from 'react';
 
 import Card from '@components/containers/Card/Card';
 import { showModal } from '@components/organisms/Modal/Modal.state';
-import { ComponentWithFragments, ModalType } from '@util/constants';
+import { ModalType } from '@components/organisms/Modal/Modal.types';
+import { ComponentWithFragments } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 import DirectoryCardFullName from './DirectoryCardFullName';
 import DirectoryCardPicture from './DirectoryCardPicture';
