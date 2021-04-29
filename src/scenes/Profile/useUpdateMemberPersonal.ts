@@ -6,7 +6,7 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form';
-import { modalVar } from '@core/state/Modal.state';
+import { closeModal } from '@components/organisms/Modal/Modal.state';
 import { IMember } from '@util/constants.entities';
 import { uploadImage } from '@util/imageUtil';
 
@@ -80,7 +80,7 @@ const useUpdateMemberPersonal = (): OnFormSubmitFunction => {
       return;
     }
 
-    modalVar(null);
+    closeModal();
     showToast({ message: 'Personal information updated.' });
   };
 

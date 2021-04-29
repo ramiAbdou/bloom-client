@@ -8,8 +8,8 @@ import Form, {
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form';
 import FormHeader from '@components/organisms/Form/FormHeader';
+import { closeModal, modalVar } from '@components/organisms/Modal/Modal.state';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
-import { modalVar } from '@core/state/Modal.state';
 import { ICommunity, IEvent } from '@util/constants.entities';
 import { now } from '@util/util';
 
@@ -46,7 +46,7 @@ const DeleteEventConfirmationForm: React.FC = () => {
 
     // Close the modal, show a confirmation toast and push to upcoming events
     // page.
-    modalVar(null);
+    closeModal();
     showToast({ message: 'Event deleted.' });
     push(`/${urlName}/events/upcoming`);
   };

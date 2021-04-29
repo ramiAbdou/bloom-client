@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
-import { modalVar } from '@core/state/Modal.state';
+import { modalVar } from '@components/organisms/Modal/Modal.state';
 import { ModalType } from '@util/constants';
 
 const DatabaseHeaderAddMemberButton: React.FC = () => {

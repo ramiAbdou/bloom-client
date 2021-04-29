@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { modalVar } from '@core/state/Modal.state';
+import { modalVar } from '@components/organisms/Modal/Modal.state';
 import GQL from '@gql/GQL';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import useGQL from '@gql/hooks/useGQL';

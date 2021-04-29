@@ -14,9 +14,9 @@ import Form, {
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form';
 import FormHeader from '@components/organisms/Form/FormHeader';
+import { closeModal, modalVar } from '@components/organisms/Modal/Modal.state';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
 import useEventTitle from '@core/hooks/useEventTitle';
-import { modalVar } from '@core/state/Modal.state';
 import { IEventGuest } from '@util/constants.entities';
 import { now } from '@util/util';
 
@@ -125,7 +125,7 @@ const EventsConfirmRsvpModalForm: React.FC = () => {
         }
       });
 
-      modalVar(null);
+      closeModal();
       showToast({ message: 'RSVP was registered.' });
     } catch {
       formDispatch({ error: 'Failed to register RSVP.', type: 'SET_ERROR' });

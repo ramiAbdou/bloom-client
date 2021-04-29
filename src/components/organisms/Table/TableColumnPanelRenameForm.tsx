@@ -8,7 +8,7 @@ import { TableColumn, TableStateAndDispatch } from './Table.types';
 
 const TableColumnPanelRenameForm: React.FC = () => {
   // @ts-ignore
-  const { columnId, tableDispatch, tableState } = panelVar()
+  const { columnId, tableState } = panelVar()
     ?.metadata as TableStateAndDispatch;
 
   const { onRenameColumn } = tableState;
@@ -30,8 +30,6 @@ const TableColumnPanelRenameForm: React.FC = () => {
     if (updatedTitle === title) return;
 
     await onRenameColumn({ id: columnId, title: updatedTitle });
-
-    // updateColumn()
 
     closePanel();
   };

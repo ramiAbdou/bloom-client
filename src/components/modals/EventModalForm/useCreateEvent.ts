@@ -13,7 +13,7 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form';
-import { modalVar } from '@core/state/Modal.state';
+import { closeModal } from '@components/organisms/Modal/Modal.state';
 import { EventPrivacy, IEvent } from '@util/constants.entities';
 import { uploadImage } from '@util/imageUtil';
 import { now } from '@util/util';
@@ -193,7 +193,7 @@ const useCreateEvent = (): OnFormSubmitFunction => {
         }
       });
 
-      modalVar(null);
+      closeModal();
       showToast({ message: 'Event created.' });
     } catch {
       formDispatch({

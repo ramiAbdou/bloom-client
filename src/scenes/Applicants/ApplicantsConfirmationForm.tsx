@@ -7,8 +7,8 @@ import Form, {
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form';
 import FormHeader from '@components/organisms/Form/FormHeader';
+import { closeModal, modalVar } from '@components/organisms/Modal/Modal.state';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
-import { modalVar } from '@core/state/Modal.state';
 import { IMember, MemberStatus } from '@util/constants.entities';
 
 interface ApplicantsConfirmationModalMetadata {
@@ -60,7 +60,7 @@ const ApplicantsConfirmationForm: React.FC = () => {
       throw new Error(error);
     }
 
-    modalVar(null);
+    closeModal();
     showToast({ message: `Member(s) have been ${response.toLowerCase()}.` });
   };
 

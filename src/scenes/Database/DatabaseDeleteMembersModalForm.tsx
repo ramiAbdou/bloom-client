@@ -7,9 +7,9 @@ import Form, {
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form';
 import FormHeader from '@components/organisms/Form/FormHeader';
+import { closeModal, modalVar } from '@components/organisms/Modal/Modal.state';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
 import { TableStateAndDispatch } from '@components/organisms/Table/Table.types';
-import { modalVar } from '@core/state/Modal.state';
 import { now } from '@util/util';
 
 interface DeleteMembersArgs {
@@ -59,7 +59,7 @@ const DatabaseDeleteMemberModalForm: React.FC = () => {
 
     try {
       await deleteMembers({ variables: { deletedAt: now(), memberIds } });
-      modalVar(null);
+      closeModal();
       showToast({ message: `${memberIds.length} member(s) removed.` });
       tableDispatch({ type: 'RESET_SELECTED_ROW_IDS' });
     } catch {

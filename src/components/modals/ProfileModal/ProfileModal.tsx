@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { DocumentNode, gql, useQuery, useReactiveVar } from '@apollo/client';
-import { modalVar } from '@core/state/Modal.state';
+import { modalVar } from '@components/organisms/Modal/Modal.state';
 import { IMember } from '@util/constants.entities';
 import ProfileModalHistory from './ProfileModalHistory';
 import ProfileModalMembershipData from './ProfileModalMembershipData';

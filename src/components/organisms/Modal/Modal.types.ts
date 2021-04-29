@@ -1,4 +1,3 @@
-import { makeVar, ReactiveVar } from '@apollo/client';
 import { ModalType } from '@util/constants';
 
 interface ModalOptions {
@@ -8,11 +7,9 @@ interface ModalOptions {
   sheet?: boolean;
 }
 
-interface ModalData {
+export interface ModalState {
   id: ModalType;
   metadata?: unknown;
   options?: ModalOptions;
   width?: number;
 }
-
-export const modalVar: ReactiveVar<ModalData> = makeVar<ModalData>(null);

@@ -3,7 +3,7 @@ import React from 'react';
 import { gql } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
-import { modalVar } from '@core/state/Modal.state';
+import { modalVar } from '@components/organisms/Modal/Modal.state';
 import useIsMember from '@hooks/useIsMember';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IEventAttendee } from '@util/constants.entities';

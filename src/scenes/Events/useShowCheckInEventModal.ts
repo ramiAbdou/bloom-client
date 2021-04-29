@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { communityIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
-import { modalVar } from '@core/state/Modal.state';
+import { modalVar } from '@components/organisms/Modal/Modal.state';
 import useIsMember from '@hooks/useIsMember';
 import { ModalType } from '@util/constants';
 import { EventPrivacy, IEvent } from '@util/constants.entities';

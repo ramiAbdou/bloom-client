@@ -9,7 +9,7 @@ import {
   useMutation
 } from '@apollo/client';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
-import { modalVar } from '@core/state/Modal.state';
+import { modalVar } from '@components/organisms/Modal/Modal.state';
 import useIsMember from '@hooks/useIsMember';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IEvent, IEventAttendee } from '@util/constants.entities';

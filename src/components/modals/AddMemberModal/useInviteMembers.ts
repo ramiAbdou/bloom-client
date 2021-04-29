@@ -5,7 +5,7 @@ import {
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form';
 import { FormItemData } from '@components/organisms/Form/Form.types';
-import { modalVar } from '@core/state/Modal.state';
+import { closeModal } from '@components/organisms/Modal/Modal.state';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { QuestionCategory } from '@util/constants';
 import { MutationEvent } from '@util/constants.events';
@@ -50,7 +50,7 @@ const useInviteMembers = (): OnFormSubmitFunction => {
     }
 
     showToast({ message: `${members.length} members(s) invited.` });
-    modalVar(null);
+    closeModal();
   };
 
   return onSubmit;

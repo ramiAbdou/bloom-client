@@ -4,10 +4,10 @@ import { IoClose } from 'react-icons/io5';
 
 import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
-import { modalVar } from '@core/state/Modal.state';
 import useBreakpoint from '@hooks/useBreakpoint';
 import useLockBodyScroll from '@hooks/useLockBodyScroll';
 import { cx } from '@util/util';
+import { closeModal, modalVar } from './Modal.state';
 
 /**
  * The darkish overlay that lays underneath the actual modal. Has a high
@@ -18,7 +18,7 @@ const ModalBackground: React.FC = () => {
   const lock: boolean = useReactiveVar(modalVar)?.options?.lock;
 
   const onClick = (): void => {
-    if (!lock) modalVar(null);
+    if (!lock) closeModal();
   };
 
   const css: string = cx('c-modal-bg', { 'c-modal-bg--lock': lock });
@@ -30,7 +30,7 @@ const ModalExitButton: React.FC = () => {
   const lock: boolean = useReactiveVar(modalVar)?.options?.lock;
 
   const onClick = (): void => {
-    modalVar(null);
+    closeModal();
   };
 
   return (

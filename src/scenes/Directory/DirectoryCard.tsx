@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 import React from 'react';
 
 import Card from '@components/containers/Card/Card';
-import { modalVar } from '@core/state/Modal.state';
+import { modalVar } from '@components/organisms/Modal/Modal.state';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 import DirectoryCardFullName from './DirectoryCardFullName';

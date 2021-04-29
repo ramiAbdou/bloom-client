@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
-import { modalVar } from '@core/state/Modal.state';
+import { modalVar } from '@components/organisms/Modal/Modal.state';
 import { ComponentWithData, ModalType } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 

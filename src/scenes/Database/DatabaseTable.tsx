@@ -10,7 +10,7 @@ import {
   TableOptions,
   TableRow
 } from '@components/organisms/Table/Table.types';
-import { modalVar } from '@core/state/Modal.state';
+import { modalVar } from '@components/organisms/Modal/Modal.state';
 import { AggregateCount, ModalType, QuestionCategory } from '@util/constants';
 import { IMember, IMemberType, IQuestion } from '@util/constants.entities';
 import {
@@ -70,18 +70,6 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
   });
 
   if (!questions?.length) return null;
-
-  // const onRenameColumn: RenameColumnFunction = async ({
-  //   column,
-  //   updateColumn
-  // }) => {
-  //   // const { title, id } = column;
-  //   // const { error } = await gql.update(IQuestion, {
-  //   //   data: { title },
-  //   //   where: { id }
-  //   // });
-  //   // if (!error) updateColumn({ id, title });
-  // };
 
   const onApplyFilters = (args: OnApplyFiltersArgs): void => {
     databaseFiltersVar(args);

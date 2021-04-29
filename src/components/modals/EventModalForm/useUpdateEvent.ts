@@ -5,7 +5,7 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form';
-import { modalVar } from '@core/state/Modal.state';
+import { closeModal, modalVar } from '@components/organisms/Modal/Modal.state';
 import { EventPrivacy, IEvent } from '@util/constants.entities';
 import { uploadImage } from '@util/imageUtil';
 
@@ -89,7 +89,7 @@ const useUpdateEvent = (): OnFormSubmitFunction => {
         }
       });
 
-      modalVar(null);
+      closeModal();
       showToast({ message: 'Event updated.' });
     } catch {
       formDispatch({ error: 'Failed to update event.', type: 'SET_ERROR' });

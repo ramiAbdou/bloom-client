@@ -1,12 +1,12 @@
 import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
-import { modalVar } from '@core/state/Modal.state';
+import { closeModal } from '@components/organisms/Modal/Modal.state';
 import { TitleProps } from '@util/constants';
 
 const ModalCloseButton: React.FC<TitleProps> = ({ title }) => {
   const onClick = (): void => {
-    modalVar(null);
+    closeModal();
   };
 
   return (

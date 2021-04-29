@@ -7,9 +7,9 @@ import Form, {
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form';
 import FormHeader from '@components/organisms/Form/FormHeader';
+import { closeModal, modalVar } from '@components/organisms/Modal/Modal.state';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
 import { TableStateAndDispatch } from '@components/organisms/Table/Table.types';
-import { modalVar } from '@core/state/Modal.state';
 
 interface DemoteMembersArgs {
   memberIds: string[];
@@ -54,7 +54,7 @@ const DatabaseDemoteMembersModalForm: React.FC = () => {
 
     try {
       await demoteMembers({ variables: { memberIds } });
-      modalVar(null);
+      closeModal();
       showToast({ message: `${memberIds.length} admin(s) demoted to member.` });
       tableDispatch({ type: 'RESET_SELECTED_ROW_IDS' });
     } catch {

@@ -1,13 +1,13 @@
 import React from 'react';
 
 import { gql } from '@apollo/client';
+import { modalVar } from '@components/organisms/Modal/Modal.state';
 import Table from '@components/organisms/Table/Table';
 import {
   TableColumn,
   TableOptions,
   TableRow
 } from '@components/organisms/Table/Table.types';
-import { modalVar } from '@core/state/Modal.state';
 import {
   ComponentWithFragments,
   ModalType,

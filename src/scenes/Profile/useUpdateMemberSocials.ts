@@ -5,7 +5,7 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form';
-import { modalVar } from '@core/state/Modal.state';
+import { closeModal } from '@components/organisms/Modal/Modal.state';
 import { IMemberSocials } from '@util/constants.entities';
 
 interface UpdateMemberSocialsArgs {
@@ -68,7 +68,7 @@ const useUpdateMemberSocials = (): OnFormSubmitFunction => {
       return;
     }
 
-    modalVar(null);
+    closeModal();
     showToast({ message: 'Social media updated.' });
   };
 

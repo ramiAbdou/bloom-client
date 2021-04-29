@@ -2,7 +2,7 @@ import React from 'react';
 
 import { gql } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
-import { modalVar } from '@core/state/Modal.state';
+import { modalVar } from '@components/organisms/Modal/Modal.state';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IMember } from '@util/constants.entities';

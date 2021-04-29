@@ -6,15 +6,15 @@ import Form from '@components/organisms/Form/Form';
 import FormErrorMessage from '@components/organisms/Form/FormErrorMessage';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
+import { closeModal } from '@components/organisms/Modal/Modal.state';
 import { IdProvider } from '@core/state/Id.state';
-import { modalVar } from '@core/state/Modal.state';
 import { useAddMember } from './AddMember.state';
 import AddMemberInput from './AddMemberInput';
 import useInviteMembers from './useInviteMembers';
 
 const AddMemberFormActions: React.FC = () => {
   const onSecondaryClick = (): void => {
-    modalVar(null);
+    closeModal();
   };
 
   return (

@@ -4,7 +4,7 @@ import { memberIdVar } from 'src/App.reactive';
 import { gql, useReactiveVar } from '@apollo/client';
 import Separator from '@components/atoms/Separator';
 import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
-import { modalVar } from '@core/state/Modal.state';
+import { modalVar } from '@components/organisms/Modal/Modal.state';
 import { ComponentWithFragments } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 import ProfileModalHistoryEventList from './ProfileModalHistoryEventList';

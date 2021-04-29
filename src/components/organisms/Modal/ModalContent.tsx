@@ -3,9 +3,11 @@ import React, { useEffect } from 'react';
 import { useReactiveVar } from '@apollo/client';
 import AddMemberModal from '@components/modals/AddMemberModal/AddMemberModal';
 import CheckInModal from '@components/modals/CheckIn/CheckIn';
+import DeleteEventConfirmationForm from '@components/modals/EventModalForm/DeleteEventConfirmationForm';
 import EventModalCreateForm from '@components/modals/EventModalForm/EventModalCreateForm';
+import EventModalUpdateForm from '@components/modals/EventModalForm/EventModalUpdateForm';
 import ProfileModal from '@components/modals/ProfileModal/ProfileModal';
-import { modalVar } from '@core/state/Modal.state';
+import { closeModal, modalVar } from '@components/organisms/Modal/Modal.state';
 import ApplicantsConfirmationForm from '@scenes/Applicants/ApplicantsConfirmationForm';
 import ApplicantsViewModal from '@scenes/Applicants/ApplicantsViewModal';
 import DatabaseDeleteMembersModalForm from '@scenes/Database/DatabaseDeleteMembersModalForm';
@@ -18,8 +20,6 @@ import ProfilePersonalModalForm from '@scenes/Profile/ProfilePersonalModalForm';
 import ProfileSocialModalForm from '@scenes/Profile/ProfileSocialModalForm';
 import { ModalType } from '@util/constants';
 import { cx } from '@util/util';
-import DeleteEventConfirmationForm from '../../modals/EventModalForm/DeleteEventConfirmationForm';
-import EventModalUpdateForm from '../../modals/EventModalForm/EventModalUpdateForm';
 import ModalContainer from './ModalContainer';
 
 const ModalCustomContent: React.FC = () => {
@@ -85,7 +85,7 @@ const ModalContent: React.FC = () => {
 
   useEffect(
     () => () => {
-      modalVar(null);
+      closeModal();
     },
     []
   );

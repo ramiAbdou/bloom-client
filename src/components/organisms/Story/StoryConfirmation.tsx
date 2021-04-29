@@ -3,7 +3,7 @@ import React from 'react';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 
 import Button from '@components/atoms/Button/Button';
-import { modalVar } from '@core/state/Modal.state';
+import { closeModal } from '@components/organisms/Modal/Modal.state';
 import { ShowProps } from '@util/constants';
 
 interface StoryConfirmationProps {
@@ -13,7 +13,7 @@ interface StoryConfirmationProps {
 
 const StoryConfirmationCloseButton: React.FC<ShowProps> = ({ show }) => {
   const onClose = (): void => {
-    modalVar(null);
+    closeModal();
   };
 
   return (

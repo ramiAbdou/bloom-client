@@ -3,6 +3,7 @@ import { IoTrash } from 'react-icons/io5';
 import { memberIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
+import { modalVar } from '@components/organisms/Modal/Modal.state';
 import {
   useTableDispatch,
   useTableState
@@ -13,7 +14,6 @@ import {
   TableStateAndDispatch
 } from '@components/organisms/Table/Table.types';
 import useMemberRole from '@core/hooks/useMemberRole';
-import { modalVar } from '@core/state/Modal.state';
 import { ModalType } from '@util/constants';
 import { MemberRole } from '@util/constants.entities';
 import { take } from '@util/util';

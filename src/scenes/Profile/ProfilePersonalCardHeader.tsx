@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { gql } from '@apollo/client';
-import { modalVar } from '@core/state/Modal.state';
+import { modalVar } from '@components/organisms/Modal/Modal.state';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 import ProfileCardHeader from './ProfileCardHeader';
