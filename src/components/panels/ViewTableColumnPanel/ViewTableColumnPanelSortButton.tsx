@@ -3,18 +3,19 @@ import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
 
 import Button from '@components/atoms/Button/Button';
 import { closePanel, panelVar } from '@components/organisms/Panel/Panel.state';
+import { TableSortDirection } from '@components/organisms/Table/Table.types';
 import { cx } from '@util/util';
-import { TableSortDirection } from './Table.types';
+import { ViewTableColumnPanelMetadata } from './ViewTableColumnPanel.types';
 
-interface TableSortButtonProps {
+interface ViewTableColumnPanelSortButtonProps {
   direction: TableSortDirection;
 }
 
-const TableSortButton: React.FC<TableSortButtonProps> = ({ direction }) => {
-  // @ts-ignore
-  const { columnId, tableDispatch, tableState } = panelVar()?.metadata as {
-    columnId: string;
-  };
+const ViewTableColumnPanelSortButton: React.FC<ViewTableColumnPanelSortButtonProps> = ({
+  direction
+}) => {
+  const { columnId, tableDispatch, tableState } = panelVar()
+    ?.metadata as ViewTableColumnPanelMetadata;
 
   const { sortColumnId, sortDirection } = tableState;
 
@@ -42,4 +43,4 @@ const TableSortButton: React.FC<TableSortButtonProps> = ({ direction }) => {
   );
 };
 
-export default TableSortButton;
+export default ViewTableColumnPanelSortButton;

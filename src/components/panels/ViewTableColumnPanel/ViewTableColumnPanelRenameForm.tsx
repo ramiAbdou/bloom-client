@@ -4,15 +4,12 @@ import Form, { OnFormSubmitFunction } from '@components/organisms/Form/Form';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { closePanel, panelVar } from '@components/organisms/Panel/Panel.state';
-import {
-  TableColumn,
-  TableStateAndDispatch
-} from '@components/organisms/Table/Table.types';
+import { TableColumn } from '@components/organisms/Table/Table.types';
+import { ViewTableColumnPanelMetadata } from './ViewTableColumnPanel.types';
 
-const TableColumnPanelRenameForm: React.FC = () => {
-  // @ts-ignore
+const ViewTableColumnPanelRenameForm: React.FC = () => {
   const { columnId, tableState } = panelVar()
-    ?.metadata as TableStateAndDispatch;
+    ?.metadata as ViewTableColumnPanelMetadata;
 
   const { onRenameColumn } = tableState;
 
@@ -21,9 +18,6 @@ const TableColumnPanelRenameForm: React.FC = () => {
   )?.title;
 
   if (!onRenameColumn) return null;
-  // const updateColumn: ActionCreator<
-  //   Partial<TableColumn>
-  // > = TableStore.useStoreActions((state) => state.updateColumn);
 
   const onSubmit: OnFormSubmitFunction = async ({ items }) => {
     // Only one form item, so just index first element.
@@ -45,4 +39,4 @@ const TableColumnPanelRenameForm: React.FC = () => {
   );
 };
 
-export default TableColumnPanelRenameForm;
+export default ViewTableColumnPanelRenameForm;
