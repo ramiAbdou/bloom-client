@@ -29,7 +29,7 @@ const MembersAnalyticsPlaygroundDropdown: ComponentWithFragments<
     <Dropdown
       fit
       className="mb-sm--nlc"
-      value={questions?.find(({ id }) => id === questionId)?.title}
+      selectedValues={[questions?.find(({ id }) => id === questionId)?.title]}
       values={questions?.map(({ title }) => title)}
       onSelect={onSelect}
     />

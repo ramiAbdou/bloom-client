@@ -1,42 +1,31 @@
-import Dropdown from './Dropdown.store';
-import { DropdownValue } from './Dropdown.types';
+import { useDropdown } from './Dropdown.state';
 
 const useSelectOption = (option: string): VoidFunction => {
-  const filteredValues = Dropdown.useStoreState(
-    (state) => state.filteredValues
-  );
-
-  const multiple = Dropdown.useStoreState((state) => state.options.multiple);
-  const value = Dropdown.useStoreState((state) => state.value);
-  const onSelect = Dropdown.useStoreState((state) => state.onSelect);
-  const setIsOpen = Dropdown.useStoreActions((state) => state.setIsOpen);
-
-  const setSearchString = Dropdown.useStoreActions(
-    (state) => state.setSearchString
-  );
+  const [
+    { filteredValues, onSelect, options, selectedValues },
+    dropdownDispatch
+  ] = useDropdown();
 
   const selectOption = () => {
-    let wasNonePreviouslySelected: boolean;
-
-    if (Array.isArray(value)) {
-      wasNonePreviouslySelected = (value as string[])?.some((element) =>
-        ['None', 'None of the Above', 'N/A'].includes(element)
-      );
-    }
-
-    const isNoneSelected = ['None', 'None of the Above', 'N/A'].includes(
-      option
+    const wasNonePreviouslySelected: boolean = selectedValues.some((element) =>
+      ['None', 'None of the Above', 'N/A'].includes(element)
     );
 
-    let updatedValue: DropdownValue;
+    const isNoneSelected: boolean = [
+      'None',
+      'None of the Above',
+      'N/A'
+    ].includes(option);
 
-    if (multiple) {
+    let updatedValue: string | string[];
+
+    if (options.multiple) {
       if (wasNonePreviouslySelected || isNoneSelected) updatedValue = [option];
-      else updatedValue = [...(value as string[]), option];
+      else updatedValue = [...selectedValues, option];
     } else updatedValue = option;
 
     onSelect(updatedValue);
-    setSearchString('');
+    dropdownDispatch({ searchString: '', type: 'SET_SEARCH_STRING' });
 
     const updatedOptions = filteredValues.filter((element: string) => {
       if (Array.isArray(updatedValue)) return !updatedValue?.includes(element);
@@ -44,13 +33,13 @@ const useSelectOption = (option: string): VoidFunction => {
     });
 
     if (
-      !multiple ||
+      !options.multiple ||
       isNoneSelected ||
       !updatedOptions.length ||
       (updatedOptions.length === 1 &&
         ['None', 'None of the Above', 'N/A'].includes(updatedOptions[0]))
     ) {
-      setIsOpen(false);
+      dropdownDispatch({ open: false, type: 'SET_OPEN' });
     }
   };
 

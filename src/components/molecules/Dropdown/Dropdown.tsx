@@ -1,40 +1,42 @@
-import deepequal from 'fast-deep-equal';
 import React, { useEffect, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
-import { BaseProps } from '@util/constants';
 import { cx } from '@util/util';
-import DropdownStore, { dropdownModel } from './Dropdown.store';
-import { defaultOptions, DropdownModel } from './Dropdown.types';
+import { DropdownProvider, useDropdown } from './Dropdown.state';
+import { DropdownInitialState, DropdownOptions } from './Dropdown.types';
 import DropdownClickBar from './DropdownClickBar';
 import DropdownOptionContainer from './DropdownOptionContainer';
 
-type DropdownContentProps = Partial<DropdownProps>;
+interface DropdownProps extends DropdownInitialState {
+  className?: string;
+  fit?: boolean;
+  options?: DropdownOptions;
+}
 
-const DropdownContent: React.FC<DropdownContentProps> = ({
+const DropdownContent: React.FC<DropdownProps> = ({
   className,
   fit,
-  value,
+  selectedValues,
   values
 }) => {
-  const isOpen = DropdownStore.useStoreState((state) => state.isOpen);
-  const storedValue = DropdownStore.useStoreState((state) => state.value);
-  const storedValues = DropdownStore.useStoreState((state) => state.values);
-  const setIsOpen = DropdownStore.useStoreActions((state) => state.setIsOpen);
-  const setValue = DropdownStore.useStoreActions((state) => state.setValue);
-  const setValues = DropdownStore.useStoreActions((state) => state.setValues);
+  const [{ open }, dropdownDispatch] = useDropdown();
 
   useEffect(() => {
-    if (!deepequal(storedValue, value)) setValue(value);
-  }, [value]);
+    dropdownDispatch({
+      selectedValues: selectedValues ?? [],
+      type: 'SET_SELECTED_VALUES'
+    });
+  }, [selectedValues]);
 
   useEffect(() => {
-    if (!deepequal(storedValues, values)) setValues(values ?? []);
+    dropdownDispatch({ type: 'SET_VALUES', values: values ?? [] });
   }, [values]);
 
   const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
 
-  useOnClickOutside(ref, () => isOpen && setIsOpen(false));
+  useOnClickOutside(ref, () => {
+    if (open) dropdownDispatch({ open: false, type: 'SET_OPEN' });
+  });
 
   const css: string = cx('', { 'm-dropdown--fit': fit }, className);
 
@@ -46,29 +48,27 @@ const DropdownContent: React.FC<DropdownContentProps> = ({
   );
 };
 
-interface DropdownProps extends BaseProps, Partial<DropdownModel> {
-  fit?: boolean;
-}
-
 const Dropdown: React.FC<DropdownProps> = ({
   onSelect,
   options,
-  show,
-  ...props
-}) => {
-  if (show === false) return null;
-
-  return (
-    <DropdownStore.Provider
-      runtimeModel={{
-        ...dropdownModel,
-        onSelect,
-        options: { ...defaultOptions, ...options }
-      }}
-    >
-      <DropdownContent {...props} />
-    </DropdownStore.Provider>
-  );
-};
+  fit,
+  className,
+  selectedValues,
+  values
+}) => (
+  <DropdownProvider
+    options={options}
+    selectedValues={selectedValues}
+    values={values}
+    onSelect={onSelect}
+  >
+    <DropdownContent
+      className={className}
+      fit={fit}
+      selectedValues={selectedValues}
+      values={values}
+    />
+  </DropdownProvider>
+);
 
 export default Dropdown;

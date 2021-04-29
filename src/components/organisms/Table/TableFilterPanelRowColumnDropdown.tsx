@@ -31,7 +31,7 @@ const TableFilterPanelRowColumnDropdown: React.FC<IdProps> = ({
   return (
     <Dropdown
       options={{ attribute: false }}
-      value={column?.title}
+      selectedValues={[column?.title]}
       values={columns?.map((value: TableColumn) => value.title)}
       onSelect={onSelect}
     />

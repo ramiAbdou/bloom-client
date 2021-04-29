@@ -3,7 +3,6 @@ import { nanoid } from 'nanoid';
 
 export interface AddMemberModel {
   addRow: Action<AddMemberModel>;
-  admin?: boolean;
   clearRows: Action<AddMemberModel>;
   deleteRow: Action<AddMemberModel, string>;
   rows: string[];
@@ -13,8 +12,6 @@ export const addMemberModel: AddMemberModel = {
   addRow: action((state) => {
     return { ...state, rows: [...state.rows, nanoid()] };
   }),
-
-  admin: false,
 
   clearRows: action((state) => {
     return { ...state, rows: [nanoid()] };

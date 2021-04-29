@@ -28,7 +28,7 @@ const TableFilterPanelRowJoinOperator: React.FC = () => {
   return (
     <Dropdown
       options={{ attribute: false }}
-      value={filterJoinOperator}
+      selectedValues={[filterJoinOperator]}
       values={[TableFilterJoinOperatorType.AND, TableFilterJoinOperatorType.OR]}
       onSelect={onSelect}
     />

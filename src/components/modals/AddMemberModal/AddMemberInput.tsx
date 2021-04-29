@@ -30,10 +30,7 @@ const AddMemberInputTrashButton: React.FC = () => {
 
 const AddMemberInput: React.FC = () => {
   const id: string = useId();
-  const admin = AddMemberStore.useStoreState((state) => state.admin);
-
-  const role: MemberRole = useMemberRole();
-  const isOwner: boolean = role === MemberRole.OWNER;
+  const isOwner: boolean = useMemberRole() === MemberRole.OWNER;
 
   return (
     <Row align="baseline" className="mo-add-member-input" spacing="xs">
@@ -63,7 +60,7 @@ const AddMemberInput: React.FC = () => {
         metadata={id}
         options={['Make Admin']}
         required={false}
-        show={!!isOwner && !admin}
+        show={!!isOwner}
       />
     </Row>
   );

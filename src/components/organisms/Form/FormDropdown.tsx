@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Dropdown from '@components/molecules/Dropdown/Dropdown';
-import { DropdownValue } from '@components/molecules/Dropdown/Dropdown.types';
+import { toArray } from '@util/util';
 import { useForm, useFormItem } from './Form.state';
 import { FormItemData } from './Form.types';
 import { getFormItemKey } from './Form.util';
@@ -16,19 +16,21 @@ const FormDropdown: React.FC<FormDropdownProps> = ({ multiple, ...args }) => {
   const [, formDispatch] = useForm();
 
   const key: string = getFormItemKey(args);
-  const value: string[] = useFormItem(key)?.value as string[];
+  const value: string | string[] = useFormItem(key)?.value as string | string[];
 
   useInitFormItem(args);
 
-  const onSelect = (result: DropdownValue): void => {
+  const onSelect = (result: string | string[]): void => {
     formDispatch({ key, type: 'SET_VALUE', value: result });
   };
+
+  const selectedValues: string[] = toArray(value);
 
   return (
     <FormItemContainer {...args}>
       <Dropdown
         options={{ multiple }}
-        value={value}
+        selectedValues={selectedValues}
         values={args?.options}
         onSelect={onSelect}
       />

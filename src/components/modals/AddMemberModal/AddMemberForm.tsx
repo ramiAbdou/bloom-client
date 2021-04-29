@@ -37,7 +37,10 @@ const AddMemberFormActions: React.FC = () => {
 
 const AddMemberFormAddAnotherButton: React.FC = () => {
   const addRow = AddMemberStore.useStoreActions((state) => state.addRow);
-  const onClick = () => addRow();
+
+  const onClick = (): void => {
+    addRow();
+  };
 
   return (
     <Button tertiary className="mb-md--nlc" onClick={onClick}>
@@ -61,17 +64,14 @@ const AddMemberFormRows: React.FC = () => {
 };
 
 const AddMemberForm: React.FC = () => {
-  const admin = AddMemberStore.useStoreState((state) => state.admin);
   const addMembers = useInviteMembers();
 
   return (
     <Form className="mo-add-member-form" onSubmit={addMembers}>
       <FormHeader
-        description={`Type in the email address of the ${
-          admin ? 'admin' : 'member'
-        }(s) you want to add to the community. We'll send them an email invite with a login link, where they can finish filling out their profile.
+        description={`Type in the email address of the member(s) you want to add to the community. We'll send them an email invite with a login link, where they can finish filling out their profile.
         `}
-        title={admin ? 'Add Admin(s)' : 'Add Member(s)'}
+        title="Add Member(s)"
       />
 
       <AddMemberFormRows />

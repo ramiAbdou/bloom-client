@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { useReactiveVar } from '@apollo/client';
-import AddMemberModal from '@components/modals/AddMember/AddMember';
+import AddMemberModal from '@components/modals/AddMemberModal/AddMemberModal';
 import CheckInModal from '@components/modals/CheckIn/CheckIn';
 import EventModalCreateForm from '@components/modals/EventModalForm/EventModalCreateForm';
 import ProfileModal from '@components/modals/ProfileModal/ProfileModal';

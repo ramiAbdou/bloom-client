@@ -4,7 +4,3 @@ export interface AddMemberInput {
   isAdmin: boolean;
   lastName: string;
 }
-
-export interface AddMembersArgs {
-  members: AddMemberInput[];
-}

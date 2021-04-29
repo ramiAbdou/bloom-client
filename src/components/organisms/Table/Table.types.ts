@@ -1,5 +1,3 @@
-import { ActionCreator } from 'easy-peasy';
-
 import { QuestionCategory, QuestionType } from '@util/constants';
 
 // ## TABLE STATE
@@ -13,7 +11,6 @@ export interface OnApplyFiltersArgs {
 
 export type OnRenameColumnArgs = {
   column: Partial<TableColumn>;
-  updateColumn: ActionCreator<Partial<TableColumn>>;
 };
 
 export interface SortTableArgs {

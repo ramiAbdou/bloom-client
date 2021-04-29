@@ -1,29 +1,31 @@
-import { Action } from 'easy-peasy';
-
-export type DropdownValue = string | string[];
-
 export interface DropdownOptions {
   attribute?: boolean;
   multiple?: boolean; // True if the dropdown is a multiple select.
 }
 
-export const defaultOptions: DropdownOptions = {
-  attribute: true,
-  multiple: false
-};
+// ## new stuff
 
-export interface DropdownModel {
+export interface DropdownInitialState {
+  onSelect?: (value: string | string[]) => void;
+  options?: DropdownOptions;
+  selectedValues: string[];
+  values: string[];
+}
+
+export interface DropdownState {
   filteredValues: string[];
-  isOpen: boolean;
-  onSelect?: (result: DropdownValue) => any;
+  onSelect?: (value: string | string[]) => void;
+  open: boolean;
   options: DropdownOptions;
   searchString: string;
-  setSearchString: Action<DropdownModel, string>;
-  setIsOpen: Action<DropdownModel, boolean>;
-  setValue: Action<DropdownModel, DropdownValue>;
-  setValues: Action<DropdownModel, string[]>;
-  setWidth: Action<DropdownModel, number>;
-  value: DropdownValue;
+  selectedValues: string[];
   values: string[];
   width: number;
 }
+
+export type DropdownAction =
+  | { type: 'SET_OPEN'; open: boolean }
+  | { type: 'SET_SEARCH_STRING'; searchString: string }
+  | { type: 'SET_SELECTED_VALUES'; selectedValues: string[] }
+  | { type: 'SET_VALUES'; values: string[] }
+  | { type: 'SET_WIDTH'; width: number };

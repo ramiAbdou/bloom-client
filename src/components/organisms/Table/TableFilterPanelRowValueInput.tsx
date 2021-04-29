@@ -26,9 +26,9 @@ const TableFilterPanelRowValueInput: React.FC = () => {
     return (
       <Dropdown
         options={{ attribute: false }}
-        value={column.options?.find(
-          (option: string) => option === filter?.value
-        )}
+        selectedValues={[
+          column.options?.find((option: string) => option === filter?.value)
+        ]}
         values={column.options}
         onSelect={onInputChange}
       />

@@ -10,12 +10,13 @@ import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { QuestionCategory } from '@util/constants';
 import { MutationEvent } from '@util/constants.events';
 import { take } from '@util/util';
-import AddMemberStore from './AddMember.store';
-import { AddMemberInput, AddMembersArgs } from './AddMember.types';
+import { AddMemberInput } from './AddMember.types';
+
+interface AddMembersArgs {
+  members: AddMemberInput[];
+}
 
 const useInviteMembers = (): OnFormSubmitFunction => {
-  const admin: boolean = AddMemberStore.useStoreState((state) => state.admin);
-
   const [inviteMembers] = useBloomMutation<any, AddMembersArgs>({
     fields: ['id'],
     operation: MutationEvent.INVITE_MEMBERS,
@@ -34,7 +35,7 @@ const useInviteMembers = (): OnFormSubmitFunction => {
         [category === QuestionCategory.FIRST_NAME, { firstName: value }],
         [category === QuestionCategory.LAST_NAME, { lastName: value }],
         [category === QuestionCategory.EMAIL, { email: value }],
-        [true, { isAdmin: admin || !!(value as string[]).length }]
+        [true, { isAdmin: !!(value as string[]).length }]
       ]);
 
       return { ...acc, [inputId]: { ...acc[inputId], ...formattedValue } };

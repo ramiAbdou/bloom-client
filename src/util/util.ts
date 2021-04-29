@@ -188,6 +188,12 @@ export const take = (arr: [any, any][]): any => {
   return null;
 };
 
+export function toArray<T>(value: T | T[]): T[] {
+  if (!value) return [];
+  if (Array.isArray(value)) return value;
+  return [value];
+}
+
 /**
  * Returns the hue from an RGB 3-tuple. Only a helper function for the next
  * update document colors function.

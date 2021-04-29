@@ -4,7 +4,8 @@ import React from 'react';
 import Show from '@components/containers/Show';
 import { ValueProps } from '@util/constants';
 import { cx } from '@util/util';
-import DropdownStore from './Dropdown.store';
+import { useDropdown, useDropdownSelector } from './Dropdown.state';
+import { DropdownState } from './Dropdown.types';
 import DropdownSearch from './DropdownSearch';
 import useSelectOption from './useSelectOption';
 
@@ -20,8 +21,10 @@ const DropdownOption: React.FC<ValueProps> = ({ value }) => {
 };
 
 const DropdownOptionList: React.FC = () => {
-  const options = DropdownStore.useStoreState(({ filteredValues, value }) =>
-    filteredValues.filter((option: string) => !value?.includes(option))
+  const [{ filteredValues, selectedValues }] = useDropdown();
+
+  const options: string[] = filteredValues.filter(
+    (option: string) => !selectedValues.includes(option)
   );
 
   return (
@@ -36,26 +39,25 @@ const DropdownOptionList: React.FC = () => {
 };
 
 const DropdownOptionContainer: React.FC = () => {
-  const isOpen = DropdownStore.useStoreState((state) => state.isOpen);
-  const width = DropdownStore.useStoreState((state) => state.width);
+  const [{ open, width }] = useDropdown();
 
-  const noOptionsFound = DropdownStore.useStoreState(
-    (state) => !state.filteredValues.length
+  const hasFilteredValues: boolean = useDropdownSelector(
+    (state: DropdownState) => !!state.filteredValues.length
   );
 
+  if (!open) return null;
+
   return (
-    <Show show={isOpen}>
-      <motion.div
-        animate={{ y: 0 }}
-        className="m-dropdown-option-ctr"
-        initial={{ y: -15 }}
-        style={{ minWidth: width ?? 0 }}
-      >
-        <DropdownSearch />
-        {noOptionsFound && <p>No results found.</p>}
-        <DropdownOptionList />
-      </motion.div>
-    </Show>
+    <motion.div
+      animate={{ y: 0 }}
+      className="m-dropdown-option-ctr"
+      initial={{ y: -15 }}
+      style={{ minWidth: width ?? 0 }}
+    >
+      <DropdownSearch />
+      {!hasFilteredValues && <p>No results found.</p>}
+      <DropdownOptionList />
+    </motion.div>
   );
 };
 

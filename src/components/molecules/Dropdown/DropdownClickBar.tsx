@@ -4,53 +4,48 @@ import { IoCaretDown } from 'react-icons/io5';
 import Row from '@components/containers/Row/Row';
 import { ValueProps } from '@util/constants';
 import { cx } from '@util/util';
-import Dropdown from './Dropdown.store';
+import { useDropdown } from './Dropdown.state';
 
 const DropdownClickBarValue: React.FC<ValueProps> = ({ value }) => {
-  const isOpen = Dropdown.useStoreState((state) => state.isOpen);
-  const attribute = Dropdown.useStoreState((state) => state.options.attribute);
-  const multiple = Dropdown.useStoreState((state) => state.options.multiple);
-  const storedValue = Dropdown.useStoreState((state) => state.value);
-  const onSelect = Dropdown.useStoreState((state) => state.onSelect);
-  const setIsOpen = Dropdown.useStoreActions((state) => state.setIsOpen);
+  const [
+    { onSelect, open, options, selectedValues },
+    dropdownDispatch
+  ] = useDropdown();
 
-  const deleteValue = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
 
-    if (!isOpen) setIsOpen(true);
-    if (!multiple) return;
+    if (!open) dropdownDispatch({ open: true, type: 'SET_OPEN' });
+    if (!options.multiple) return;
 
     onSelect(
-      multiple
-        ? (storedValue as string[]).filter((option) => option !== value)
-        : (storedValue as string)
+      options.multiple
+        ? selectedValues.filter((option) => option !== value)
+        : selectedValues[0]
     );
   };
 
-  if (!attribute) return <p className="overflow-ellipses">{value}</p>;
+  if (!options.attribute) return <p className="overflow-ellipses">{value}</p>;
 
   const css: string = cx('c-tag-attr m-dropdown-value o-visible', {
-    'm-dropdown-value--cancel': multiple
+    'm-dropdown-value--cancel': options.multiple
   });
 
   return (
-    <button className={css} type="button" onClick={deleteValue}>
+    <button className={css} type="button" onClick={onClick}>
       {value}
     </button>
   );
 };
 
 const DropdownClickBarValues: React.FC = () => {
-  const value = Dropdown.useStoreState((state) => state.value);
+  const [{ selectedValues }] = useDropdown();
 
-  let values: string[] = [];
-
-  if (Array.isArray(value)) values = value;
-  else if (value) values = [value];
+  if (!selectedValues.length) return null;
 
   return (
-    <Row className="m-dropdown-value-ctr o-scroll" show={!!values?.length}>
-      {values.map((element: string) => (
+    <Row className="m-dropdown-value-ctr o-scroll">
+      {selectedValues.map((element: string) => (
         <DropdownClickBarValue key={element} value={element} />
       ))}
     </Row>
@@ -58,20 +53,21 @@ const DropdownClickBarValues: React.FC = () => {
 };
 
 const DropdownClickBar: React.FC = () => {
-  const isOpen = Dropdown.useStoreState((state) => state.isOpen);
-  const setIsOpen = Dropdown.useStoreActions((state) => state.setIsOpen);
-  const setWidth = Dropdown.useStoreActions((state) => state.setWidth);
+  const [{ open }, dropdownDispatch] = useDropdown();
+
   const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
   const width = ref?.current?.offsetWidth;
 
   useEffect(() => {
-    if (width) setWidth(width);
+    if (width) dropdownDispatch({ type: 'SET_WIDTH', width });
   }, [width]);
 
-  const onClick = () => setIsOpen(!isOpen);
+  const onClick = (): void => {
+    dropdownDispatch({ open: !open, type: 'SET_OPEN' });
+  };
 
   const css: string = cx('m-dropdown-bar', {
-    'm-dropdown-bar--open': isOpen
+    'm-dropdown-bar--open': open
   });
 
   return (

@@ -42,6 +42,7 @@ const ModalExitButton: React.FC = () => {
 
 const ModalContainer: React.FC = ({ children }) => {
   const sheet: boolean = useReactiveVar(modalVar)?.options?.sheet;
+  const width: number = useReactiveVar(modalVar)?.width;
 
   useLockBodyScroll();
 
@@ -74,7 +75,7 @@ const ModalContainer: React.FC = ({ children }) => {
         className={css}
         exit={exit}
         initial={initial}
-        // style={width ? { width } : {}}
+        style={{ width }}
         transition={{ duration: 0.2 }}
       >
         {children}

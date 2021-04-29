@@ -1,33 +1,29 @@
 import React from 'react';
 
-import Show from '@components/containers/Show';
-import DropdownStore from './Dropdown.store';
+import { useDropdown, useDropdownSelector } from './Dropdown.state';
+import { DropdownState } from './Dropdown.types';
 
 const DropdownSearch: React.FC = () => {
-  const show: boolean = DropdownStore.useStoreState(
-    ({ values }) => values?.length >= 5
+  const [{ searchString }, dropdownDispatch] = useDropdown();
+
+  const showSearchBar: boolean = useDropdownSelector(
+    ({ values }: DropdownState) => values.length >= 5
   );
 
-  const value = DropdownStore.useStoreState((state) => state.searchString);
-
-  const setSearchString = DropdownStore.useStoreActions(
-    (state) => state.setSearchString
-  );
+  if (!showSearchBar) return null;
 
   const onChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchString(target.value);
+    dropdownDispatch({ searchString: target.value, type: 'SET_SEARCH_STRING' });
   };
 
   return (
-    <Show show={show}>
-      <input
-        className="m-dropdown-search"
-        placeholder="Search..."
-        type="text"
-        value={value}
-        onChange={onChange}
-      />
-    </Show>
+    <input
+      className="m-dropdown-search"
+      placeholder="Search..."
+      type="text"
+      value={searchString}
+      onChange={onChange}
+    />
   );
 };
 

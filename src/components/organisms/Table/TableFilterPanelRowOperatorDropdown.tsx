@@ -23,7 +23,7 @@ const TableFilterPanelRowOperatorDropdown: React.FC = () => {
   return (
     <Dropdown
       options={{ attribute: false }}
-      value={filter.operator}
+      selectedValues={[filter.operator]}
       values={[
         TableFilterOperatorType.IS,
         TableFilterOperatorType.IS_NOT,
