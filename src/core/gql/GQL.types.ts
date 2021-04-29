@@ -28,11 +28,6 @@ export interface CreateArgs<T, S = unknown> {
   modifications?: CreateArgsModification<S>[];
 }
 
-export interface CustomMutationArgs {
-  fields: string[];
-  mutationName: string;
-}
-
 export interface CustomQueryArgs {
   fields: string[];
   queryName: string;
@@ -43,11 +38,6 @@ export interface FindOneArgs<T> {
   fields?: (keyof T | string)[];
   skip?: boolean;
   where: RecursiveWherePartial<T>;
-}
-
-export interface MutationResult<T = unknown> {
-  data: T;
-  error: string;
 }
 
 export interface QueryResult<T = unknown> {
