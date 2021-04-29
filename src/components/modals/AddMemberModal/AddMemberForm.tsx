@@ -8,7 +8,7 @@ import FormHeader from '@components/organisms/Form/FormHeader';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { IdProvider } from '@core/state/Id.state';
 import { modalVar } from '@core/state/Modal.state';
-import AddMemberStore from './AddMember.store';
+import { useAddMember } from './AddMember.state';
 import AddMemberInput from './AddMemberInput';
 import useInviteMembers from './useInviteMembers';
 
@@ -36,10 +36,10 @@ const AddMemberFormActions: React.FC = () => {
 };
 
 const AddMemberFormAddAnotherButton: React.FC = () => {
-  const addRow = AddMemberStore.useStoreActions((state) => state.addRow);
+  const [, addMemberDispatch] = useAddMember();
 
   const onClick = (): void => {
-    addRow();
+    addMemberDispatch({ type: 'ADD_ROW' });
   };
 
   return (
@@ -50,7 +50,7 @@ const AddMemberFormAddAnotherButton: React.FC = () => {
 };
 
 const AddMemberFormRows: React.FC = () => {
-  const rows = AddMemberStore.useStoreState((state) => state.rows);
+  const [{ rows }] = useAddMember();
 
   return (
     <ul>

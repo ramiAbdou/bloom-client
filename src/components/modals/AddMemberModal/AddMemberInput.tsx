@@ -9,17 +9,17 @@ import useMemberRole from '@core/hooks/useMemberRole';
 import { useId } from '@core/state/Id.state';
 import { QuestionCategory } from '@util/constants';
 import { MemberRole } from '@util/constants.entities';
-import AddMemberStore from './AddMember.store';
+import { useAddMember, useAddMemberSelector } from './AddMember.state';
 
 const AddMemberInputTrashButton: React.FC = () => {
-  const id: string = useId();
+  const [, addMemberDispatch] = useAddMember();
+  const rowId: string = useId();
 
-  const show: boolean = AddMemberStore.useStoreState(
-    (state) => state.rows.length >= 2
-  );
+  const show: boolean = useAddMemberSelector((state) => state.rows.length >= 2);
 
-  const deleteRow = AddMemberStore.useStoreActions((state) => state.deleteRow);
-  const onClick = () => deleteRow(id);
+  const onClick = (): void => {
+    addMemberDispatch({ rowId, type: 'DELETE_ROW' });
+  };
 
   return (
     <Button className="mr-sm--nlc misc-trash" show={show} onClick={onClick}>

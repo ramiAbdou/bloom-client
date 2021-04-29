@@ -1,12 +1,12 @@
 import React from 'react';
 
-import AddMemberStore from './AddMember.store';
+import { AddMemberProvider } from './AddMember.state';
 import AddMemberForm from './AddMemberForm';
 
 const AddMemberModal: React.FC = () => (
-  <AddMemberStore.Provider>
+  <AddMemberProvider>
     <AddMemberForm />
-  </AddMemberStore.Provider>
+  </AddMemberProvider>
 );
 
 export default AddMemberModal;
