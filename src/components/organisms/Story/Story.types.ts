@@ -18,7 +18,6 @@ export interface StoryPageProps
   branchId?: string;
   branches?: Record<string, StoryPageBranch>;
   confirmation?: boolean;
-  confirmationClose?: boolean;
   disabled?: boolean;
   id?: string | 'CONFIRMATION';
 }

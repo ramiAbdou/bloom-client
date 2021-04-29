@@ -6,13 +6,13 @@ import Row from '@components/containers/Row/Row';
 import FormMultipleSelect from '@components/organisms/Form/FormMultipleSelect';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import useMemberRole from '@core/hooks/useMemberRole';
-import IdStore from '@core/store/Id.store';
+import { useId } from '@core/state/Id.state';
 import { QuestionCategory } from '@util/constants';
 import { MemberRole } from '@util/constants.entities';
 import AddMemberStore from './AddMember.store';
 
 const AddMemberInputTrashButton: React.FC = () => {
-  const id: string = IdStore.useStoreState((state) => state.id);
+  const id: string = useId();
 
   const show: boolean = AddMemberStore.useStoreState(
     (state) => state.rows.length >= 2
@@ -29,7 +29,7 @@ const AddMemberInputTrashButton: React.FC = () => {
 };
 
 const AddMemberInput: React.FC = () => {
-  const id: string = IdStore.useStoreState((state) => state.id);
+  const id: string = useId();
   const admin = AddMemberStore.useStoreState((state) => state.admin);
 
   const role: MemberRole = useMemberRole();

@@ -6,8 +6,8 @@ import Form from '@components/organisms/Form/Form';
 import FormErrorMessage from '@components/organisms/Form/FormErrorMessage';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
+import { IdProvider } from '@core/state/Id.state';
 import { modalVar } from '@core/state/Modal.state';
-import IdStore from '@core/store/Id.store';
 import AddMemberStore from './AddMember.store';
 import AddMemberInput from './AddMemberInput';
 import useInviteMembers from './useInviteMembers';
@@ -52,9 +52,9 @@ const AddMemberFormRows: React.FC = () => {
   return (
     <ul>
       {rows.map((id) => (
-        <IdStore.Provider key={id} runtimeModel={{ id }}>
+        <IdProvider key={id} id={id}>
           <AddMemberInput />
-        </IdStore.Provider>
+        </IdProvider>
       ))}
     </ul>
   );

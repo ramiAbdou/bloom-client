@@ -2,7 +2,7 @@ import React from 'react';
 
 import Input from '@components/atoms/Input/Input';
 import Dropdown from '@components/molecules/Dropdown/Dropdown';
-import IdStore from '@core/store/Id.store';
+import { useId } from '@core/state/Id.state';
 import { QuestionType } from '@util/constants';
 import { useTable, useTableColumn, useTableFilter } from './Table.state';
 import { TableColumn } from './Table.types';
@@ -11,7 +11,7 @@ import { TableFilter } from './TableFilterPanel.types';
 const TableFilterPanelRowValueInput: React.FC = () => {
   const [_, tableDispatch] = useTable();
 
-  const filterId: string = IdStore.useStoreState((state) => state.id);
+  const filterId: string = useId();
   const filter: TableFilter = useTableFilter(filterId);
   const column: TableColumn = useTableColumn({ columnId: filter.columnId });
 

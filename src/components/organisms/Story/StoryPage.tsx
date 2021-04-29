@@ -14,7 +14,6 @@ const StoryPage: React.FC<StoryPageProps> = ({
   children,
   className,
   confirmation,
-  confirmationClose,
   description,
   iconUrl,
   id,
@@ -50,7 +49,7 @@ const StoryPage: React.FC<StoryPageProps> = ({
 
   if (confirmation) {
     return (
-      <StoryConfirmation closeButton={confirmationClose} title={title}>
+      <StoryConfirmation title={title}>
         <p>{description}</p>
       </StoryConfirmation>
     );

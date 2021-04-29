@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import Row from '@components/containers/Row/Row';
-import IdStore from '@core/store/Id.store';
+import { IdProvider } from '@core/state/Id.state';
 import { IdProps } from '@util/constants';
 import { useTable, useTableFilter } from './Table.state';
 import { TableFilter } from './Table.types';
@@ -30,7 +30,7 @@ const TableFilterPanelRow: React.FC<IdProps> = ({ id: filterId }) => {
   if (!columnId) return null;
 
   return (
-    <IdStore.Provider runtimeModel={{ id: filterId }}>
+    <IdProvider id={filterId}>
       <Row className="o-table-filter-row mb-md--nlc" spacing="sm">
         <TableFilterRowJoinOperator />
 
@@ -41,7 +41,7 @@ const TableFilterPanelRow: React.FC<IdProps> = ({ id: filterId }) => {
           <TableFilterRowDeleteButton />
         </Row>
       </Row>
-    </IdStore.Provider>
+    </IdProvider>
   );
 };
 

@@ -12,6 +12,7 @@ interface ModalData {
   id: ModalType;
   metadata?: unknown;
   options?: ModalOptions;
+  width?: number;
 }
 
 export const modalVar: ReactiveVar<ModalData> = makeVar<ModalData>(null);
