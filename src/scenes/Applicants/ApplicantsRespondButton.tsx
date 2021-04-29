@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
-import { modalVar } from '@components/organisms/Modal/Modal.state';
+import { showModal } from '@components/organisms/Modal/Modal.state';
 import { ModalType } from '@util/constants';
 import { MemberStatus } from '@util/constants.entities';
 import { take } from '@util/util';
@@ -21,7 +21,7 @@ const ApplicantsRespondButton: React.FC<ApplicantsRespondButtonProps> = ({
   if (!applicantIds?.length) return null;
 
   const onClick = (): void => {
-    modalVar({
+    showModal({
       id: ModalType.CONFIRM_APPLICANT,
       metadata: { applicantIds, response }
     });

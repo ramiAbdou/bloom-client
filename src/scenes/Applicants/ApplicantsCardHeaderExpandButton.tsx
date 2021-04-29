@@ -2,7 +2,7 @@ import React from 'react';
 
 import { gql } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
-import { modalVar } from '@components/organisms/Modal/Modal.state';
+import { showModal } from '@components/organisms/Modal/Modal.state';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IMember } from '@util/constants.entities';
@@ -13,7 +13,7 @@ const ApplicantsCardHeaderExpandButton: ComponentWithFragments<IMember> = ({
   const isMobile: boolean = useBreakpoint() === 1;
 
   const onClick = (): void => {
-    modalVar({ id: ModalType.VIEW_APPLICANT, metadata: member.id });
+    showModal({ id: ModalType.VIEW_APPLICANT, metadata: member.id });
   };
 
   return (

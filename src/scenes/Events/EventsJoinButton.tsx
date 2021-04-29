@@ -9,7 +9,7 @@ import {
   useMutation
 } from '@apollo/client';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
-import { modalVar } from '@components/organisms/Modal/Modal.state';
+import { showModal } from '@components/organisms/Modal/Modal.state';
 import useIsMember from '@hooks/useIsMember';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IEvent, IEventAttendee } from '@util/constants.entities';
@@ -116,7 +116,7 @@ const EventsJoinButton: ComponentWithFragments<
     e.stopPropagation();
 
     if (!isMember) {
-      modalVar({ id: ModalType.CHECK_IN, metadata: event.id });
+      showModal({ id: ModalType.CHECK_IN, metadata: event.id });
     }
 
     await createEventAttendeeWithMember({

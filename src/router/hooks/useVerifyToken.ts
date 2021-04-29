@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { modalVar } from '@components/organisms/Modal/Modal.state';
+import { showModal } from '@components/organisms/Modal/Modal.state';
 import GQL from '@gql/GQL';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import useGQL from '@gql/hooks/useGQL';
@@ -49,7 +49,7 @@ const useVerifyToken = (): boolean => {
         error === ErrorType.EVENT_FINISHED ||
         error === ErrorType.EVENT_HASNT_STARTED
       ) {
-        modalVar({ id: ModalType.VIEW_EVENT_ERROR, metadata: error });
+        showModal({ id: ModalType.VIEW_EVENT_ERROR, metadata: error });
       }
 
       // If there is no data, then there is nothing left to query/do.

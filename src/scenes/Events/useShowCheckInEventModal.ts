@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { communityIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
-import { modalVar } from '@components/organisms/Modal/Modal.state';
+import { showModal } from '@components/organisms/Modal/Modal.state';
 import useIsMember from '@hooks/useIsMember';
 import { ModalType } from '@util/constants';
 import { EventPrivacy, IEvent } from '@util/constants.entities';
@@ -21,7 +21,7 @@ const useShowCheckInEventModal = (event: IEvent): void => {
     if (!event) return;
 
     if (!isMember && !!communityId && (isMembersOnly || hasCookieError)) {
-      modalVar({
+      showModal({
         id: ModalType.CHECK_IN,
         metadata: event,
         options: { lock: isMembersOnly }

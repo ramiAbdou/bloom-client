@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
-import { modalVar } from '@components/organisms/Modal/Modal.state';
+import { showModal } from '@components/organisms/Modal/Modal.state';
 import { ComponentWithData, ModalType } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 
@@ -11,7 +11,7 @@ const ProfileMembershipCardOnboardingButton: ComponentWithData<IMember> = ({
   if (member?.memberValues?.length) return null;
 
   const onClick = (): void => {
-    modalVar({ id: ModalType.UPDATE_MEMBERSHIP_INFORMATION });
+    showModal({ id: ModalType.UPDATE_MEMBERSHIP_INFORMATION });
   };
 
   return (

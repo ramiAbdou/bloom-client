@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 import React from 'react';
 
 import Card from '@components/containers/Card/Card';
-import { modalVar } from '@components/organisms/Modal/Modal.state';
+import { showModal } from '@components/organisms/Modal/Modal.state';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 import DirectoryCardFullName from './DirectoryCardFullName';
@@ -12,7 +12,7 @@ import DirectoryCardRole from './DirectoryCardRole';
 
 const DirectoryCard: ComponentWithFragments<IMember> = ({ data: member }) => {
   const onClick = (): void => {
-    modalVar({ id: ModalType.VIEW_PROFILE, metadata: member.id });
+    showModal({ id: ModalType.VIEW_PROFILE, metadata: member.id });
   };
 
   return (

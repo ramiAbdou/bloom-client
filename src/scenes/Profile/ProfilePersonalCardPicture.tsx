@@ -3,7 +3,7 @@ import React from 'react';
 import { gql } from '@apollo/client';
 import Row from '@components/containers/Row/Row';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
-import { modalVar } from '@components/organisms/Modal/Modal.state';
+import { showModal } from '@components/organisms/Modal/Modal.state';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IMember } from '@util/constants.entities';
@@ -15,7 +15,7 @@ const ProfilePersonalCardPicture: ComponentWithFragments<IMember> = ({
   const isMobile: boolean = useBreakpoint() === 1;
 
   const onClick = (): void => {
-    modalVar({ id: ModalType.UPDATE_PERSONAL_INFORMATION });
+    showModal({ id: ModalType.UPDATE_PERSONAL_INFORMATION });
   };
 
   return (

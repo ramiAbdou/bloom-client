@@ -3,7 +3,7 @@ import { memberIdVar } from 'src/App.reactive';
 
 import { gql, useReactiveVar } from '@apollo/client';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
-import { modalVar } from '@components/organisms/Modal/Modal.state';
+import { showModal } from '@components/organisms/Modal/Modal.state';
 import useIsMember from '@hooks/useIsMember';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IEvent, IEventGuest } from '@util/constants.entities';
@@ -40,11 +40,11 @@ const EventRsvpButton: ComponentWithFragments<IEvent, EventRsvpButtonProps> = ({
     e.stopPropagation();
 
     if (!isMember) {
-      modalVar({ id: ModalType.CHECK_IN, metadata: event.id });
+      showModal({ id: ModalType.CHECK_IN, metadata: event.id });
       return;
     }
 
-    modalVar({ id: ModalType.CONFIRM_RSVP, metadata: event.id });
+    showModal({ id: ModalType.CONFIRM_RSVP, metadata: event.id });
   };
 
   return (

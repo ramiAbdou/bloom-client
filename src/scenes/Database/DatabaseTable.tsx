@@ -2,6 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 
 import { useReactiveVar } from '@apollo/client';
+import { showModal } from '@components/organisms/Modal/Modal.state';
 import Table from '@components/organisms/Table/Table';
 import {
   OnApplyFiltersArgs,
@@ -10,7 +11,6 @@ import {
   TableOptions,
   TableRow
 } from '@components/organisms/Table/Table.types';
-import { modalVar } from '@components/organisms/Modal/Modal.state';
 import { AggregateCount, ModalType, QuestionCategory } from '@util/constants';
 import { IMember, IMemberType, IQuestion } from '@util/constants.entities';
 import {
@@ -80,7 +80,7 @@ const DatabaseTable: React.FC<DatabaseTableProps> = ({
   };
 
   const onRowClick = ({ id: memberId }: TableRow): void => {
-    modalVar({ id: ModalType.VIEW_PROFILE, metadata: memberId });
+    showModal({ id: ModalType.VIEW_PROFILE, metadata: memberId });
   };
 
   const onSortColumn = (args: SortTableArgs): void => {

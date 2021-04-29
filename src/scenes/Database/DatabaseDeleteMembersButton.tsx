@@ -3,7 +3,7 @@ import { IoTrash } from 'react-icons/io5';
 import { memberIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
-import { modalVar } from '@components/organisms/Modal/Modal.state';
+import { showModal } from '@components/organisms/Modal/Modal.state';
 import {
   useTableDispatch,
   useTableState
@@ -28,7 +28,7 @@ const DatabaseDeleteMembersButton: React.FC = () => {
   const isOwner: boolean = useMemberRole() === MemberRole.OWNER;
 
   const onClick = (): void => {
-    modalVar({
+    showModal({
       id: ModalType.DELETE_MEMBERS,
       metadata: { tableDispatch, tableState } as TableStateAndDispatch,
       options: { confirmation: true }

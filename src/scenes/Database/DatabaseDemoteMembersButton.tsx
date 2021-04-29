@@ -3,7 +3,7 @@ import { IoArrowDownCircle } from 'react-icons/io5';
 import { memberIdVar } from 'src/App.reactive';
 
 import { useReactiveVar } from '@apollo/client';
-import { modalVar } from '@components/organisms/Modal/Modal.state';
+import { showModal } from '@components/organisms/Modal/Modal.state';
 import {
   useTableDispatch,
   useTableState
@@ -37,7 +37,7 @@ const DatabaseDemoteMembersButton: React.FC = () => {
     (totalCount > 15 && isAllRowsSelected) || selectedRowIds.length > 15;
 
   const onClick = (): void => {
-    modalVar({
+    showModal({
       id: ModalType.DEMOTE_MEMBERS,
       metadata: { tableDispatch, tableState } as TableStateAndDispatch,
       options: { confirmation: true }

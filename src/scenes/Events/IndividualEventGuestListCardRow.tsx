@@ -3,7 +3,7 @@ import React from 'react';
 import { gql } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
-import { modalVar } from '@components/organisms/Modal/Modal.state';
+import { showModal } from '@components/organisms/Modal/Modal.state';
 import useIsMember from '@hooks/useIsMember';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IEventGuest } from '@util/constants.entities';
@@ -22,7 +22,7 @@ const IndividualEventGuestListCardRow: ComponentWithFragments<IEventGuest> = ({
 
   const onClick = (): void => {
     if (isMember && member?.id) {
-      modalVar({ id: ModalType.VIEW_PROFILE, metadata: member?.id });
+      showModal({ id: ModalType.VIEW_PROFILE, metadata: member?.id });
     }
   };
 

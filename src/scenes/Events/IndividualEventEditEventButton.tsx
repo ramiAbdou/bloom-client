@@ -2,7 +2,7 @@ import React from 'react';
 
 import { gql } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
-import { modalVar } from '@components/organisms/Modal/Modal.state';
+import { showModal } from '@components/organisms/Modal/Modal.state';
 import useMemberRole from '@core/hooks/useMemberRole';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IEvent, MemberRole } from '@util/constants.entities';
@@ -23,7 +23,7 @@ const IndividualEventEditEventButton: ComponentWithFragments<IEvent> = ({
   if (!role || isPast) return null;
 
   const onClick = (): void => {
-    modalVar({ id: ModalType.UPDATE_EVENT, metadata: event.id });
+    showModal({ id: ModalType.UPDATE_EVENT, metadata: event.id });
   };
 
   return (

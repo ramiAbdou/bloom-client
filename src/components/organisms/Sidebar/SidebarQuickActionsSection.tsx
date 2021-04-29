@@ -2,7 +2,7 @@ import React from 'react';
 import { IoAdd, IoPersonAdd } from 'react-icons/io5';
 
 import { gql } from '@apollo/client';
-import { modalVar } from '@components/organisms/Modal/Modal.state';
+import { showModal } from '@components/organisms/Modal/Modal.state';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 import { SidebarLinkOptions } from './Sidebar.types';
@@ -15,12 +15,12 @@ const SidebarQuickActionsSection: ComponentWithFragments<IMember> = ({
     {
       Icon: IoAdd,
       onClick: () =>
-        modalVar({ id: ModalType.CREATE_EVENT, options: { sheet: true } }),
+        showModal({ id: ModalType.CREATE_EVENT, options: { sheet: true } }),
       title: 'Create Event'
     },
     {
       Icon: IoPersonAdd,
-      onClick: () => modalVar({ id: ModalType.ADD_MEMBERS, width: 750 }),
+      onClick: () => showModal({ id: ModalType.ADD_MEMBERS, width: 750 }),
       title: 'Add Member'
     }
   ];

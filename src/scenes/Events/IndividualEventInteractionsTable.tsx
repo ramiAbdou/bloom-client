@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { gql } from '@apollo/client';
-import { modalVar } from '@components/organisms/Modal/Modal.state';
+import { showModal } from '@components/organisms/Modal/Modal.state';
 import Table from '@components/organisms/Table/Table';
 import {
   TableColumn,
@@ -26,7 +26,7 @@ const IndividualEventInteractionsTable: ComponentWithFragments<IEvent> = ({
   );
 
   const onRowClick = (row: TableRow): void => {
-    modalVar({ id: ModalType.VIEW_PROFILE, metadata: row?.id });
+    showModal({ id: ModalType.VIEW_PROFILE, metadata: row?.id });
   };
 
   const options: TableOptions = {

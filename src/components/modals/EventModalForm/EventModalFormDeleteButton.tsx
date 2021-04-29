@@ -2,14 +2,14 @@ import React from 'react';
 
 import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
-import { modalVar } from '@components/organisms/Modal/Modal.state';
+import { modalVar, showModal } from '@components/organisms/Modal/Modal.state';
 import { ModalType } from '@util/constants';
 
 const EventModalFormDeleteButton: React.FC = () => {
   const eventId: string = useReactiveVar(modalVar)?.metadata as string;
 
   const onClick = (): void => {
-    modalVar({
+    showModal({
       id: ModalType.CONFIRM_DELETE_EVENT,
       metadata: eventId,
       options: { confirmation: true }

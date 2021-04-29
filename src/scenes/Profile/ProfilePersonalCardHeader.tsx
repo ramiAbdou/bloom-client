@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { gql } from '@apollo/client';
-import { modalVar } from '@components/organisms/Modal/Modal.state';
+import { showModal } from '@components/organisms/Modal/Modal.state';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 import ProfileCardHeader from './ProfileCardHeader';
@@ -10,7 +10,7 @@ const ProfilePersonalCardHeader: ComponentWithFragments<IMember> = ({
   data: member
 }) => {
   const onClick = (): void => {
-    modalVar({ id: ModalType.UPDATE_PERSONAL_INFORMATION });
+    showModal({ id: ModalType.UPDATE_PERSONAL_INFORMATION });
   };
 
   return (

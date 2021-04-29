@@ -2,7 +2,7 @@ import React from 'react';
 
 import { gql } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
-import { modalVar } from '@components/organisms/Modal/Modal.state';
+import { showModal } from '@components/organisms/Modal/Modal.state';
 import { ComponentWithFragments, ModalType } from '@util/constants';
 import { IMember } from '@util/constants.entities';
 
@@ -18,7 +18,7 @@ const ProfileSocialCardOnboardingContainer: ComponentWithFragments<IMember> = ({
   if (isSocialLinked) return null;
 
   const onClick = (): void => {
-    modalVar({ id: ModalType.UPDATE_SOCIAL_INFORMATION });
+    showModal({ id: ModalType.UPDATE_SOCIAL_INFORMATION });
   };
 
   return (
