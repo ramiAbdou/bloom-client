@@ -13,26 +13,15 @@ const FilterDirectoryPanelQuestionOptionList: ComponentWithFragments<IQuestion> 
   const isOpen: boolean =
     useReactiveVar(directoryFilterOpenQuestionIdVar) === question.id;
 
-  // const sortedOptions: string[] = question.options?.sort(
-  //   (a: string, b: string) => {
-  //     const aNumOptions: number = question.memberValues?.filter(
-  //       (memberValue: IMemberValue) => memberValue?.value === a
-  //     )?.length;
-
-  //     const bNumOptions: number = question.memberValues?.filter(
-  //       (memberValue: IMemberValue) => memberValue?.value === b
-  //     )?.length;
-
-  //     if (aNumOptions === bNumOptions) return 0;
-  //     return aNumOptions < bNumOptions ? 1 : -1;
-  //   }
-  // );
-
   return (
     <Show show={!!isOpen}>
       <ul className="mt-sm s-directory-filter-question-option-list">
         {question.options.map((_: string, i: number) => (
-          <FilterDirectoryPanelQuestionOption data={question} i={i} />
+          <FilterDirectoryPanelQuestionOption
+            key={question.id}
+            data={question}
+            i={i}
+          />
         ))}
       </ul>
     </Show>

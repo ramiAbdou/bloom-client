@@ -40,6 +40,13 @@ export const directorySearchStringVar: ReactiveVar<string> = makeVar<string>(
   ''
 );
 
+export const clearDirectoryReactiveFields = (): void => {
+  directoryIsAdminsOnlyVar(false);
+  directoryFilterOpenQuestionIdVar(null);
+  directoryFilterSelectedValuesVar([]);
+  directorySearchStringVar('');
+};
+
 interface DirectoryReactiveFields {
   directoryMemberValuesExp: { read: () => Record<string, unknown> };
   directoryRoleExp: { read: () => Record<string, unknown> };

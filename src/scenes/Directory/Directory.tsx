@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { DocumentNode, gql, useQuery } from '@apollo/client';
 import Scene from '@components/containers/Scene';
 import { IMember } from '@util/constants.entities';
+import { clearDirectoryReactiveFields } from './Directory.reactive';
 import DirectoryActionRow from './DirectoryActionRow';
 import DirectoryCard from './DirectoryCard';
 import DirectoryCardList from './DirectoryCardList';
@@ -60,6 +61,8 @@ const DirectoryContent: React.FC = () => {
   const { data, loading } = useQuery<GetMembersByCommunityIdResult>(
     GET_MEMBERS_BY_COMMUNITY_ID
   );
+
+  useEffect(() => () => clearDirectoryReactiveFields(), []);
 
   return (
     <>
