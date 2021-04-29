@@ -66,7 +66,7 @@ const IndividualEventAddRecordingPanelForm: React.FC = () => {
   const event: IEvent = data?.event;
 
   return (
-    <Panel align="BOTTOM_LEFT">
+    <Panel align="BOTTOM_LEFT" size="lg">
       <Form onSubmit={onSubmit}>
         <FormShortText
           id="RECORDING_URL"

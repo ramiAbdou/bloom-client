@@ -22,7 +22,5 @@ export interface PanelState {
   id: PanelType;
   metadata?: unknown;
   scrollId?: string;
-  size?: 'md' | 'lg';
-  style?: React.CSSProperties;
   uniqueIdentifier?: string;
 }

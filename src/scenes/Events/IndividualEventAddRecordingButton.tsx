@@ -24,11 +24,7 @@ const IndividualEventAddRecordingButton: ComponentWithFragments<IEvent> = ({
   if (!role || !isPast) return null;
 
   const onClick = (): void => {
-    showPanel({
-      id: PanelType.ADD_RECORDING_LINK,
-      metadata: event.id,
-      size: 'lg'
-    });
+    showPanel({ id: PanelType.ADD_RECORDING_LINK, metadata: event.id });
   };
 
   return (
