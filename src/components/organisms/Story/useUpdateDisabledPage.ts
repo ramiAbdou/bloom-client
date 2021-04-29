@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
 
 import { useStory } from './Story.state';
-import StoryStore from './Story.store';
-import { StoryPageProps } from './Story.types';
 
 /**
  * Updates the story page's disabled status based on the current page index.
@@ -10,12 +8,7 @@ import { StoryPageProps } from './Story.types';
  * is.
  */
 const useUpdateDisabledPage = (id: string): void => {
-  const [, storyDispatch] = useStory();
-  const pageId: string = StoryStore.useStoreState((state) => state.pageId);
-
-  const pages: StoryPageProps[] = StoryStore.useStoreState(
-    (state) => state.pages
-  );
+  const [{ pageId, pages }, storyDispatch] = useStory();
 
   const currentPageIndex: number = pages.findIndex(
     (element) => element.id === pageId

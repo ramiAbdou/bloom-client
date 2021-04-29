@@ -1,8 +1,10 @@
 import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 
-import { useStory } from '@components/organisms/Story/Story.state';
-import StoryStore from '@components/organisms/Story/Story.store';
+import {
+  useStory,
+  useStorySelector
+} from '@components/organisms/Story/Story.state';
 import StoryPage from '@components/organisms/Story/StoryPage';
 import { ErrorContext } from '@util/constants.errors';
 import CheckInGuestForm from './CheckInGuestForm';
@@ -13,12 +15,10 @@ interface CheckInMainPageProps {
 }
 
 const CheckInMainPage: React.FC<CheckInMainPageProps> = ({ lock }) => {
-  const [, storyDispatch] = useStory();
+  const [{ pageId }, storyDispatch] = useStory();
 
-  const pageId = StoryStore.useStoreState((state) => state.pageId);
-
-  const branchId = StoryStore.useStoreState(
-    ({ getPage }) => getPage('FINISH')?.branchId
+  const branchId = useStorySelector(
+    ({ pages }) => pages.find((page) => page.id === 'FINISH')?.branchId
   );
 
   const hasCookieError = !!Cookies.get(ErrorContext.LOGIN_ERROR);

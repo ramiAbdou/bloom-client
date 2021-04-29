@@ -3,8 +3,7 @@ import React, { useEffect } from 'react';
 
 import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
 import { cx, take } from '@util/util';
-import { useStory } from './Story.state';
-import StoryStore from './Story.store';
+import { useStory, useStorySelector } from './Story.state';
 import { StoryPageBranch, StoryPageProps } from './Story.types';
 import StoryConfirmation from './StoryConfirmation';
 import useUpdateDisabledPage from './useUpdateDisabledPage';
@@ -22,7 +21,7 @@ const StoryPage: React.FC<StoryPageProps> = ({
   show,
   title
 }) => {
-  const [, storyDispatch] = useStory();
+  const [{ pageId }, storyDispatch] = useStory();
 
   id = take([
     [confirmation, 'CONFIRMATION'],
@@ -33,8 +32,9 @@ const StoryPage: React.FC<StoryPageProps> = ({
   branchId = branchId ?? id;
   branches = branches ?? { [branchId]: { description, iconUrl, title } };
 
-  const pageId = StoryStore.useStoreState((state) => state.pageId);
-  const page = StoryStore.useStoreState(({ getPage }) => getPage(id));
+  const page = useStorySelector(({ pages }) =>
+    pages.find((value) => value.id === id)
+  );
 
   useUpdateDisabledPage(id);
 

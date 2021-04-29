@@ -1,11 +1,10 @@
 import React from 'react';
 
-import { StoryProvider } from './Story.state';
-import StoryStore from './Story.store';
+import { StoryProvider, useStorySelector } from './Story.state';
 import StoryNavigation from './StoryNavigation';
 
 const StoryContent: React.FC = ({ children }) => {
-  const hasPages = StoryStore.useStoreState((state) => !!state.pages?.length);
+  const hasPages = useStorySelector((state) => !!state.pages?.length);
 
   return (
     <>
@@ -17,9 +16,7 @@ const StoryContent: React.FC = ({ children }) => {
 
 const Story: React.FC = ({ children }) => (
   <StoryProvider>
-    <StoryStore.Provider>
-      <StoryContent>{children}</StoryContent>
-    </StoryStore.Provider>
+    <StoryContent>{children}</StoryContent>
   </StoryProvider>
 );
 

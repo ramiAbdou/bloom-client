@@ -5,14 +5,15 @@ import Show from '@components/containers/Show';
 import useTooltip from '@hooks/useTooltip';
 import { ShowProps } from '@util/constants';
 import { cx } from '@util/util';
-import { useStory } from './Story.state';
-import StoryStore from './Story.store';
+import { useStory, useStorySelector } from './Story.state';
 import { StoryPageProps } from './Story.types';
 
 const StoryNavigationBar: React.FC<StoryPageProps> = ({ id }) => {
   const [, storyDispatch] = useStory();
 
-  const page = StoryStore.useStoreState(({ getPage }) => getPage(id));
+  const page = useStorySelector(({ pages }) =>
+    pages.find((value) => value.id === id)
+  );
 
   const { disabled, branches, branchId } = page;
   const title = branches[branchId]?.title;
@@ -30,9 +31,9 @@ const StoryNavigationBar: React.FC<StoryPageProps> = ({ id }) => {
 };
 
 const StoryNavigation: React.FC<ShowProps> = ({ show }) => {
-  const pageId = StoryStore.useStoreState((state) => state.pageId);
+  const [{ pageId }] = useStory();
 
-  const pages = StoryStore.useStoreState((state) =>
+  const pages = useStorySelector((state) =>
     state.pages.filter(({ id }) => id !== 'CONFIRMATION')
   );
 
