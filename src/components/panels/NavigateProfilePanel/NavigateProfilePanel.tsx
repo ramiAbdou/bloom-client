@@ -8,20 +8,24 @@ import PanelOption from '@components/organisms/Panel/PanelOption';
 import useCommunityUrlName from '@core/hooks/useCommunityUrlName';
 import useLogout from './useLogout';
 
-const SidebarPanel: React.FC = () => {
+const NavigateProfilePanel: React.FC = () => {
   const { push } = useHistory();
-  const logout = useLogout();
+  const logout: VoidFunction = useLogout();
 
   const urlName: string = useCommunityUrlName();
 
+  const onLogoutClick = async (): Promise<void> => {
+    await logout();
+  };
+
+  const onProfileClick = (): void => {
+    push(`/${urlName}/profile`);
+  };
+
   // Show a panel that either allows them to view their profile or log out.
   const actions: PanelAction[] = [
-    {
-      Icon: IoPerson,
-      onClick: () => push(`/${urlName}/profile`),
-      text: 'Your Profile'
-    },
-    { Icon: IoExit, onClick: logout, text: 'Log Out' }
+    { Icon: IoPerson, onClick: onProfileClick, text: 'Your Profile' },
+    { Icon: IoExit, onClick: onLogoutClick, text: 'Log Out' }
   ];
 
   return (
@@ -36,4 +40,4 @@ const SidebarPanel: React.FC = () => {
   );
 };
 
-export default SidebarPanel;
+export default NavigateProfilePanel;

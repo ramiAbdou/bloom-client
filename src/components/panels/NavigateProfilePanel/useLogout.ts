@@ -1,21 +1,26 @@
 import { useHistory } from 'react-router-dom';
 
-import { useApolloClient } from '@apollo/client';
-import useBloomMutation from '@gql/hooks/useBloomMutation';
-import { MutationEvent } from '@util/constants.events';
+import {
+  DocumentNode,
+  gql,
+  useApolloClient,
+  useMutation
+} from '@apollo/client';
+
+const LOGOUT: DocumentNode = gql`
+  mutation Logout {
+    logout
+  }
+`;
 
 const useLogout = (): VoidFunction => {
+  const [logout] = useMutation<boolean>(LOGOUT);
+
   const { push } = useHistory();
   const apolloClient = useApolloClient();
 
-  const [logout] = useBloomMutation<boolean>({
-    operation: MutationEvent.LOGOUT
-  });
-
   return async () => {
-    const { error } = await logout();
-
-    if (error) return;
+    await logout();
 
     // Clear the entities that we've ever fetched.
     apolloClient.clearStore();
