@@ -1,8 +1,7 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { communityIdVar, showToast } from 'src/App.reactive';
+import { showToast } from 'src/App.reactive';
 
-import { useReactiveVar } from '@apollo/client';
+import { DocumentNode, gql, useMutation, useReactiveVar } from '@apollo/client';
 import Form, {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -10,45 +9,40 @@ import Form, {
 import FormHeader from '@components/organisms/Form/FormHeader';
 import { closeModal, modalVar } from '@components/organisms/Modal/Modal.state';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
-import { ICommunity, IEvent } from '@util/constants.entities';
+import { IEvent } from '@util/constants.entities';
 import { now } from '@util/util';
 
+interface DeleteEventArgs {
+  deletedAt: string;
+  eventId: string;
+}
+
+const DELETE_EVENT: DocumentNode = gql`
+  mutation DeleteEvent($deletedAt: String!, $eventId: String!) {
+    updateEvent(pk_columns: { id: $eventId }, _set: { deletedAt: $deletedAt }) {
+      deletedAt
+      id
+    }
+  }
+`;
+
 const DeleteEventConfirmationForm: React.FC = () => {
-  const communityId: string = useReactiveVar(communityIdVar);
+  const [deleteEvent] = useMutation<IEvent, DeleteEventArgs>(DELETE_EVENT);
   const eventId: string = useReactiveVar(modalVar)?.metadata as string;
 
-  const { push } = useHistory();
-
   const onSubmit: OnFormSubmitFunction = async ({
-    gql,
     formDispatch
   }: OnFormSubmitArgs) => {
-    // Fetch the URL name of the community so we can push to correct URL.
-    const { urlName } = await gql.findOne(ICommunity, {
-      fields: ['urlName'],
-      where: { id: communityId }
-    });
-
-    // Set the event's deletedAt to the current timestamp.
-    const { error } = await gql.update(IEvent, {
-      data: { deletedAt: now() },
-      where: { id: eventId }
-    });
-
-    if (error) {
+    try {
+      await deleteEvent({ variables: { deletedAt: now(), eventId } });
+      closeModal();
+      showToast({ message: 'Event deleted.' });
+    } catch {
       formDispatch({
         error: 'Failed to delete the Event. Please try again later.',
         type: 'SET_ERROR'
       });
-
-      return;
     }
-
-    // Close the modal, show a confirmation toast and push to upcoming events
-    // page.
-    closeModal();
-    showToast({ message: 'Event deleted.' });
-    push(`/${urlName}/events/upcoming`);
   };
 
   return (

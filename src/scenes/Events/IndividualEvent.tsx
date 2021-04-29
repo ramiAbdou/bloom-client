@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 import { communityIdVar, eventIdVar } from 'src/App.reactive';
 
 import { DocumentNode, gql, useQuery } from '@apollo/client';
@@ -25,6 +25,7 @@ interface GetEventByIdResult {
 const GET_EVENT_BY_ID: DocumentNode = gql`
   query GetEventById($eventId: String!) {
     event(id: $eventId) {
+      deletedAt
       id
       privacy
       ...IndividualEventAboutCardFragment
@@ -71,7 +72,9 @@ const IndividualEvent: React.FC = () => {
   // show the CHECK_IN modal.
   useShowCheckInEventModal(event);
 
-  if (loading || !event) return null;
+  if (loading) return null;
+
+  if (!event || event?.deletedAt) return <Redirect to="upcoming" />;
 
   const css: string = cx('home-content', {
     's-events-individual--public': !isMember

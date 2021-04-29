@@ -1,8 +1,22 @@
-import { communityIdVar, userIdVar } from 'src/App.reactive';
-
-import { useReactiveVar } from '@apollo/client';
-import useFindOne from '@gql/hooks/useFindOne';
+import { DocumentNode, gql, useQuery } from '@apollo/client';
 import { IMember } from '@util/constants.entities';
+
+interface GetMemberByCommunityIdAndUserIdResult {
+  members: IMember[];
+}
+
+const GET_MEMBER_BY_COMMUNITY_ID_AND_USER_ID: DocumentNode = gql`
+  query GetMemberByCommunityIdAndUserId($communityId: String, $userId: String) {
+    communityId @client @export(as: "communityId")
+    userId @client @export(as: "userId")
+
+    members(
+      where: { communityId: { _eq: $communityId }, userId: { _eq: $userId } }
+    ) {
+      id
+    }
+  }
+`;
 
 /**
  * Returns true if the authenticated user has a membership with the active
@@ -12,15 +26,13 @@ import { IMember } from '@util/constants.entities';
  * IndividualEvent.
  */
 const useIsMember = (): boolean => {
-  const communityId: string = useReactiveVar(communityIdVar);
-  const userId: string = useReactiveVar(userIdVar);
+  const { data, loading } = useQuery<GetMemberByCommunityIdAndUserIdResult>(
+    GET_MEMBER_BY_COMMUNITY_ID_AND_USER_ID
+  );
 
-  const { data: member, loading } = useFindOne(IMember, {
-    fields: ['community.id'],
-    where: { communityId, userId }
-  });
+  const isMember: boolean = !!data?.members?.length;
 
-  return loading || !!member.id;
+  return loading || isMember;
 };
 
 export default useIsMember;
