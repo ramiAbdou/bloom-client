@@ -28,16 +28,19 @@ const CheckInModalMemberStatusPage: ComponentWithFragments<
     title="Check In"
   >
     <CheckInModalMemberStatusPageFormLabel data={event} />
-    <CheckInModalMemberStatusPageButtonRow />
+    <CheckInModalMemberStatusPageButtonRow data={event} />
   </StoryPage>
 );
 
 CheckInModalMemberStatusPage.fragment = gql`
   fragment CheckInModalMemberStatusPageFragment on events {
+    ...CheckInModalMemberStatusPageButtonRowFragment
+
     community {
       name
     }
   }
+  ${CheckInModalMemberStatusPageButtonRow.fragment}
 `;
 
 export default CheckInModalMemberStatusPage;

@@ -16,6 +16,7 @@ const Row: React.FC<RowProps> = (props) => {
     noMarginBottom,
     spacing,
     show,
+    style,
     wrap
   } = props;
 
@@ -45,7 +46,10 @@ const Row: React.FC<RowProps> = (props) => {
   if (show === false) return null;
 
   return (
-    <div className={css} style={noMarginBottom ? { marginBottom: 0 } : {}}>
+    <div
+      className={css}
+      style={noMarginBottom ? { marginBottom: 0, ...style } : style}
+    >
       {children}
     </div>
   );

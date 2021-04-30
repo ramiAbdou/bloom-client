@@ -15,7 +15,7 @@ import {
   buildIndividualEventTableColumns,
   buildIndividualEventTableRows
 } from './IndividualEvent.util';
-import IndividualEventTableActions from './IndividualEventTableActions';
+import IndividualEventInteractionsTableActionRow from './IndividualEventInteractionsTableActionRow';
 
 const IndividualEventInteractionsTable: ComponentWithFragments<IEvent> = ({
   data: event
@@ -44,7 +44,7 @@ const IndividualEventInteractionsTable: ComponentWithFragments<IEvent> = ({
       totalCount={rows.length}
       onRowClick={onRowClick}
     >
-      <IndividualEventTableActions />
+      <IndividualEventInteractionsTableActionRow data={event} />
     </Table>
   );
 };

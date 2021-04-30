@@ -45,7 +45,6 @@ const EventsUpcoming: React.FC = () => {
     GetEventsUpcomingByCommunityIdResult,
     GetEventsUpcomingByCommunityIdArgs
   >(GET_EVENTS_UPCOMING_BY_COMMUNITY_ID, {
-    fetchPolicy: 'network-only',
     variables: { currentTimestamp: now() }
   });
 

@@ -14,4 +14,5 @@ export interface RowProps extends BaseProps {
   noMarginBottom?: boolean;
   spacing?: Spacing;
   wrap?: boolean;
+  style?: React.CSSProperties;
 }
