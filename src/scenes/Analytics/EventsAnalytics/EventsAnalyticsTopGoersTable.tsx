@@ -18,7 +18,7 @@ const EventsAnalyticsTopGoersTable: ComponentWithFragments<IEvent[]> = ({
 }) => {
   const allAttendees: IEventAttendee[] = events?.reduce(
     (result: IEventAttendee[], event: IEvent) =>
-      event?.eventAttendees ? result.concat(event.eventAttendees) : result,
+      event?.eventAttendees ? [...result, ...event.eventAttendees] : result,
     []
   );
 

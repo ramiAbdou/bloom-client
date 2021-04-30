@@ -66,6 +66,7 @@ const EventsAnalyticsRecentEventsTable: ComponentWithFragments<IEvent[]> = ({
 
 EventsAnalyticsRecentEventsTable.fragment = gql`
   fragment EventsAnalyticsRecentEventsTableFragment on events {
+    id
     startTime
     title
 

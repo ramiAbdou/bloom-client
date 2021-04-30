@@ -24,6 +24,7 @@ const GET_EVENTS_ANALYTICS: DocumentNode = gql`
     events(
       where: {
         communityId: { _eq: $communityId }
+        deletedAt: { _is_null: true }
         endTime: { _lt: $currentTimestamp }
       }
       order_by: { startTime: desc }
@@ -31,10 +32,12 @@ const GET_EVENTS_ANALYTICS: DocumentNode = gql`
       id
       ...EventsAnalyticsOverviewSectionFragment
       ...EventsAnalyticsRecentEventsSectionFragment
+      ...EventsAnalyticsTopGoersSectionFragment
     }
   }
   ${EventsAnalyticsOverviewSection.fragment}
   ${EventsAnalyticsRecentEventsSection.fragment}
+  ${EventsAnalyticsTopGoersSection.fragment}
 `;
 
 const EventsAnalyticsEmptyMessage: React.FC = () => (
