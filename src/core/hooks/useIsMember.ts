@@ -26,13 +26,13 @@ const GET_MEMBER_BY_COMMUNITY_ID_AND_USER_ID: DocumentNode = gql`
  * IndividualEvent.
  */
 const useIsMember = (): boolean => {
-  const { data, loading } = useQuery<GetMemberByCommunityIdAndUserIdResult>(
+  const { data } = useQuery<GetMemberByCommunityIdAndUserIdResult>(
     GET_MEMBER_BY_COMMUNITY_ID_AND_USER_ID
   );
 
   const isMember: boolean = !!data?.members?.length;
 
-  return loading || isMember;
+  return isMember;
 };
 
 export default useIsMember;

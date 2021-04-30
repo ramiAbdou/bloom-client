@@ -25,8 +25,6 @@ const useUpdateUserId = (): boolean => {
   const userId: string = data?.getUserTokens?.userId;
   const storedUserId: string = useReactiveVar(userIdVar);
 
-  console.log(userId);
-
   useEffect(() => {
     // If the userId is decoded from the decoded token, then set the active
     // entities for the communities, members and users.

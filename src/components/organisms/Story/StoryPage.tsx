@@ -38,8 +38,6 @@ const StoryPage: React.FC<StoryPageProps> = ({
   useUpdateDisabledPage(id);
 
   useEffect(() => {
-    console.log({ branchId, branches, disabled: !!pageId, id });
-
     storyDispatch({
       page: { branchId, branches, disabled: !!pageId, id },
       type: 'SET_PAGE'

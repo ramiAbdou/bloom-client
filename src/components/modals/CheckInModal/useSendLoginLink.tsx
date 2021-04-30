@@ -6,6 +6,7 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form';
+import { getCheckInErrorMessage } from './CheckInModal.util';
 
 interface SendLoginLinkArgs {
   communityId?: string;
@@ -42,36 +43,28 @@ const useSendLoginLink = (): OnFormSubmitFunction => {
   const { pathname } = useLocation();
 
   const onSubmit = async ({
-    // gql,
-    // formDispatch,
+    formDispatch,
     items,
     storyDispatch
   }: OnFormSubmitArgs) => {
     const email: string = items.EMAIL?.value as string;
 
-    await sendLoginLink({
-      variables: { communityId, email, redirectUrl: communityId && pathname }
-    });
+    try {
+      await sendLoginLink({
+        variables: { communityId, email, redirectUrl: communityId && pathname }
+      });
 
-    // const owner: IMember = await gql.findOne(IMember, {
-    //   fields: ['email', 'firstName', 'lastName'],
-    //   where: { community: { id: communityId }, role: MemberRole.OWNER }
-    // });
-
-    // if (error) {
-    //   formDispatch({
-    //     error: getCheckInErrorMessage({ error: error as ErrorType, owner }),
-    //     type: 'SET_ERROR'
-    //   });
-
-    //   return;
-    // }
-
-    storyDispatch({
-      branchId: 'LOGIN_LINK',
-      pageId: 'CONFIRMATION',
-      type: 'SET_CURRENT_PAGE'
-    });
+      storyDispatch({
+        branchId: 'LOGIN_LINK',
+        pageId: 'CONFIRMATION',
+        type: 'SET_CURRENT_PAGE'
+      });
+    } catch (e) {
+      formDispatch({
+        error: getCheckInErrorMessage({ error: e.message }),
+        type: 'SET_ERROR'
+      });
+    }
   };
 
   return onSubmit;

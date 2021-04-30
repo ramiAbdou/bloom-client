@@ -2,8 +2,8 @@ import React from 'react';
 
 import BloomLogo from '@components/images/bloom.svg';
 import NetworkIcon from '@components/images/network.svg';
-import LoginCardContent from '@components/modals/CheckInModal/CheckInModalLoginContent';
 import StoryPage from '@components/organisms/Story/StoryPage';
+import LoginCard from './LoginCard';
 
 const LoginCardHeader: React.FC = () => (
   <div className="s-login-header">
@@ -19,7 +19,7 @@ const LoginCardHeader: React.FC = () => (
 const LoginMainPage: React.FC = () => (
   <StoryPage branches={{ MAIN: {} }}>
     <LoginCardHeader />
-    <LoginCardContent />
+    <LoginCard />
   </StoryPage>
 );
 

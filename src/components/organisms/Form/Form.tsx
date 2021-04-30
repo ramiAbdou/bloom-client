@@ -69,7 +69,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
 
         formDispatch({ loading: false, type: 'SET_LOADING' });
       } catch (e) {
-        formDispatch({ error: e, type: 'SET_ERROR' });
+        formDispatch({ error: e.message, type: 'SET_ERROR' });
       }
     },
     [items, ...(onSubmitDeps || [])]

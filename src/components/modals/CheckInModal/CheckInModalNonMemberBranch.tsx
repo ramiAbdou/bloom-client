@@ -1,29 +1,27 @@
 import React from 'react';
-import { eventIdVar } from 'src/App.reactive';
 
-import { useReactiveVar } from '@apollo/client';
+import { gql } from '@apollo/client';
 import Row from '@components/containers/Row/Row';
 import Form, { OnFormSubmitFunction } from '@components/organisms/Form/Form';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
-import useFindOne from '@gql/hooks/useFindOne';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { QuestionCategory, ShowProps } from '@util/constants';
+import {
+  ComponentWithData,
+  ComponentWithFragments,
+  QuestionCategory,
+  ShowProps
+} from '@util/constants';
 import { IEvent } from '@util/constants.entities';
 import useCreateEventAttendeeWithSupporter from './useCreateEventAttendeeWithSupporter';
 import useCreateEventGuestWithSupporter from './useCreateEventGuestWithSupporter';
 
-const CheckInGuestFormContent: React.FC = () => {
-  const eventId: string = useReactiveVar(eventIdVar);
-
-  const { data: event, loading } = useFindOne(IEvent, {
-    fields: ['endTime', 'startTime'],
-    where: { id: eventId }
-  });
-
-  if (loading) return null;
-
-  const isUpcoming: boolean = getEventTiming(event) === EventTiming.UPCOMING;
+const CheckInModalNonMemberFormContent: ComponentWithData<IEvent> = ({
+  data: event
+}) => {
+  const isUpcoming: boolean =
+    getEventTiming({ endTime: event.endTime, startTime: event.startTime }) ===
+    EventTiming.UPCOMING;
 
   return (
     <>
@@ -45,20 +43,18 @@ const CheckInGuestFormContent: React.FC = () => {
   );
 };
 
-const CheckInGuestForm: React.FC<ShowProps> = ({ show }) => {
-  const eventId: string = useReactiveVar(eventIdVar);
-
-  const { data: event, loading } = useFindOne(IEvent, {
-    fields: ['endTime', 'startTime'],
-    where: { id: eventId }
-  });
-
+const CheckInModalNonMemberBranch: ComponentWithFragments<
+  IEvent,
+  ShowProps
+> = ({ data: event, show }) => {
   const createEventGuestWithSupporter = useCreateEventGuestWithSupporter();
   const createEventAttendeeWithSupporter = useCreateEventAttendeeWithSupporter();
 
-  if (loading || show === false) return null;
+  if (show === false) return null;
 
-  const isUpcoming: boolean = getEventTiming(event) === EventTiming.UPCOMING;
+  const isUpcoming: boolean =
+    getEventTiming({ endTime: event.endTime, startTime: event.startTime }) ===
+    EventTiming.UPCOMING;
 
   const onSubmit: OnFormSubmitFunction = isUpcoming
     ? createEventGuestWithSupporter
@@ -66,9 +62,16 @@ const CheckInGuestForm: React.FC<ShowProps> = ({ show }) => {
 
   return (
     <Form onSubmit={onSubmit}>
-      <CheckInGuestFormContent />
+      <CheckInModalNonMemberFormContent data={event} />
     </Form>
   );
 };
 
-export default CheckInGuestForm;
+CheckInModalNonMemberBranch.fragment = gql`
+  fragment CheckInModalNonMemberBranchFragment on events {
+    endTime
+    startTime
+  }
+`;
+
+export default CheckInModalNonMemberBranch;

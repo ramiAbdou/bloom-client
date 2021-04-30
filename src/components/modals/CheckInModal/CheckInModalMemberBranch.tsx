@@ -7,20 +7,17 @@ import { useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import ErrorMessage from '@components/atoms/ErrorMessage';
 import Separator from '@components/atoms/Separator';
-import Show from '@components/containers/Show';
 import GoogleLogo from '@components/images/google.svg';
 import Form from '@components/organisms/Form/Form';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
-import useFindOne from '@gql/hooks/useFindOne';
 import { APP, QuestionCategory, ShowProps } from '@util/constants';
-import { IMember, MemberRole } from '@util/constants.entities';
 import { ErrorContext, ErrorType } from '@util/constants.errors';
 import { buildUrl } from '@util/util';
 import { getCheckInErrorMessage } from './CheckInModal.util';
 import useSendLoginLink from './useSendLoginLink';
 
-const CheckInGoogleButton: React.FC = () => {
+const CheckInModalMemberBranchGoogleButton: React.FC = () => {
   const communityId: string = useReactiveVar(communityIdVar);
   const { pathname } = useLocation();
 
@@ -46,17 +43,10 @@ const CheckInGoogleButton: React.FC = () => {
   );
 };
 
-const LoginCardGoogleContainer: React.FC = React.memo(() => {
-  const communityId: string = useReactiveVar(communityIdVar);
-
-  const { data: owner, loading } = useFindOne(IMember, {
-    fields: ['email', 'firstName', 'lastName'],
-    where: { communityId, role: MemberRole.OWNER }
-  });
-
+const CheckInModalMemberBranchGoogleContainer: React.FC = () => {
   // We store the error code in a cookie.
   const error = Cookies.get(ErrorContext.LOGIN_ERROR) as ErrorType;
-  const message = getCheckInErrorMessage({ error, owner });
+  const message = getCheckInErrorMessage({ error });
 
   // After we get the message, we remove the cookie so that the error doesn't
   // get shown again. We set a timeout to ensure that even if the component
@@ -69,17 +59,15 @@ const LoginCardGoogleContainer: React.FC = React.memo(() => {
     return () => clearTimeout(timeout);
   }, [error]);
 
-  if (loading) return null;
-
   return (
     <div>
-      <CheckInGoogleButton />
+      <CheckInModalMemberBranchGoogleButton />
       <ErrorMessage marginBottom={0}>{message}</ErrorMessage>
     </div>
   );
-});
+};
 
-const LoginCardEmailForm: React.FC = () => {
+const CheckInModalMemberBranchEmailForm: React.FC = () => {
   const sendLoginLink = useSendLoginLink();
 
   return (
@@ -97,12 +85,16 @@ const LoginCardEmailForm: React.FC = () => {
   );
 };
 
-const CheckInLoginContent: React.FC<ShowProps> = ({ show }) => (
-  <Show show={show}>
-    <LoginCardGoogleContainer />
-    <Separator margin={24} />
-    <LoginCardEmailForm />
-  </Show>
-);
+const CheckInModalMemberBranch: React.FC<ShowProps> = ({ show }) => {
+  if (show === false) return null;
 
-export default CheckInLoginContent;
+  return (
+    <>
+      <CheckInModalMemberBranchGoogleContainer />
+      <Separator margin={24} />
+      <CheckInModalMemberBranchEmailForm />
+    </>
+  );
+};
+
+export default CheckInModalMemberBranch;

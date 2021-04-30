@@ -5,7 +5,7 @@ import { communityIdVar, eventIdVar } from 'src/App.reactive';
 import { DocumentNode, gql, useQuery } from '@apollo/client';
 import useIsMember from '@hooks/useIsMember';
 import { IEvent } from '@util/constants.entities';
-import { cx } from '@util/util';
+import { cx, updateDocumentColors } from '@util/util';
 import IndividualEventAboutCard from './IndividualEventAboutCard';
 import IndividualEventAttendeeListCard from './IndividualEventAttendeeListCard';
 import IndividualEventGuestListCard from './IndividualEventGuestListCard';
@@ -37,6 +37,7 @@ const GET_EVENT_BY_ID: DocumentNode = gql`
 
       community {
         id
+        primaryColor
       }
     }
   }
@@ -62,6 +63,7 @@ const IndividualEvent: React.FC = () => {
     if (event?.id) {
       communityIdVar(event.community.id);
       eventIdVar(event.id);
+      updateDocumentColors(event.community.primaryColor);
     }
   }, [event]);
 

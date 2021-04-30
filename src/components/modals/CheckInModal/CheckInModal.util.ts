@@ -1,9 +1,7 @@
-import { IMember } from '@util/constants.entities';
 import { ErrorType } from '@util/constants.errors';
 
 interface GetCheckInErrorMessageArgs {
   error: ErrorType;
-  owner?: IMember;
 }
 
 /**
@@ -12,7 +10,7 @@ interface GetCheckInErrorMessageArgs {
 export const getCheckInErrorMessage = (
   args: GetCheckInErrorMessageArgs
 ): string => {
-  const { error, owner } = args;
+  const { error } = args;
 
   if (error === ErrorType.APPLICATION_REJECTED) {
     return 'You must be accepted into a commmunity before logging in.';
@@ -28,8 +26,7 @@ export const getCheckInErrorMessage = (
 
   if (error === ErrorType.NOT_MEMBER) {
     return `This email is not registered as a member of this community. If you
-      believe this is an error, please reach out to the owner,
-      ${owner?.firstName} ${owner?.lastName} (${owner?.email}).
+      believe this is an error, please reach out to the owner.
     `;
   }
 
