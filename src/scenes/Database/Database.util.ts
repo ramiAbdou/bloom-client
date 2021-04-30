@@ -40,7 +40,7 @@ const getMemberValue = ({ member, question }: GetMemberValueArgs) => {
   }
 
   if (category === QuestionCategory.EVENTS_ATTENDED) {
-    return member.eventAttendees?.length ?? 0;
+    return member.eventAttendeesAggregate.aggregate.count;
   }
 
   return member.memberValues.find(

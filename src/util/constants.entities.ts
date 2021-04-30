@@ -207,6 +207,8 @@ export class IMember extends BaseEntity {
 
   eventAttendees: IEventAttendee[];
 
+  eventAttendeesAggregate: AggregateCount;
+
   eventGuests: IEventGuest[];
 
   eventWatches: IEventWatch[];

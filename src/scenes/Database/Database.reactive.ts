@@ -78,6 +78,9 @@ export const databaseReactiveFields: DatabaseReactiveFields = {
               case QuestionCategory.EMAIL:
                 return { email: { [mappedOperator]: value } };
 
+              case QuestionCategory.EVENTS_ATTENDED:
+                return { eventAttendees: { [mappedOperator]: value } };
+
               case QuestionCategory.FACEBOOK_URL:
                 return {
                   memberSocials: { facebookUrl: { [mappedOperator]: value } }
@@ -113,7 +116,12 @@ export const databaseReactiveFields: DatabaseReactiveFields = {
                 };
 
               default:
-                return {};
+                return {
+                  memberValues: {
+                    questionId: { _eq: column.id },
+                    value: { [mappedOperator]: value }
+                  }
+                };
             }
           }
         )

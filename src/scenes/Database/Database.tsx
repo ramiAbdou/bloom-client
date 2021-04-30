@@ -86,6 +86,12 @@ const GET_MEMBERS_BY_COMMUNITY_ID_EXPANDED: DocumentNode = gql`
       role
       status
 
+      eventAttendeesAggregate: eventAttendees_aggregate {
+        aggregate {
+          count
+        }
+      }
+
       memberSocials {
         facebookUrl
         instagramUrl
