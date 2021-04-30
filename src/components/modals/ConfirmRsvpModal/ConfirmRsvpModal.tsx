@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import React from 'react';
 import { showToast } from 'src/App.reactive';
 
@@ -19,13 +18,9 @@ import { closeModal, modalVar } from '@components/organisms/Modal/Modal.state';
 import ModalConfirmationActionRow from '@components/organisms/Modal/ModalConfirmationActionRow';
 import useEventTitle from '@core/hooks/useEventTitle';
 import { IEventGuest } from '@util/constants.entities';
-import { now } from '@util/util';
 
 interface CreateEventGuestWithMemberArgs {
-  createdAt: string;
   eventId: string;
-  id: string;
-  updatedAt: string;
 }
 
 interface CreateEventGuestWithMemberResult {
@@ -33,23 +28,11 @@ interface CreateEventGuestWithMemberResult {
 }
 
 const CREATE_EVENT_GUEST_WITH_MEMBER: DocumentNode = gql`
-  mutation CreateEventGuest(
-    $createdAt: String!
-    $eventId: String!
-    $id: String!
-    $memberId: String
-    $updatedAt: String!
-  ) {
+  mutation CreateEventGuest($eventId: String!, $memberId: String) {
     memberId @client @export(as: "memberId")
 
     createEventGuest(
-      object: {
-        createdAt: $createdAt
-        eventId: $eventId
-        id: $id
-        memberId: $memberId
-        updatedAt: $updatedAt
-      }
+      object: { eventId: $eventId, memberId: $memberId }
       on_conflict: {
         constraint: event_guests_event_id_member_id_supporter_id_unique
         update_columns: [updatedAt]
@@ -117,15 +100,7 @@ const EventsConfirmRsvpModal: React.FC = () => {
     formDispatch
   }: OnFormSubmitArgs) => {
     try {
-      await createEventGuestWithMember({
-        variables: {
-          createdAt: now(),
-          eventId,
-          id: nanoid(),
-          updatedAt: now()
-        }
-      });
-
+      await createEventGuestWithMember({ variables: { eventId } });
       closeModal();
       showToast({ message: 'RSVP was registered.' });
     } catch {

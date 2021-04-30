@@ -1,5 +1,4 @@
 import day from 'dayjs';
-import { nanoid } from 'nanoid';
 import { showToast } from 'src/App.reactive';
 
 import {
@@ -16,20 +15,16 @@ import {
 import { closeModal } from '@components/organisms/Modal/Modal.state';
 import { EventPrivacy, IEvent } from '@util/constants.entities';
 import { uploadImage } from '@util/imageUtil';
-import { now } from '@util/util';
 
 interface CreateEventArgs {
-  createdAt: string;
   description: string;
   endTime: string;
-  id: string;
   imageUrl: string;
   privacy: string;
   summary: string;
   startTime: string;
   title: string;
   videoUrl: string;
-  updatedAt: string;
 }
 
 interface CreateEventResult {
@@ -39,34 +34,28 @@ interface CreateEventResult {
 const CREATE_EVENT: DocumentNode = gql`
   mutation CreateEvent(
     $communityId: String!
-    $createdAt: String!
     $description: String!
     $endTime: String!
-    $id: String!
     $imageUrl: String
     $privacy: String!
     $startTime: String!
     $summary: String
     $title: String!
     $videoUrl: String!
-    $updatedAt: String!
   ) {
     communityId @client @export(as: "communityId")
 
     createEvent(
       object: {
         communityId: $communityId
-        createdAt: $createdAt
         description: $description
         endTime: $endTime
-        id: $id
         imageUrl: $imageUrl
         privacy: $privacy
         summary: $summary
         startTime: $startTime
         title: $title
         videoUrl: $videoUrl
-        updatedAt: $updatedAt
       }
     ) {
       description
@@ -179,16 +168,13 @@ const useCreateEvent = (): OnFormSubmitFunction => {
     try {
       await createEvent({
         variables: {
-          createdAt: now(),
           description,
           endTime,
-          id: nanoid(),
           imageUrl,
           privacy,
           startTime,
           summary,
           title,
-          updatedAt: now(),
           videoUrl
         }
       });

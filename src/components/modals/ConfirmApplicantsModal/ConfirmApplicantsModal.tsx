@@ -23,7 +23,6 @@ interface UpdateApplicantStatusesArgs {
   joinedAt: string;
   memberIds: string[];
   status: MemberStatus;
-  updatedAt: string;
 }
 
 interface UpdateApplicantStatusesResult {
@@ -35,11 +34,10 @@ const UPDATE_APPLICANT_STATUSES: DocumentNode = gql`
     $joinedAt: String!
     $memberIds: [String!]!
     $status: String!
-    $updatedAt: String!
   ) {
     updateMembers(
       where: { id: { _in: $memberIds } }
-      _set: { joinedAt: $joinedAt, status: $status, updatedAt: $updatedAt }
+      _set: { joinedAt: $joinedAt, status: $status }
     ) {
       returning {
         id
@@ -121,8 +119,7 @@ const ApplicantsConfirmApplicantsModal: React.FC = () => {
         variables: {
           joinedAt: now(),
           memberIds: applicantIds,
-          status: response,
-          updatedAt: now()
+          status: response
         }
       });
 

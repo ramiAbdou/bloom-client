@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import React from 'react';
 
 import { DocumentNode, gql, useMutation } from '@apollo/client';
@@ -8,33 +7,17 @@ import useIsMember from '@hooks/useIsMember';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { ComponentWithFragments } from '@util/constants';
 import { IEvent, IEventWatch, MemberRole } from '@util/constants.entities';
-import { now } from '@util/util';
 
 interface CreateEventWatchArgs {
-  createdAt: string;
   eventId: string;
-  id: string;
-  updatedAt: string;
 }
 
 const CREATE_EVENT_WATCH: DocumentNode = gql`
-  mutation CreateEventWatch(
-    $createdAt: String!
-    $eventId: String!
-    $id: String!
-    $memberId: String
-    $updatedAt: String!
-  ) {
+  mutation CreateEventWatch($eventId: String!, $memberId: String) {
     memberId @client @export(as: "memberId")
 
     createEventWatch(
-      object: {
-        createdAt: $createdAt
-        eventId: $eventId
-        id: $id
-        memberId: $memberId
-        updatedAt: $updatedAt
-      }
+      object: { eventId: $eventId, memberId: $memberId }
       on_conflict: {
         constraint: event_watches_event_id_member_id_unique
         update_columns: [updatedAt]
@@ -80,14 +63,7 @@ const EventsViewRecordingButton: ComponentWithFragments<
   ) => {
     e.stopPropagation();
 
-    await createEventWatch({
-      variables: {
-        createdAt: now(),
-        eventId: event.id,
-        id: nanoid(),
-        updatedAt: now()
-      }
-    });
+    await createEventWatch({ variables: { eventId: event.id } });
   };
 
   return (

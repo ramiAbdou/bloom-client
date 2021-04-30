@@ -1,7 +1,3 @@
-type RecursivePartial<T> = {
-  [P in keyof T]?: RecursivePartial<T[P]>;
-};
-
 type RecursiveWherePartial<T> = {
   [P in keyof T]?: T[P] extends string
     ? string | { _in?: string[]; _lt?: string; _gt?: string }
@@ -11,21 +7,6 @@ type RecursiveWherePartial<T> = {
 export enum GQLOperation {
   FIND = 'Find',
   FIND_ONE = 'FindOne'
-}
-
-interface CreateArgsModification<T> {
-  entity: new () => T;
-  id: string;
-  field: RecursivePartial<T>;
-}
-
-export interface CreateArgs<T, S = unknown> {
-  data: Omit<
-    RecursivePartial<T>,
-    'createdAt' | 'deletedAt' | 'id' | 'updatedAt'
-  >;
-  fields: string[];
-  modifications?: CreateArgsModification<S>[];
 }
 
 export interface CustomQueryArgs {

@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import { communityIdVar } from 'src/App.reactive';
 
 import { DocumentNode, gql, useMutation } from '@apollo/client';
@@ -11,10 +10,8 @@ import { FormItemData } from '@components/organisms/Form/Form.types';
 import { QuestionCategory } from '@util/constants';
 import { IUser, MemberStatus } from '@util/constants.entities';
 import { UniqueConstraint } from '@util/constants.errors';
-import { now } from '@util/util';
 
 interface CreateApplicantsMemberValueInput {
-  id: string;
   questionId: string;
   value: string;
 }
@@ -22,45 +19,30 @@ interface CreateApplicantsMemberValueInput {
 interface CreateApplicantsMemberInput {
   bio: string;
   communityId: string;
-  createdAt: string;
   email: string;
   firstName: string;
-  id: string;
   lastName: string;
   memberTypeId: string;
   memberValues: { data: CreateApplicantsMemberValueInput[] };
   status: string;
-  updatedAt: string;
 }
 
 interface CreateApplicantArgs {
-  createdAt: string;
   email: string;
-  id: string;
   members: { data: CreateApplicantsMemberInput[] };
-  updatedAt: string;
 }
 
 const CREATE_APPLICANT: DocumentNode = gql`
   mutation CreateApplicant(
-    $createdAt: String!
     $email: String!
-    $id: String!
     $members: members_arr_rel_insert_input
-    $updatedAt: String!
   ) {
     createUser(
       on_conflict: {
         constraint: users_email_unique
         update_columns: [updatedAt]
       }
-      object: {
-        createdAt: $createdAt
-        email: $email
-        id: $id
-        members: $members
-        updatedAt: $updatedAt
-      }
+      object: { email: $email, members: $members }
     ) {
       createdAt
       email
@@ -150,25 +132,19 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
     const membersInput: CreateApplicantsMemberInput = {
       bio,
       communityId: communityIdVar(),
-      createdAt: now(),
       email,
       firstName,
-      id: nanoid(),
       lastName,
       memberTypeId: memberTypeName,
       memberValues: { data: [] },
-      status: MemberStatus.PENDING,
-      updatedAt: now()
+      status: MemberStatus.PENDING
     };
 
     try {
       await applyToCommunity({
         variables: {
-          createdAt: now(),
           email,
-          id: nanoid(),
-          members: { data: [membersInput] },
-          updatedAt: now()
+          members: { data: [membersInput] }
         }
       });
 

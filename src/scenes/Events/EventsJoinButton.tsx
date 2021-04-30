@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import React from 'react';
 
 import {
@@ -14,14 +13,10 @@ import { ModalType } from '@components/organisms/Modal/Modal.types';
 import useIsMember from '@hooks/useIsMember';
 import { ComponentWithFragments } from '@util/constants';
 import { IEvent, IEventAttendee } from '@util/constants.entities';
-import { now } from '@util/util';
 import { EventTiming, getEventTiming } from './Events.util';
 
 interface CreateEventAttendeeArgs {
-  createdAt: string;
   eventId: string;
-  id: string;
-  updatedAt: string;
 }
 
 interface CreateEventAttendeeResult {
@@ -29,29 +24,16 @@ interface CreateEventAttendeeResult {
 }
 
 const CREATE_EVENT_ATTENDEE_WITH_MEMBER: DocumentNode = gql`
-  mutation CreateEventAttendee(
-    $createdAt: String!
-    $eventId: String!
-    $id: String!
-    $memberId: String
-    $updatedAt: String!
-  ) {
+  mutation CreateEventAttendee($eventId: String!, $memberId: String) {
     memberId @client @export(as: "memberId")
 
     createEventAttendee(
-      object: {
-        createdAt: $createdAt
-        eventId: $eventId
-        id: $id
-        memberId: $memberId
-        updatedAt: $updatedAt
-      }
+      object: { eventId: $eventId, memberId: $memberId }
       on_conflict: {
         constraint: event_attendees_event_id_member_id_supporter_id_unique
         update_columns: [updatedAt]
       }
     ) {
-      createdAt
       id
       updatedAt
 
@@ -120,14 +102,7 @@ const EventsJoinButton: ComponentWithFragments<
       showModal({ id: ModalType.CHECK_IN, metadata: event.id });
     }
 
-    await createEventAttendeeWithMember({
-      variables: {
-        createdAt: now(),
-        eventId: event.id,
-        id: nanoid(),
-        updatedAt: now()
-      }
-    });
+    await createEventAttendeeWithMember({ variables: { eventId: event.id } });
   };
 
   return (
