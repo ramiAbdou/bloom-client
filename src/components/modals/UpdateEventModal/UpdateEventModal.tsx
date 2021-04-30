@@ -5,10 +5,10 @@ import Form, { OnFormSubmitFunction } from '@components/organisms/Form/Form';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import Modal from '@components/organisms/Modal/Modal';
 import { IEvent } from '@util/constants.entities';
-import EventModalFormDeleteButton from '../CreateEventModal/EventModalFormDeleteButton';
 import EventModalFormDetailsSection from '../CreateEventModal/EventModalFormDetailsSection';
 import EventModalFormMainSection from '../CreateEventModal/EventModalFormMainSection';
 import EventModalFormPrivacySection from '../CreateEventModal/EventModalFormPrivacySection';
+import UpdateEventModalFormDeleteButton from './UpdateEventModalFormDeleteButton';
 import useUpdateEvent from './useUpdateEvent';
 
 interface GetEventToUpdateByIdResult {
@@ -54,7 +54,7 @@ const UpdateEventModal: React.FC = () => {
         <FormSubmitButton loadingText="Updating...">
           Update Event
         </FormSubmitButton>
-        <EventModalFormDeleteButton />
+        <UpdateEventModalFormDeleteButton />
       </Form>
     </Modal>
   );

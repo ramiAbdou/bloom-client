@@ -5,7 +5,7 @@ import Button from '@components/atoms/Button/Button';
 import { modalVar, showModal } from '@components/organisms/Modal/Modal.state';
 import { ModalType } from '@components/organisms/Modal/Modal.types';
 
-const EventModalFormDeleteButton: React.FC = () => {
+const UpdateEventModalFormDeleteButton: React.FC = () => {
   const eventId: string = useReactiveVar(modalVar)?.metadata as string;
 
   const onClick = (): void => {
@@ -22,4 +22,4 @@ const EventModalFormDeleteButton: React.FC = () => {
   );
 };
 
-export default EventModalFormDeleteButton;
+export default UpdateEventModalFormDeleteButton;
