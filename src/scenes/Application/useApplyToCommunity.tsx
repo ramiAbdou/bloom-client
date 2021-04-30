@@ -6,7 +6,6 @@ import {
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form';
 import { FormItemData } from '@components/organisms/Form/Form.types';
-// import { parseValue } from '@components/organisms/Form/Form.util';
 import { QuestionCategory } from '@util/constants';
 import { IUser, MemberStatus } from '@util/constants.entities';
 import { UniqueConstraint } from '@util/constants.errors';
@@ -85,17 +84,12 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
   );
 
   const onSubmit = async ({
-    // gql,
     formDispatch,
     storyDispatch,
     storyState
   }: OnFormSubmitArgs) => {
     const { items } = storyState;
     const storyValues: FormItemData[] = Object.values(items);
-    // const { memberTypes } = await gql.findOne(ICommunity, {
-    //   fields: ['memberTypes.id', 'memberTypes.name'],
-    //   where: { id: '' }
-    // });
 
     const bio: string = storyValues.find(
       (value: FormItemData) => value.category === QuestionCategory.BIO

@@ -3,11 +3,8 @@ import { useHistory } from 'react-router-dom';
 
 import { showModal } from '@components/organisms/Modal/Modal.state';
 import { ModalType } from '@components/organisms/Modal/Modal.types';
-import GQL from '@gql/GQL';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
-import useGQL from '@gql/hooks/useGQL';
 import { VerifyEvent } from '@util/constants';
-import { IEvent } from '@util/constants.entities';
 import { ErrorType } from '@util/constants.errors';
 import { MutationEvent } from '@util/constants.events';
 import { openHref } from '@util/util';
@@ -28,8 +25,6 @@ const useVerifyToken = (): boolean => {
   const token: string = new URLSearchParams(window.location.search).get(
     'token'
   );
-
-  const gql: GQL = useGQL();
 
   const [verifyToken, result1] = useBloomMutation<VerifiedToken>({
     fields: ['event', 'eventId'],
@@ -59,10 +54,7 @@ const useVerifyToken = (): boolean => {
       // If the event is VerifyEvent.JOIN_EVENT, then we need to grab the
       // videoUrl from the backend and open the browser to that.
       if (data.event === VerifyEvent.JOIN_EVENT) {
-        const { videoUrl } = await gql.findOne(IEvent, {
-          fields: ['videoUrl'],
-          where: { id: data.eventId }
-        });
+        const videoUrl = '';
 
         // Only open the videoUrl if it's present though!
         if (videoUrl) openHref(videoUrl, false);

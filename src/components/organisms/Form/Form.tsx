@@ -1,8 +1,6 @@
 import React, { useCallback } from 'react';
 
 import { useStorySafe } from '@components/organisms/Story/Story.state';
-import GQL from '@gql/GQL';
-import useGQL from '@gql/hooks/useGQL';
 import { ClassNameProps, ShowProps } from '@util/constants';
 import { cx } from '@util/util';
 import { StoryAction, StoryState } from '../Story/Story.types';
@@ -21,7 +19,6 @@ export interface FormProps extends ClassNameProps, ShowProps {
 export interface OnFormSubmitArgs {
   formDispatch: React.Dispatch<FormAction>;
   storyDispatch?: React.Dispatch<StoryAction>;
-  gql: GQL;
   items: Record<string, FormItemData>;
   storyState?: StoryState;
 }
@@ -37,7 +34,6 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
 }) => {
   const [{ items }, formDispatch] = useForm();
   const [, storyDispatch] = useStorySafe();
-  const gql: GQL = useGQL();
 
   const onFormSubmit = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
@@ -60,13 +56,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
       formDispatch({ loading: true, type: 'SET_LOADING' });
 
       try {
-        await onSubmit({
-          formDispatch,
-          gql,
-          items: validatedItems,
-          storyDispatch
-        });
-
+        await onSubmit({ formDispatch, items: validatedItems, storyDispatch });
         formDispatch({ loading: false, type: 'SET_LOADING' });
       } catch (e) {
         formDispatch({ error: e.message, type: 'SET_ERROR' });

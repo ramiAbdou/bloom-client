@@ -1,12 +1,8 @@
 import React from 'react';
-import { eventIdVar } from 'src/App.reactive';
 
-import { gql, useReactiveVar } from '@apollo/client';
+import { gql } from '@apollo/client';
 import QuickFilterButton from '@components/atoms/Button/QuickFilterButton';
 import Row from '@components/containers/Row/Row';
-import { TableFilterFunction } from '@components/organisms/Table/TableFilterPanel.types';
-// import TableQuickFilter from '@components/organisms/Table/TableQuickFilter';
-import useFindOne from '@core/gql/hooks/useFindOne';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { ComponentWithFragments } from '@util/constants';
 import { IEvent } from '@util/constants.entities';
@@ -47,30 +43,14 @@ const IndividualEventInteractionsTableWatchedFilter: React.FC = () => {
   );
 };
 
-const IndividualEventNoShowFilter: React.FC = () => {
-  const eventId: string = useReactiveVar(eventIdVar);
+const IndividualEventInteractionsTableNoShowFilter: React.FC = () => {
+  const onClick = (): void => {};
 
-  const { data: event, loading } = useFindOne(IEvent, {
-    fields: ['endTime', 'startTime'],
-    where: { id: eventId }
-  });
-
-  if (loading) return null;
-
-  const isPast: boolean = getEventTiming(event) === EventTiming.PAST;
-
-  // const filter: TableFilterFunction = (
-  //   row: IndividualEventTableRowProps
-  // ): boolean => !!row.rsvpdAt && !row.joinedAt;
-
-  return null;
-  // return (
-  //   <TableQuickFilter
-  //     filter={filter}
-  //     show={isPast}
-  //     title="RSVP'd + Didn't Join"
-  //   />
-  // );
+  return (
+    <QuickFilterButton active={false} onClick={onClick}>
+      Filter: No Show
+    </QuickFilterButton>
+  );
 };
 
 const IndividualEventInteractionsTableFilterRow: ComponentWithFragments<IEvent> = ({
@@ -82,7 +62,6 @@ const IndividualEventInteractionsTableFilterRow: ComponentWithFragments<IEvent> 
   });
 
   const isPast: boolean = eventTiming === EventTiming.PAST;
-  const isUpcoming: boolean = eventTiming === EventTiming.UPCOMING;
 
   return (
     <Row wrap gap="sm">
@@ -91,7 +70,7 @@ const IndividualEventInteractionsTableFilterRow: ComponentWithFragments<IEvent> 
       {isPast && event.recordingUrl && (
         <IndividualEventInteractionsTableWatchedFilter />
       )}
-      <IndividualEventNoShowFilter />
+      {isPast && <IndividualEventInteractionsTableNoShowFilter />}
     </Row>
   );
 };

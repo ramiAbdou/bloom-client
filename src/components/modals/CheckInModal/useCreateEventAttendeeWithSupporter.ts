@@ -4,7 +4,7 @@ import {
 } from '@components/organisms/Form/Form';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { CreateEventGuestArgs } from '@scenes/Events/Events.types';
-import { IEvent, IEventGuest } from '@util/constants.entities';
+import { IEventGuest } from '@util/constants.entities';
 import { MutationEvent } from '@util/constants.events';
 import { openHref } from '@util/util';
 
@@ -30,7 +30,6 @@ const useCreateEventAttendeeWithSupporter = (): OnFormSubmitFunction => {
 
   const onSubmit = async ({
     formDispatch,
-    gql,
     storyDispatch,
     items
   }: OnFormSubmitArgs) => {
@@ -47,11 +46,7 @@ const useCreateEventAttendeeWithSupporter = (): OnFormSubmitFunction => {
 
     if (error) formDispatch({ error, type: 'SET_ERROR' });
     else {
-      const { videoUrl } = await gql.findOne(IEvent, {
-        fields: ['videoUrl'],
-        where: { id: '' }
-      });
-
+      const videoUrl = '';
       openHref(videoUrl);
 
       storyDispatch({
