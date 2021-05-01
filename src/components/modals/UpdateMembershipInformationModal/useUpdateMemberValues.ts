@@ -1,55 +1,75 @@
-import { showToast } from 'src/App.reactive';
+import { memberIdVar, showToast } from 'src/App.reactive';
 
+import { DocumentNode, gql, useMutation } from '@apollo/client';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form';
 import { FormItemData } from '@components/organisms/Form/Form.types';
 import { closeModal } from '@components/organisms/Modal/Modal.state';
-import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { IMemberValue } from '@util/constants.entities';
-import { MutationEvent } from '@util/constants.events';
 
 export interface MemberValueInput {
+  memberId: string;
   questionId: string;
-  value: string[];
+  value: string;
 }
 
-export interface UpdateMemberValueArgs {
-  items: MemberValueInput[];
+export interface UpsertMemberValuesArgs {
+  memberValueInputs: MemberValueInput[];
 }
+
+export interface UpsertMemberValuesResult {
+  createMemberValues: { returning: IMemberValue[] };
+}
+
+const UPSERT_MEMBER_VALUES: DocumentNode = gql`
+  mutation UpsertMemberValues(
+    $memberValueInputs: [member_values_insert_input!]!
+  ) {
+    createMemberValues(
+      objects: $memberValueInputs
+      on_conflict: {
+        constraint: member_values_member_id_question_id_unique
+        update_columns: [updatedAt, value]
+      }
+    ) {
+      returning {
+        id
+        updatedAt
+        value
+      }
+    }
+  }
+`;
 
 const useUpdateMemberValues = (): OnFormSubmitFunction => {
-  const [updateMemberValues] = useBloomMutation<
-    IMemberValue[],
-    UpdateMemberValueArgs
-  >({
-    fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
-    operation: MutationEvent.UPDATE_MEMBER_VALUES,
-    types: { items: { required: true, type: '[MemberValueArgs!]' } }
-  });
+  const [upsertMemberValues] = useMutation<
+    UpsertMemberValuesResult,
+    UpsertMemberValuesArgs
+  >(UPSERT_MEMBER_VALUES);
 
   const onSubmit = async ({ formDispatch, items }: OnFormSubmitArgs) => {
-    const data: MemberValueInput[] = Object.values(items).map(
+    const memberValueInputs: MemberValueInput[] = Object.values(items).map(
       (item: FormItemData) => {
-        const { questionId, value } = item;
-        return { questionId, value: value as string[] };
+        return {
+          memberId: memberIdVar(),
+          questionId: item.questionId,
+          value: item.value?.toString()
+        };
       }
     );
 
-    const { error } = await updateMemberValues({ items: data });
-
-    if (error) {
+    try {
+      await upsertMemberValues({ variables: { memberValueInputs } });
+      closeModal();
+      showToast({ message: 'Membership information updated.' });
+    } catch (e) {
       formDispatch({
         error: 'Failed to update membership information.',
         type: 'SET_ERROR'
       });
-
-      return;
     }
-
-    closeModal();
-    showToast({ message: 'Membership information updated.' });
   };
 
   return onSubmit;
