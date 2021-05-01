@@ -1,30 +1,116 @@
+import { communityIdVar, eventIdVar } from 'src/App.reactive';
+
+import {
+  ApolloCache,
+  DocumentNode,
+  gql,
+  Reference,
+  useMutation
+} from '@apollo/client';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form';
-import useBloomMutation from '@gql/hooks/useBloomMutation';
-import { CreateEventGuestArgs } from '@scenes/Events/Events.types';
-import { IEventGuest } from '@util/constants.entities';
-import { MutationEvent } from '@util/constants.events';
-import { openHref } from '@util/util';
+import { IEventAttendee } from '@util/constants.entities';
+import { getGraphQLError, openHref } from '@util/util';
+
+interface CreateEventAttendeeWithSupporterArgs {
+  communityId: string;
+  eventId: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+}
+
+interface CreateEventAttendeeWithSupporterResult {
+  createEventAttendee: IEventAttendee;
+}
+
+const CREATE_EVENT_ATTENDEE_WITH_SUPPORTER: DocumentNode = gql`
+  mutation CreateEventAttendeeWithSupporter(
+    $communityId: String!
+    $email: String!
+    $eventId: String!
+    $firstName: String!
+    $lastName: String!
+  ) {
+    createEventAttendee(
+      object: {
+        eventId: $eventId
+        supporter: {
+          data: {
+            communityId: $communityId
+            email: $email
+            firstName: $firstName
+            lastName: $lastName
+            user: {
+              data: { email: $email }
+              on_conflict: {
+                constraint: users_email_unique
+                update_columns: [updatedAt]
+              }
+            }
+          }
+          on_conflict: {
+            constraint: supporters_community_id_email_unique
+            update_columns: [updatedAt]
+          }
+        }
+      }
+    ) {
+      createdAt
+      id
+
+      event {
+        id
+        videoUrl
+      }
+
+      supporter {
+        createdAt
+        email
+        id
+        firstName
+        lastName
+
+        user {
+          email
+          id
+        }
+      }
+    }
+  }
+`;
 
 const useCreateEventAttendeeWithSupporter = (): OnFormSubmitFunction => {
-  const [createEventAttendeeWithSupporter] = useBloomMutation<
-    IEventGuest,
-    CreateEventGuestArgs
-  >({
-    fields: [
-      'createdAt',
-      'id',
-      { event: ['id'] },
-      { supporter: ['id', 'email', 'firstName', 'lastName'] }
-    ],
-    operation: MutationEvent.CREATE_EVENT_ATTENDEE_WITH_SUPPORTER,
-    types: {
-      email: { required: false },
-      eventId: { required: true },
-      firstName: { required: false },
-      lastName: { required: false }
+  const [createEventAttendeeWithSupporter] = useMutation<
+    CreateEventAttendeeWithSupporterResult,
+    CreateEventAttendeeWithSupporterArgs
+  >(CREATE_EVENT_ATTENDEE_WITH_SUPPORTER, {
+    update: (
+      cache: ApolloCache<CreateEventAttendeeWithSupporterResult>,
+      { data }
+    ) => {
+      const eventAttendee: IEventAttendee = data?.createEventAttendee;
+
+      cache.modify({
+        fields: {
+          members: (existingEventAttendeeRefs: Reference[] = []) => {
+            const newEventAttendeeRef: Reference = cache.writeFragment({
+              data: eventAttendee,
+              fragment: gql`
+                fragment NewEventAttendee on event_attendees {
+                  createdAt
+                  id
+                }
+              `
+            });
+
+            return [...existingEventAttendeeRefs, newEventAttendeeRef];
+          }
+        },
+        id: `events:${eventAttendee.event.id}`
+      });
     }
   });
 
@@ -37,17 +123,19 @@ const useCreateEventAttendeeWithSupporter = (): OnFormSubmitFunction => {
     const lastName: string = items.LAST_NAME?.value as string;
     const email: string = items.EMAIL?.value as string;
 
-    const { error } = await createEventAttendeeWithSupporter({
-      email,
-      eventId: '',
-      firstName,
-      lastName
-    });
+    try {
+      const { data } = await createEventAttendeeWithSupporter({
+        variables: {
+          communityId: communityIdVar(),
+          email,
+          eventId: eventIdVar(),
+          firstName,
+          lastName
+        }
+      });
 
-    if (error) formDispatch({ error, type: 'SET_ERROR' });
-    else {
-      const videoUrl = '';
-      openHref(videoUrl);
+      const eventAttendee: IEventAttendee = data?.createEventAttendee;
+      openHref(eventAttendee.event.videoUrl);
 
       storyDispatch({
         branchId: 'ATTENDEE_CONFIRMATION',
@@ -56,6 +144,8 @@ const useCreateEventAttendeeWithSupporter = (): OnFormSubmitFunction => {
       });
 
       storyDispatch({ type: 'GO_FORWARD' });
+    } catch (e) {
+      formDispatch({ error: getGraphQLError(e), type: 'SET_ERROR' });
     }
   };
 

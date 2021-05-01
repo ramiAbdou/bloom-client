@@ -1,8 +1,9 @@
 import day from 'dayjs';
-import { APIError } from 'graphql-hooks';
 
+import { ApolloError } from '@apollo/client';
 import { QuestionCategory } from '@util/constants';
 import { IMember, IMemberValue, IQuestion } from '@util/constants.entities';
+import { TableConstraint } from '@util/constants.errors';
 
 /**
  * Returns the URL with the URL params.
@@ -42,30 +43,37 @@ export const cx = (
   return customClass ? `${classes} ${customClass}` : classes;
 };
 
-interface GraphQLError {
-  message: string;
-}
+type GraphQLErrorContext = { email: string };
 
-/**
- * Returns the GraphQL error from the APIError object returned after a GraphQL
- * query or mutation runs.
- *
- * There's 2 different types of error we track: either a fetch error or a
- * custom GraphQL error.
- */
-export const getGraphQLError = (error: APIError): string => {
+export const getGraphQLError = (
+  error: ApolloError,
+  context?: GraphQLErrorContext
+): string => {
   if (!error) return null;
 
-  const { fetchError, graphQLErrors, httpError } = error;
+  const { message, networkError } = error;
+  const { email } = context ?? {};
 
-  if (fetchError) return 'Failed to connect to Bloom servers.';
-  if (httpError) return 'Request failed.';
+  if (networkError) {
+    return 'Failed to connect to Bloom servers.';
+  }
 
-  return (graphQLErrors[0] as GraphQLError)?.message;
+  if (
+    message.includes(TableConstraint.MEMBERS_COMMUNITY_ID_EMAIL_UNIQUE) &&
+    email
+  ) {
+    return `The email (${email}) already exists in this community.`;
+  }
+
+  if (
+    message.includes(TableConstraint.MEMBERS_COMMUNITY_ID_EMAIL_UNIQUE) &&
+    !email
+  ) {
+    return `One of these emails already exists in this community.`;
+  }
+
+  return message;
 };
-
-export const isEmpty = (obj: Record<string, any>) =>
-  !obj || Object.keys(obj).length === 0;
 
 /**
  * Returns the current UTC timestamp as a string to the millisecond.

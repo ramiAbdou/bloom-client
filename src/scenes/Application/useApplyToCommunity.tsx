@@ -8,7 +8,7 @@ import {
 import { FormItemData } from '@components/organisms/Form/Form.types';
 import { QuestionCategory } from '@util/constants';
 import { IUser, MemberStatus } from '@util/constants.entities';
-import { UniqueConstraint } from '@util/constants.errors';
+import { getGraphQLError } from '@util/util';
 
 interface CreateApplicantsMemberValueInput {
   questionId: string;
@@ -143,17 +143,11 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
       });
 
       storyDispatch({ type: 'GO_FORWARD' });
-    } catch (e) {
-      if (
-        e.graphQLErrors[0].message.includes(
-          UniqueConstraint.MEMBERS_COMMUNITY_ID_EMAIL_UNIQUE
-        )
-      ) {
-        formDispatch({
-          error: `This email (${email}) is already a member in this community.`,
-          type: 'SET_ERROR'
-        });
-      }
+    } catch (error) {
+      formDispatch({
+        error: getGraphQLError(error, { email }),
+        type: 'SET_ERROR'
+      });
     }
   };
 

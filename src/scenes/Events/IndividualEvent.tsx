@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { communityIdVar, eventIdVar } from 'src/App.reactive';
 
-import { DocumentNode, gql, useQuery } from '@apollo/client';
+import { DocumentNode, gql, useQuery, useReactiveVar } from '@apollo/client';
 import useIsMember from '@hooks/useIsMember';
 import { IEvent } from '@util/constants.entities';
 import { cx, updateDocumentColors } from '@util/util';
@@ -75,7 +75,6 @@ const IndividualEvent: React.FC = () => {
   useShowCheckInEventModal(event);
 
   if (loading) return null;
-
   if (!event || event?.deletedAt) return <Redirect to="upcoming" />;
 
   const css: string = cx('home-content', {

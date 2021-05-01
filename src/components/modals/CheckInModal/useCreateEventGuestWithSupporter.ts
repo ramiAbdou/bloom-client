@@ -1,34 +1,117 @@
-import { eventIdVar } from 'src/App.reactive';
+/* eslint-disable camelcase */
 
-import { useReactiveVar } from '@apollo/client';
+import { communityIdVar, eventIdVar } from 'src/App.reactive';
+
+import {
+  ApolloCache,
+  DocumentNode,
+  gql,
+  Reference,
+  useMutation
+} from '@apollo/client';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form';
-import useBloomMutation from '@gql/hooks/useBloomMutation';
-import { CreateEventGuestArgs } from '@scenes/Events/Events.types';
 import { IEventGuest } from '@util/constants.entities';
-import { MutationEvent } from '@util/constants.events';
+import { getGraphQLError } from '@util/util';
+
+interface CreateEventGuestWithSupporterArgs {
+  communityId: string;
+  eventId: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+}
+
+interface CreateEventGuestWithSupporterResult {
+  createEventGuest: IEventGuest;
+}
+
+const CREATE_EVENT_GUEST_WITH_SUPPORTER: DocumentNode = gql`
+  mutation CreateEventGuestWithSupporter(
+    $communityId: String!
+    $email: String!
+    $eventId: String!
+    $firstName: String!
+    $lastName: String!
+  ) {
+    createEventGuest(
+      object: {
+        eventId: $eventId
+        supporter: {
+          data: {
+            communityId: $communityId
+            email: $email
+            firstName: $firstName
+            lastName: $lastName
+            user: {
+              data: { email: $email }
+              on_conflict: {
+                constraint: users_email_unique
+                update_columns: [updatedAt]
+              }
+            }
+          }
+          on_conflict: {
+            constraint: supporters_community_id_email_unique
+            update_columns: [updatedAt]
+          }
+        }
+      }
+    ) {
+      createdAt
+      id
+
+      event {
+        id
+      }
+
+      supporter {
+        createdAt
+        email
+        id
+        firstName
+        lastName
+
+        user {
+          email
+          id
+        }
+      }
+    }
+  }
+`;
 
 const useCreateEventGuestWithSupporter = (): OnFormSubmitFunction => {
-  const eventId: string = useReactiveVar(eventIdVar);
+  const [createEventGuestWithSupporter] = useMutation<
+    CreateEventGuestWithSupporterResult,
+    CreateEventGuestWithSupporterArgs
+  >(CREATE_EVENT_GUEST_WITH_SUPPORTER, {
+    update: (
+      cache: ApolloCache<CreateEventGuestWithSupporterResult>,
+      { data }
+    ) => {
+      const eventGuest: IEventGuest = data?.createEventGuest;
 
-  const [createEventGuestWithSupporter] = useBloomMutation<
-    IEventGuest,
-    CreateEventGuestArgs
-  >({
-    fields: [
-      'createdAt',
-      'id',
-      { event: ['id'] },
-      { supporter: ['id', 'email', 'firstName', 'lastName'] }
-    ],
-    operation: MutationEvent.CREATE_EVENT_GUEST_WITH_SUPPORTER,
-    types: {
-      email: { required: true },
-      eventId: { required: true },
-      firstName: { required: true },
-      lastName: { required: true }
+      cache.modify({
+        fields: {
+          members: (existingEventGuestRefs: Reference[] = []) => {
+            const newEventGuestRef: Reference = cache.writeFragment({
+              data: eventGuest,
+              fragment: gql`
+                fragment NewEventGuest on event_guests {
+                  createdAt
+                  id
+                }
+              `
+            });
+
+            return [...existingEventGuestRefs, newEventGuestRef];
+          }
+        },
+        id: `events:${eventGuest.event.id}`
+      });
     }
   });
 
@@ -41,15 +124,21 @@ const useCreateEventGuestWithSupporter = (): OnFormSubmitFunction => {
     const lastName: string = items.LAST_NAME?.value as string;
     const email: string = items.EMAIL?.value as string;
 
-    const { error } = await createEventGuestWithSupporter({
-      email,
-      eventId,
-      firstName,
-      lastName
-    });
+    try {
+      await createEventGuestWithSupporter({
+        variables: {
+          communityId: communityIdVar(),
+          email,
+          eventId: eventIdVar(),
+          firstName,
+          lastName
+        }
+      });
 
-    if (error) formDispatch({ error, type: 'SET_ERROR' });
-    else storyDispatch({ type: 'GO_FORWARD' });
+      storyDispatch({ type: 'GO_FORWARD' });
+    } catch (e) {
+      formDispatch({ error: getGraphQLError(e), type: 'SET_ERROR' });
+    }
   };
 
   return onSubmit;

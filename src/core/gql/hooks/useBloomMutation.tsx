@@ -4,7 +4,6 @@ import VariableOptions from 'gql-query-builder/build/VariableOptions';
 import { useMutation as useGraphQlHooksMutation } from 'graphql-hooks';
 
 import { MutationEvent } from '@util/constants.events';
-import { getGraphQLError } from '@util/util';
 
 export type UseMutationArgs<S> = {
   fields?: Fields;
@@ -34,7 +33,7 @@ function useBloomMutation<T = any, S = any>({
   types,
   variables: initialVariables
 }: UseMutationArgs<S>): MutationResult<T, S> {
-  const [mutationFn, { data, error, loading }] = useGraphQlHooksMutation(
+  const [mutationFn, { data, loading }] = useGraphQlHooksMutation(
     mutation({ fields, operation, variables: types }).query,
     initialVariables ? { variables: initialVariables } : {}
   );
@@ -46,14 +45,14 @@ function useBloomMutation<T = any, S = any>({
 
     return {
       data: result.data ? (result.data[operation] as T) : (null as T),
-      error: getGraphQLError(result.error),
+      error: 'There was an error executing this operation.',
       loading: result.loading
     };
   };
 
   const result = {
     data: data ? (data[operation] as T) : (null as T),
-    error: getGraphQLError(error),
+    error: 'There was an error executing this operation.',
     loading
   };
 

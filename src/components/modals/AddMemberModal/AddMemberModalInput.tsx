@@ -29,7 +29,7 @@ const AddMemberInputTrashButton: React.FC = () => {
 };
 
 const AddMemberInput: React.FC = () => {
-  const id: string = useId();
+  const rowId: string = useId();
   const isOwner: boolean = useMemberRole() === MemberRole.OWNER;
 
   return (
@@ -38,26 +38,26 @@ const AddMemberInput: React.FC = () => {
 
       <FormShortText
         category={QuestionCategory.FIRST_NAME}
-        metadata={id}
+        metadata={rowId}
         placeholder="First Name"
       />
 
       <FormShortText
         category={QuestionCategory.LAST_NAME}
-        metadata={id}
+        metadata={rowId}
         placeholder="Last Name"
       />
 
       <FormShortText
         category={QuestionCategory.EMAIL}
         className="mr-sm--nlc"
-        metadata={id}
+        metadata={rowId}
         placeholder="Email"
       />
 
       <FormMultipleSelect
         plain
-        metadata={id}
+        metadata={rowId}
         options={['Make Admin']}
         required={false}
         show={!!isOwner}

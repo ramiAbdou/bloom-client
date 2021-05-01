@@ -1,56 +1,120 @@
-import { showToast } from 'src/App.reactive';
+/* eslint-disable camelcase */
+import { communityIdVar, showToast } from 'src/App.reactive';
 
+import { DocumentNode, gql, useMutation } from '@apollo/client';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form';
 import { FormItemData } from '@components/organisms/Form/Form.types';
 import { closeModal } from '@components/organisms/Modal/Modal.state';
-import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { QuestionCategory } from '@util/constants';
-import { MutationEvent } from '@util/constants.events';
-import { take } from '@util/util';
-import { AddMemberInput } from './AddMemberModal.types';
+import {
+  IMember,
+  IUser,
+  MemberRole,
+  MemberStatus
+} from '@util/constants.entities';
+import { getGraphQLError } from '@util/util';
 
-interface AddMembersArgs {
-  members: AddMemberInput[];
+interface UsersRelationalInput {
+  data: IUser;
+  on_conflict: { constraint: string; update_columns: string[] };
 }
 
+interface MembersInput {
+  communityId: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  memberTypeId: string;
+  role: MemberRole;
+  user: UsersRelationalInput;
+}
+
+interface InviteMembersArgs {
+  members: MembersInput[];
+}
+
+interface InviteMembersResult {
+  createMembers: { returning: IMember[] };
+}
+
+const INVITE_MEMBERS: DocumentNode = gql`
+  mutation InviteMembers($members: [members_insert_input!]!) {
+    createMembers(objects: $members) {
+      returning {
+        id
+        firstName
+        lastName
+        email
+        role
+      }
+    }
+  }
+`;
+
 const useInviteMembers = (): OnFormSubmitFunction => {
-  const [inviteMembers] = useBloomMutation<any, AddMembersArgs>({
-    fields: ['id'],
-    operation: MutationEvent.INVITE_MEMBERS,
-    types: { members: { required: true, type: '[InviteMemberInput!]' } }
-  });
+  const [inviteMembers] = useMutation<InviteMembersResult, InviteMembersArgs>(
+    INVITE_MEMBERS
+  );
 
   const onSubmit = async ({ items, formDispatch }: OnFormSubmitArgs) => {
+    const memberValues: FormItemData[] = Object.values(items);
+
     // In the first pass, format all the values by looking at the item's
     // category and id.
-    const memberData: Record<string, AddMemberInput> = Object.values(
-      items
-    ).reduce((acc: Record<string, AddMemberInput>, data: FormItemData) => {
-      const { category, metadata: inputId, value } = data;
+    const memberData: Record<string, MembersInput> = memberValues.reduce(
+      (acc: Record<string, MembersInput>, data: FormItemData) => {
+        const { category, metadata: inputId, value } = data;
 
-      const formattedValue = take([
-        [category === QuestionCategory.FIRST_NAME, { firstName: value }],
-        [category === QuestionCategory.LAST_NAME, { lastName: value }],
-        [category === QuestionCategory.EMAIL, { email: value }],
-        [true, { isAdmin: !!(value as string[]).length }]
-      ]);
+        switch (category) {
+          case QuestionCategory.EMAIL:
+            return {
+              ...acc,
+              [inputId]: {
+                ...acc[inputId],
+                communityId: communityIdVar(),
+                email: value,
+                status: MemberStatus.INVITED,
+                user: {
+                  data: { email: value },
+                  on_conflict: {
+                    constraint: 'users_email_unique',
+                    update_columns: ['updatedAt']
+                  }
+                }
+              }
+            };
 
-      return { ...acc, [inputId]: { ...acc[inputId], ...formattedValue } };
-    }, {});
+          case QuestionCategory.FIRST_NAME:
+            return { ...acc, [inputId]: { ...acc[inputId], firstName: value } };
 
-    const members: AddMemberInput[] = Object.values(memberData);
-    const { error } = await inviteMembers({ members: Object.values(members) });
+          case QuestionCategory.LAST_NAME:
+            return { ...acc, [inputId]: { ...acc[inputId], lastName: value } };
 
-    if (error) {
-      formDispatch({ error, type: 'SET_ERROR' });
-      return;
+          default:
+            return {
+              ...acc,
+              [inputId]: {
+                ...acc[inputId],
+                role: (value as string[]).length ? 'Admin' : null
+              }
+            };
+        }
+      },
+      {}
+    );
+
+    const members: MembersInput[] = Object.values(memberData);
+
+    try {
+      await inviteMembers({ variables: { members } });
+      showToast({ message: `${members.length} members(s) invited.` });
+      closeModal();
+    } catch (e) {
+      formDispatch({ error: getGraphQLError(e), type: 'SET_ERROR' });
     }
-
-    showToast({ message: `${members.length} members(s) invited.` });
-    closeModal();
   };
 
   return onSubmit;

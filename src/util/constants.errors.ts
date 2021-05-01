@@ -12,6 +12,6 @@ export enum ErrorType {
   USER_NOT_FOUND = 'USER_NOT_FOUND'
 }
 
-export enum UniqueConstraint {
+export enum TableConstraint {
   MEMBERS_COMMUNITY_ID_EMAIL_UNIQUE = 'members_community_id_email_unique'
 }
