@@ -64,8 +64,7 @@ const Sidebar: React.FC = () => {
   const community: ICommunity = data?.community;
   const member: IMember = data?.member;
 
-  if (loading) return null;
-  if (!member) return null;
+  if (loading || !member) return null;
 
   return (
     <SidebarContainer>

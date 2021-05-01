@@ -1,44 +1,54 @@
 import React from 'react';
 
 import { gql } from '@apollo/client';
-import FormImage from '@components/organisms/Form/FormImage';
-import FormLongText from '@components/organisms/Form/FormLongText';
 import FormShortText from '@components/organisms/Form/FormShortText';
-import { ComponentWithFragments, QuestionCategory } from '@util/constants';
-import { IMember } from '@util/constants.entities';
+import { ComponentWithFragments } from '@util/constants';
+import { IMemberSocials } from '@util/constants.entities';
 
-const UpdateSocialInformationModalQuestionList: ComponentWithFragments<IMember> = ({
-  data: member
+const UpdateSocialInformationModalQuestionList: ComponentWithFragments<IMemberSocials> = ({
+  data: memberSocials
 }) => (
   <ul>
-    <FormImage
-      id="PROFILE_PICTURE"
+    <FormShortText
+      id="LINKED_IN_URL"
       required={false}
-      value={member.pictureUrl}
+      title="LinkedIn URL"
+      validate="IS_URL"
+      value={memberSocials.linkedInUrl}
     />
 
     <FormShortText
-      category={QuestionCategory.FIRST_NAME}
-      title="First Name"
-      value={member.firstName}
+      id="TWITTER_URL"
+      required={false}
+      title="Twitter URL"
+      validate="IS_URL"
+      value={memberSocials.twitterUrl}
     />
 
     <FormShortText
-      category={QuestionCategory.LAST_NAME}
-      title="Last Name"
-      value={member.lastName}
+      id="FACEBOOK_URL"
+      required={false}
+      title="Facebook URL"
+      validate="IS_URL"
+      value={memberSocials.facebookUrl}
     />
 
-    <FormLongText id="BIO" required={false} title="Bio" value={member.bio} />
+    <FormShortText
+      id="INSTAGRAM_URL"
+      required={false}
+      title="Instagram URL"
+      validate="IS_URL"
+      value={memberSocials.instagramUrl}
+    />
   </ul>
 );
 
 UpdateSocialInformationModalQuestionList.fragment = gql`
-  fragment UpdateSocialInformationModalQuestionListFragment on members {
-    bio
-    firstName
-    lastName
-    pictureUrl
+  fragment UpdateSocialInformationModalQuestionListFragment on members_socials {
+    linkedInUrl
+    twitterUrl
+    facebookUrl
+    instagramUrl
   }
 `;
 
