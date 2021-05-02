@@ -13,8 +13,14 @@ import {
   IEventWatch
 } from '@util/constants.entities';
 import { sortObjects } from '@util/util';
-import { individualEventInteractionsTableSortVar } from './Events.reactive';
-import { IndividualEventTableRowProps } from './IndividualEvent.types';
+import {
+  individualEventInteractionsTableSortVar,
+  individualEventTableFilters
+} from './Events.reactive';
+import {
+  IndividualEventTableFilter,
+  IndividualEventTableRowProps
+} from './IndividualEvent.types';
 
 /**
  * Returns a record of data for everybody who attended the event.
@@ -128,6 +134,10 @@ export const useIndividualEventTableRows = (event: IEvent): TableRow[] => {
   const { sortColumnId, sortDirection } =
     useReactiveVar(individualEventInteractionsTableSortVar) ?? {};
 
+  const filters: IndividualEventTableFilter[] = useReactiveVar(
+    individualEventTableFilters
+  );
+
   const eventAttendeesRecord: Record<
     string,
     IndividualEventTableRowProps
@@ -150,16 +160,24 @@ export const useIndividualEventTableRows = (event: IEvent): TableRow[] => {
 
   if (!totalRecord) return null;
 
-  return Object.values(
-    totalRecord
-  )?.sort((a: IndividualEventTableRowProps, b: IndividualEventTableRowProps) =>
-    sortObjects(
-      a,
-      b,
-      (sortColumnId as keyof IndividualEventTableRowProps) ?? 'rsvpdAt',
-      sortDirection
+  return Object.values(totalRecord)
+    ?.filter(({ joinedAt, rsvpdAt, watched }) =>
+      filters.every((filter: IndividualEventTableFilter) => {
+        if (filter === 'ATTENDED') return !!joinedAt;
+        if (filter === 'NO_SHOW') return !!rsvpdAt && !joinedAt;
+        if (filter === 'RSVPD') return !!rsvpdAt;
+        if (filter === 'WATCHED') return !!watched;
+        return false;
+      })
     )
-  ) as TableRow[];
+    ?.sort((a: IndividualEventTableRowProps, b: IndividualEventTableRowProps) =>
+      sortObjects(
+        a,
+        b,
+        (sortColumnId as keyof IndividualEventTableRowProps) ?? 'rsvpdAt',
+        sortDirection
+      )
+    ) as TableRow[];
 };
 
 /**

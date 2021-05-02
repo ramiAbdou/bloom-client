@@ -1,53 +1,75 @@
 import React from 'react';
 
-import { gql } from '@apollo/client';
+import { gql, useReactiveVar } from '@apollo/client';
 import QuickFilterButton from '@components/atoms/Button/QuickFilterButton';
 import Row from '@components/containers/Row/Row';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { ComponentWithFragments } from '@util/constants';
 import { IEvent } from '@util/constants.entities';
+import {
+  individualEventTableFilters,
+  toggleIndividualEventTableFilter
+} from './Events.reactive';
 
 const IndividualEventInteractionsTableRsvpFilter: React.FC = () => {
-  // const databaseIsAdminsOnly: boolean = useReactiveVar(databaseIsAdminsOnlyVar);
+  const active: boolean = useReactiveVar(individualEventTableFilters).includes(
+    'RSVPD'
+  );
 
-  const onClick = (): void => {};
+  const onClick = (): void => {
+    toggleIndividualEventTableFilter('RSVPD');
+  };
 
   return (
-    <QuickFilterButton active={false} onClick={onClick}>
+    <QuickFilterButton active={active} onClick={onClick}>
       Filter: RSVP'd
     </QuickFilterButton>
   );
 };
 
 const IndividualEventInteractionsTableAttendedFilter: React.FC = () => {
-  // const databaseIsAdminsOnly: boolean = useReactiveVar(databaseIsAdminsOnlyVar);
+  const active: boolean = useReactiveVar(individualEventTableFilters).includes(
+    'ATTENDED'
+  );
 
-  const onClick = (): void => {};
+  const onClick = (): void => {
+    toggleIndividualEventTableFilter('ATTENDED');
+  };
 
   return (
-    <QuickFilterButton active={false} onClick={onClick}>
+    <QuickFilterButton active={active} onClick={onClick}>
       Filter: Attended
     </QuickFilterButton>
   );
 };
 
 const IndividualEventInteractionsTableWatchedFilter: React.FC = () => {
-  // const databaseIsAdminsOnly: boolean = useReactiveVar(databaseIsAdminsOnlyVar);
+  const active: boolean = useReactiveVar(individualEventTableFilters).includes(
+    'WATCHED'
+  );
 
-  const onClick = (): void => {};
+  const onClick = (): void => {
+    toggleIndividualEventTableFilter('WATCHED');
+  };
 
   return (
-    <QuickFilterButton active={false} onClick={onClick}>
+    <QuickFilterButton active={active} onClick={onClick}>
       Filter: Viewed Recording
     </QuickFilterButton>
   );
 };
 
 const IndividualEventInteractionsTableNoShowFilter: React.FC = () => {
-  const onClick = (): void => {};
+  const active: boolean = useReactiveVar(individualEventTableFilters).includes(
+    'NO_SHOW'
+  );
+
+  const onClick = (): void => {
+    toggleIndividualEventTableFilter('NO_SHOW');
+  };
 
   return (
-    <QuickFilterButton active={false} onClick={onClick}>
+    <QuickFilterButton active={active} onClick={onClick}>
       Filter: No Show
     </QuickFilterButton>
   );

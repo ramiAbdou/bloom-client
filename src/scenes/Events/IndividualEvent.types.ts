@@ -7,3 +7,9 @@ export interface IndividualEventTableRowProps extends IdProps {
   rsvpdAt?: string;
   watched?: boolean;
 }
+
+export type IndividualEventTableFilter =
+  | 'ATTENDED'
+  | 'NO_SHOW'
+  | 'RSVPD'
+  | 'WATCHED';

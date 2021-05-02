@@ -1,5 +1,6 @@
 import { makeVar, ReactiveVar } from '@apollo/client';
 import { SortTableArgs } from '../../components/organisms/Table/Table.types';
+import { IndividualEventTableFilter } from './IndividualEvent.types';
 
 /**
  * Returns the search string used in the PastEventsList.
@@ -7,6 +8,24 @@ import { SortTableArgs } from '../../components/organisms/Table/Table.types';
 export const eventsPastSearchStringVar: ReactiveVar<string> = makeVar<string>(
   ''
 );
+
+export const individualEventTableFilters: ReactiveVar<
+  IndividualEventTableFilter[]
+> = makeVar<IndividualEventTableFilter[]>([]);
+
+export const toggleIndividualEventTableFilter = (
+  filter: IndividualEventTableFilter
+): void => {
+  const currentFilters: IndividualEventTableFilter[] = individualEventTableFilters();
+
+  if (currentFilters.includes(filter)) {
+    const updatedFilters = currentFilters.filter((value) => value !== filter);
+    individualEventTableFilters(updatedFilters);
+    return;
+  }
+
+  individualEventTableFilters([...currentFilters, filter]);
+};
 
 export const individualEventInteractionsTableSortVar: ReactiveVar<SortTableArgs> = makeVar<SortTableArgs>(
   null
