@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 import {
   communityIdVar,
-  memberIdVar,
   setCommunityId,
+  setMemberId,
   userIdVar
 } from 'src/App.reactive';
 
@@ -78,7 +78,7 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
     if (!member?.id || !member.community?.id) return;
 
     setCommunityId(member.community.id);
-    memberIdVar(member.id);
+    setMemberId(member.id);
 
     // As we set the active entities, we must also update the document
     // colors with the community's primary color.

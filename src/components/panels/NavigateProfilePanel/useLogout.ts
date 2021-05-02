@@ -1,5 +1,5 @@
 import { useHistory } from 'react-router-dom';
-import { memberIdVar, setCommunityId, userIdVar } from 'src/App.reactive';
+import { setCommunityId, setMemberId, userIdVar } from 'src/App.reactive';
 
 import {
   DocumentNode,
@@ -27,7 +27,7 @@ const useLogout = (): VoidFunction => {
     apolloClient.resetStore();
 
     setCommunityId(null);
-    memberIdVar(null);
+    setMemberId(null);
     userIdVar(null);
 
     // Reset all of the document colors to Bloom colors.

@@ -181,7 +181,9 @@ const useCreateEvent = (): OnFormSubmitFunction => {
 
       closeModal();
       showToast({ message: 'Event created.' });
-    } catch {
+    } catch (e) {
+      console.log(e);
+
       formDispatch({
         error: 'Failed to create event. Please try again later.',
         type: 'SET_ERROR'

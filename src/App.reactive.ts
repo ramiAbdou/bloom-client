@@ -6,13 +6,28 @@ import { makeVar, ReactiveVar } from '@apollo/client';
 
 export const communityIdVar: ReactiveVar<string> = makeVar<string>(null);
 
+/**
+ * Sets the active communityId and adds it to the localStorage. This will
+ * allow us to include it in our GraphQL request headers.
+ */
 export const setCommunityId = (communityId: string): void => {
   communityIdVar(communityId);
   localStorage.setItem('communityId', communityId);
 };
 
 export const eventIdVar: ReactiveVar<string> = makeVar<string>(null);
+
 export const memberIdVar: ReactiveVar<string> = makeVar<string>(null);
+
+/**
+ * Sets the active memberId and adds it to the localStorage. This will
+ * allow us to include it in our GraphQL request headers.
+ */
+export const setMemberId = (memberId: string): void => {
+  memberIdVar(memberId);
+  localStorage.setItem('memberId', memberId);
+};
+
 export const userIdVar: ReactiveVar<string> = makeVar<string>(null);
 
 // ## LOADER

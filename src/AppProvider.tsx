@@ -23,7 +23,8 @@ const apolloLink: HttpLink = new HttpLink({
   credentials: 'include',
   headers: {
     'Hasura-Client-Name': `Bloom Client (${process.env.APP_ENV})`,
-    communityId: localStorage.getItem('communityId'),
+    'X-Community-Id': localStorage.getItem('communityId'),
+    'X-Member-Id': localStorage.getItem('memberId'),
     'content-type': 'application/json'
   },
   uri: process.env.HASURA_SERVER_URL
