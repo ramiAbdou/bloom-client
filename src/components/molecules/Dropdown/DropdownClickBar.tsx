@@ -56,11 +56,11 @@ const DropdownClickBar: React.FC = () => {
   const [{ open }, dropdownDispatch] = useDropdown();
 
   const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
-  const width = ref?.current?.offsetWidth;
 
   useEffect(() => {
+    const width: number = ref?.current?.offsetWidth;
     if (width) dropdownDispatch({ type: 'SET_WIDTH', width });
-  }, [width]);
+  }, [ref]);
 
   const onClick = (): void => {
     dropdownDispatch({ open: !open, type: 'SET_OPEN' });

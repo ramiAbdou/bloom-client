@@ -40,8 +40,6 @@ const Application: React.FC = () => {
     ? data?.applications[0]
     : null;
 
-  console.log(error);
-
   useEffect(() => {
     if (application?.id) {
       setCommunityId(application.community.id);
