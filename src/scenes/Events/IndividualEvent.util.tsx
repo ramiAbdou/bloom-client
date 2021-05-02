@@ -2,6 +2,7 @@ import day from 'dayjs';
 import deepmerge from 'deepmerge';
 import React from 'react';
 
+import { useReactiveVar } from '@apollo/client';
 import { TableColumn, TableRow } from '@components/organisms/Table/Table.types';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { QuestionType } from '@util/constants';
@@ -12,6 +13,7 @@ import {
   IEventWatch
 } from '@util/constants.entities';
 import { sortObjects } from '@util/util';
+import { individualEventInteractionsTableSortVar } from './Events.reactive';
 import { IndividualEventTableRowProps } from './IndividualEvent.types';
 
 /**
@@ -122,7 +124,10 @@ const buildIndividualEventTableWatchers = (
  *  - Joined the event.
  *  - Viewed the event recording.
  */
-export const buildIndividualEventTableRows = (event: IEvent): TableRow[] => {
+export const useIndividualEventTableRows = (event: IEvent): TableRow[] => {
+  const { sortColumnId, sortDirection } =
+    useReactiveVar(individualEventInteractionsTableSortVar) ?? {};
+
   const eventAttendeesRecord: Record<
     string,
     IndividualEventTableRowProps
@@ -148,7 +153,12 @@ export const buildIndividualEventTableRows = (event: IEvent): TableRow[] => {
   return Object.values(
     totalRecord
   )?.sort((a: IndividualEventTableRowProps, b: IndividualEventTableRowProps) =>
-    sortObjects(a, b, ['joinedAt', 'rsvpdAt'])
+    sortObjects(
+      a,
+      b,
+      (sortColumnId as keyof IndividualEventTableRowProps) ?? 'rsvpdAt',
+      sortDirection
+    )
   ) as TableRow[];
 };
 

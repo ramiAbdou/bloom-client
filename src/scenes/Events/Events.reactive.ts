@@ -1,10 +1,15 @@
 import { makeVar, ReactiveVar } from '@apollo/client';
+import { SortTableArgs } from '../../components/organisms/Table/Table.types';
 
 /**
  * Returns the search string used in the PastEventsList.
  */
 export const eventsPastSearchStringVar: ReactiveVar<string> = makeVar<string>(
   ''
+);
+
+export const individualEventInteractionsTableSortVar: ReactiveVar<SortTableArgs> = makeVar<SortTableArgs>(
+  null
 );
 
 interface IndividualEventTableVarState {

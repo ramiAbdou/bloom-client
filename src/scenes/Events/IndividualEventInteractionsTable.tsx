@@ -1,76 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { DocumentNode, gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 import { showModal } from '@components/organisms/Modal/Modal.state';
 import { ModalType } from '@components/organisms/Modal/Modal.types';
 import Table from '@components/organisms/Table/Table';
 import {
+  SortTableArgs,
   TableColumn,
   TableOptions,
   TableRow
 } from '@components/organisms/Table/Table.types';
 import { ComponentWithFragments } from '@util/constants';
 import { IEvent } from '@util/constants.entities';
+import { individualEventInteractionsTableSortVar } from './Events.reactive';
 import {
   buildIndividualEventTableColumns,
-  buildIndividualEventTableRows
+  useIndividualEventTableRows
 } from './IndividualEvent.util';
 import IndividualEventInteractionsTableActionRow from './IndividualEventInteractionsTableActionRow';
-
-const GET_MEMBERS_WITH_EVENT_INTERACTIONS: DocumentNode = gql`
-  query GetMembersWithEventInteractions(
-    $eventId: String!
-    $limit: Int!
-    $offset: Int!
-    $orderBy: String!
-    $orderDirection: String!
-  ) {
-    individualEventTableLimit @client @export(as: "limit")
-    individualEventTableOffset @client @export(as: "offset")
-    individualEventTableOrderBy @client @export(as: "orderBy")
-    individualEventTableOrderDirection @client @export(as: "orderDirection")
-
-    members: get_members_with_event_interactions(
-      args: {
-        _limit: $limit
-        _offset: $offset
-        event_id: $eventId
-        order_by: $orderBy
-        order_direction: $orderDirection
-      }
-    ) {
-      email
-      firstName
-      id
-      lastName
-
-      eventAttendees(where: { eventId: { _eq: $eventId } }) {
-        id
-        createdAt
-      }
-
-      eventGuests(where: { eventId: { _eq: $eventId } }) {
-        id
-        createdAt
-      }
-
-      eventWatches(where: { eventId: { _eq: $eventId } }) {
-        id
-        createdAt
-      }
-    }
-  }
-`;
 
 const IndividualEventInteractionsTable: ComponentWithFragments<IEvent> = ({
   data: event
 }) => {
-  const { data, loading } = useQuery(GET_MEMBERS_WITH_EVENT_INTERACTIONS, {
-    skip: !event.id,
-    variables: { eventId: event.id }
-  });
+  const [offset, setOffset] = useState<number>(0);
 
-  const rows: TableRow[] = buildIndividualEventTableRows(event as IEvent);
+  const rows: TableRow[] = useIndividualEventTableRows(event as IEvent);
 
   const columns: TableColumn[] = buildIndividualEventTableColumns(
     event as IEvent
@@ -78,6 +32,14 @@ const IndividualEventInteractionsTable: ComponentWithFragments<IEvent> = ({
 
   const onRowClick = (row: TableRow): void => {
     showModal({ id: ModalType.VIEW_PROFILE, metadata: row?.id });
+  };
+
+  const onOffsetChange = (updatedOffset: number): void => {
+    setOffset(updatedOffset);
+  };
+
+  const onSortColumn = (args: SortTableArgs): void => {
+    individualEventInteractionsTableSortVar(args);
   };
 
   const options: TableOptions = {
@@ -90,9 +52,11 @@ const IndividualEventInteractionsTable: ComponentWithFragments<IEvent> = ({
     <Table
       columns={columns}
       options={options}
-      rows={rows}
+      rows={rows.slice(offset, offset + 25)}
       totalCount={rows.length}
+      onOffsetChange={onOffsetChange}
       onRowClick={onRowClick}
+      onSortColumn={onSortColumn}
     >
       <IndividualEventInteractionsTableActionRow data={event} />
     </Table>
