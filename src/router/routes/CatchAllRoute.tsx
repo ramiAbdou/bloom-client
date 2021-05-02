@@ -1,7 +1,8 @@
 import React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
+import { userIdVar } from 'src/App.reactive';
 
-import { DocumentNode, gql, useQuery } from '@apollo/client';
+import { DocumentNode, gql, useQuery, useReactiveVar } from '@apollo/client';
 import { IMember } from '@util/constants.entities';
 
 interface GetMembersByUserIdResult {
@@ -10,8 +11,6 @@ interface GetMembersByUserIdResult {
 
 const GET_MEMBERS_BY_USER_ID: DocumentNode = gql`
   query GetMembersByUserId($userId: String!) {
-    userId @client @export(as: "userId")
-
     members(where: { status: { _eq: "Accepted" }, userId: { _eq: $userId } }) {
       id
       community {
@@ -25,12 +24,14 @@ const CatchAllRoute: React.FC<Pick<RouteProps, 'exact' | 'path'>> = ({
   exact,
   path
 }) => {
-  const { data, loading, error } = useQuery<GetMembersByUserIdResult>(
-    GET_MEMBERS_BY_USER_ID
+  const userId: string = useReactiveVar(userIdVar);
+
+  const { data, loading } = useQuery<GetMembersByUserIdResult>(
+    GET_MEMBERS_BY_USER_ID,
+    { skip: !userId, variables: { userId } }
   );
 
   if (loading) return <Route component={null} exact={exact} path={path} />;
-  if (error) return null;
 
   const members: IMember[] = data?.members;
 

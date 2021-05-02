@@ -28,9 +28,7 @@ const useUpdateUserId = (): boolean => {
   useEffect(() => {
     // If the userId is decoded from the decoded token, then set the active
     // entities for the communities, members and users.
-    if (userId) {
-      userIdVar(userId);
-    }
+    if (userId) userIdVar(userId);
   }, [userId]);
 
   return loading || (!!userId && userId !== storedUserId);
