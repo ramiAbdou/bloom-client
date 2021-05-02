@@ -64,7 +64,7 @@ const Sidebar: React.FC = () => {
   const community: ICommunity = data?.community;
   const member: IMember = data?.member;
 
-  if (loading || !member) return null;
+  if (loading) return null;
 
   return (
     <SidebarContainer>
@@ -72,11 +72,11 @@ const Sidebar: React.FC = () => {
 
       <div className="f f-col o-scroll w-100">
         {community && <SidebarCommunityName data={community} />}
-        <SidebarMainSection data={member} />
-        <SidebarAdminSection data={member} />
-        <SidebarQuickActionsSection data={member} />
-        <SidebarProfileSection data={member} />
-        <SidebarProfile data={member} />
+        {member && <SidebarMainSection data={member} />}
+        {member && <SidebarAdminSection data={member} />}
+        {member && <SidebarQuickActionsSection data={member} />}
+        {member && <SidebarProfileSection data={member} />}
+        {member && <SidebarProfile data={member} />}
       </div>
     </SidebarContainer>
   );

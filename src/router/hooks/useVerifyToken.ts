@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { userIdVar } from 'src/App.reactive';
 
 import { DocumentNode, gql, useMutation } from '@apollo/client';
 import { showModal } from '@components/organisms/Modal/Modal.state';
@@ -13,8 +14,7 @@ interface VerifyTokenArgs {
 }
 
 interface VerifyTokenResult {
-  event?: VerifyEvent;
-  eventId?: string;
+  verifyToken: { event?: VerifyEvent; eventId?: string; userId?: string };
 }
 
 const VERIFY_TOKEN: DocumentNode = gql`
@@ -22,6 +22,7 @@ const VERIFY_TOKEN: DocumentNode = gql`
     verifyToken(token: $token) {
       event
       eventId
+      userId
     }
   }
 `;
@@ -31,10 +32,9 @@ const VERIFY_TOKEN: DocumentNode = gql`
  * if user logs in from email.
  */
 const useVerifyToken = (): boolean => {
-  const [verifyToken, result1] = useMutation<
-    VerifyTokenResult,
-    VerifyTokenArgs
-  >(VERIFY_TOKEN);
+  const [verifyToken, result] = useMutation<VerifyTokenResult, VerifyTokenArgs>(
+    VERIFY_TOKEN
+  );
 
   const token: string = new URLSearchParams(window.location.search).get(
     'token'
@@ -49,10 +49,15 @@ const useVerifyToken = (): boolean => {
     (async () => {
       try {
         const { data } = await verifyToken({ variables: { token } });
+        const { event, eventId, userId } = data?.verifyToken ?? {};
+
+        if (event === VerifyEvent.LOG_IN) {
+          if (userId) userIdVar(userId);
+        }
 
         // If the event is VerifyEvent.JOIN_EVENT, then we need to grab the
         // videoUrl from the backend and open the browser to that.
-        if (data.event === VerifyEvent.JOIN_EVENT) {
+        if (event === VerifyEvent.JOIN_EVENT) {
           const videoUrl = '';
 
           // Only open the videoUrl if it's present though!
@@ -74,7 +79,7 @@ const useVerifyToken = (): boolean => {
   }, [token]);
 
   const loading: boolean =
-    (!!token && !result1.data && !result1.error) || result1.loading;
+    (!!token && !result.data && !result.error) || result.loading;
 
   return loading;
 };
