@@ -6,7 +6,7 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form';
-import { getCheckInErrorMessage } from './CheckInModal.util';
+import { getGraphQLError } from '@util/util';
 
 interface SendLoginLinkArgs {
   communityId?: string;
@@ -60,10 +60,7 @@ const useSendLoginLink = (): OnFormSubmitFunction => {
         type: 'SET_CURRENT_PAGE'
       });
     } catch (e) {
-      formDispatch({
-        error: getCheckInErrorMessage({ error: e.message }),
-        type: 'SET_ERROR'
-      });
+      formDispatch({ error: getGraphQLError(e), type: 'SET_ERROR' });
     }
   };
 

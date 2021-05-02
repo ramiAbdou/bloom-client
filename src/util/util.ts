@@ -3,7 +3,7 @@ import day from 'dayjs';
 import { ApolloError } from '@apollo/client';
 import { QuestionCategory } from '@util/constants';
 import { IMember, IMemberValue, IQuestion } from '@util/constants.entities';
-import { TableConstraint } from '@util/constants.errors';
+import { ErrorType, TableConstraint } from '@util/constants.errors';
 
 /**
  * Returns the URL with the URL params.
@@ -69,7 +69,27 @@ export const getGraphQLError = (
     message.includes(TableConstraint.MEMBERS_COMMUNITY_ID_EMAIL_UNIQUE) &&
     !email
   ) {
-    return `One of these emails already exists in this community.`;
+    return 'One of these emails already exists in this community.';
+  }
+
+  if (message === ErrorType.APPLICATION_REJECTED) {
+    return 'You must be accepted into a commmunity before logging in.';
+  }
+
+  if (message === ErrorType.APPLICATION_PENDING) {
+    return 'You have pending member applications. Once they are accepted, you will be able to log in.';
+  }
+
+  if (message === ErrorType.NO_MEMBER_APPLICATIONS) {
+    return 'To log in, you must be a member of a community. To do that, you must fill out an application to the community.';
+  }
+
+  if (message === ErrorType.NOT_MEMBER) {
+    return 'This email is not registered as a member of this community. If you believe this is an error, please reach out to the owner.';
+  }
+
+  if (message === ErrorType.USER_NOT_FOUND) {
+    return 'You must apply and be accepted into a commmunity before logging in.';
   }
 
   return message;

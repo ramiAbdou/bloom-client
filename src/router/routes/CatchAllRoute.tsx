@@ -25,11 +25,12 @@ const CatchAllRoute: React.FC<Pick<RouteProps, 'exact' | 'path'>> = ({
   exact,
   path
 }) => {
-  const { data, loading } = useQuery<GetMembersByUserIdResult>(
+  const { data, loading, error } = useQuery<GetMembersByUserIdResult>(
     GET_MEMBERS_BY_USER_ID
   );
 
   if (loading) return <Route component={null} exact={exact} path={path} />;
+  if (error) return null;
 
   const members: IMember[] = data?.members;
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
-import { communityIdVar, isLoaderShowingVar } from 'src/App.reactive';
+import { isLoaderShowingVar, setCommunityId } from 'src/App.reactive';
 
 import { DocumentNode, gql, useQuery } from '@apollo/client';
 import Story from '@components/organisms/Story/Story';
@@ -40,9 +40,11 @@ const Application: React.FC = () => {
     ? data?.applications[0]
     : null;
 
+  console.log(error);
+
   useEffect(() => {
     if (application?.id) {
-      communityIdVar(application.community.id);
+      setCommunityId(application.community.id);
       updateDocumentColors(application.community.primaryColor);
     }
   }, [application]);

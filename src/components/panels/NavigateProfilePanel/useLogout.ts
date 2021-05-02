@@ -1,5 +1,5 @@
 import { useHistory } from 'react-router-dom';
-import { communityIdVar, memberIdVar, userIdVar } from 'src/App.reactive';
+import { memberIdVar, setCommunityId, userIdVar } from 'src/App.reactive';
 
 import {
   DocumentNode,
@@ -26,7 +26,7 @@ const useLogout = (): VoidFunction => {
     // Clear the entities that we've ever fetched.
     apolloClient.resetStore();
 
-    communityIdVar(null);
+    setCommunityId(null);
     memberIdVar(null);
     userIdVar(null);
 

@@ -5,9 +5,14 @@ import { makeVar, ReactiveVar } from '@apollo/client';
 // ## ACTIVE ID's
 
 export const communityIdVar: ReactiveVar<string> = makeVar<string>(null);
+
+export const setCommunityId = (communityId: string): void => {
+  communityIdVar(communityId);
+  localStorage.setItem('communityId', communityId);
+};
+
 export const eventIdVar: ReactiveVar<string> = makeVar<string>(null);
 export const memberIdVar: ReactiveVar<string> = makeVar<string>(null);
-export const memberSocialsIdVar: ReactiveVar<string> = makeVar<string>(null);
 export const userIdVar: ReactiveVar<string> = makeVar<string>(null);
 
 // ## LOADER

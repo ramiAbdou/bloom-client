@@ -3,7 +3,7 @@ import { Redirect, Route, RouteProps } from 'react-router-dom';
 import {
   communityIdVar,
   memberIdVar,
-  memberSocialsIdVar,
+  setCommunityId,
   userIdVar
 } from 'src/App.reactive';
 
@@ -37,10 +37,6 @@ const GET_MEMBER_BY_COMMUNITY_URL_NAME: DocumentNode = gql`
       community {
         id
         primaryColor
-      }
-
-      memberSocials {
-        id
       }
     }
   }
@@ -81,9 +77,8 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
     // actually returned those ID's.
     if (!member?.id || !member.community?.id) return;
 
-    communityIdVar(member.community.id);
+    setCommunityId(member.community.id);
     memberIdVar(member.id);
-    memberSocialsIdVar(member.memberSocials.id);
 
     // As we set the active entities, we must also update the document
     // colors with the community's primary color.

@@ -1,55 +1,44 @@
 import React from 'react';
 
 import { gql } from '@apollo/client';
+import FormImage from '@components/organisms/Form/FormImage';
+import FormLongText from '@components/organisms/Form/FormLongText';
 import FormShortText from '@components/organisms/Form/FormShortText';
-import { ComponentWithFragments } from '@util/constants';
-import { IMemberSocials } from '@util/constants.entities';
+import { ComponentWithFragments, QuestionCategory } from '@util/constants';
+import { IMember } from '@util/constants.entities';
 
-const UpdatePersonalInformationModalQuestionList: ComponentWithFragments<IMemberSocials> = ({
-  data: memberSocials
+const UpdatePersonalInformationModalQuestionList: ComponentWithFragments<IMember> = ({
+  data: member
 }) => (
   <ul>
-    <FormShortText
-      id="LINKED_IN_URL"
+    <FormImage
+      id="PROFILE_PICTURE"
       required={false}
-      title="LinkedIn URL"
-      validate="IS_URL"
-      value={memberSocials.linkedInUrl}
+      value={member.pictureUrl}
     />
 
     <FormShortText
-      id="TWITTER_URL"
-      required={false}
-      title="Twitter URL"
-      validate="IS_URL"
-      value={memberSocials.twitterUrl}
+      category={QuestionCategory.FIRST_NAME}
+      title="First Name"
+      value={member.firstName}
     />
 
     <FormShortText
-      id="FACEBOOK_URL"
-      required={false}
-      title="Facebook URL"
-      validate="IS_URL"
-      value={memberSocials.facebookUrl}
+      category={QuestionCategory.LAST_NAME}
+      title="Last Name"
+      value={member.lastName}
     />
 
-    <FormShortText
-      id="INSTAGRAM_URL"
-      required={false}
-      title="Instagram URL"
-      validate="IS_URL"
-      value={memberSocials.instagramUrl}
-    />
+    <FormLongText id="BIO" required={false} title="Bio" value={member.bio} />
   </ul>
 );
 
 UpdatePersonalInformationModalQuestionList.fragment = gql`
-  fragment UpdatePersonalInformationModalQuestionListFragment on member_socials {
-    facebookUrl
-    id
-    instagramUrl
-    linkedInUrl
-    twitterUrl
+  fragment UpdatePersonalInformationModalQuestionListFragment on members {
+    bio
+    firstName
+    lastName
+    pictureUrl
   }
 `;
 

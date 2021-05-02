@@ -65,12 +65,11 @@ const GET_MEMBERS_WITH_EVENT_INTERACTIONS: DocumentNode = gql`
 const IndividualEventInteractionsTable: ComponentWithFragments<IEvent> = ({
   data: event
 }) => {
-  const { data, error, loading } = useQuery(
-    GET_MEMBERS_WITH_EVENT_INTERACTIONS,
-    { skip: !event.id, variables: { eventId: event.id } }
-  );
+  const { data, loading } = useQuery(GET_MEMBERS_WITH_EVENT_INTERACTIONS, {
+    skip: !event.id,
+    variables: { eventId: event.id }
+  });
 
-  console.log(data, error);
   const rows: TableRow[] = buildIndividualEventTableRows(event as IEvent);
 
   const columns: TableColumn[] = buildIndividualEventTableColumns(

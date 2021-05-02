@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { communityIdVar } from 'src/App.reactive';
 
-import { useReactiveVar } from '@apollo/client';
+import { ApolloError, useReactiveVar } from '@apollo/client';
 import Button from '@components/atoms/Button/Button';
 import ErrorMessage from '@components/atoms/ErrorMessage';
 import Separator from '@components/atoms/Separator';
@@ -13,8 +13,7 @@ import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { APP, QuestionCategory, ShowProps } from '@util/constants';
 import { ErrorContext, ErrorType } from '@util/constants.errors';
-import { buildUrl } from '@util/util';
-import { getCheckInErrorMessage } from './CheckInModal.util';
+import { buildUrl, getGraphQLError } from '@util/util';
 import useSendLoginLink from './useSendLoginLink';
 
 const CheckInModalMemberBranchGoogleButton: React.FC = () => {
@@ -46,7 +45,7 @@ const CheckInModalMemberBranchGoogleButton: React.FC = () => {
 const CheckInModalMemberBranchGoogleContainer: React.FC = () => {
   // We store the error code in a cookie.
   const error = Cookies.get(ErrorContext.LOGIN_ERROR) as ErrorType;
-  const message = getCheckInErrorMessage({ error });
+  const message = getGraphQLError(new ApolloError({ errorMessage: error }));
 
   // After we get the message, we remove the cookie so that the error doesn't
   // get shown again. We set a timeout to ensure that even if the component
