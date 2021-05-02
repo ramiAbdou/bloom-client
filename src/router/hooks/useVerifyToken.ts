@@ -51,9 +51,7 @@ const useVerifyToken = (): boolean => {
         const { data } = await verifyToken({ variables: { token } });
         const { event, eventId, userId } = data?.verifyToken ?? {};
 
-        if (event === VerifyEvent.LOG_IN) {
-          if (userId) userIdVar(userId);
-        }
+        if (event === VerifyEvent.LOGIN && userId) userIdVar(userId);
 
         // If the event is VerifyEvent.JOIN_EVENT, then we need to grab the
         // videoUrl from the backend and open the browser to that.

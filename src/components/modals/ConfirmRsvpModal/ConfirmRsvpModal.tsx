@@ -40,7 +40,6 @@ const CREATE_EVENT_GUEST_WITH_MEMBER: DocumentNode = gql`
     ) {
       createdAt
       id
-      updatedAt
 
       member {
         firstName
@@ -103,7 +102,8 @@ const EventsConfirmRsvpModal: React.FC = () => {
       await createEventGuestWithMember({ variables: { eventId } });
       closeModal();
       showToast({ message: 'RSVP was registered.' });
-    } catch {
+    } catch (e) {
+      console.log(e);
       formDispatch({ error: 'Failed to register RSVP.', type: 'SET_ERROR' });
     }
   };

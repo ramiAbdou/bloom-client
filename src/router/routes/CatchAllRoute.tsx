@@ -37,7 +37,10 @@ const CatchAllRoute: React.FC<Pick<RouteProps, 'exact' | 'path'>> = ({
 
   // If userId isn't present, means the user isn't logged in, so redirect
   // the user to the login page.
-  if (!members?.length) return <Redirect to="/login" />;
+  if (!members?.length) {
+    userIdVar(null);
+    return <Redirect to="/login" />;
+  }
 
   // If the members of the user have loaded, redirect them to the first
   // community that loads.
